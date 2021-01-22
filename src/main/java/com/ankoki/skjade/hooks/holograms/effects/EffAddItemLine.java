@@ -23,8 +23,8 @@ public class EffAddItemLine extends Effect {
                 "add [[the] item] %itemstack% to [[the] hologram] [with [the]] id %string%");
     }
 
-    Expression<ItemStack> item;
-    Expression<String> key;
+    private Expression<ItemStack> item;
+    private Expression<String> key;
 
     @Override
     protected void execute(Event event) {

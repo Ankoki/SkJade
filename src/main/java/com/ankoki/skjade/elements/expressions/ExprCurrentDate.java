@@ -26,7 +26,7 @@ public class ExprCurrentDate extends SimpleExpression<String> {
                 "[the] current date [formatted as %-string%]");
     }
 
-    Expression<String> dateFormat;
+    private Expression<String> dateFormat;
 
     @Nullable
     @Override

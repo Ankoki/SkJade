@@ -23,7 +23,7 @@ public class EffUnregisterPlaceholder extends Effect {
                 "unregister [holo[grahpic[ displays]]] placeholder %string%");
     }
 
-    Expression<String> placeholder;
+    private Expression<String> placeholder;
 
     @Override
     protected void execute(Event event) {

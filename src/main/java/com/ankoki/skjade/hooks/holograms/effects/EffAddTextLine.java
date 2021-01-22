@@ -22,7 +22,7 @@ public class EffAddTextLine extends Effect {
                 "add [the] [text] line %string% to [[the] hologram] [with [the]] id %string%");
     }
 
-    Expression<String> line, key;
+    private Expression<String> line, key;
 
     @Override
     protected void execute(Event event) {

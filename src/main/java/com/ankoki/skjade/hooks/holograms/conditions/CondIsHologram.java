@@ -23,7 +23,7 @@ public class CondIsHologram extends Condition {
                 "%entity% is a [(hd|holographic displays)] hologram");
     }
 
-    Expression<Entity> entity;
+    private Expression<Entity> entity;
 
     @Override
     public boolean check(Event event) {

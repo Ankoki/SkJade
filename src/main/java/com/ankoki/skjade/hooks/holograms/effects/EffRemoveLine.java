@@ -22,8 +22,8 @@ public class EffRemoveLine extends Effect {
                 "remove [the] line [number] %number% from [[the] hologram] [with [the]] id %string%");
     }
 
-    Expression<Number> number;
-    Expression<String> key;
+    private Expression<Number> number;
+    private Expression<String> key;
 
     @Override
     protected void execute(Event event) {

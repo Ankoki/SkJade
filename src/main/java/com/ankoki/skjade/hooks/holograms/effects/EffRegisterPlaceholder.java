@@ -23,9 +23,9 @@ public class EffRegisterPlaceholder extends Effect {
     //            "register [[a] holo[graphic[ displays]]] placeholder %string% ([to have]|with) refresh rate %number% to run %function%");
     //}
 
-    Expression<String> text;
-    Expression<Number> refreshRate;
-    Expression<?> function;
+    private Expression<String> text;
+    private Expression<Number> refreshRate;
+    private Expression<?> function;
 
     @Override
     protected void execute(Event event) {
