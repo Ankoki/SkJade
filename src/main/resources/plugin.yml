@@ -1,0 +1,12 @@
+name: SkJade
+version: beta-1.0
+description: "§7Enhance §eSkript §7with this add-on and use custom syntax! §c❤"
+author: Ankoki
+website: https://www.github.com/Ankoki-Dev/SkJade
+api-version: 1.16
+main: com.ankoki.skjade.SkJade
+commands:
+  skjade:
+    description: Shows the version of SkJade that is currently being run.
+depend:
+  - Skript
