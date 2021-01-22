@@ -20,7 +20,7 @@ public class EffCreateHolo extends Effect {
 
     static {
         Skript.registerEffect(EffCreateHolo.class,
-                "create [[a] (hd|holographic[ ]displays) holo[gram] at %location% [with [the]] id %string%");
+                "create [a] [(hd|holographic[ ]displays)] holo[gram] at %location% [with [the]] id %string%");
     }
 
     private Expression<Location> location;

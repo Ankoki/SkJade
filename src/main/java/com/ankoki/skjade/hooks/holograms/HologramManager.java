@@ -37,6 +37,7 @@ public class HologramManager {
     }
 
     public static void removeLine(String key, int line) {
+        if (line < 0) line = 0;
         Hologram hologram = allHolograms.get(key);
         hologram.removeLine(line);
         allHolograms.remove(key);

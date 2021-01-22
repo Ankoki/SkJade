@@ -19,7 +19,7 @@ public class EffAddTextLine extends Effect {
 
     static {
         Skript.registerEffect(EffAddTextLine.class,
-                "add [the] [text] line %string% to [[the] hologram] [with [the]] id %string%");
+                "add [the] [text] line %string% to [[the] holo[gram]] [with [the]] id %string%");
     }
 
     private Expression<String> line, key;

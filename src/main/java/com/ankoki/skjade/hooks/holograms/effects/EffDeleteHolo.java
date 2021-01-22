@@ -1,7 +1,6 @@
 package com.ankoki.skjade.hooks.holograms.effects;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -10,35 +9,28 @@ import com.ankoki.skjade.hooks.holograms.HologramManager;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-@Name("Remove Line")
-@Description("Removes a line from a hologram")
-@Examples("remove line number 3 from the hologram with id \"testHolo\"")
-@RequiredPlugins("HolographicDisplays")
-@Since("1.0")
-public class EffRemoveLine extends Effect {
+public class EffDeleteHolo extends Effect {
 
     static {
-        Skript.registerEffect(EffRemoveLine.class,
-                "remove [the] line [number] %number% from [[the] holo[gram]] [with [the]] id %string%");
+        Skript.registerEffect(EffDeleteHolo.class,
+                "delete [(hd|holographic[ ]displays)] holo[gram] [with [id]] %string%");
     }
 
-    private Expression<Number> number;
     private Expression<String> key;
 
     @Override
     protected void execute(Event event) {
-        HologramManager.removeLine(key.getSingle(event), number.getSingle(event).intValue() - 1);
+        HologramManager.deleteHologram(key.getSingle(event));
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "remove line";
+        return "delete hologram";
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        number = (Expression<Number>) exprs[0];
-        key = (Expression<String>) exprs[1];
+        key = (Expression<String>) exprs[0];
         return true;
     }
 }

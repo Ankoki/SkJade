@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+//TODO make a seraliser for holograms so they are persistant over restart c:
 public class SkJade extends JavaPlugin {
 
     private static boolean beta;
@@ -33,9 +34,13 @@ public class SkJade extends JavaPlugin {
         }
         addon = Skript.registerAddon(this);
         this.loadElements();
-        if (isHDEnabled()) {
+        if (isPluginEnabled("HolographicDisplays")) {
             logger.info("HolographicDisplays was found! Enabling support");
             this.loadHDElements();
+        }
+        if (isPluginEnabled("Citizens")) {
+            logger.info("Citizens was found! Enabling support");
+            this.loadCitizensElements();
         }
         if (version.startsWith("beta-")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
@@ -43,6 +48,7 @@ public class SkJade extends JavaPlugin {
             logger.warning("I recommend switching to a non-beta version of SkJade, especially if " +
                     "runninng on a production server, as data might be lost!");
         }
+        this.registerCommand();
         logger.info(String.format("SkJade has been successfully enabled in %.2f seconds (%sms)",
                 (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         /*
@@ -71,10 +77,10 @@ public class SkJade extends JavaPlugin {
         return Skript.isAcceptRegistrations();
     }
 
-    private boolean isHDEnabled() {
-        Plugin holographicDisplays = pluginManager.getPlugin("HolographicDisplays");
-        if (holographicDisplays == null) return false;
-        return holographicDisplays.isEnabled();
+    private boolean isPluginEnabled(String pluginName) {
+        Plugin plugin = pluginManager.getPlugin(pluginName);
+        if (plugin == null) return false;
+        return plugin.isEnabled();
     }
 
     private boolean loadElements() {
@@ -86,7 +92,7 @@ public class SkJade extends JavaPlugin {
                     "conditions");
             logger.info("All elements have been loaded successfully!");
         } catch (IOException ex) {
-            logger.info("Something went wrong!");
+            logger.info("Something went horribly wrong!");
             ex.printStackTrace();
             return false;
         }
@@ -101,7 +107,22 @@ public class SkJade extends JavaPlugin {
                     "conditions");
             logger.info("HolographicDisplays hooks loaded successfully!!");
         } catch (IOException ex) {
-            logger.info("Something went wrong!");
+            logger.info("Something went horribly wrong!");
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean loadCitizensElements() {
+        try {
+            addon.loadClasses("com.ankoki.skjade.hooks.citizens",
+                    "expressions",
+                    "effects",
+                    "events",
+                    "conditions");
+        } catch (IOException ex) {
+            logger.info("Something went horribly wrong!");
             ex.printStackTrace();
             return false;
         }

@@ -10,3 +10,6 @@ commands:
     description: Shows the version of SkJade that is currently being run.
 depend:
   - Skript
+softdepend:
+  - HolographicDisplays
+  - Citizens
