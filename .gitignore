@@ -1,0 +1,6 @@
+# Project exclude paths
+/out/
+/target/
+/.idea/
+/dependency-reduced-pom.xml
+/SkJade.iml
