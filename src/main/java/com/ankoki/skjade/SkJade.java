@@ -34,6 +34,7 @@ public class SkJade extends JavaPlugin {
         }
         addon = Skript.registerAddon(this);
         this.loadElements();
+
         if (isPluginEnabled("HolographicDisplays")) {
             logger.info("HolographicDisplays was found! Enabling support");
             this.loadHDElements();
@@ -42,15 +43,15 @@ public class SkJade extends JavaPlugin {
             logger.info("Citizens was found! Enabling support");
             this.loadCitizensElements();
         }
-        if (version.startsWith("beta-")) {
+        if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
                     "work correctly!");
             logger.warning("I recommend switching to a non-beta version of SkJade, especially if " +
                     "runninng on a production server, as data might be lost!");
         }
         this.registerCommand();
-        logger.info(String.format("SkJade has been successfully enabled in %.2f seconds (%sms)",
-                (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
+        logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
+                version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         /*
         //This isn't on github just yet so this will cause errors.
         UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
