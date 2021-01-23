@@ -22,7 +22,7 @@ public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> 
 
     @Override
     public ItemStack convert(ItemStack itemStack) {
-        return toShinny(itemStack);
+        return toShiny(itemStack);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> 
         return ItemStack.class;
     }
 
-    private ItemStack toShinny(ItemStack itemStack) {
+    private ItemStack toShiny(ItemStack itemStack) {
         if (itemStack.getType() == Material.BOW) {
             itemStack.addUnsafeEnchantment(Enchantment.RIPTIDE, 1);
         } else {

@@ -43,6 +43,10 @@ public class SkJade extends JavaPlugin {
             logger.info("Citizens was found! Enabling support");
             this.loadCitizensElements();
         }
+        if (isPluginEnabled("Elementals")) {
+            logger.info("Elementals was found! Enabling support");
+            this.loadElementalsElements();
+        }
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
                     "work correctly!");
@@ -118,6 +122,21 @@ public class SkJade extends JavaPlugin {
     private boolean loadCitizensElements() {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.citizens",
+                    "expressions",
+                    "effects",
+                    "events",
+                    "conditions");
+        } catch (IOException ex) {
+            logger.info("Something went horribly wrong!");
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean loadElementalsElements() {
+        try {
+            addon.loadClasses("com.ankoki.skjade.hooks.elementals",
                     "expressions",
                     "effects",
                     "events",
