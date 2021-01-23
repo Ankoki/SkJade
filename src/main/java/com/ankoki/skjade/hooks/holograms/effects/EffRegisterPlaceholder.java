@@ -26,6 +26,7 @@ public class EffRegisterPlaceholder extends Effect {
     //}
 
     private Expression<String> text;
+    //From what ive found you need to use regex to get a function.
     private Expression<Function<String>> function;
 
     @Override
