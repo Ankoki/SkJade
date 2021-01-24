@@ -1,4 +1,4 @@
-package com.ankoki.skjade.hooks.elementals.condition;
+package com.ankoki.skjade.hooks.elementals.conditions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
