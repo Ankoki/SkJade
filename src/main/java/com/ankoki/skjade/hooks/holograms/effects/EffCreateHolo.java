@@ -12,7 +12,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Create Hologram")
-@Description("Creates a hologram at the specified location with the id specified. The id must be unique.")
+@Description("Creates a hologram at the specified location with the id specified. The ID must be unique.")
 @Examples("create a hologram at location(10,100,10,world(\"world\")) with the id \"testHolo\"")
 @RequiredPlugins("HolographicDisplays")
 @Since("1.0")

@@ -7,6 +7,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,15 +21,15 @@ public class EffAddItemLine extends Effect {
 
     static {
         Skript.registerEffect(EffAddItemLine.class,
-                "add [[the] item] %itemstack% to [[the] hologram] [with [the]] id %string%");
+                "add [[the] item] %itemstack% to %hologram%");
     }
 
     private Expression<ItemStack> item;
-    private Expression<String> key;
+    private Expression<Hologram> hologram;
 
     @Override
     protected void execute(Event event) {
-        HologramManager.addItemLine(key.getSingle(event), item.getSingle(event));
+        HologramManager.addItemLine(hologram.getSingle(event), item.getSingle(event));
     }
 
     @Override
@@ -39,7 +40,7 @@ public class EffAddItemLine extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         item = (Expression<ItemStack>) exprs[0];
-        key = (Expression<String>) exprs[1];
+        hologram = (Expression<Hologram>) exprs[1];
         return true;
     }
 }

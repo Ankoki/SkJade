@@ -7,6 +7,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -19,15 +20,15 @@ public class EffRemoveLine extends Effect {
 
     static {
         Skript.registerEffect(EffRemoveLine.class,
-                "remove [the] line [number] %number% from [[the] holo[gram]] [with [the]] id %string%");
+                "remove %hologramlines% from %holograms%");
     }
 
     private Expression<Number> number;
-    private Expression<String> key;
+    private Expression<Hologram> hologram;
 
     @Override
     protected void execute(Event event) {
-        HologramManager.removeLine(key.getSingle(event), number.getSingle(event).intValue() - 1);
+        HologramManager.removeLine(hologram.getSingle(event), number.getSingle(event).intValue());
     }
 
     @Override
@@ -38,7 +39,7 @@ public class EffRemoveLine extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         number = (Expression<Number>) exprs[0];
-        key = (Expression<String>) exprs[1];
+        hologram = (Expression<Hologram>) exprs[1];
         return true;
     }
 }

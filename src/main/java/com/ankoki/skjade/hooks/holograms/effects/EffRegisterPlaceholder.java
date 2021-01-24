@@ -12,18 +12,18 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-@Name("Register Placeholder")
+/*@Name("Register Placeholder")
 @Description("Registers a placeholder for HolographicDisplays only.")
 @Examples("register placeholder \"onlinePlayers\" to run funcThatReturnsString()")
 @RequiredPlugins("HolographicDisplays")
-@Since("1.0")
+@Since("1.0")*/
 public class EffRegisterPlaceholder extends Effect {
 
     //Figure out how to take in functions in a pattern to execute them, they have to return a string.
-    //static {
+    /*static {
     //    Skript.registerEffect(EffRegisterPlaceholder.class,
-    //            "register [[a] holo[graphic[ displays]]] placeholder %string% to run %function%");
-    //}
+    //            "register [[a] holo[graphic[ displays]]] placeholder %string% to run [the] function <(.+)>\\([<.*?>]\\)");
+    }*/
 
     private Expression<String> text;
     //From what ive found you need to use regex to get a function.

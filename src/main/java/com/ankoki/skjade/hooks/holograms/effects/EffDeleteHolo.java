@@ -1,6 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -9,11 +10,16 @@ import com.ankoki.skjade.hooks.holograms.HologramManager;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Delete Hologram")
+@Description("Deletes a hologram")
+@Examples("delete the hologram with the id \"myHologram\"")
+@RequiredPlugins("HolographicDisplays")
+@Since("1.0")
 public class EffDeleteHolo extends Effect {
 
     static {
         Skript.registerEffect(EffDeleteHolo.class,
-                "delete [(hd|holographic[ ]displays)] holo[gram] [with [id]] %string%");
+                "delete [(hd|holographic[ ]displays)] %hologram%");
     }
 
     private Expression<String> key;

@@ -1,6 +1,7 @@
 package com.ankoki.skjade.hooks.elementals.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -21,22 +22,22 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("An elemental spell book with the spell name")
 @Examples("give player a elementals spellbook with the spell \"dash\"")
 @Since("1.0")
-public class ExprSpellBook extends SimpleExpression<ItemStack> {
+public class ExprSpellBook extends SimpleExpression<ItemType> {
 
     static {
-        Skript.registerExpression(ExprSpellBook.class, ItemStack.class, ExpressionType.PROPERTY,
-                "[elementals] spell[[ ]book] with [[the] spell] %string%");
+        Skript.registerExpression(ExprSpellBook.class, ItemType.class, ExpressionType.PROPERTY,
+                "[a[n]] [elementals] spell[[ ]book] with [[the] spell] %string%");
     }
 
     private Expression<String> string;
 
     @Nullable
     @Override
-    protected ItemStack[] get(Event event) {
+    protected ItemType[] get(Event event) {
         Spell spell = Utils.getSpellFromName(string.getSingle(event));
         if (spell == null) return null;
         ItemStack item = new BookManager(spell).getBook();
-        return new ItemStack[]{item};
+        return new ItemType[]{new ItemType(item)};
     }
 
     @Override
@@ -45,8 +46,8 @@ public class ExprSpellBook extends SimpleExpression<ItemStack> {
     }
 
     @Override
-    public Class<? extends ItemStack> getReturnType() {
-        return ItemStack.class;
+    public Class<? extends ItemType> getReturnType() {
+        return ItemType.class;
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.effects;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -16,6 +14,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Unregister Placeholder")
 @Description("Unregisters a Holographic Displays placeholder.")
 @Examples("unregister holographic placeholder \"testPlaceholder\"")
+@RequiredPlugins("HolographicDisplays")
+@Since("1.0")
 public class EffUnregisterPlaceholder extends Effect {
 
     static {

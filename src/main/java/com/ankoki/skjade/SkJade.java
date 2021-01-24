@@ -3,6 +3,7 @@ package com.ankoki.skjade;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import com.ankoki.skjade.commands.SkJadeCmd;
+import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -109,8 +110,10 @@ public class SkJade extends JavaPlugin {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms",
                     "expressions",
                     "effects",
-                    "conditions");
-            logger.info("HolographicDisplays hooks loaded successfully!!");
+                    "conditions",
+                    "events");
+            new HoloClassInfo();
+            logger.info("HolographicDisplays hooks loaded successfully!");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
