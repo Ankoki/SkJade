@@ -8,6 +8,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.elementals.api.ElementalsAPI;
 import com.ankoki.elementals.events.EntitySpellCastEvent;
 import com.ankoki.elementals.events.GenericSpellCastEvent;
 import com.ankoki.elementals.events.SpellCastEvent;
@@ -38,7 +39,7 @@ public class ExprSpell extends SimpleExpression<Spell> {
         if (inEvent) {
             return new Spell[]{this.fromEvent(event)};
         }
-        return new Spell[]{Utils.getSpellFromName(spell.getSingle(event))};
+        return new Spell[]{ElementalsAPI.valueOf(spell.getSingle(event))};
     }
 
     @Override

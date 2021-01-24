@@ -5,6 +5,7 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.elementals.api.ElementalsAPI;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,7 +21,7 @@ public class CondSpellExists extends Condition {
 
     @Override
     public boolean check(Event event) {
-        return Utils.getSpellFromName(spell.getSingle(event)) != null;
+        return ElementalsAPI.valueOf(spell.getSingle(event)) != null;
     }
 
     @Override
