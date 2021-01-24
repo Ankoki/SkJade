@@ -66,4 +66,11 @@ public class Utils {
         CLICKABLE,
         TOUCHABLE;
     }
+
+    public enum SpellType {
+        GENERIC,
+        ENTITY,
+        GENERIC_PROLONGED,
+        ENTITY_PROLONGED;
+    }
 }

@@ -12,7 +12,6 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.elementals.managers.ItemManager;
 import com.ankoki.elementals.managers.Spell;
-import com.ankoki.skjade.utils.Utils;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
@@ -25,16 +24,16 @@ public class EffEnchantItem extends Effect {
 
     static {
         Skript.registerEffect(EffEnchantItem.class,
-                "add [the] elementals enchant %string% to %itemstack%");
+                "add %spell% to %itemstack%");
     }
 
-    private Expression<String> string;
+    private Expression<Spell> spellExprs;
     private Expression<ItemStack> item;
 
     @Override
     protected void execute(Event event) {
         ItemStack i = item.getSingle(event);
-        Spell spell = Utils.getSpellFromName(string.getSingle(event));
+        Spell spell = spellExprs.getSingle(event);
         if (i == null || spell == null) return;
         if (i.getType().isBlock()) return;
         item.change(event, new ItemStack[] {new ItemManager(i).addSpell(spell).getItem()}, ChangeMode.SET);
@@ -47,7 +46,7 @@ public class EffEnchantItem extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        string = (Expression<String>) exprs[0];
+        spellExprs = (Expression<Spell>) exprs[0];
         item = (Expression<ItemStack>) exprs[1];
         return true;
     }

@@ -3,6 +3,7 @@ package com.ankoki.skjade;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import com.ankoki.skjade.commands.SkJadeCmd;
+import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -144,6 +145,8 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "events",
                     "conditions");
+            new EleClassInfo();
+            logger.info("Elementals hooks loaded successfully!");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
