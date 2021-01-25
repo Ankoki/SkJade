@@ -5,6 +5,7 @@ import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.lang.function.EffFunctionCall;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
@@ -27,16 +28,14 @@ public class EffRegisterPlaceholder extends Effect {
 
     private Expression<String> text;
     //From what ive found you need to use regex to get a function.
-    private Expression<Function<String>> function;
+    private EffFunctionCall function;
 
     @Override
     protected void execute(Event event) {
         HologramsAPI.registerPlaceholder(SkJade.getInstance(),
                 text.getSingle(event),
                 2, () -> {
-                    //execute function
                     return "hi";
-                    //return String.valueOf(function.getSingle(event).execute(null));
                 });
     }
 
@@ -48,11 +47,11 @@ public class EffRegisterPlaceholder extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         text = (Expression<String>) exprs[0];
-        if (exprs[1].getReturnType() != String.class) {
+        /*if (exprs[1].getReturnType() != String.class) {
             Skript.error("You need to use a function which returns a string!");
             return false;
-        }
-        function = (Expression<Function<String>>) exprs[1];
+        }*/
+        function = EffFunctionCall.parse(String.valueOf(parseResult.regexes.get(0)));
         return true;
     }
 }

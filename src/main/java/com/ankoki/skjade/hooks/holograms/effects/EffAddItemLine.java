@@ -29,7 +29,10 @@ public class EffAddItemLine extends Effect {
 
     @Override
     protected void execute(Event event) {
-        HologramManager.addItemLine(hologram.getSingle(event), item.getSingle(event));
+        Hologram holo = hologram.getSingle(event);
+        ItemStack i = item.getSingle(event);
+        if (holo == null || i == null) return;
+        HologramManager.addItemLine(holo, i);
     }
 
     @Override

@@ -1,10 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.events;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -20,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Hologram Line Touch")
 @Description("Called when an interactable hologram line is touched.")
 @Examples("on holo line touch:")
+@RequiredPlugins("HolographicDisplays")
 @Since("1.0")
 public class EvtHologramLineTouch extends SkriptEvent {
 

@@ -2,10 +2,7 @@ package com.ankoki.skjade.hooks.holograms.expressions;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.RequiredPlugins;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -20,6 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Hologram")
 @Description("A HolographicDisplays Hologram. The ID of every hologram should be unique.")
+@Examples({"event-holo",
+            "the hologram with id \"id\""})
 @RequiredPlugins("HolographicDisplays")
 @Since("1.0")
 public class ExprHologram extends SimpleExpression<Hologram> {

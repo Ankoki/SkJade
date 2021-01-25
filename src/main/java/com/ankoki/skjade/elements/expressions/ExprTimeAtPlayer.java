@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+//TODO property expression
 @Name("Time at Player")
 @Description("Returns the player's time.")
 @Examples("broadcast \"%the time at player%\"")

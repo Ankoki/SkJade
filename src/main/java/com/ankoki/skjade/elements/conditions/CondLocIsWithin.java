@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("if player's location is within arg-1's location and arg-2's location:")
 @Since("1.0")
 public class CondLocIsWithin extends Condition {
+    //TODO change to property condition
 
     static {
         PropertyCondition.register(CondLocIsWithin.class,
@@ -35,7 +36,11 @@ public class CondLocIsWithin extends Condition {
 
     @Override
     public boolean check(Event event) {
-        return contains(location.getSingle(event), locationOne.getSingle(event), locationTwo.getSingle(event));
+        Location loc = location.getSingle(event);
+        Location loc1 = locationOne.getSingle(event);
+        Location loc2 = locationTwo.getSingle(event);
+        if (loc == null || loc1 == null || loc2 == null) return false;
+        return contains(loc, loc1, loc2);
     }
 
     @Override

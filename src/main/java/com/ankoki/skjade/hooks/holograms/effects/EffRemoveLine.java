@@ -8,6 +8,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -20,15 +21,27 @@ public class EffRemoveLine extends Effect {
 
     static {
         Skript.registerEffect(EffRemoveLine.class,
-                "remove %hologramlines% from %holograms%");
+                "remove %hologramlines%",
+                "remove [the] (%number%(st|nd|rd|th) line|line %number%) from %hologram%");
     }
 
     private Expression<Number> number;
     private Expression<Hologram> hologram;
+    private Expression<HologramLine> hologramLine;
+    private boolean is2nd;
 
     @Override
     protected void execute(Event event) {
-        HologramManager.removeLine(hologram.getSingle(event), number.getSingle(event).intValue());
+        if (is2nd) {
+            HologramLine line = hologramLine.getSingle(event);
+            if (line == null) return;
+            HologramManager.removeLine(line);
+            return;
+        }
+        Hologram holo = hologram.getSingle(event);
+        int i = number.getSingle(event).intValue();
+        if (holo == null) return;
+        HologramManager.removeLine(holo, i);
     }
 
     @Override
@@ -38,8 +51,13 @@ public class EffRemoveLine extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        number = (Expression<Number>) exprs[0];
-        hologram = (Expression<Hologram>) exprs[1];
+        if (parseResult.mark == 1) {
+            is2nd = true;
+            number = (Expression<Number>) exprs[0];
+            hologram = (Expression<Hologram>) exprs[1];
+        } else {
+            hologramLine = (Expression<HologramLine>) exprs[0];
+        }
         return true;
     }
 }

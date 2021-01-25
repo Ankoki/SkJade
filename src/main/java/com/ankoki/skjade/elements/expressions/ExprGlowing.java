@@ -1,6 +1,10 @@
 package com.ankoki.skjade.elements.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.lang.ExpressionType;
 import org.bukkit.Material;
@@ -8,6 +12,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+@Name("Glowing ItemStack")
+@Description("Makes a glowing(enchanted with no enchant flag) item.")
+@Examples("give player glowing diamond")
+@Since("1.0")
 public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> {
 
     static {

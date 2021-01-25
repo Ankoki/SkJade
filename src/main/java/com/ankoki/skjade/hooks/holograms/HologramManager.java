@@ -16,8 +16,9 @@ public class HologramManager {
     private static final Map<String, Hologram> allHolograms = new HashMap<>();
     private static final Map<Hologram, List<HologramLine>> allLines = new HashMap<>();
 
-    public static void createHologram(String key, Location location) {
+    public static void createHologram(String key, Location location, boolean hidden) {
         Hologram hologram = HologramsAPI.createHologram(SkJade.getInstance(), location);
+        hologram.getVisibilityManager().setVisibleByDefault(hidden);
         allHolograms.put(key, hologram);
     }
 
@@ -92,6 +93,25 @@ public class HologramManager {
         }
     }
 
+    public static void removeLine(HologramLine line) {
+        Hologram hologram = line.getParent();
+        if (hologram == null) return;
+        List<HologramLine> lines = allLines.get(hologram);
+        if (lines == null) {
+            lines = new ArrayList<>();
+        }
+        lines.remove(line);
+        line.removeLine();
+        allLines.put(hologram, lines);
+        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
+            if (entry.getValue() == hologram) {
+                allHolograms.remove(entry.getKey());
+                allHolograms.put(entry.getKey(), hologram);
+            }
+            return;
+        }
+    }
+
     public static HologramLine getLine(Hologram hologram, int line) {
         line--;
         if (line < 0) line = 0;
@@ -108,5 +128,14 @@ public class HologramManager {
 
     public static Hologram getHologram(String key) {
         return allHolograms.get(key);
+    }
+
+    public static String getIDFromHolo(Hologram hologram) {
+        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
+            if (entry.getValue() == hologram) {
+                return entry.getKey();
+            }
+        }
+        return "";
     }
 }

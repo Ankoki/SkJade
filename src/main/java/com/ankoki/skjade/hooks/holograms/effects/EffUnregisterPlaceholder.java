@@ -27,7 +27,9 @@ public class EffUnregisterPlaceholder extends Effect {
 
     @Override
     protected void execute(Event event) {
-        HologramsAPI.unregisterPlaceholder(SkJade.getInstance(), placeholder.getSingle(event));
+        String s = placeholder.getSingle(event);
+        if (s == null) return;
+        HologramsAPI.unregisterPlaceholder(SkJade.getInstance(), s);
     }
 
     @Override

@@ -20,15 +20,19 @@ public class EffCreateHolo extends Effect {
 
     static {
         Skript.registerEffect(EffCreateHolo.class,
-                "create [a] [(hd|holographic[ ]displays)] holo[gram] at %location% [with [the]] id %string%");
+                "create [a] [(hd|holographic[ ]displays)] holo[gram] at %location% [with [the]] id %string% (1¦to be (hidden|invisible) [by default]|)");
     }
 
     private Expression<Location> location;
     private Expression<String> key;
+    private boolean hidden;
 
     @Override
     protected void execute(Event event) {
-        HologramManager.createHologram(key.getSingle(event), location.getSingle(event));
+        String k = key.getSingle(event);
+        Location loc = location.getSingle(event);
+        if (k == null || loc == null) return;
+        HologramManager.createHologram(k, loc, hidden);
     }
 
     @Override
@@ -40,6 +44,7 @@ public class EffCreateHolo extends Effect {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         location = (Expression<Location>) exprs[0];
         key = (Expression<String>) exprs[1];
+        hidden = parseResult.mark == 1;
         return true;
     }
 }

@@ -7,6 +7,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -22,11 +23,13 @@ public class EffDeleteHolo extends Effect {
                 "delete [(hd|holographic[ ]displays)] %hologram%");
     }
 
-    private Expression<String> key;
+    private Expression<Hologram> hologram;
 
     @Override
     protected void execute(Event event) {
-        HologramManager.deleteHologram(key.getSingle(event));
+        Hologram holo = hologram.getSingle(event);
+        if (holo == null) return;
+        HologramManager.deleteHologram(holo);
     }
 
     @Override
@@ -36,7 +39,7 @@ public class EffDeleteHolo extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        key = (Expression<String>) exprs[0];
+        hologram = (Expression<Hologram>) exprs[0];
         return true;
     }
 }

@@ -72,12 +72,12 @@ public class HoloClassInfo {
 
             @Override
             public String toVariableNameString(Hologram hologram) {
-                return "hologram";
+                return "hologram:" + hologram.getCreationTimestamp();
             }
 
             @Override
             public String getVariableNamePattern() {
-                return "\\S+";
+                return "hologram:\\d+";
             }
         }));
 

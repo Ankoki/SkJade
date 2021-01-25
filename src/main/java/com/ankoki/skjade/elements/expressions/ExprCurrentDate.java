@@ -2,7 +2,9 @@ package com.ankoki.skjade.elements.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -15,10 +17,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+//This already exists but the fucks i give are through the floor
 @Name("Current Date")
 @Description("Gets the current date and formats as the date either as " +
              "\"HH:mm:ss dd/MM/yyyy\" or as the one specified, must follow these guidelines: " +
              "https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html")
+@Examples("send \"%the current date formatted as \"\"HH:mm:ss dd/MM/yyyy\"\"%\"")
+@Since("1.0")
 public class ExprCurrentDate extends SimpleExpression<String> {
 
     static {

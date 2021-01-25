@@ -28,7 +28,7 @@ public class EleClassInfo {
 
             @Override
             public String toVariableNameString(Spell spell) {
-                return "elementals spell";
+                return spell.getSpellName();
             }
 
             @Override

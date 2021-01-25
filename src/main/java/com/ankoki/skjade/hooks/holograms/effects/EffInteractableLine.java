@@ -37,6 +37,7 @@ public class EffInteractableLine extends Effect {
     protected void execute(Event event) {
         Hologram holo = hologram.getSingle(event);
         HologramLine line = HologramManager.getLine(holo, lineNumber.getSingle(event).intValue());
+        if (holo == null || line == null) return;
         if (negated) {
             switch (touchType) {
                 case CLICKABLE:

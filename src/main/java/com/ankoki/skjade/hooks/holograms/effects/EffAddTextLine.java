@@ -9,6 +9,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Add Text Line")
@@ -28,7 +29,10 @@ public class EffAddTextLine extends Effect {
 
     @Override
     protected void execute(Event event) {
-        HologramManager.addTextLine(hologram.getSingle(event), line.getSingle(event));
+        Hologram holo = hologram.getSingle(event);
+        String text = line.getSingle(event);
+        if (holo == null || text == null) return;
+        HologramManager.addTextLine(holo, text);
     }
 
     @Override
