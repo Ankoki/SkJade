@@ -16,9 +16,10 @@ public class HologramManager {
     private static final Map<String, Hologram> allHolograms = new HashMap<>();
     private static final Map<Hologram, List<HologramLine>> allLines = new HashMap<>();
 
-    public static void createHologram(String key, Location location, boolean hidden) {
+    public static void createHologram(String key, Location location, boolean hidden, boolean allowPlaceholders) {
         Hologram hologram = HologramsAPI.createHologram(SkJade.getInstance(), location);
         hologram.getVisibilityManager().setVisibleByDefault(hidden);
+        hologram.setAllowPlaceholders(allowPlaceholders);
         allHolograms.put(key, hologram);
     }
 
