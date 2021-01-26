@@ -46,14 +46,9 @@ public class EffCreateSpell extends Effect {
         int i = id.getSingle(event).intValue();
         int cool = cooldown.getSingle(event).intValue();
         if (name == null) return;
-        Spell spell = new Spell(name, i, false);
-        try {
-            ElementalsAPI.registerSpell(SkJade.getInstance(), spell);
-        } catch (Exception ex) {
-            return;
-        }
         if (generic) {
             ElementalsAPI.registerGenericSpells(SkJade.getInstance(), new GenericSpell() {
+                private final Spell spell = new Spell(name, i, false);
                 @Override
                 public boolean onCast(Player player) {
                     return (Boolean) functionCall.getAll(event)[0];
@@ -72,6 +67,7 @@ public class EffCreateSpell extends Effect {
             return;
         }
         ElementalsAPI.registerEntitySpells(SkJade.getInstance(), new EntitySpell() {
+            private final Spell spell = new Spell(name, i, false);
             @Override
             public boolean onCast(Player player, Entity entity) {
                 return (Boolean) functionCall.getAll(event)[0];

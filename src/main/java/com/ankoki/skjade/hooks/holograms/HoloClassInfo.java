@@ -4,17 +4,24 @@ import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
+import ch.njol.skript.classes.Serializer;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.util.coll.CollectionUtils;
+import ch.njol.yggdrasil.Fields;
+import com.ankoki.skjade.SkJade;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import com.gmail.filoghost.holographicdisplays.api.line.ItemLine;
 import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
+
+import java.io.NotSerializableException;
+import java.io.StreamCorruptedException;
 
 public class HoloClassInfo {
 
@@ -78,6 +85,34 @@ public class HoloClassInfo {
             @Override
             public String getVariableNamePattern() {
                 return "hologram:\\d+";
+            }
+        })
+        .serializer(new Serializer<Hologram>() {
+            @Override
+            public Fields serialize(Hologram hologram) throws NotSerializableException {
+                Fields fields = new Fields();
+                fields.putObject("id", HologramManager.getIDFromHolo(hologram));
+                fields.putObject("location", HologramManager.getHoloLocation(hologram));
+                fields.putObject("lines", HologramManager.getLines(hologram));
+
+                return fields;
+            }
+
+            @Override
+            public void deserialize(Hologram hologram, Fields fields) throws StreamCorruptedException, NotSerializableException {
+                if (!hologram.isDeleted()) hologram.delete();
+                HologramManager.createHologram((String) fields.getObject("id"),
+                        (Location) fields.getObject("location"), true, true);
+            }
+
+            @Override
+            public boolean mustSyncDeserialization() {
+                return true;
+            }
+
+            @Override
+            protected boolean canBeInstantiated() {
+                return false;
             }
         }));
 

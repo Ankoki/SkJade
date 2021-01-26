@@ -59,6 +59,9 @@ public class EffRegisterPlaceholder extends Effect {
             return false;
         }
         functionCall = new ExprFunctionCall(function);
-        return functionCall != null && functionCall.getReturnType() != null;
+        if (functionCall != null) {
+            functionCall.getReturnType();
+        }
+        return true;
     }
 }

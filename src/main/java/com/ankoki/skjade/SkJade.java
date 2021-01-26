@@ -5,6 +5,7 @@ import ch.njol.skript.SkriptAddon;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,9 @@ public class SkJade extends JavaPlugin {
     private PluginManager pluginManager;
     private SkriptAddon addon;
     private Logger logger;
+
+    private final int pluginId = 10131;
+    private Metrics metrics;
 
     @Override
     public void onEnable() {
@@ -41,10 +45,6 @@ public class SkJade extends JavaPlugin {
             logger.info("HolographicDisplays was found! Enabling support");
             this.loadHDElements();
         }
-        if (isPluginEnabled("Citizens")) {
-            logger.info("Citizens was found! Enabling support");
-            this.loadCitizensElements();
-        }
         if (isPluginEnabled("Elementals")) {
             logger.info("Elementals was found! Enabling support");
             this.loadElementalsElements();
@@ -52,9 +52,10 @@ public class SkJade extends JavaPlugin {
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
                     "work correctly!");
-            logger.warning("I recommend switching to a non-beta version of SkJade, especially if " +
+            logger.warning("I recommend switching to a non-beta version of SkJade, especially if you're " +
                     "runninng on a production server, as data might be lost!");
         }
+        metrics = new Metrics(this, pluginId);
         this.registerCommand();
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
@@ -115,21 +116,6 @@ public class SkJade extends JavaPlugin {
                     "events");
             new HoloClassInfo();
             logger.info("HolographicDisplays hooks loaded successfully!");
-        } catch (IOException ex) {
-            logger.info("Something went horribly wrong!");
-            ex.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean loadCitizensElements() {
-        try {
-            addon.loadClasses("com.ankoki.skjade.hooks.citizens",
-                    "expressions",
-                    "effects",
-                    "events",
-                    "conditions");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();

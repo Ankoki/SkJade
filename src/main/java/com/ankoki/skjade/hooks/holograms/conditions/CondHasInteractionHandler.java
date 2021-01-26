@@ -6,7 +6,7 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.utils.Utils;
+import com.ankoki.skjade.utils.Utils.TouchType;
 import com.gmail.filoghost.holographicdisplays.api.line.CollectableLine;
 import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import com.gmail.filoghost.holographicdisplays.api.line.TouchableLine;
@@ -25,7 +25,7 @@ public class CondHasInteractionHandler extends Condition {
                 "%hologramline% is (0¦interactable|1¦clickable|2¦touchable)");
     }
 
-    private Utils.TouchType touchType;
+    private TouchType touchType;
     private Expression<HologramLine> hologramLine;
 
     @Override
@@ -51,11 +51,11 @@ public class CondHasInteractionHandler extends Condition {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         if (parseResult.mark == 0) {
-            touchType = Utils.TouchType.INTERACTABLE;
+            touchType = TouchType.INTERACTABLE;
         } else if (parseResult.mark == 1) {
-            touchType = Utils.TouchType.CLICKABLE;
+            touchType = TouchType.CLICKABLE;
         } else if (parseResult.mark == 2) {
-            touchType = Utils.TouchType.TOUCHABLE;
+            touchType = TouchType.TOUCHABLE;
         }
         hologramLine = (Expression<HologramLine>) exprs[0];
         return true;
