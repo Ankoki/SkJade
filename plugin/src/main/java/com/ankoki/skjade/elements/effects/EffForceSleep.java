@@ -27,14 +27,14 @@ public class EffForceSleep extends Effect {
                 "(force|make) %players% [to] sleep at %location%");
     }
 
-    private Expression<Player> player;
+    private Expression<Player> players;
     private Expression<Location> location;
 
     @Override
     protected void execute(Event event) {
         Location loc = location.getSingle(event);
-        if (loc == null) return;
-        Arrays.stream(player.getArray(event)).forEach(p -> {
+        if (loc == null || players == null) return;
+        Arrays.stream(players.getArray(event)).forEach(p -> {
             if (p == null) return;
             p.sleep(loc, true);
         });
@@ -42,12 +42,12 @@ public class EffForceSleep extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "force " + player.toString(event, b) + " to sleep";
+        return "force " + players.toString(event, b) + " to sleep";
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        player = (Expression<Player>) exprs[0];
+        players = (Expression<Player>) exprs[0];
         location = (Expression<Location>) exprs[1];
         return true;
     }

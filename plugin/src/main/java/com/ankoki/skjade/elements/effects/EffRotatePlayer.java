@@ -35,6 +35,7 @@ public class EffRotatePlayer extends Effect {
 
     @Override
     protected void execute(Event event) {
+        if (players == null) return;
         float h = horizontal.getSingle(event).floatValue();
         float v = vertical == null ? 0 : vertical.getSingle(event).floatValue();
         Arrays.stream(players.getArray(event)).forEach(player -> {

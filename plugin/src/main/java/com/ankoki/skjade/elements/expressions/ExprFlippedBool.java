@@ -22,7 +22,7 @@ public class ExprFlippedBool extends SimpleExpression<Boolean> {
 
     static {
         Skript.registerExpression(ExprFlippedBool.class, Boolean.class, ExpressionType.COMBINED,
-            "(flipped |!)%boolean%");
+            "(flipped |toggled |!)%boolean%");
     }
 
     private Expression<Boolean> bool;

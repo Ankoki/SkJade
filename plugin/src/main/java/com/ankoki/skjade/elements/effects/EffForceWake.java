@@ -26,12 +26,13 @@ public class EffForceWake extends Effect {
                 "(force|make) %players% [to] wake[ ]up [(1¦and set spawn[[ ]point])]");
     }
 
-    private Expression<Player> player;
+    private Expression<Player> players;
     private boolean setPoint;
 
     @Override
     protected void execute(Event event) {
-        Arrays.stream(player.getArray(event)).forEach(p -> {
+        if (players == null) return;
+        Arrays.stream(players.getArray(event)).forEach(p -> {
             if (p == null) return;
             p.wakeup(setPoint);
         });
@@ -39,12 +40,12 @@ public class EffForceWake extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "force " + player.toString(event, b) + " to wake";
+        return "force " + players.toString(event, b) + " to wake";
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        player = (Expression<Player>) exprs[0];
+        players = (Expression<Player>) exprs[0];
         setPoint = parseResult.mark == 1;
         return true;
     }

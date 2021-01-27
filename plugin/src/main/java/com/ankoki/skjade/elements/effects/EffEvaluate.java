@@ -30,8 +30,11 @@ public class EffEvaluate extends Effect {
 
     @Override
     protected void execute(Event event) {
+        if (evaluate == null) return;
         Arrays.stream(evaluate.getArray(event)).forEach(eval -> {
-            TriggerItem.walk(Effect.parse(eval, null), event);
+            TriggerItem eff = Effect.parse(eval, null);
+            if (eff == null) return;
+            TriggerItem.walk(eff, event);
         });
     }
 

@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Exact String")
 @Description("Checks if a string is exactly equal to another string.")
-@Examples("add 1 to {%player's uuid%::champ} if {%player's uuid%::key} = \"afgaIgHaWU29oNE\"")
+@Examples("add 1 to {%player's uuid%::champ} if {%player's uuid%::key} exactly equals \"afgaIgHaWU29oNE\"")
 @Since("1.0.0")
 public class CondExactString extends Condition {
 
@@ -32,7 +32,7 @@ public class CondExactString extends Condition {
         String str1 = string1.getSingle(event);
         String str2 = string2.getSingle(event);
         if (str1 == null || str2 == null) return false;
-        return isNegated() == str1.equals(str2);
+        return isNegated() != str1.equals(str2);
     }
 
     @Override

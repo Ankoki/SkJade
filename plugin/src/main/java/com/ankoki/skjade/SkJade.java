@@ -40,6 +40,7 @@ public class SkJade extends JavaPlugin {
             pluginManager.disablePlugin(this);
             return;
         }
+        loadNMS();
         addon = Skript.registerAddon(this);
         this.loadElements();
 
@@ -59,7 +60,6 @@ public class SkJade extends JavaPlugin {
         }
         metrics = new Metrics(this, pluginId);
         this.registerCommand();
-        loadNMS();
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         /*
@@ -80,6 +80,7 @@ public class SkJade extends JavaPlugin {
             if (NMS.class.isAssignableFrom(clazz)) {
                 nmsHandler = (NMS) clazz.getConstructor().newInstance();
                 nmsEnabled = true;
+                logger.info("NMS Support for " + version + " loaded!");
             } else {
                 logger.severe("Could not find any NMS support for this version! Please note SkJade only supports the latest sub-version of each version.");
                 logger.info("SkJade will remain enabled, however anything using NMS will not function!");
@@ -138,11 +139,11 @@ public class SkJade extends JavaPlugin {
 
     private boolean loadElementalsElements() {
         try {
-            addon.loadClasses("com.ankoki.skjade.hooks.elementals",
+            addon.loadClasses("com.ankoki.skjade.hooks.elementals"/*,
                     "expressions",
                     "effects",
                     "events",
-                    "conditions");
+                    "conditions"*/);
             new EleClassInfo();
             logger.info("Elementals hooks loaded successfully!");
         } catch (IOException ex) {

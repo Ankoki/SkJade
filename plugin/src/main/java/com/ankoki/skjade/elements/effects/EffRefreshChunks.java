@@ -32,6 +32,7 @@ public class EffRefreshChunks extends Effect {
 
     @Override
     protected void execute(Event event) {
+        if (chunks == null) return;
         Bukkit.getScheduler().runTaskAsynchronously(SkJade.getInstance(), () -> {
             Arrays.stream(chunks.getArray(event)).forEach(chunk -> {
                 if (chunk == null) return;

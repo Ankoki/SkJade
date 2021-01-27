@@ -31,7 +31,11 @@ public class ExprChunkAt extends PropertyExpression<World, Chunk> {
 
     @Override
     protected Chunk[] get(Event event, World[] worlds) {
-        return new Chunk[]{worlds[0].getChunkAt(chunkX.getSingle(event).intValue(), chunkZ.getSingle(event).intValue())};
+        if (chunkX == null || chunkZ == null) return new Chunk[]{};
+        int x = chunkX.getSingle(event).intValue();
+        int z = chunkZ.getSingle(event).intValue();
+        Chunk chunk = worlds[0].getChunkAt(x, z);
+        return new Chunk[]{chunk};
     }
 
     @Override
