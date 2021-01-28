@@ -58,7 +58,7 @@ public class ExprSpell extends SimpleExpression<Spell> {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        if (parseResult.mark == 1) {
+        if (i == 1) {
             if (!ScriptLoader.isCurrentEvent(EntitySpellCastEvent.class) &&
                     ScriptLoader.isCurrentEvent(GenericSpellCastEvent.class) &&
                         ScriptLoader.isCurrentEvent(SpellCastEvent.class)) {

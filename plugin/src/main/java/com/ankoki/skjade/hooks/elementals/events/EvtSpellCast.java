@@ -2,9 +2,7 @@ package com.ankoki.skjade.hooks.elementals.events;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
-import ch.njol.skript.lang.Literal;
-import ch.njol.skript.lang.SkriptEvent;
-import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
 import com.ankoki.elementals.events.SpellCastEvent;
@@ -19,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("on any spell cast:")
 @RequiredPlugins("Elementals")
 @Since("1.0.0")
-public class EvtSpellCast extends SkriptEvent {
+public class EvtSpellCast extends SimpleEvent {
 
     static {
         Skript.registerEvent("Spell Cast", EvtSpellCast.class, SpellCastEvent.class,
@@ -55,17 +53,7 @@ public class EvtSpellCast extends SkriptEvent {
     }
 
     @Override
-    public boolean init(Literal<?>[] literals, int i, ParseResult parseResult) {
-        return true;
-    }
-
-    @Override
     public boolean check(Event event) {
-        return event instanceof SpellCastEvent;
-    }
-
-    @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "spell cast event";
+        return true;
     }
 }

@@ -1,8 +1,8 @@
 name: SkJade
-version: 1.0.0-beta
+version: '${project.version}'
 description: "§7Enhance §eSkript §7with this add-on and use custom syntax! §c❤"
 author: Ankoki
-website: https://www.github.com/Ankoki-Dev/SkJade
+website: 'https://www.github.com/Ankoki-Dev/SkJade'
 api-version: 1.16
 main: com.ankoki.skjade.SkJade
 commands:

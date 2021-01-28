@@ -25,7 +25,7 @@ public class EffRotatePlayer extends Effect {
     static {
         if (SkJade.isNmsEnabled()) {
             Skript.registerEffect(EffRotatePlayer.class,
-                    "rotate %players% by %number% [horizontally] [[and] %-number% [vertically]]:");
+                    "rotate %players% by %number% [horizontally] [[and] %-number% [vertically]]");
         }
     }
 
@@ -39,6 +39,7 @@ public class EffRotatePlayer extends Effect {
         float h = horizontal.getSingle(event).floatValue();
         float v = vertical == null ? 0 : vertical.getSingle(event).floatValue();
         Arrays.stream(players.getArray(event)).forEach(player -> {
+            if (player == null) return;
             SkJade.getNmsHandler().sendPacketPlayOutPosition(player, h, v);
         });
     }
@@ -52,7 +53,9 @@ public class EffRotatePlayer extends Effect {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         players = (Expression<Player>) exprs[0];
         horizontal = (Expression<Number>) exprs[1];
-        vertical = (Expression<Number>) exprs[2];
+        if (exprs.length > 1) {
+            vertical = (Expression<Number>) exprs[2];
+        }
         return true;
     }
 }

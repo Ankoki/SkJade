@@ -6,6 +6,7 @@ import com.ankoki.skjade.api.NMS;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
+import com.ankoki.skjade.utils.Utils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -49,8 +50,14 @@ public class SkJade extends JavaPlugin {
             this.loadHDElements();
         }
         if (isPluginEnabled("Elementals")) {
-            logger.info("Elementals was found! Enabling support");
-            this.loadElementalsElements();
+            Plugin elementals = pluginManager.getPlugin("Elementals");
+            assert elementals != null;
+            if (Utils.checkPluginVersion(elementals, 1, 4)) {
+                logger.info("Elementals was found! Enabling support");
+                this.loadElementalsElements();
+            } else {
+                logger.info("Elementals was found! However it is an early version! Please upgrade to atleast 1.4.");
+            }
         }
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +

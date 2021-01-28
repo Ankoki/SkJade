@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
+
 public class NMSHandler implements NMS {
 
     @Override
@@ -16,7 +18,8 @@ public class NMSHandler implements NMS {
                 loc.getZ(),
                 loc.getYaw() + h,
                 loc.getPitch() + v,
-                null,
+                new HashSet<>(),
                 0);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-    }}
+    }
+}

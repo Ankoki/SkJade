@@ -23,12 +23,12 @@ public class EleClassInfo {
 
             @Override
             public String toString(Spell spell, int i) {
-                return "elementals spell";
+                return spell.getSpellName().toLowerCase();
             }
 
             @Override
             public String toVariableNameString(Spell spell) {
-                return spell.getSpellName();
+                return spell.getSpellName().toLowerCase();
             }
 
             @Override
