@@ -3,7 +3,10 @@ package com.ankoki.skjade.utils;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
+import java.util.TreeMap;
+
 public class Utils {
+    private static final TreeMap<Integer, String> rn = new TreeMap<>();
 
     public static String coloured(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
@@ -30,6 +33,28 @@ public class Utils {
         return pluginVer >= required;
     }
 
+    public static String toRoman(int number) {
+        if (rn.size() == 0) {
+            rn.put(1000, "M");
+            rn.put(900, "CM");
+            rn.put(500, "D");
+            rn.put(400, "CD");
+            rn.put(100, "C");
+            rn.put(90, "XC");
+            rn.put(50, "L");
+            rn.put(40, "XL");
+            rn.put(10, "X");
+            rn.put(9, "IX");
+            rn.put(5, "V");
+            rn.put(4, "IV");
+            rn.put(1, "I");
+        }
+        int l = rn.floorKey(number);
+        if (number == l) {
+            return rn.get(number);
+        }
+        return rn.get(l) + toRoman(number - l);
+    }
 
     public enum SpellType {
         GENERIC,

@@ -45,6 +45,10 @@ public class SkJade extends JavaPlugin {
         addon = Skript.registerAddon(this);
         this.loadElements();
 
+        if (isPluginEnabled("ProtocolLib")) {
+            logger.info("ProtocolLib was found! Enabling support");
+            this.loadProtocolElements();
+        }
         if (isPluginEnabled("HolographicDisplays")) {
             logger.info("HolographicDisplays was found! Enabling support");
             this.loadHDElements();
@@ -153,6 +157,23 @@ public class SkJade extends JavaPlugin {
                     "conditions"*/);
             new EleClassInfo();
             logger.info("Elementals hooks loaded successfully!");
+        } catch (IOException ex) {
+            logger.info("Something went horribly wrong!");
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean loadProtocolElements() {
+        try {
+            addon.loadClasses("com.ankoki.skjade.hooks.protocollib"/*,
+                    "expressions",
+                    "effects",
+                    "events",
+                    "conditions"*/);
+            new EleClassInfo();
+            logger.info("ProtocolLib hooks loaded successfully!");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();

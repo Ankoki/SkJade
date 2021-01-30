@@ -1,24 +1,27 @@
-package com.ankoki.skjade.elements.effects;
+package com.ankoki.skjade.hooks.protocollib.effects;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketContainer;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 @Name("Rotate Player")
 @Description("Rotates a player without teleportation.")
 @Examples("rotate all players by 3 horizontally and 7 vertically")
+@RequiredPlugins("ProtocolLib")
 @Since("1.0.0")
 public class EffRotatePlayer extends Effect {
 
@@ -40,7 +43,16 @@ public class EffRotatePlayer extends Effect {
         float v = vertical == null ? 0 : vertical.getSingle(event).floatValue();
         Arrays.stream(players.getArray(event)).forEach(player -> {
             if (player == null) return;
-            SkJade.getNmsHandler().sendPacketPlayOutPosition(player, h, v);
+            Location loc = player.getLocation();
+            PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.POSITION);
+            packet.getDoubles().write(0, loc.getX());
+            packet.getDoubles().write(1, loc.getY());
+            packet.getDoubles().write(2, loc.getZ());
+            packet.getFloat().write(0, loc.getYaw() + h);
+            packet.getFloat().write(1, loc.getPitch() + v);
+            try {
+                ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
+            } catch (InvocationTargetException ignored) {}
         });
     }
 

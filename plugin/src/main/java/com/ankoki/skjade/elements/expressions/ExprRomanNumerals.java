@@ -8,10 +8,15 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.utils.Utils;
 import jdk.jfr.Description;
 import jdk.jfr.Name;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Name("Roman Numerals")
 @Description("Returns the given number in roman numerals.")
@@ -26,22 +31,11 @@ public class ExprRomanNumerals extends PropertyExpression<Integer, String> {
 
     @Override
     protected String[] get(Event event, Integer[] integers) {
-        int n = integers[0];
-        String[] roman = "M|CM|D|CD|C|XC|L|XL|X|IX|V|IV|I".split("\\|");
-        String[] numbers = "1000|900|500|400|100|90|50|40|10|9|5|4|1".split("\\|");
-        int i = 0;
-        String r = "";
-        for (String s : numbers) {
-            i++;
-            int next = 0;
-            int parsed = Integer.parseInt(s);
-            while (n >= parsed) {
-                next++;
-                n -= parsed;
-                r += roman[i--];
-            }
-        }
-        return new String[]{r.isEmpty() ? "" : r};
+        List<String> allRomans = new ArrayList<>();
+        Arrays.stream(integers).forEach(i -> {
+            allRomans.add(Utils.toRoman(i));
+        });
+        return (String[]) allRomans.toArray();
     }
 
     @Override

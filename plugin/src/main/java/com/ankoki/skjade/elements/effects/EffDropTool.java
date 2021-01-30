@@ -9,7 +9,6 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -23,40 +22,26 @@ public class EffDropTool extends Effect {
 
     static {
         Skript.registerEffect(EffDropTool.class,
-                "make %players% drop (1¦[their] [current] item|2¦all [the] items in [their] hand|3¦[the] tool %itemstack%|their [(whole|entire)] inv[entory])");
+                "make %players% drop (1¦[their] [current] item|2¦all [the] items in [their] hand|their [(whole|entire)] inv[entory])");
     }
 
     private Expression<Player> player;
     private Expression<ItemStack> item;
     private boolean dropInv;
     private boolean dropStack;
-    private boolean dropTool;
 
     @Override
     protected void execute(Event event) {
         Player p = player.getSingle(event);
         if (p == null) return;
-        if (!dropInv && !dropTool) {
+        if (!dropInv) {
             p.dropItem(dropStack);
             return;
         }
-        if (dropInv) {
-            p.getInventory().forEach(item -> {
-                if (item != null) p.getWorld().dropItemNaturally(p.getLocation(), item);
-            });
-            p.getInventory().clear();
-        }
-        if (dropTool) {
-            ItemStack i = item.getSingle(event);
-            if (i == null || i.getType() == Material.AIR) return;
-            p.getInventory().forEach(item -> {
-                if (i == item) {
-                    p.getWorld().dropItemNaturally(p.getLocation(), item);
-                    p.getInventory().remove(item);
-                    return;
-                }
-            });
-        }
+        p.getInventory().forEach(item -> {
+            if (item != null) p.getWorld().dropItemNaturally(p.getLocation(), item);
+        });
+        p.getInventory().clear();
     }
 
     @Override
@@ -68,10 +53,6 @@ public class EffDropTool extends Effect {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         dropInv = parseResult.mark == 0;
         dropStack = parseResult.mark == 1;
-        dropTool = parseResult.mark == 3;
-        if (dropTool) {
-            item = (Expression<ItemStack>) exprs[1];
-        }
         player = (Expression<Player>) exprs[0];
         return true;
     }
