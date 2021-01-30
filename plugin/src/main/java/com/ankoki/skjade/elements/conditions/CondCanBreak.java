@@ -22,7 +22,7 @@ public class CondCanBreak extends Condition {
 
     static {
         Skript.registerCondition(CondCanBreak.class,
-                "%item type% can break %item type%");
+                "%itemtype% can break %itemtype%");
     }
 
     private Expression<ItemType> item1;
@@ -37,7 +37,7 @@ public class CondCanBreak extends Condition {
         ItemStack matItem = i2.getRandom();
         if (item == null || matItem == null) return false;
         Material material = matItem.getType();
-        return SkJade.getNmsHandler().canBreak(item, material);
+        return SkJade.getNMS().canBreak(item, material);
     }
 
     @Override

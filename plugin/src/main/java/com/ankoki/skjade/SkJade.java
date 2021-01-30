@@ -122,7 +122,6 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "events",
                     "conditions"*/);
-            logger.info("All elements have been loaded successfully!");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -139,7 +138,6 @@ public class SkJade extends JavaPlugin {
                     "conditions",
                     "events"*/);
             new HoloClassInfo();
-            logger.info("HolographicDisplays hooks loaded successfully!");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -156,7 +154,6 @@ public class SkJade extends JavaPlugin {
                     "events",
                     "conditions"*/);
             new EleClassInfo();
-            logger.info("Elementals hooks loaded successfully!");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -172,8 +169,6 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "events",
                     "conditions"*/);
-            new EleClassInfo();
-            logger.info("ProtocolLib hooks loaded successfully!");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -198,7 +193,7 @@ public class SkJade extends JavaPlugin {
         return instance;
     }
 
-    public static NMS getNmsHandler() {
+    public static NMS getNMS() {
         return nmsHandler;
     }
 

@@ -15,14 +15,14 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Flipped Boolean")
 @Description("Returns the flipped value of a boolean")
-@Examples({"broadcast \"%flipped {isFlying::%player's uuid%}%\"",
+@Examples({"broadcast \"%flipped {bed::%player's uuid%}%\"",
             "set player's flight mode to !(player's flight mode)"})
 @Since("1.0.0")
 public class ExprFlippedBool extends SimpleExpression<Boolean> {
 
     static {
         Skript.registerExpression(ExprFlippedBool.class, Boolean.class, ExpressionType.COMBINED,
-            "(flipped |toggled |!)%boolean%");
+            "(flipped |toggled |inverted |!)%boolean%");
     }
 
     private Expression<Boolean> bool;
