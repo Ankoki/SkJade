@@ -22,15 +22,15 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprRomanNumerals.class, String.class, ExpressionType.PROPERTY,
-                "[value of] %number% in roman numeral[s]");
+                "([the] [value of] %number% in roman numeral[s]|roman numeral[s] of %number)");
     }
 
-    private Expression<Integer> num;
+    private Expression<Number> num;
 
     @Override
     protected String[] get(Event event) {
         if (num == null) return new String[]{""};
-        int i = num.getSingle(event);
+        int i = num.getSingle(event).intValue();
         return new String[]{Utils.toRoman(i)};
     }
 
@@ -51,7 +51,7 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        num = (Expression<Integer>) exprs[0];
+        num = (Expression<Number>) exprs[0];
         return true;
     }
 }

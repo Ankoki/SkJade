@@ -1,11 +1,13 @@
 package com.ankoki.skjade.nms.v1_15_R1;
 
 import com.ankoki.skjade.api.NMS;
+import net.minecraft.server.v1_15_R1.Block;
 import net.minecraft.server.v1_15_R1.IBlockData;
 import net.minecraft.server.v1_15_R1.PacketPlayOutGameStateChange;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_15_R1.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,7 +23,12 @@ public class NMSHandler implements NMS {
     @Override
     public boolean canBreak(ItemStack item, Material material) {
         net.minecraft.server.v1_15_R1.ItemStack craftItem = CraftItemStack.asNMSCopy(item);
-        IBlockData data = (IBlockData) material.createBlockData();
+        IBlockData data = fromMat(material);
         return craftItem.canDestroySpecialBlock(data);
+    }
+
+    private IBlockData fromMat(Material mat) {
+        Block nmsBlock = CraftMagicNumbers.getBlock(mat);
+        return nmsBlock.getBlockData();
     }
 }

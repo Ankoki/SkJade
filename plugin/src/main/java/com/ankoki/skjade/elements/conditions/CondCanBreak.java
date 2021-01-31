@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Can Break Block")
 @Description("Checks if an item type can break a block.")
-@Examples("if {_item} can break {_block}:")
+@Examples("if player's tool can break player's target block:")
 @RequiredPlugins("Minecraft 1.15+")
 @Since("1.0.0")
 public class CondCanBreak extends Condition {
@@ -37,7 +37,7 @@ public class CondCanBreak extends Condition {
         ItemStack matItem = i2.getRandom();
         if (item == null || matItem == null) return false;
         Material material = matItem.getType();
-        return SkJade.getNMS().canBreak(item, material);
+        return SkJade.getInstance().nmsHandler.canBreak(item, material);
     }
 
     @Override

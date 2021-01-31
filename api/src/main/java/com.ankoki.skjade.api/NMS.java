@@ -5,6 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public interface NMS {
-    void sendDemo(Player player);
-    boolean canBreak(ItemStack item1, Material mat);
+    public void sendDemo(Player player);
+    boolean canBreak(ItemStack item1, Material material);
 }

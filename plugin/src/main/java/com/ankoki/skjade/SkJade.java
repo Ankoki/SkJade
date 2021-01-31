@@ -12,6 +12,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -24,9 +25,10 @@ public class SkJade extends JavaPlugin {
     private PluginManager pluginManager;
     private SkriptAddon addon;
     private Logger logger;
-    private final int pluginId = 10131;
+    private final int pluginId = Integer.parseInt(Integer.toString(10131));
     private Metrics metrics;
-    private static NMS nmsHandler;
+    @Nullable
+    public NMS nmsHandler = null;
     private static boolean nmsEnabled = false;
 
     @Override
@@ -191,10 +193,6 @@ public class SkJade extends JavaPlugin {
 
     public static SkJade getInstance() {
         return instance;
-    }
-
-    public static NMS getNMS() {
-        return nmsHandler;
     }
 
     public static boolean isNmsEnabled() {
