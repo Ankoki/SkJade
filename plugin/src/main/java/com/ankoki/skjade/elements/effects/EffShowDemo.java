@@ -8,6 +8,8 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
+import com.ankoki.skjade.utils.Utils;
+import com.ankoki.skjade.utils.Version;
 import jdk.jfr.Description;
 import jdk.jfr.Name;
 import org.bukkit.entity.Player;
@@ -44,6 +46,6 @@ public class EffShowDemo extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         player = (Expression<Player>) exprs[0];
-        return true;
+        return SkJade.isNmsEnabled() && Utils.serverNewer(Version.v1_14_R1);
     }
 }

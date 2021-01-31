@@ -16,10 +16,10 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Shortens statements such as true = true to just true.")
 @Examples("if true:")
 @Since("1.0.0")
-public class CondIsBoolean extends Condition {
+public class CondBoolean extends Condition {
 
     static {
-        Skript.registerCondition(CondIsBoolean.class,
+        Skript.registerCondition(CondBoolean.class,
                 "%booleans%");
     }
 

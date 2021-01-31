@@ -8,6 +8,8 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
+import com.ankoki.skjade.utils.Utils;
+import com.ankoki.skjade.utils.Version;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -49,6 +51,6 @@ public class CondCanBreak extends Condition {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         item1 = (Expression<ItemType>) exprs[0];
         item2 = (Expression<ItemType>) exprs[1];
-        return SkJade.isNmsEnabled();
+        return SkJade.isNmsEnabled() && Utils.serverNewer(Version.v1_15_R1);
     }
 }

@@ -14,7 +14,9 @@ import ch.njol.util.coll.CollectionUtils;
 import jdk.jfr.Description;
 import jdk.jfr.Name;
 import org.bukkit.event.Event;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -36,17 +38,9 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
     @Nullable
     @Override
     protected Integer[] get(Event e) {
-        List<Integer> borderSlots = new ArrayList<>();
         Inventory inv = inventory.getSingle(e);
-        int nrOfRows = (inv.getSize()/9);
-        for (int slot = 0; slot < inv.getSize(); slot++) {
-            int s = slot%9;
-            int sr = slot/nrOfRows;
-            if (s == 0 || s == 1 || sr == 0 || sr == nrOfRows -1) {
-                borderSlots.add(slot);
-            }
-        }
-        return (Integer[]) borderSlots.toArray();
+        if (inv == null) return null;
+        return getBorderSlots(inv);
     }
 
     @Override
@@ -88,22 +82,46 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
         Integer[] slots = this.get(e);
         if (slots == null) return;
         if (mode == ChangeMode.DELETE || mode == ChangeMode.RESET) {
-            for (int i2 = 0; i2 < inv.getSize(); i2++) {
-                for (int i : slots) {
-                    if (i == i2) {
-                        inv.setItem(i2, null);
-                    }
-                }
-            }
+            fillBorder(inv, null);
         } else if (mode == ChangeMode.SET) {
             if (delta[0] == null || !(delta[0] instanceof ItemType)) return;
-            for (int i2 = 0; i2 < inv.getSize(); i2++) {
-                for (int i : slots) {
-                    if (i == i2) {
-                        inv.setItem(i2, ((ItemType) delta[0]).getRandom());
-                    }
-                }
-            }
+            fillBorder(inv, ((ItemType) delta[0]).getRandom());
         }
+    }
+
+    private void fillBorder(Inventory inv, @Nullable ItemStack fillItem) {
+        for (int i : this.getBorderSlots(inv)) {
+            inv.setItem(i, fillItem);
+        }
+    }
+
+    private Integer[] getBorderSlots(Inventory inv) {
+        List<Integer> slotsList = new ArrayList<>();
+        InventoryType type = inv.getType();
+        int rows = 0;
+        if (type == InventoryType.CHEST ||
+            type == InventoryType.ENDER_CHEST ||
+            type == InventoryType.SHULKER_BOX ||
+            type == InventoryType.BARREL) rows = inv.getSize()/9;
+        if (type == InventoryType.DISPENSER ||
+            type == InventoryType.DROPPER) rows = 3;
+        if (type == InventoryType.HOPPER) return new Integer[]{0, 4};
+        if (rows == 0) return new Integer[]{};
+        int slots = inv.getSize();
+        int slotsPerRow = slots/rows;
+        for (int i = 1; i <= rows; i++) {
+            slotsList.add(slotsPerRow * (i - 1));
+            slotsList.add((slotsPerRow * (i - 1)) + (slotsPerRow - 1));
+        }
+        for (int i = 1; i <= (slotsPerRow - 2); i++) {
+            slotsList.add(i);
+        }
+        for (int i = slots - 2; i <= ((rows - 1) * slotsPerRow) + 1; i++) {
+            slotsList.add(i);
+        }
+        for (int i = (inv.getSize() - 1); i >= (inv.getSize() - slotsPerRow); i--) {
+            slotsList.add(i);
+        }
+        return slotsList.toArray(new Integer[0]);
     }
 }
