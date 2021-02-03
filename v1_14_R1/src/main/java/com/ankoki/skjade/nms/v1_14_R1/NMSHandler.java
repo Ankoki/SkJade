@@ -15,9 +15,4 @@ public class NMSHandler implements NMS {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         craftPlayer.getHandle().playerConnection.sendPacket(packet);
     }
-
-    @Override
-    public boolean canBreak(ItemStack item, Material material) {
-        return false;
-    }
 }

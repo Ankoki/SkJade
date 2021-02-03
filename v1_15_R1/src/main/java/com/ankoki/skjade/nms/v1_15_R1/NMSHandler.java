@@ -19,16 +19,4 @@ public class NMSHandler implements NMS {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         craftPlayer.getHandle().playerConnection.sendPacket(packet);
     }
-
-    @Override
-    public boolean canBreak(ItemStack item, Material material) {
-        net.minecraft.server.v1_15_R1.ItemStack craftItem = CraftItemStack.asNMSCopy(item);
-        IBlockData data = fromMat(material);
-        return craftItem.canDestroySpecialBlock(data);
-    }
-
-    private IBlockData fromMat(Material mat) {
-        Block nmsBlock = CraftMagicNumbers.getBlock(mat);
-        return nmsBlock.getBlockData();
-    }
 }

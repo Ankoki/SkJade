@@ -7,39 +7,30 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.utils.Utils;
-import com.ankoki.skjade.utils.Version;
-import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Can Break Block")
 @Description("Checks if an item type can break a block.")
 @Examples("if player's tool can break player's target block:")
-@RequiredPlugins("Minecraft 1.15+")
 @Since("1.0.0")
 public class CondCanBreak extends Condition {
 
     static {
         Skript.registerCondition(CondCanBreak.class,
-                "%itemtype% can break %itemtype%");
+                "%itemtype% can break %block%");
     }
 
     private Expression<ItemType> item1;
-    private Expression<ItemType> item2;
+    private Expression<Block> item2;
 
     @Override
     public boolean check(Event event) {
         ItemType i1 = item1.getSingle(event);
-        ItemType i2 = item2.getSingle(event);
+        Block i2 = item2.getSingle(event);
         if (i1 == null || i2 == null) return false;
-        ItemStack item = i1.getRandom();
-        ItemStack matItem = i2.getRandom();
-        if (item == null || matItem == null) return false;
-        Material material = matItem.getType();
-        return SkJade.getInstance().nmsHandler.canBreak(item, material);
+        return !i2.getDrops(i1.getRandom()).isEmpty();
     }
 
     @Override
@@ -50,7 +41,7 @@ public class CondCanBreak extends Condition {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         item1 = (Expression<ItemType>) exprs[0];
-        item2 = (Expression<ItemType>) exprs[1];
-        return SkJade.isNmsEnabled() && Utils.serverNewer(Version.v1_15_R1);
+        item2 = (Expression<Block>) exprs[1];
+        return true;
     }
 }
