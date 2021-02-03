@@ -76,7 +76,7 @@ public class SkJade extends JavaPlugin {
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         /*
-        //This isn't on github just yet so this will cause errors.
+        //There isn't any releases on GitHub yet so this will error.
         UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
         if (checker.isOutdated) {
             logger.info("You are not running the latest version of SkJade! Please update here:");

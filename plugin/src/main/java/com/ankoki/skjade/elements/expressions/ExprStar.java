@@ -23,6 +23,7 @@ import java.util.List;
 @Examples("show happy villager at star at block 8 in front of player with 5 points, with radius 10 and density 5")
 @Since("1.0.0")
 public class ExprStar extends SimpleExpression<Location> {
+    private static final double _2PI = 6.283185307179586;
 
     static {
         Skript.registerExpression(ExprStar.class, Location.class, ExpressionType.SIMPLE,
@@ -42,7 +43,7 @@ public class ExprStar extends SimpleExpression<Location> {
         double r = radius.getSingle(event).doubleValue();
         double d = density.getSingle(event).doubleValue();
         if (c == null) return null;
-        return (Location[]) getStar(c, r, p, d).toArray();
+        return getStar(c, r, p, d).toArray(new Location[0]);
     }
 
     @Override
@@ -70,38 +71,25 @@ public class ExprStar extends SimpleExpression<Location> {
         return true;
     }
 
-    private List<Location> getStar(Location origin, double radius, int vertices, double density) {
+    private List<Location> getStar(Location center, double radius, int vertices, double density) {
+        System.out.println("start");
         List<Location> locations = new ArrayList<>();
-        double points = ((vertices * (vertices + 1D) / 2D - (vertices * 2) * density));
-        double delta = 360D/vertices;
-        List<Location> vertex = new ArrayList<>();
-        for (int i = 1; i <= vertices; i++) {
-            vertex.add(origin.add(new Vector(Math.cos(delta * i), 0, Math.cos(delta * i)).multiply(radius)));
+        double delta = _2PI / vertices;
+        for (double theta = 0; theta < _2PI; theta += delta) {
+            Vector offset = new Vector(Math.sin(theta) * radius, 0, Math.cos(theta) * radius);
+            //gigi said suck it twink
+            Location vertex = center;
+            vertex.add(offset);
+            locations.add(vertex);
+            System.out.println("added the location " + center.add(offset).toString());
         }
-        int index = 0;
-        for (Location location : vertex) {
-            index++;
-            List<Integer> neighbors = new ArrayList<>();
-            neighbors.add(index < vertices ? index++ : 1);
-            neighbors.add(index > 1 ? index-- : vertices);
-            for (int it = 0; it <= vertices; it++) {
-                if (neighbors.contains(it)) {
-                    locations = (getLine(location, vertex.get(it--), density));
-                }
-            }
-        }
-        return locations;
-    }
-
-    private List<Location> getLine(Location start, Location end, double density) {
-        List<Location> locations = new ArrayList<>();
-        double points = start.distance(end);
-        Vector delta = (start.toVector().subtract(end.toVector())).multiply(1/points);
-        for (int i = 1; i <= points; i++) {
-            locations.add(start.add(delta.multiply(new Vector(i, i, i))));
-        }
+        System.out.println("loop exited fam xxx");
         return locations;
     }
 }
 
-//!show happy villager at star at block 8 in front of player with 5 points, with radius 10 and density 5
+/*
+!show happy villager at star at block 2 in front of player with 5 points, with radius 2 and density 5
+!set blocks at (star at player's location with 5 points, with radius 2 and density 5) to red wool
+
+ */

@@ -2,8 +2,12 @@ package com.ankoki.skjade.utils;
 
 import com.ankoki.skjade.SkJade;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Utils {
@@ -70,6 +74,19 @@ public class Utils {
         int vFin = vMajor + vMinor;
 
         return sFin >= vFin;
+    }
+
+    public static List<Location> getCircle(Location centre, double radius, int density) {
+        World world = centre.getWorld();
+        double increment = (2 * Math.PI)/density;
+        List<Location> locations = new ArrayList<>();
+        for (int i = 0; i < density; i++) {
+            double angle = i * increment;
+            double x = centre.getX() + (radius * Math.cos(angle));
+            double z = centre.getZ() + (radius * Math.sin(angle));
+            locations.add(new Location(world, x, centre.getY(), z));
+        }
+        return locations;
     }
 
     public enum SpellType {
