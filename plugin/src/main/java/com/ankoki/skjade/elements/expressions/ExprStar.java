@@ -43,8 +43,23 @@ public class ExprStar extends SimpleExpression<Location> {
         double r = radius.getSingle(event).doubleValue();
         double d = density.getSingle(event).doubleValue();
         if (c == null) return null;
-        return getStar(c, r, p, d).toArray(new Location[0]);
+        if (p > 2) return null;
+        List<Location> points = getStarPoints(c, r, p);
+        List<Location> allLines = new ArrayList<>();
+        for (int i  = 0; i < (points.size() - 2); i++) {
+            int v = i;
+            allLines.addAll(getLine(points.get(i), points.get(i + 2), 1 / r));
+        }
+        if (isEven(p)) {
+            allLines.addAll(getLine(points.get(points.size() - 1), points.get(0), 1 / r));
+            allLines.addAll(getLine(points.get(points.size() - 2), points.get(1), 1 / r));
+        } else {
+            allLines.addAll(getLine(points.get(points.size() - 1), points.get(1), 1 / r));
+            allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / r));
+        }
+        return allLines.toArray(new Location[0]);
     }
+
 
     @Override
     public boolean isSingle() {
@@ -71,20 +86,34 @@ public class ExprStar extends SimpleExpression<Location> {
         return true;
     }
 
-    private List<Location> getStar(Location center, double radius, int vertices, double density) {
-        System.out.println("start");
+    private List<Location> getStarPoints(Location center, double radius, int vertices) {
         List<Location> locations = new ArrayList<>();
         double delta = _2PI / vertices;
         for (double theta = 0; theta < _2PI; theta += delta) {
             Vector offset = new Vector(Math.sin(theta) * radius, 0, Math.cos(theta) * radius);
             //gigi said suck it twink
-            Location vertex = center;
+            Location vertex = center.clone();
             vertex.add(offset);
             locations.add(vertex);
-            System.out.println("added the location " + center.add(offset).toString());
         }
-        System.out.println("loop exited fam xxx");
         return locations;
+    }
+
+    private List<Location> getLine(Location loc1, Location loc2, double space) {
+        List<Location> points = new ArrayList<>();
+        double distance = loc1.distance(loc2);
+        Vector p1 = loc1.toVector();
+        Vector p2 = loc2.toVector();
+        Vector vector = p2.clone().subtract(p1).normalize().multiply(space);
+        for (double length = 0; length < distance; p1.add(vector)) {
+            points.add(p1.toLocation(loc1.getWorld()));
+            length += space;
+        }
+        return points;
+    }
+
+    private boolean isEven(int number) {
+        return number % 2 == 0;
     }
 }
 
