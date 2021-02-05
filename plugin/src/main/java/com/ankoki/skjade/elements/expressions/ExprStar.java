@@ -20,7 +20,7 @@ import java.util.List;
 
 @Name("Star")
 @Description("Returns the points of the outline of a star from the center, radius, and density")
-@Examples("show happy villager at star at block 8 in front of player with 5 points, with radius 10 and density 5")
+@Examples("set blocks at (star at player's location with 5 points, with radius 10 and density 5) to red wool")
 @Since("1.0.0")
 public class ExprStar extends SimpleExpression<Location> {
     private static final double _2PI = 6.283185307179586;
@@ -43,19 +43,18 @@ public class ExprStar extends SimpleExpression<Location> {
         double r = radius.getSingle(event).doubleValue();
         double d = density.getSingle(event).doubleValue();
         if (c == null) return null;
-        if (p > 2) return null;
+        if (p < 2) return new Location[]{c};
         List<Location> points = getStarPoints(c, r, p);
         List<Location> allLines = new ArrayList<>();
         for (int i  = 0; i < (points.size() - 2); i++) {
             int v = i;
-            allLines.addAll(getLine(points.get(i), points.get(i + 2), 1 / r));
+            allLines.addAll(getLine(points.get(i), points.get(i + 2), 1 / d));
         }
-        if (isEven(p)) {
-            allLines.addAll(getLine(points.get(points.size() - 1), points.get(0), 1 / r));
-            allLines.addAll(getLine(points.get(points.size() - 2), points.get(1), 1 / r));
+        if (!isEven(p)) {
+            allLines.addAll(getLine(points.get(points.size() - 1), points.get(1), 1 / d));
+            allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / d));
         } else {
-            allLines.addAll(getLine(points.get(points.size() - 1), points.get(1), 1 / r));
-            allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / r));
+           allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / d));
         }
         return allLines.toArray(new Location[0]);
     }
@@ -119,6 +118,5 @@ public class ExprStar extends SimpleExpression<Location> {
 
 /*
 !show happy villager at star at block 2 in front of player with 5 points, with radius 2 and density 5
-!set blocks at (star at player's location with 5 points, with radius 2 and density 5) to red wool
-
+!set all blocks at (star at player's location with 6 points, with radius 20 and density 10) to red wool
  */
