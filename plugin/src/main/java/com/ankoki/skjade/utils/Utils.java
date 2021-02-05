@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -71,6 +72,24 @@ public class Utils {
         int sv = (svMaj*10) + svMin;
         int v = (vMaj*10) + vMin;
         return sv >= v;
+    }
+
+    public static String rainbow(String message, int step) {
+        String[] str = message.split("");
+        StringBuilder builder = new StringBuilder();
+        double angle = 0;
+        for (String s : str) {
+            angle += step;
+            int r = (int) ((Math.sin(angle) + 1) * 127.5);
+            int g = (int) ((Math.sin(angle) + 120) * 127.5);
+            int b = (int) ((Math.sin(angle) + 240) * 127.5);
+            builder.append(net.md_5.bungee.api.ChatColor.of(new Color(r, g, b))).append(s);
+        }
+        return builder.toString();
+    }
+
+    public static String rgbToHex(int r, int g, int b) {
+        return String.format("#%02X%02X%02X", r, g, b);
     }
 
     public enum SpellType {

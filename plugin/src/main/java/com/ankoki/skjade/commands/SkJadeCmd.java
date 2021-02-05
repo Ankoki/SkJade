@@ -11,15 +11,13 @@ public class SkJadeCmd implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        sender.sendMessage(Utils.coloured(PREFIX + "You are currently running §eSk§aJade§7 v"
+                + SkJade.getVersion()));
         if (SkJade.isBeta()) {
-            sender.sendMessage(Utils.coloured(PREFIX + "You are currently running §eSk§aJade§7 "
-                    + SkJade.getVersion()));
             sender.sendMessage(Utils.coloured(PREFIX + "Running on a beta version is risky, and " +
                     "can cause data loss or unexpected errors, please switch to a stable version!"));
-        } else {
-            sender.sendMessage(Utils.coloured(PREFIX + "You are currently running §eSk§aJade§7 v"
-                    + SkJade.getVersion()));
         }
+        //sender.sendMessage(Utils.rainbow("small test string lol", 1));
         return true;
     }
 }
