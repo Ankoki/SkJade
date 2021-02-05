@@ -7,12 +7,12 @@ import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import com.ankoki.skjade.utils.Utils;
+import com.ankoki.skjade.utils.Version;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -22,13 +22,13 @@ public class SkJade extends JavaPlugin {
     private static boolean beta;
     private static SkJade instance;
     private static String version;
+    private static Version serverVersion;
     private PluginManager pluginManager;
     private SkriptAddon addon;
     private Logger logger;
     private final int pluginId = Integer.parseInt(Integer.toString(10131));
     private Metrics metrics;
-    @Nullable
-    public NMS nmsHandler = null;
+    private static NMS nmsHandler = null;
     private static boolean nmsEnabled = false;
 
     @Override
@@ -73,6 +73,7 @@ public class SkJade extends JavaPlugin {
         }
         metrics = new Metrics(this, pluginId);
         this.registerCommand();
+        this.loadServerVersion();
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         /*
@@ -148,6 +149,11 @@ public class SkJade extends JavaPlugin {
         return true;
     }
 
+    private void loadServerVersion() {
+        String packageName = this.getServer().getClass().getPackage().getName();
+        serverVersion = Version.valueOf(packageName.substring(packageName.lastIndexOf('.') + 1));
+    }
+
     private boolean loadElementalsElements() {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.elementals"/*,
@@ -191,11 +197,19 @@ public class SkJade extends JavaPlugin {
         return version;
     }
 
+    public static Version getServerVersion() {
+        return serverVersion;
+    }
+
     public static SkJade getInstance() {
         return instance;
     }
 
     public static boolean isNmsEnabled() {
         return nmsEnabled;
+    }
+
+    public static NMS getNmsHandler() {
+        return nmsHandler;
     }
 }

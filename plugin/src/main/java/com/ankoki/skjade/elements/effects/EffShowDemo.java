@@ -6,10 +6,9 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Version;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.utils.Utils;
-import com.ankoki.skjade.utils.Version;
 import jdk.jfr.Description;
 import jdk.jfr.Name;
 import org.bukkit.entity.Player;
@@ -35,7 +34,7 @@ public class EffShowDemo extends Effect {
     protected void execute(Event event) {
         Player p = player.getSingle(event);
         if (p == null) return;
-        SkJade.getInstance().nmsHandler.sendDemo(p);
+        SkJade.getNmsHandler().sendDemo(p);
     }
 
     @Override
@@ -46,6 +45,6 @@ public class EffShowDemo extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         player = (Expression<Player>) exprs[0];
-        return SkJade.isNmsEnabled() && Utils.serverNewer(Version.v1_14_R1);
+        return SkJade.isNmsEnabled() && new Version(String.valueOf(Skript.getMinecraftVersion())).isLargerThan(new Version("1.13.2"));
     }
 }

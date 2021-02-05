@@ -20,13 +20,13 @@ import java.util.List;
 
 @Name("Circle")
 @Description("Returns the points of the outline of a circle which ")
-@Examples("set (circle at player's location with a radius of 10 and a density 100) to red wool")
+@Examples("set (circle at player's location with a radius of 10 and 100 blocks to make up the circle) to red wool")
 @Since("1.0.0")
 public class ExprCircle extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE,
-                "[a] circle (at|from) %location% with [a] radius [of] %number%(,| and) [a] density [of] %number%");
+                "[a] circle (at|from) %location% with [a] radius [of] %number%(,| and) %number% blocks [to make up[ the circle]]");
     }
 
     private Expression<Location> center;
