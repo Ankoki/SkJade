@@ -12,6 +12,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -25,17 +26,25 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
 
     static {
         Skript.registerExpression(ExprNearestEntity.class, Entity.class, ExpressionType.SIMPLE,
-                "[the] (nearest|closest) entity to %location%");
+                "[the] (nearest|closest) entity to (%location%|1¦%player%)");
     }
 
     private Expression<Location> location;
+    private Expression<Player> player;
 
     @Nullable
     @Override
     protected Entity[] get(Event e) {
-        Location loc = location.getSingle(e);
+        Location loc;
+        Player p = null;
+        if (location == null) {
+            p = player.getSingle(e);
+            if (p == null) return null;
+            loc = p.getLocation();
+        }
+        else loc = location.getSingle(e);
         if (loc == null) return null;
-        return new Entity[]{getClosestEntity(loc)};
+        return new Entity[]{p == null ? getClosestEntity(loc, false) : getClosestEntity(loc, true, p)};
     }
 
     @Override
@@ -50,19 +59,26 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "closest entity to " + location.toString(e, debug);
+        return "closest entity to " + (location == null ? player.toString(e, debug) : location.toString(e, debug));
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        location = (Expression<Location>) exprs[0];
+        if (parseResult.mark != 1) location = (Expression<Location>) exprs[0];
+        else player = (Expression<Player>) exprs[0];
         return true;
     }
 
-    private Entity getClosestEntity(Location location) {
+    private Entity getClosestEntity(Location location, boolean ignorePlayer, Player... player) {
         TreeMap<Double, Entity> map = new TreeMap<>();
         for (Entity ent : location.getWorld().getEntities()) {
-            map.put(location.distanceSquared(ent.getLocation()), ent);
+            if (ignorePlayer) {
+                if (ent != player[0]) {
+                    map.put(location.distanceSquared(ent.getLocation()), ent);
+                }
+            } else {
+                map.put(location.distanceSquared(ent.getLocation()), ent);
+            }
         }
         return map.firstEntry().getValue();
     }
