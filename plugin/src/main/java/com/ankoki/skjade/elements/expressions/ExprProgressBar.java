@@ -41,16 +41,30 @@ public class ExprProgressBar extends SimpleExpression<String> {
         int current = currentValue.getSingle(e).intValue();
         String bar = barCharacter.getSingle(e);
         if (bar == null) bar = "|";
-
         StringBuilder builder = new StringBuilder();
+
+        //This is the test one
+        double amountColoured = Math.floor((max/20D)*current);
+        builder.append(ChatColor.of(toHex(allColours[0])));
+        for (int i = 0; i < amountColoured; i++) {
+            builder.append(bar);
+        }
+        builder.append(allColours[1] == null ? "§7" : toHex(allColours[1]));
+        for (int i = 0; i < 20 - amountColoured; i++) {
+            builder.append(bar);
+        }
+        return new String[]{builder.toString()};
+
+
+        /*
         if (current > 0) builder.append(ChatColor.of(Utils.rgbToHex(allColours[0].getRed(), allColours[0].getGreen(), allColours[0].getBlue())));
         else builder.append(allColours[1] == null ? "§7" : ChatColor.of(Utils.rgbToHex(allColours[1].getRed(), allColours[1].getGreen(), allColours[1].getBlue())));
-
         for (int i = 0; i < max; i++) {
             builder.append(bar);
         }
         if (current > 0) builder.insert(current, ChatColor.of(Utils.rgbToHex(allColours[0].getRed(), allColours[0].getGreen(), allColours[0].getBlue())));
         return new String[]{builder.toString()};
+         */
     }
 
     @Override
@@ -79,8 +93,16 @@ public class ExprProgressBar extends SimpleExpression<String> {
     public Class<? extends String> getReturnType() {
         return String.class;
     }
+
+    private String toHex(Color color) {
+        return Utils.rgbToHex(color.getRed(), color.getGreen(), color.getBlue());
+    }
 }
 
 /*
 !send title "Smelting..." with subtitle (progress bar with the value 20 out of a total value of 45 with bar char "|") to player
+
+WORK FOR TOMORROW ok ty
+
+make a make amount, lets say 20 bars. do something like set double coloured to Math.floor((max value/20)*current value) and then set coloured of the bar in the done colour, and 20 - coloured in the not done.
  */
