@@ -44,14 +44,12 @@ public class ExprProgressBar extends SimpleExpression<String> {
 
         StringBuilder builder = new StringBuilder();
         if (current > 0) builder.append(ChatColor.of(Utils.rgbToHex(allColours[0].getRed(), allColours[0].getGreen(), allColours[0].getBlue())));
-        else if (allColours.length >= 2) builder.append(ChatColor.of(Utils.rgbToHex(allColours[1].getRed(), allColours[1].getGreen(), allColours[1].getBlue())));
-        else builder.append("§7");
+        else builder.append(allColours[1] == null ? "§7" : ChatColor.of(Utils.rgbToHex(allColours[1].getRed(), allColours[1].getGreen(), allColours[1].getBlue())));
 
         for (int i = 0; i < max; i++) {
             builder.append(bar);
         }
-        builder.insert(current, ChatColor.of(Utils.rgbToHex(allColours[0].getRed(), allColours[0].getGreen(), allColours[0].getBlue())));
-
+        if (current > 0) builder.insert(current, ChatColor.of(Utils.rgbToHex(allColours[0].getRed(), allColours[0].getGreen(), allColours[0].getBlue())));
         return new String[]{builder.toString()};
     }
 
