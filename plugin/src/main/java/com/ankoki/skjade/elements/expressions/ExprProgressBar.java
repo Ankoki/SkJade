@@ -17,18 +17,18 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Progress Bar")
-@Description("Returns a progress bar with the specified colours.")
-@Examples("send title \"Smelting...\" with subtitle progress bar with the value loop-value out of a total value of 100 with bar char \"|\"")
+@Description("Returns a progress bar with the specified colours. The default bar length/amount of bar characters is 50.")
+@Examples("send title \"Smelting...\" with subtitle progress bar with the value loop-value out of a total value of 100")
 @Since("1.0.0")
 public class ExprProgressBar extends SimpleExpression<String> {
-    private static final Color[] defaultColours = new Color[]{Color.GREEN, Color.GRAY};
+    private static final Color[] defaultColours = new Color[]{Color.GREEN};
 
     static {
         Skript.registerExpression(ExprProgressBar.class, String.class, ExpressionType.SIMPLE,
-                "[a] [new] progress[ ]bar [(string|text|txt)] with [([the]|(current|filled))] value %number% [out] of [[a] total [value] [of]] %number% (using|with) [the] [bar] char[acter] %string% [([and] (using|with) [the]|and) colo[u]rs %-colors%]");
+                "[a] [new] progress[ ]bar [(string|text|txt)] with [([the]|(current|filled))] value %number% [out] of [[a] total [value] [of]] %number% [(using|with) [the] [bar] char[acter] %-string%] [([and] (using|with) [the]|and) colo[u]rs %-colors%] [(1¦with %-number% bar char[acter]s)]");
     }
 
-    private Expression<Number> currentValue, maxValue;
+    private Expression<Number> currentValue, maxValue, barLength;
     private Expression<String> barCharacter;
     private Expression<Color> colours;
 
@@ -39,32 +39,23 @@ public class ExprProgressBar extends SimpleExpression<String> {
         else allColours = colours.getArray(e);
         int max = maxValue.getSingle(e).intValue();
         int current = currentValue.getSingle(e).intValue();
-        String bar = barCharacter.getSingle(e);
-        if (bar == null) bar = "|";
-        StringBuilder builder = new StringBuilder();
+        String bar = "|";
+        if (barCharacter != null) bar = barCharacter.getSingle(e);
+        if (current > max) current = max;
+        int bl = 50;                             //yes i am fully aware that this is a mess let me live
+        if (barLength != null) bl = barLength.getSingle(e).intValue();
 
-        //This is the test one
-        double amountColoured = Math.floor((max/20D)*current);
+        StringBuilder builder = new StringBuilder();
+        double amountColoured = Math.floor(((float) bl / max) * current);
         builder.append(ChatColor.of(toHex(allColours[0])));
         for (int i = 0; i < amountColoured; i++) {
             builder.append(bar);
         }
-        builder.append(allColours[1] == null ? "§7" : toHex(allColours[1]));
-        for (int i = 0; i < 20 - amountColoured; i++) {
+        builder.append(allColours.length < 2 ? "§7" : toHex(allColours[1]));
+        for (int i = 0; i < (bl - amountColoured); i++) {
             builder.append(bar);
         }
         return new String[]{builder.toString()};
-
-
-        /*
-        if (current > 0) builder.append(ChatColor.of(Utils.rgbToHex(allColours[0].getRed(), allColours[0].getGreen(), allColours[0].getBlue())));
-        else builder.append(allColours[1] == null ? "§7" : ChatColor.of(Utils.rgbToHex(allColours[1].getRed(), allColours[1].getGreen(), allColours[1].getBlue())));
-        for (int i = 0; i < max; i++) {
-            builder.append(bar);
-        }
-        if (current > 0) builder.insert(current, ChatColor.of(Utils.rgbToHex(allColours[0].getRed(), allColours[0].getGreen(), allColours[0].getBlue())));
-        return new String[]{builder.toString()};
-         */
     }
 
     @Override
@@ -80,7 +71,9 @@ public class ExprProgressBar extends SimpleExpression<String> {
         currentValue = (Expression<Number>) exprs[0];
         maxValue = (Expression<Number>) exprs[1];
         barCharacter = (Expression<String>) exprs[2];
-        colours = (Expression<Color>) exprs[3];
+        if (barCharacter == null) colours = (Expression<Color>) exprs[2];
+        else colours = (Expression<Color>) exprs[3];
+        if (parseResult.mark == 1) barLength = (Expression<Number>) exprs[exprs.length - 1];
         return true;
     }
 
@@ -104,5 +97,5 @@ public class ExprProgressBar extends SimpleExpression<String> {
 
 WORK FOR TOMORROW ok ty
 
-make a make amount, lets say 20 bars. do something like set double coloured to Math.floor((max value/20)*current value) and then set coloured of the bar in the done colour, and 20 - coloured in the not done.
+make a make amount, lets say 20 bars. do something like set double coloured to Math.floor((20/max value)*current value) and then set coloured of the bar in the done colour, and 20 - coloured in the not done.
  */
