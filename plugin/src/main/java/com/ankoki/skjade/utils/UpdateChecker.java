@@ -18,11 +18,11 @@ public class UpdateChecker {
         this.getLatestTag(true);
     }
 
-    public String getLatestTag(boolean check) {
-        if (check || latestTag.isEmpty()) {
+    public String getLatestTag(boolean forceCheck) {
+        if (forceCheck || latestTag.isEmpty()) {
             String redirectedURL = "";
             try {
-                URLConnection con = new URL("https://github.com/Ankoki-Dev/Elementals/releases/latest").openConnection();
+                URLConnection con = new URL(String.format("https://github.com/%s/%s/releases/latest", user, repo)).openConnection();
                 con.connect();
                 InputStream is = con.getInputStream();
                 redirectedURL = con.getURL().toString();
