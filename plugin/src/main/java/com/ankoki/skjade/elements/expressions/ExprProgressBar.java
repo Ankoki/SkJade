@@ -46,6 +46,10 @@ public class ExprProgressBar extends SimpleExpression<String> {
         if (barLength != null) bl = barLength.getSingle(e).intValue();
 
         StringBuilder builder = new StringBuilder();
+        builder.append(ChatColor.of(toHex(allColours[0])));
+        for (int i = 0; i < bl; i++) builder.append(bar);
+        builder.insert((int) Math.floor((((float) bl / max) * current)), allColours.length < 2 ? "§7" : toHex(allColours[1]));
+        /*
         double amountColoured = Math.floor(((float) bl / max) * current);
         builder.append(ChatColor.of(toHex(allColours[0])));
         for (int i = 0; i < amountColoured; i++) {
@@ -55,6 +59,7 @@ public class ExprProgressBar extends SimpleExpression<String> {
         for (int i = 0; i < (bl - amountColoured); i++) {
             builder.append(bar);
         }
+         */
         return new String[]{builder.toString()};
     }
 
