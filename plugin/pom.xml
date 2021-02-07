@@ -102,6 +102,12 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>com.github.marcoacierno</groupId>
+            <artifactId>pastebin-java-api</artifactId>
+            <version>0.2.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.Ankoki-Dev</groupId>
             <artifactId>Elementals</artifactId>
             <version>1.4</version>
