@@ -11,51 +11,42 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
-import com.besaba.revonline.pastebinapi.paste.PasteVisiblity;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
-@Name("Set Paste Visibility")
-@Description("Sets the visibility of a paste.")
-@Examples("make the paste with the id \"myPaste\" be public")
+@Name("Set Paste Title")
+@Description("Sets the title of a paste.")
+@Examples("set the title of the paste with id \"myPaste\" to \"Hi! This is my paste!\"")
 @Since("1.0.0")
-public class EffSetPasteVisibility extends Effect {
+public class EffSetPasteText extends Effect {
 
     static {
-        Skript.registerEffect(EffSetPasteVisibility.class,
-                "make %pastes% be (public|1¦private|2¦unlisted)");
+        Skript.registerEffect(EffSetPasteText.class,
+                "set [the] [raw] text of %pastes% to %string%");
     }
 
     private Expression<PasteBuilder> pasteBuilder;
-    private PasteVisiblity visiblity;
+    private Expression<String> text;
 
     @Override
     protected void execute(Event e) {
         PasteBuilder[] builders = pasteBuilder.getArray(e);
-        if (builders.length < 1) return;
-        Arrays.stream(builders).forEach(builder -> PasteManager.setVisibility(builder, visiblity));
+        String s = text.getSingle(e);
+        if (s == null || s.isEmpty() || builders.length < 1) return;
+        Arrays.stream(builders).forEach(builder -> PasteManager.setText(builder, s));
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "make " + pasteBuilder.toString(e, debug) + " be public, private or unlisted";
+        return "set the raw text of " + pasteBuilder.toString(e, debug) + " to " + text.toString(e, debug);
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        switch (parseResult.mark) {
-            case 1:
-                visiblity = PasteVisiblity.Private;
-                break;
-            case 2:
-                visiblity = PasteVisiblity.Unlisted;
-                break;
-            default:
-                visiblity = PasteVisiblity.Public;
-        }
         pasteBuilder = (Expression<PasteBuilder>) exprs[0];
+        text = (Expression<String>) exprs[1];
         return true;
     }
 }

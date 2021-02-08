@@ -21,17 +21,17 @@ import java.util.Arrays;
 @Description("Set when a paste will expire.")
 @Examples("set the paste with the id \"myPaste\" to never expire")
 @Since("1.0.0")
-public class EffSetExpire extends Effect {
+public class EffSetPasteExpire extends Effect {
 
     static {
-        Skript.registerEffect(EffSetExpire.class,
+        Skript.registerEffect(EffSetPasteExpire.class,
                 "set %pastes% to never expire",
                 "set %pastes% to expire in (a|1|one) month",
                 "set %pastes% to expire in (2|two) weeks",
                 "set %pastes% to expire in (a|1|one) week",
                 "set %pastes% to expire in (a|1|one) day",
                 "set %pastes% to expire in (an|1|one) hour",
-                "set %pastes% to expire in (ten|10) minutes");
+                "set %pastes% to expire in (ten|10) min[ute]s");
     }
 
     private Expression<PasteBuilder> paste;

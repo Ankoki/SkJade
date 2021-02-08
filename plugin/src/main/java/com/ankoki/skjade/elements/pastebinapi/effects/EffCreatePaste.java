@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Name("Create Paste")
 @Description("Creates a new pastebin paste. The ID must be unique.")
-@Examples("create a new paste with the id \"my paste\"")
+@Examples("create a new paste with the id \"myPaste\"")
 @Since("1.0.0")
 public class EffCreatePaste extends Effect {
 

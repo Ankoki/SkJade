@@ -62,4 +62,24 @@ public class PasteManager {
             }
         }
     }
+
+    public static void setTitle(PasteBuilder builder, String title) {
+        builder.setTitle(title);
+        for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
+            if (builder == entry.getValue()) {
+                pasteBuilders.remove(entry.getKey());
+                pasteBuilders.put(entry.getKey(), builder);
+            }
+        }
+    }
+
+    public static void setText(PasteBuilder builder, String title) {
+        builder.setRaw(title);
+        for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
+            if (builder == entry.getValue()) {
+                pasteBuilders.remove(entry.getKey());
+                pasteBuilders.put(entry.getKey(), builder);
+            }
+        }
+    }
 }
