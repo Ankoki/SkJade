@@ -9,9 +9,9 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.pastebinapi.api.PasteBuilder;
+import com.ankoki.pastebinapi.enums.PasteVisibility;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
-import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
-import com.besaba.revonline.pastebinapi.paste.PasteVisiblity;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,7 +29,7 @@ public class EffSetPasteVisibility extends Effect {
     }
 
     private Expression<PasteBuilder> pasteBuilder;
-    private PasteVisiblity visiblity;
+    private PasteVisibility visiblity;
 
     @Override
     protected void execute(Event e) {
@@ -47,13 +47,13 @@ public class EffSetPasteVisibility extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         switch (parseResult.mark) {
             case 1:
-                visiblity = PasteVisiblity.Private;
+                visiblity = PasteVisibility.UNLISTED;
                 break;
             case 2:
-                visiblity = PasteVisiblity.Unlisted;
+                visiblity = PasteVisibility.PRIVATE;
                 break;
             default:
-                visiblity = PasteVisiblity.Public;
+                visiblity = PasteVisibility.PUBLIC;
         }
         pasteBuilder = (Expression<PasteBuilder>) exprs[0];
         return true;

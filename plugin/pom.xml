@@ -102,9 +102,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.marcoacierno</groupId>
-            <artifactId>pastebin-java-api</artifactId>
-            <version>0.2.1</version>
+            <groupId>com.github.Ankoki-Dev</groupId>
+            <artifactId>Pastebin-API</artifactId>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -142,6 +142,11 @@
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>20.1.0</version>
         </dependency>
 
         <!-- This is for the NMS Handling, ignore this -->

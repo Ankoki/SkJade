@@ -8,7 +8,6 @@ import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import com.ankoki.skjade.utils.Utils;
 import com.ankoki.skjade.utils.Version;
-import com.besaba.revonline.pastebinapi.impl.factory.PastebinFactory;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -31,7 +30,6 @@ public class SkJade extends JavaPlugin {
     private Metrics metrics;
     private static NMS nmsHandler = null;
     private static boolean nmsEnabled = false;
-    private static PastebinFactory factory;
 
     @Override
     public void onEnable() {
@@ -76,7 +74,6 @@ public class SkJade extends JavaPlugin {
         metrics = new Metrics(this, pluginId);
         this.registerCommand();
         this.loadServerVersion();
-        factory = new PastebinFactory();
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         /*
@@ -214,9 +211,5 @@ public class SkJade extends JavaPlugin {
 
     public static NMS getNmsHandler() {
         return nmsHandler;
-    }
-
-    public static PastebinFactory getFactory() {
-        return factory;
     }
 }

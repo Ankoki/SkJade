@@ -9,8 +9,8 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.pastebinapi.api.PasteBuilder;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
-import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 

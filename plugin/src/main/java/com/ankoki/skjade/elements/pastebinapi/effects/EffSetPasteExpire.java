@@ -9,9 +9,9 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.pastebinapi.api.PasteBuilder;
+import com.ankoki.pastebinapi.enums.PasteExpiry;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
-import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
-import com.besaba.revonline.pastebinapi.paste.PasteExpire;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +26,8 @@ public class EffSetPasteExpire extends Effect {
     static {
         Skript.registerEffect(EffSetPasteExpire.class,
                 "set %pastes% to never expire",
+                "set %pastes% to expire in (a|1|one) year",
+                "set %pastes% to expire in (6|six) months",
                 "set %pastes% to expire in (a|1|one) month",
                 "set %pastes% to expire in (2|two) weeks",
                 "set %pastes% to expire in (a|1|one) week",
@@ -35,7 +37,7 @@ public class EffSetPasteExpire extends Effect {
     }
 
     private Expression<PasteBuilder> paste;
-    private PasteExpire expires;
+    private PasteExpiry expires;
 
     @Override
     protected void execute(Event e) {
@@ -54,25 +56,29 @@ public class EffSetPasteExpire extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         switch (matchedPattern) {
             case 0:
-                expires = PasteExpire.Never;
+                expires = PasteExpiry.NEVER;
                 break;
             case 1:
-                expires = PasteExpire.OneMonth;
-                break;
+                expires = PasteExpiry.ONE_YEAR;
             case 2:
-                expires = PasteExpire.TwoWeek;
-                break;
+                expires = PasteExpiry.SIX_MONTHS;
             case 3:
-                expires = PasteExpire.OneWeek;
+                expires = PasteExpiry.ONE_MONTH;
                 break;
             case 4:
-                expires = PasteExpire.OneDay;
+                expires = PasteExpiry.TWO_WEEKS;
                 break;
             case 5:
-                expires = PasteExpire.OneHour;
+                expires = PasteExpiry.ONE_WEEK;
                 break;
             case 6:
-                expires = PasteExpire.TenMinutes;
+                expires = PasteExpiry.ONE_DAY;
+                break;
+            case 7:
+                expires = PasteExpiry.ONE_HOUR;
+                break;
+            case 8:
+                expires = PasteExpiry.TEN_MINUTES;
         }
         paste = (Expression<PasteBuilder>) exprs[0];
         return true;

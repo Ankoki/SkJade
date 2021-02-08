@@ -4,7 +4,7 @@ import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.util.coll.CollectionUtils;
-import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
+import com.ankoki.pastebinapi.api.PasteBuilder;
 import org.jetbrains.annotations.Nullable;
 
 public class PasteClassInfo {

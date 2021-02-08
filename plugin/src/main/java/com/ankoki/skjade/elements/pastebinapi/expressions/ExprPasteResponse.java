@@ -11,9 +11,8 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
-import com.besaba.revonline.pastebinapi.Pastebin;
-import com.besaba.revonline.pastebinapi.response.Response;
+import com.ankoki.pastebinapi.Pastebin;
+import com.ankoki.pastebinapi.utils.Response;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,7 +26,7 @@ public class ExprPasteResponse extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprPasteResponse.class, String.class, ExpressionType.SIMPLE,
-                "[the] [paste] response from [[the] paste] %string% with the dev[eloper] key %string%");
+                "[the] [raw] [paste] (response|text) from [[the] paste] %string% with the dev[eloper] key %string%");
     }
 
     private Expression<String> pasteKey, developerKey;
@@ -41,13 +40,12 @@ public class ExprPasteResponse extends SimpleExpression<String> {
         key.isEmpty() || devKey.isEmpty()) return null;
 
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
-            Pastebin pastebin = SkJade.getFactory().createPastebin(devKey);
-            Response<String> pasteResponse = pastebin.getRawPaste(key);
-            if (pasteResponse.hasError()) {
-                Skript.error(pasteResponse.getError());
-                return null;
+            Pastebin pastebin = new Pastebin(key);
+            Response<String> response = pastebin.getPaste();
+            if (response.hasError()) {
+                return "There was an error fetching this paste! \n" + response.getError();
             }
-            return pasteResponse.get();
+            return response.get();
         });
         Delay.addDelayedEvent(e);
         try {

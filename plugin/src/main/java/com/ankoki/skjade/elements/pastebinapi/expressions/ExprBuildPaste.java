@@ -1,24 +1,29 @@
 package com.ankoki.skjade.elements.pastebinapi.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
-import com.besaba.revonline.pastebinapi.Pastebin;
-import com.besaba.revonline.pastebinapi.paste.Paste;
-import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
-import com.besaba.revonline.pastebinapi.response.Response;
+import com.ankoki.pastebinapi.api.PasteBuilder;
+import com.ankoki.pastebinapi.utils.Response;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Build Paste")
+@Description("Create's a pastebin paste. Returns the link of the built pastebin. Only call this once per builder and store the link.")
+@Examples("send \"the url of the built paste with the id \"myPaste\" with the developer key \"{@developerKey}\"")
+@Since("1.0.0")
 public class ExprBuildPaste extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprBuildPaste.class, String.class, ExpressionType.SIMPLE,
-                "[the] (link|url) of built %paste% with [the] dev[elepor] key %string%");
+                "[the] (link|url) of [the] built %paste% with [the] dev[elepor] key %string%");
     }
 
     private Expression<PasteBuilder> pasteBuilder;
@@ -30,16 +35,11 @@ public class ExprBuildPaste extends SimpleExpression<String> {
         PasteBuilder builder = pasteBuilder.getSingle(e);
         String devKey = developerKey.getSingle(e);
         if (builder == null || devKey == null || devKey.isEmpty()) return null;
-
-        Pastebin pastebin = SkJade.getFactory().createPastebin(devKey);
-        Paste paste = builder.build();
-        if (paste == null || pastebin == null) return null;
-        //probably gotta send my own thing from the pastebuilder coz it seems the api is too old to work for this.
-        Response<String> postResult = pastebin.post(paste);
+        builder.setDeveloperKey(devKey);
+        Response<String> postResult = builder.createPaste();
         if (postResult.hasError()) {
-            Skript.error(postResult.getError());
+            return new String[]{"There was an error posting your pastebin! \n" + postResult.getError()};
         }
-
         return new String[]{postResult.get()};
     }
 

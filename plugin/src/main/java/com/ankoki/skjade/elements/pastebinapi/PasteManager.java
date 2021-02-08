@@ -1,9 +1,9 @@
 package com.ankoki.skjade.elements.pastebinapi;
 
+import com.ankoki.pastebinapi.api.PasteBuilder;
+import com.ankoki.pastebinapi.enums.PasteExpiry;
+import com.ankoki.pastebinapi.enums.PasteVisibility;
 import com.ankoki.skjade.SkJade;
-import com.besaba.revonline.pastebinapi.paste.PasteBuilder;
-import com.besaba.revonline.pastebinapi.paste.PasteExpire;
-import com.besaba.revonline.pastebinapi.paste.PasteVisiblity;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class PasteManager {
     private static final Map<String, PasteBuilder> pasteBuilders = new HashMap<>();
 
     public static void createPasteBuilder(String key) {
-        PasteBuilder pasteBuilder = SkJade.getFactory().createPaste();
+        PasteBuilder pasteBuilder = new PasteBuilder();
         pasteBuilders.put(key, pasteBuilder);
     }
 
@@ -22,8 +22,8 @@ public class PasteManager {
         return null;
     }
 
-    public static void setExpires(PasteBuilder builder, PasteExpire expire) {
-        builder.setExpire(expire);
+    public static void setExpires(PasteBuilder builder, PasteExpiry expire) {
+        builder.setExpiry(expire);
         for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
             if (builder == entry.getValue()) {
                 pasteBuilders.remove(entry.getKey());
@@ -47,14 +47,14 @@ public class PasteManager {
             for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
                 if (builder == entry.getValue()) {
                     pasteBuilders.remove(entry.getKey());
-                    pasteBuilders.put(entry.getKey(), SkJade.getFactory().createPaste());
+                    pasteBuilders.put(entry.getKey(), new PasteBuilder());
                 }
             }
         });
     }
 
-    public static void setVisibility(PasteBuilder builder, PasteVisiblity visiblity) {
-        builder.setVisiblity(visiblity);
+    public static void setVisibility(PasteBuilder builder, PasteVisibility visiblity) {
+        builder.setVisibility(visiblity);
         for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
             if (builder == entry.getValue()) {
                 pasteBuilders.remove(entry.getKey());
@@ -74,7 +74,7 @@ public class PasteManager {
     }
 
     public static void setText(PasteBuilder builder, String title) {
-        builder.setRaw(title);
+        builder.setText(title);
         for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
             if (builder == entry.getValue()) {
                 pasteBuilders.remove(entry.getKey());
