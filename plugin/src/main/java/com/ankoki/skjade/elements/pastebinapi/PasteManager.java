@@ -3,7 +3,6 @@ package com.ankoki.skjade.elements.pastebinapi;
 import com.ankoki.pastebinapi.api.PasteBuilder;
 import com.ankoki.pastebinapi.enums.PasteExpiry;
 import com.ankoki.pastebinapi.enums.PasteVisibility;
-import com.ankoki.skjade.SkJade;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -75,6 +74,16 @@ public class PasteManager {
 
     public static void setText(PasteBuilder builder, String title) {
         builder.setText(title);
+        for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
+            if (builder == entry.getValue()) {
+                pasteBuilders.remove(entry.getKey());
+                pasteBuilders.put(entry.getKey(), builder);
+            }
+        }
+    }
+
+    public static void setFormat(PasteBuilder builder, String format) {
+        builder.setFormat(format);
         for (Map.Entry<String, PasteBuilder> entry : pasteBuilders.entrySet()) {
             if (builder == entry.getValue()) {
                 pasteBuilders.remove(entry.getKey());

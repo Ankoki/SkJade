@@ -1,6 +1,10 @@
 package com.ankoki.skjade.elements.pastebinapi.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -11,6 +15,10 @@ import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Paste")
+@Description("Returns the pastebin paste with that id if it exists, else, it will be null.")
+@Examples("set {logs::%player's uuid%} to the pastebuilder with the id \"%player%Paste\"")
+@Since("1.0.0")
 public class ExprPaste extends SimpleExpression<PasteBuilder> {
 
     static {
