@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class PasteManager {
     private static final Map<String, PasteBuilder> pasteBuilders = new HashMap<>();
+    private static String linkToLastBuiltPaste;
 
     public static void createPasteBuilder(String key) {
         PasteBuilder pasteBuilder = new PasteBuilder();
@@ -90,5 +91,13 @@ public class PasteManager {
                 pasteBuilders.put(entry.getKey(), builder);
             }
         }
+    }
+
+    public static String getLinkToLastBuiltPaste() {
+        return linkToLastBuiltPaste;
+    }
+
+    public static void setLinkToLastBuiltPaste(String link) {
+        linkToLastBuiltPaste = link;
     }
 }
