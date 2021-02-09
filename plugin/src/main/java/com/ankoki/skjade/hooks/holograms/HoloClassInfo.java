@@ -30,7 +30,7 @@ public class HoloClassInfo {
         .user("holo(gram)?s?")
         .name("Hologram")
         .description("A Hologram created with Holographic displays.")
-        .since("1.0")
+        .since("1.0.0")
         .changer(new Changer<Hologram>() {
             @Nullable
             @Override
@@ -122,7 +122,7 @@ public class HoloClassInfo {
         .user("holo(gram)?( |-)?lines?")
         .name("Hologram Line")
         .description("A line of a Hologram.")
-        .since("1.0")
+        .since("1.0.0")
         .changer(new Changer<HologramLine>() {
             @Nullable
             @Override
