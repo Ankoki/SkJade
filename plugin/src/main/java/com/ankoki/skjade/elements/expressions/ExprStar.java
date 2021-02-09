@@ -46,15 +46,25 @@ public class ExprStar extends SimpleExpression<Location> {
         if (p < 2) return new Location[]{c};
         List<Location> points = getStarPoints(c, r, p);
         List<Location> allLines = new ArrayList<>();
-        for (int i  = 0; i < (points.size() - 2); i++) {
-            allLines.addAll(getLine(points.get(i), points.get(i + 2), 1 / d));
+        int i = 0;
+        for (Location loc1 : points) {
+            int nb1 = i > points.size() ? 0 : (i + 1);
+            int nb2 = (i - 1) < 0 ? (points.size() - 1) : (i - 1);
+            int ii = 0;
+            for (Location loc2 : points) {
+                if (ii != nb1 && ii != nb2) {
+                    allLines.addAll(getLine(loc1, loc2, 1 / d));
+                }
+                ii++;
+            }
+            i++;
         }
-        if (!isEven(p)) {
+        /*if (isEven(p)) {
+            allLines.addAll(getLine(points.get(points.size() - 2), points.get(1), 1 / d));
+        } else {
             allLines.addAll(getLine(points.get(points.size() - 1), points.get(1), 1 / d));
             allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / d));
-        } else {
-            allLines.addAll(getLine(points.get(points.size() - 2), points.get(1), 1 / d));
-        }
+        }*/
         /*
         int i = 0;
         for (Location loc : points) {
