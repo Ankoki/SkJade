@@ -18,7 +18,7 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 @Name("Build Paste")
-@Description("Create's a pastebin paste. The developer key is linked to your pastebin account and found at this website: https://pastebin.com/doc_api#1")
+@Description("Create's a pastebin paste. You should only call this once per paste. The developer key is linked to your pastebin account and found at this website: https://pastebin.com/doc_api#1")
 @Examples({"build the paste with the id \"myPaste\" with the developer key \"{@developerKey}\"",
            "send the link of last built pastebin"})
 @Since("1.0.0")

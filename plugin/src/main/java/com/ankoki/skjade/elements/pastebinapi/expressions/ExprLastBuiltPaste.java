@@ -15,7 +15,7 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 @Name("Last Built Paste")
-@Description("Returns the link of the last built pastebin. Only call this once per builder and store the link. The developer key is linked to your pastebin account and found at this website: https://pastebin.com/doc_api#1")
+@Description("Returns the link of the last built pastebin. If you build a new paste, this will be overridden.")
 @Examples("send the url of the last built paste")
 @Since("1.0.0")
 public class ExprLastBuiltPaste extends SimpleExpression<String> {
