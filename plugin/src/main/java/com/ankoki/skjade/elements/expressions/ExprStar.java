@@ -47,15 +47,20 @@ public class ExprStar extends SimpleExpression<Location> {
         List<Location> points = getStarPoints(c, r, p);
         List<Location> allLines = new ArrayList<>();
         for (int i  = 0; i < (points.size() - 2); i++) {
-            int v = i;
             allLines.addAll(getLine(points.get(i), points.get(i + 2), 1 / d));
         }
         if (!isEven(p)) {
             allLines.addAll(getLine(points.get(points.size() - 1), points.get(1), 1 / d));
             allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / d));
         } else {
-           allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / d));
+            allLines.addAll(getLine(points.get(points.size() - 2), points.get(1), 1 / d));
         }
+        /*
+        int i = 0;
+        for (Location loc : points) {
+            Bukkit.broadcastMessage("Point " + i + ": " + loc.getX() + " " + loc.getY() + " " + loc.getZ());
+            i++;
+        }*/
         return allLines.toArray(new Location[0]);
     }
 
