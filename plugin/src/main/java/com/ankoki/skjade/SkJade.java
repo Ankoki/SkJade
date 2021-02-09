@@ -16,7 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-//TODO make a seraliser for holograms so they are persistant over restart c:
 public class SkJade extends JavaPlugin {
 
     private static boolean beta;
@@ -70,6 +69,7 @@ public class SkJade extends JavaPlugin {
                     "work correctly!");
             logger.warning("I recommend switching to a non-beta version of SkJade, especially if you're " +
                     "runninng on a production server, as data might be lost!");
+            beta = true;
         }
         metrics = new Metrics(this, pluginId);
         this.registerCommand();
