@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
@@ -52,36 +53,8 @@ public class ExprStar extends SimpleExpression<Location> {
             allLines.addAll(getLine(points.get(i), points.get(pI1), 1 / d));
             allLines.addAll(getLine(points.get(i), points.get(pI2), 1 / d));
         }
-
-        /* what gigi said to do
-        int i = 0;
-        for (Location loc1 : points) {
-            int nb1 = i > points.size() ? 0 : (i + 1);
-            int nb2 = (i - 1) < 0 ? (points.size() - 1) : (i - 1);
-            int ii = 0;
-            for (Location loc2 : points) {
-                if (ii != nb1 && ii != nb2) {
-                    allLines.addAll(getLine(loc1, loc2, 1 / d));
-                }
-                ii++;
-            }
-            i++;
-        }*/
-
-        /* my old code
-        for (int i = 0; i < (points.size() - 2); i++) {
-            allLines.addAll(getLine(points.get(i), points.get(i + 2), 1 / d));
-        }
-        if (p % 2 == 0) {
-            allLines.addAll(getLine(points.get(points.size() - 2), points.get(1), 1 / d));
-        } else {
-            allLines.addAll(getLine(points.get(points.size() - 1), points.get(1), 1 / d));
-            allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / d));
-        }*/
-
         return allLines.toArray(new Location[0]);
     }
-
 
     @Override
     public boolean isSingle() {
@@ -111,12 +84,19 @@ public class ExprStar extends SimpleExpression<Location> {
     private List<Location> getStarPoints(Location center, double radius, int vertices) {
         List<Location> locations = new ArrayList<>();
         double delta = _2PI / vertices;
+        boolean bug = false;
         for (double theta = 0; theta < _2PI; theta += delta) {
+            if (!bug && vertices == 6) {
+                bug = true;
+                continue;
+            }
             Vector offset = new Vector(Math.sin(theta) * radius, 0, Math.cos(theta) * radius);
             //gigi said suck it twink
             Location vertex = center.clone();
             vertex.add(offset);
-            locations.add(vertex);
+            if (!locations.contains(vertex)) {
+                locations.add(vertex);
+            }
         }
         return locations;
     }
