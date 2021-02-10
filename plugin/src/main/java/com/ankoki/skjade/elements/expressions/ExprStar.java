@@ -46,6 +46,14 @@ public class ExprStar extends SimpleExpression<Location> {
         if (p < 2) return new Location[]{c};
         List<Location> points = getStarPoints(c, r, p);
         List<Location> allLines = new ArrayList<>();
+        for (int i = 0; i < points.size(); i++) {
+            int pI1 = (i + 2) > (points.size() - 1) ? ((i + 2) == points.size() ? 0 : 1) : (i + 2);
+            int pI2 = (i - 2) < 0 ? ((i - 2) == -1 ? (points.size() - 1) : (points.size() - 2)) : (i - 2);
+            allLines.addAll(getLine(points.get(i), points.get(pI1), 1 / d));
+            allLines.addAll(getLine(points.get(i), points.get(pI2), 1 / d));
+        }
+
+        /* what gigi said to do
         int i = 0;
         for (Location loc1 : points) {
             int nb1 = i > points.size() ? 0 : (i + 1);
@@ -58,19 +66,19 @@ public class ExprStar extends SimpleExpression<Location> {
                 ii++;
             }
             i++;
+        }*/
+
+        /* my old code
+        for (int i = 0; i < (points.size() - 2); i++) {
+            allLines.addAll(getLine(points.get(i), points.get(i + 2), 1 / d));
         }
-        /*if (isEven(p)) {
+        if (p % 2 == 0) {
             allLines.addAll(getLine(points.get(points.size() - 2), points.get(1), 1 / d));
         } else {
             allLines.addAll(getLine(points.get(points.size() - 1), points.get(1), 1 / d));
             allLines.addAll(getLine(points.get(points.size() - 2), points.get(0), 1 / d));
         }*/
-        /*
-        int i = 0;
-        for (Location loc : points) {
-            Bukkit.broadcastMessage("Point " + i + ": " + loc.getX() + " " + loc.getY() + " " + loc.getZ());
-            i++;
-        }*/
+
         return allLines.toArray(new Location[0]);
     }
 
@@ -124,10 +132,6 @@ public class ExprStar extends SimpleExpression<Location> {
             length += space;
         }
         return points;
-    }
-
-    private boolean isEven(int number) {
-        return number % 2 == 0;
     }
 }
 
