@@ -21,7 +21,7 @@ public class Utils {
     }
 
     /**
-     * Checks the vertsion of a plugin compared too a version you want
+     * Checks the version of a plugin compared too a version you want
      * it to match up with, for example, if you wanted to make sure if a plugin
      * had a version higher than 1.2, you can use versionChecker(Plugin, 1, 2);
      *
