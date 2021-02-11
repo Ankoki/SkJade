@@ -10,13 +10,12 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
-
-import java.util.TreeMap;
 
 @Name("Nearest Entity")
 @Description("Returns the nearest entity to a location.")
@@ -45,13 +44,26 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
         } else loc = location.getSingle(e);
         if (loc == null) return null;
 
-        TreeMap<Double, Entity> map = new TreeMap<>();
+        Entity result = null;
+        double lastDistance = Double.MAX_VALUE;
+        if (ent == null) Bukkit.broadcastMessage("entity null wot");
         for (Entity allEnts : loc.getWorld().getEntities()) {
+            Bukkit.broadcastMessage("allEnt name: " + allEnts.getName());
+            if (ent != null) {
+                Bukkit.broadcastMessage("ents name: " + ent.getName());
+            }
             if (ent != null && allEnts == ent) continue;
-            map.put(loc.distanceSquared(allEnts.getLocation()), ent);
+            double dist = loc.distanceSquared(allEnts.getLocation());
+            if (dist < lastDistance) {
+                result = allEnts;
+                lastDistance = dist;
+            }
         }
-
-        return new Entity[]{map.firstEntry().getValue()};
+        if (result == null) {
+            Bukkit.broadcastMessage("result null huh");
+        }
+        else Bukkit.broadcastMessage("result name: " + result.getName());
+        return new Entity[]{result};
     }
 
     @Override
