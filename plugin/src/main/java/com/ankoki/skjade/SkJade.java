@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+//TODO test ExprCircle again, fix ExprProgressBar and ExprNearestEntity. then we ready for release bois
 public class SkJade extends JavaPlugin {
 
     private static boolean beta;

@@ -11,8 +11,6 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.utils.Utils;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -21,20 +19,20 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("send title \"Smelting...\" with subtitle progress bar with the value loop-value out of a total value of 100")
 @Since("1.0.0")
 public class ExprProgressBar extends SimpleExpression<String> {
-    private static final Color[] defaultColours = new Color[]{Color.GREEN};
+    private static final String[] defaultColours = new String[]{"§a"};
 
     static {
         Skript.registerExpression(ExprProgressBar.class, String.class, ExpressionType.SIMPLE,
-                "[a] [new] progress[ ]bar [(string|text|txt)] with [([the]|(current|filled))] value %number% [out] of [[a] total [value] [of]] %number% [(using|with) [the] [bar] char[acter] %-string%] [([and] (using|with) [the]|and) colo[u]rs %-colors%] [(1¦with %-number% bar char[acter]s)]");
+                "[a] [new] progress[ ]bar [(string|text|txt)] with [([the]|(current|filled))] value %number% [out] of [[a] total [value] [of]] %number% [(using|with) [the] [bar] char[acter] %-string%] [([and] (using|with) [the]|and) colo[u]rs %-strings%] [(1¦with %-number% bar char[acter]s)]");
     }
 
     private Expression<Number> currentValue, maxValue, barLength;
     private Expression<String> barCharacter;
-    private Expression<Color> colours;
+    private Expression<String> colours;
 
     @Override
     protected String[] get(Event e) {
-        Color[] allColours;
+        String[] allColours;
         if (colours == null || colours.getSingle(e) == null) allColours = defaultColours;
         else allColours = colours.getArray(e);
         int max = maxValue.getSingle(e).intValue();
@@ -46,9 +44,9 @@ public class ExprProgressBar extends SimpleExpression<String> {
         if (barLength != null) bl = barLength.getSingle(e).intValue();
 
         StringBuilder builder = new StringBuilder();
-        builder.append(ChatColor.of(toHex(allColours[0])));
-        for (int i = 0; i < bl; i++) builder.append(bar);
-        builder.insert((bl /max) * current, allColours.length < 2 ? "§7" : toHex(allColours[1]));
+        builder.append(Utils.coloured(allColours[0]));
+        for (int i = 0; i < (bl + 1); i++) builder.append(bar);
+        builder.insert(Math.max((bl / max) * current, 2), allColours.length < 2 ? "§7" : Utils.coloured(allColours[1]));
         return new String[]{builder.toString()};
     }
 
@@ -65,8 +63,8 @@ public class ExprProgressBar extends SimpleExpression<String> {
         currentValue = (Expression<Number>) exprs[0];
         maxValue = (Expression<Number>) exprs[1];
         barCharacter = (Expression<String>) exprs[2];
-        if (barCharacter == null) colours = (Expression<Color>) exprs[2];
-        else colours = (Expression<Color>) exprs[3];
+        if (barCharacter == null) colours = (Expression<String>) exprs[2];
+        else colours = (Expression<String>) exprs[3];
         if (parseResult.mark == 1) barLength = (Expression<Number>) exprs[exprs.length - 1];
         return true;
     }
@@ -79,10 +77,6 @@ public class ExprProgressBar extends SimpleExpression<String> {
     @Override
     public Class<? extends String> getReturnType() {
         return String.class;
-    }
-
-    private String toHex(Color color) {
-        return Utils.rgbToHex(color.getRed(), color.getGreen(), color.getBlue());
     }
 }
 

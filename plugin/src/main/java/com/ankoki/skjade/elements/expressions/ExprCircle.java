@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.Event;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Name("Circle")
 @Description("Returns the points of the outline of a circle which ")
-@Examples("set (circle at player's location with a radius of 10 and density 100) to red wool")
+@Examples("set all blocks at (circle at player's location with a radius of 10 and density 3) to red wool")
 @Since("1.0.0")
 public class ExprCircle extends SimpleExpression<Location> {
 
@@ -40,7 +41,7 @@ public class ExprCircle extends SimpleExpression<Location> {
         double r = radius.getSingle(event).doubleValue();
         double d = density.getSingle(event).doubleValue();
         if (c == null) return null;
-        return getCircle(c, r, 1 / d).toArray(new Location[0]);
+        return Utils.getCircle(c, r, 1/d).toArray(new Location[0]);
     }
 
 
@@ -66,18 +67,5 @@ public class ExprCircle extends SimpleExpression<Location> {
         radius = (Expression<Number>) exprs[1];
         density = (Expression<Number>) exprs[2];
         return true;
-    }
-
-    private List<Location> getCircle(Location centre, double radius, double density) {
-        World world = centre.getWorld();
-        double increment = (2 * Math.PI)/density;
-        List<Location> locations = new ArrayList<>();
-        for (int i = 0; i < density; i++) {
-            double angle = i * increment;
-            double x = centre.getX() + (radius * Math.cos(angle));
-            double z = centre.getZ() + (radius * Math.sin(angle));
-            locations.add(new Location(world, x, centre.getY(), z));
-        }
-        return locations;
     }
 }
