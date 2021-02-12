@@ -10,7 +10,6 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -25,7 +24,8 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
 
     static {
         Skript.registerExpression(ExprNearestEntity.class, Entity.class, ExpressionType.SIMPLE,
-                "[the] (nearest|closest) entity to (%location%|1¦%entity%)");
+                "[the] (nearest|closest) entity to %entity%",
+                "[the] (nearest|closest) entity to %location%");
     }
 
     private Expression<Location> location;
@@ -46,12 +46,7 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
 
         Entity result = null;
         double lastDistance = Double.MAX_VALUE;
-        if (ent == null) Bukkit.broadcastMessage("entity null wot");
         for (Entity allEnts : loc.getWorld().getEntities()) {
-            Bukkit.broadcastMessage("allEnt name: " + allEnts.getName());
-            if (ent != null) {
-                Bukkit.broadcastMessage("ents name: " + ent.getName());
-            }
             if (ent != null && allEnts == ent) continue;
             double dist = loc.distanceSquared(allEnts.getLocation());
             if (dist < lastDistance) {
@@ -59,10 +54,6 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
                 lastDistance = dist;
             }
         }
-        if (result == null) {
-            Bukkit.broadcastMessage("result null huh");
-        }
-        else Bukkit.broadcastMessage("result name: " + result.getName());
         return new Entity[]{result};
     }
 
@@ -83,8 +74,8 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        if (parseResult.mark != 1) location = (Expression<Location>) exprs[0];
-        else entity = (Expression<Entity>) exprs[0];
+        if (matchedPattern == 0) entity = (Expression<Entity>) exprs[0];
+        else location = (Expression<Location>) exprs[0];
         return true;
     }
 }
