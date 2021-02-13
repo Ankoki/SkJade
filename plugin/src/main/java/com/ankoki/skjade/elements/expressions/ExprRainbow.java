@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Name("Rainbow Text")
 @Description("Returns the specified text in rainbow.")
-@Examples("broadcast rainbow \"hi! this is a rainbow string\" and be pastel")
+@Examples("broadcast pastel rainbow \"hi! this is a rainbow string\"")
 @RequiredPlugins("Spigot 1.16+")
 @Since("1.0.0")
 public class ExprRainbow extends SimpleExpression<String> {
@@ -31,7 +31,7 @@ public class ExprRainbow extends SimpleExpression<String> {
         if (ver <= 16) {
             Skript.registerExpression(ExprRainbow.class, String.class, ExpressionType.SIMPLE,
                     "(rainbow %-string%|[make] %-string% [(as|be)] rainbow)",
-                    "(pastel rainbow %-string%|[make] %-string% [to] [be] rainbow) [and] [[to] be] pastel");
+                    "(pastel rainbow %-string%|[make] %-string% [to] [be] rainbow [and] [[to] be] pastel)");
         }
     }
 
