@@ -76,30 +76,32 @@ public class Utils {
         return sv >= v;
     }
 
-    public static String rainbow(String message, int step) {
-        String[] str = message.split("");
+    //testing use 0.3, 0.3, 0.3, 0, 2, 4
+    public static String rainbow(String message, double freq1, double freq2, double freq3,
+                                 double phase1, double phase2, double phase3, boolean pastel) {
+        int center = pastel ? 200 : 128;
+        int width = pastel ? 55 : 127;
         StringBuilder builder = new StringBuilder();
-        double angle = 0;
-        for (String s : str) {
-            angle += step;
-            int r = (int) ((Math.sin(angle) + 1) * 127.5);
-            int g = (int) ((Math.sin(angle) + 120) * 127.5);
-            int b = (int) ((Math.sin(angle) + 240) * 127.5);
-            builder.append(net.md_5.bungee.api.ChatColor.of(new Color(r, g, b))).append(s);
+
+        int i = 0;
+        for (String s : message.split("")) {
+            float red = (float) (Math.sin(freq1 * i + phase1) * width + center);
+            float green = (float) (Math.sin(freq2 * i + phase2) * width + center);
+            float blue = (float) (Math.sin(freq3 * i + phase3) * width + center);
+            if (red > 255 || red < 0) red = 0;
+            if (green > 255 || green < 0) green = 0;
+            if (blue > 255 || blue < 0) blue = 0;
+            builder.append(net.md_5.bungee.api.ChatColor.of(new Color((int) red, (int) green, (int) blue))).append(s);
+            i++;
         }
         return builder.toString();
     }
 
-    public static String rgbToHex(int r, int g, int b) {
-        return String.format("#%02X%02X%02X", r, g, b);
-    }
-
-
     public static List<Location> getCircle(Location centre, double radius, double totalBlocks) {
         World world = centre.getWorld();
-        double increment = (2 * Math.PI);
+        double increment = _2PI/totalBlocks;
         List<Location> locations = new ArrayList<>();
-        for (int i = 0; i < (360 * totalBlocks); i++) {
+        for (int i = 0; i < totalBlocks; i++) {
             double angle = i * increment;
             double x = centre.getX() + (radius * Math.cos(angle));
             double z = centre.getZ() + (radius * Math.sin(angle));
