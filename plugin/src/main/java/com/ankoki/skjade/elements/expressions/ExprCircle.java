@@ -12,12 +12,8 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Name("Circle")
 @Description("Returns the points of the outline of a circle which ")
@@ -41,7 +37,7 @@ public class ExprCircle extends SimpleExpression<Location> {
         double r = radius.getSingle(event).doubleValue();
         double d = density.getSingle(event).doubleValue();
         if (c == null) return null;
-        return Utils.getCircle(c, r, 1/d).toArray(new Location[0]);
+        return Utils.getCircle(c, r, d).toArray(new Location[0]);
     }
 
 

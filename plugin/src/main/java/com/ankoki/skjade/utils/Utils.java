@@ -95,11 +95,11 @@ public class Utils {
     }
 
 
-    public static List<Location> getCircle(Location centre, double radius, double density) {
+    public static List<Location> getCircle(Location centre, double radius, double totalBlocks) {
         World world = centre.getWorld();
-        double increment = (2 * Math.PI)/density;
+        double increment = (2 * Math.PI);
         List<Location> locations = new ArrayList<>();
-        for (int i = 0; i < density; i++) {
+        for (int i = 0; i < (360 * totalBlocks); i++) {
             double angle = i * increment;
             double x = centre.getX() + (radius * Math.cos(angle));
             double z = centre.getZ() + (radius * Math.sin(angle));
