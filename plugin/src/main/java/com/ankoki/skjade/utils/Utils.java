@@ -3,7 +3,6 @@ package com.ankoki.skjade.utils;
 import com.ankoki.skjade.SkJade;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -12,8 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class Utils {
+public final class Utils {
+    private Utils(){}
     private static final double _2PI = 6.283185307179586;
+    private static final TreeMap<Integer, String> rn = new TreeMap<>();
+
+    static {
+        rn.put(1000, "M");
+        rn.put(900, "CM");
+        rn.put(500, "D");
+        rn.put(400, "CD");
+        rn.put(100, "C");
+        rn.put(90, "XC");
+        rn.put(50, "L");
+        rn.put(40, "XL");
+        rn.put(10, "X");
+        rn.put(9, "IX");
+        rn.put(5, "V");
+        rn.put(4, "IV");
+        rn.put(1, "I");
+    }
 
     public static String coloured(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
@@ -41,25 +58,11 @@ public class Utils {
     }
 
     public static String toRoman(int number) {
-        TreeMap<Integer, String> rN = new TreeMap<>();
-        rN.put(1000, "M");
-        rN.put(900, "CM");
-        rN.put(500, "D");
-        rN.put(400, "CD");
-        rN.put(100, "C");
-        rN.put(90, "XC");
-        rN.put(50, "L");
-        rN.put(40, "XL");
-        rN.put(10, "X");
-        rN.put(9, "IX");
-        rN.put(5, "V");
-        rN.put(4, "IV");
-        rN.put(1, "I");
-        int l = rN.floorKey(number);
+        int l = rn.floorKey(number);
         if (number == l) {
-            return rN.get(number);
+            return rn.get(number);
         }
-        return rN.get(l) + toRoman(number - l);
+        return rn.get(l) + toRoman(number - l);
     }
 
     public static boolean versionIsMinimum(Version version) {
@@ -96,14 +99,12 @@ public class Utils {
     }
 
     public static List<Location> getCircle(Location centre, double radius, double density) {
-        World world = centre.getWorld();
         List<Location> locations = new ArrayList<>();
         for (int degree = 0; degree < 360; degree++) {
             double radians = Math.toRadians(degree);
             double x = Math.cos(radians) * radius;
             double z = Math.sin(radians) * radius;
             locations.add(centre.add(x, 0, z));
-            centre.subtract(x, 0, z);
         }
         return locations;
     }
