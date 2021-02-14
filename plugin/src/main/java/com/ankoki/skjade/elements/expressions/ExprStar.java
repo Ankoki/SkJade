@@ -26,7 +26,7 @@ public class ExprStar extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprStar.class, Location.class, ExpressionType.SIMPLE,
-                "[(all [[of] the]|the)] [(loc[ation]s|points) of] [a] star (at|from) %location% with %integer% points, (with|of) [a] radius [of] %number%(,| and) [a] density [of] %number%");
+                "[(all [[of] the]|the)] [(loc[ation]s|points) of] [a] star (at|from) %location% with %integer% points(,| and) [with] [a] radius [of] %number%(,| and) [a] density [of] %number%");
     }
 
     private Expression<Location> center;
