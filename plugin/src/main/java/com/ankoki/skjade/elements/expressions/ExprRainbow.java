@@ -58,7 +58,7 @@ public class ExprRainbow extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "rainbow " + message.toString(e, debug) + (pastel ? "" : " to be pastel");
+        return "rainbow " + message.toString(e, debug) + (pastel ? " to be pastel" : "");
     }
 
     @Override
