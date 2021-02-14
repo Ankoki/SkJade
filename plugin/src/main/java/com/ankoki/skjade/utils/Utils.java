@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class Utils {
-    private static final TreeMap<Integer, String> rn = new TreeMap<>();
     private static final double _2PI = 6.283185307179586;
 
     public static String coloured(String s) {
@@ -42,26 +41,25 @@ public class Utils {
     }
 
     public static String toRoman(int number) {
-        if (rn.size() == 0) {
-            rn.put(1000, "M");
-            rn.put(900, "CM");
-            rn.put(500, "D");
-            rn.put(400, "CD");
-            rn.put(100, "C");
-            rn.put(90, "XC");
-            rn.put(50, "L");
-            rn.put(40, "XL");
-            rn.put(10, "X");
-            rn.put(9, "IX");
-            rn.put(5, "V");
-            rn.put(4, "IV");
-            rn.put(1, "I");
-        }
-        int l = rn.floorKey(number);
+        TreeMap<Integer, String> rN = new TreeMap<>();
+        rN.put(1000, "M");
+        rN.put(900, "CM");
+        rN.put(500, "D");
+        rN.put(400, "CD");
+        rN.put(100, "C");
+        rN.put(90, "XC");
+        rN.put(50, "L");
+        rN.put(40, "XL");
+        rN.put(10, "X");
+        rN.put(9, "IX");
+        rN.put(5, "V");
+        rN.put(4, "IV");
+        rN.put(1, "I");
+        int l = rN.floorKey(number);
         if (number == l) {
-            return rn.get(number);
+            return rN.get(number);
         }
-        return rn.get(l) + toRoman(number - l);
+        return rN.get(l) + toRoman(number - l);
     }
 
     public static boolean versionIsMinimum(Version version) {
@@ -71,8 +69,8 @@ public class Utils {
         int svMin = Integer.parseInt(serverVersion.name().split("_")[2]);
         int vMaj = Integer.parseInt(version.name().split("_")[1]);
         int vMin = Integer.parseInt(version.name().split("_")[2]);
-        int sv = (svMaj*10) + svMin;
-        int v = (vMaj*10) + vMin;
+        int sv = (svMaj * 10) + svMin;
+        int v = (vMaj * 10) + vMin;
         return sv >= v;
     }
 
@@ -97,15 +95,15 @@ public class Utils {
         return builder.toString();
     }
 
-    public static List<Location> getCircle(Location centre, double radius, double totalBlocks) {
+    public static List<Location> getCircle(Location centre, double radius, double density) {
         World world = centre.getWorld();
-        double increment = _2PI/totalBlocks;
         List<Location> locations = new ArrayList<>();
-        for (int i = 0; i < totalBlocks; i++) {
-            double angle = i * increment;
-            double x = centre.getX() + (radius * Math.cos(angle));
-            double z = centre.getZ() + (radius * Math.sin(angle));
-            locations.add(new Location(world, x, centre.getY(), z));
+        for (int degree = 0; degree < 360; degree++) {
+            double radians = Math.toRadians(degree);
+            double x = Math.cos(radians) * radius;
+            double z = Math.sin(radians) * radius;
+            locations.add(centre.add(x, 0, z));
+            centre.subtract(x, 0, z);
         }
         return locations;
     }
