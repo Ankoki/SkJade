@@ -60,8 +60,8 @@ public class HologramManager {
             if (entry.getValue() == hologram) {
                 allHolograms.remove(entry.getKey());
                 allHolograms.put(entry.getKey(), hologram);
+                return;
             }
-            return;
         }
     }
 
@@ -77,8 +77,8 @@ public class HologramManager {
             if (entry.getValue() == hologram) {
                 allHolograms.remove(entry.getKey());
                 allHolograms.put(entry.getKey(), hologram);
+                return;
             }
-            return;
         }
     }
 
@@ -97,8 +97,8 @@ public class HologramManager {
             if (entry.getValue() == hologram) {
                 allHolograms.remove(entry.getKey());
                 allHolograms.put(entry.getKey(), hologram);
+                return;
             }
-            return;
         }
     }
 
@@ -116,8 +116,8 @@ public class HologramManager {
             if (entry.getValue() == hologram) {
                 allHolograms.remove(entry.getKey());
                 allHolograms.put(entry.getKey(), hologram);
+                return;
             }
-            return;
         }
     }
 

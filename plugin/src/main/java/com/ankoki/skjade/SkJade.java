@@ -16,7 +16,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-//TODO, fix ExprProgressBar and ExprCircle. then we ready for release bois
+/** IMPORTANT
+ *
+ * SkJade is named SkJade because Jade West from Victorious is absolutely
+ * gorgeous. We love Liz Gillies. Ok bye now <3
+ */
 public class SkJade extends JavaPlugin {
 
     private static boolean beta;
