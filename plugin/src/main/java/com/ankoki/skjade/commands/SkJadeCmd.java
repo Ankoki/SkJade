@@ -17,7 +17,6 @@ public class SkJadeCmd implements CommandExecutor {
             sender.sendMessage(Utils.coloured(PREFIX + "Running on a beta version is risky, and " +
                     "can cause data loss or unexpected errors, please switch to a stable version!"));
         }
-        //sender.sendMessage(Utils.rainbow("small test string lol", 1));
         return true;
     }
 }

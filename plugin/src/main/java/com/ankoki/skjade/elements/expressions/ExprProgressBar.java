@@ -10,24 +10,23 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.utils.Utils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.awt.*;
 
-@Name("Progress Bar")
+/*@Name("Progress Bar")
 @Description("Returns a progress bar with the specified colours. The default bar length/amount of bar characters is 50.")
 @Examples("send title \"Smelting...\" with subtitle progress bar with the value loop-value out of a total value of 100")
-@Since("1.0.0")
+@Since("1.0.0")*/
 public class ExprProgressBar extends SimpleExpression<String> {
     private static final Color[] defaultColours = new Color[]{Color.GREEN, Color.GRAY};
 
-    static {
+    /*static {
         Skript.registerExpression(ExprProgressBar.class, String.class, ExpressionType.SIMPLE,
                 "[a] [new] progress[ ]bar [(string|text|txt)] with [([the]|(current|filled))] value %number% [out] of [[a] total [value] [of]] %number% [(using|with) [the] [bar] char[acter] %-string%] [([and] (using|with) [the]|and) colo[u]rs %-colors%] [(1¦with %-number% bar char[acter]s)]");
-    }
+    }*/
 
     private Expression<Number> currentValue, maxValue, barLength;
     private Expression<String> barCharacter;
@@ -41,7 +40,7 @@ public class ExprProgressBar extends SimpleExpression<String> {
         int max = maxValue.getSingle(e).intValue();
         int current = currentValue.getSingle(e).intValue();
         String bar = "|";
-        if (barCharacter != null) bar = barCharacter.getSingle(e);
+        if (barCharacter != null && barCharacter.getSingle(e) != null) bar = barCharacter.getSingle(e);
         if (current > max) current = max;
         int bl = 50;                             //yes i am fully aware that this is a mess let me live
         if (barLength != null) bl = barLength.getSingle(e).intValue();
