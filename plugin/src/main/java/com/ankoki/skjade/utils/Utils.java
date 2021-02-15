@@ -3,6 +3,7 @@ package com.ankoki.skjade.utils;
 import com.ankoki.skjade.SkJade;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -98,13 +99,15 @@ public final class Utils {
         return builder.toString();
     }
 
-    public static List<Location> getCircle(Location centre, double radius, double density) {
+    public static List<Location> getCircle(Location centre, double radius, double totalBlocks) {
+        World world = centre.getWorld();
+        double increment = _2PI/totalBlocks;
         List<Location> locations = new ArrayList<>();
-        for (int degree = 0; degree < 360; degree++) {
-            double radians = Math.toRadians(degree);
-            double x = Math.cos(radians) * radius;
-            double z = Math.sin(radians) * radius;
-            locations.add(centre.add(x, 0, z));
+        for (int i = 0; i < totalBlocks; i++) {
+            double angle = i * increment;
+            double x = centre.getX() + (radius * Math.cos(angle));
+            double z = centre.getZ() + (radius * Math.sin(angle));
+            locations.add(new Location(world, x, centre.getY(), z));
         }
         return locations;
     }

@@ -17,29 +17,28 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Circle")
 @Description("Returns the points of the outline of a circle which ")
-@Examples("set all blocks at (circle at player's location with a radius of 10 and density 3) to red wool")
+@Examples("set all blocks at (circle at player's location with a radius of 5) to red wool")
 @Since("1.0.0")
 public class ExprCircle extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE,
-                "[a] circle (at|from) %location% with [a] radius [of] %number%(,| and) [with] [a] density [of] %number%");
+                "[a] circle (at|from) %location% with [a] radius [of] %number% [and %-number% total (points|blocks|locations)]");
     }
 
     private Expression<Location> center;
     private Expression<Number> radius;
-    private Expression<Number> density;
+    private Expression<Number> total;
 
     @Nullable
     @Override
     protected Location[] get(Event event) {
         Location c = center.getSingle(event);
         double r = radius.getSingle(event).doubleValue();
-        double d = density.getSingle(event).doubleValue();
+        double t = total == null ? r * 10 : total.getSingle(event).doubleValue();
         if (c == null) return null;
-        return Utils.getCircle(c, r, d).toArray(new Location[0]);
+        return Utils.getCircle(c, r, t).toArray(new Location[0]);
     }
-
 
     @Override
     public boolean isSingle() {
@@ -54,14 +53,14 @@ public class ExprCircle extends SimpleExpression<Location> {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "circle with center " + center.toString(event, b) + " with radius " + radius.toString(event, b) +
-                " with density " + density.toString(event, b);
+                (total == null ? "" : " and " + total.toString(event, b) + "total points");
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
         center = (Expression<Location>) exprs[0];
         radius = (Expression<Number>) exprs[1];
-        density = (Expression<Number>) exprs[2];
+        total = (Expression<Number>) exprs[2];
         return true;
     }
 }
