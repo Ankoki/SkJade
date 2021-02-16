@@ -33,7 +33,7 @@ public class EffCreateHolo extends Effect {
         String k = key.getSingle(event);
         Location loc = location.getSingle(event);
         if (k == null || loc == null) return;
-A        HologramManager.createHologram(k, loc, !hidden, !notAccepting);
+        HologramManager.createHologram(k, loc, !hidden, !notAccepting);
     }
 
     @Override
