@@ -26,28 +26,26 @@ public class EffCreateHolo extends Effect {
 
     private Expression<Location> location;
     private Expression<String> key;
-    private boolean shown = true;
-    private boolean notAccepting;
+    private boolean hidden, notAccepting;
 
     @Override
     protected void execute(Event event) {
         String k = key.getSingle(event);
         Location loc = location.getSingle(event);
         if (k == null || loc == null) return;
-        System.out.println("hologram shown by default: " + shown);
-        HologramManager.createHologram(k, loc, shown, !notAccepting);
+A        HologramManager.createHologram(k, loc, !hidden, !notAccepting);
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "create hologram at " + location.toString(event, b) + " with the id " + key.toString(event, b) + (shown ? " to be hidden " : "") + (notAccepting ? "to not allow placeholders" : "");
+        return "create hologram at " + location.toString(event, b) + " with the id " + key.toString(event, b) + (hidden ? " to be hidden " : "") + (notAccepting ? "to not allow placeholders" : "");
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         location = (Expression<Location>) exprs[0];
         key = (Expression<String>) exprs[1];
-        shown = parseResult.mark == 1 || parseResult.mark == 3;
+        hidden = parseResult.mark == 1 || parseResult.mark == 3;
         notAccepting = parseResult.mark == 2 || parseResult.mark == 3;
         return true;
     }
