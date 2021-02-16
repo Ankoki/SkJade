@@ -42,7 +42,7 @@ public class EffSetVisibility extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "set visibility";
+        return (show ? "show " : "hide ") + holo.toString(event, b) + (show ? " to " : " from ") + player.toString(event, b);
     }
 
     @Override

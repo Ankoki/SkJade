@@ -87,7 +87,9 @@ public class EffCreateSpell extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "create an elementals spell";
+        return "create a new " + (generic ? " entity " : " generic ") + " spell named " +
+                spellName.toString(event, b) + " with the id " + id.toString(event, b) + " to run " +
+                functionCall.toString(event, b) + " on cast with a cooldown of " + cooldown.toString(event, b) + " seconds";
     }
 
     @Override

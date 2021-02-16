@@ -34,7 +34,7 @@ public class EffUnregisterPlaceholder extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "unregister holographic placeholder";
+        return "unregister holographic placeholder " + placeholder.toString(event, b);
     }
 
     @Override

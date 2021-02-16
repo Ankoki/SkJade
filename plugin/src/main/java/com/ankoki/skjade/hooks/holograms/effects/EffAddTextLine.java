@@ -36,7 +36,7 @@ public class EffAddTextLine extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "add text line";
+        return "add text line " + line.toString(event, b) + " to " + hologram.toString(event, b);
     }
 
     @Override

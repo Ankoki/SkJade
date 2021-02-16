@@ -34,7 +34,7 @@ public class EffDeleteHolo extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "delete hologram";
+        return "delete " + hologram.toString(event, b);
     }
 
     @Override

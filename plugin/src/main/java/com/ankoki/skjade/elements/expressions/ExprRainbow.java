@@ -13,7 +13,8 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 @Name("Rainbow Text")
-@Description("Returns the specified text in rainbow.")
+@Description({"Returns the specified text in rainbow.",
+              "Just a note this looks crazy in console, but theres nothing we can do about it:p (like this: \"\")"})
 @Examples("broadcast pastel rainbow \"hi! this is a rainbow string\"")
 @RequiredPlugins("Spigot 1.16+")
 @Since("1.0.0")
@@ -58,7 +59,7 @@ public class ExprRainbow extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "rainbow " + message.toString(e, debug) + (pastel ? " to be pastel" : "");
+        return (pastel ? "" : "pastel ") + "rainbow " + message.toString(e, debug);
     }
 
     @Override

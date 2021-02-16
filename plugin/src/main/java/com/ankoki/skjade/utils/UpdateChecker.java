@@ -19,7 +19,7 @@ public class UpdateChecker {
     }
 
     public String getLatestTag(boolean forceCheck) {
-        if (forceCheck || latestTag.isEmpty()) {
+        if (forceCheck || (latestTag == null || latestTag.isEmpty())) {
             String redirectedURL = "";
             try {
                 URLConnection con = new URL(String.format("https://github.com/%s/%s/releases/latest", user, repo)).openConnection();
@@ -43,7 +43,7 @@ public class UpdateChecker {
         return latestTag;
     }
 
-    public boolean isOutdated() {
+    public boolean isLatest() {
         return isLatest;
     }
 }

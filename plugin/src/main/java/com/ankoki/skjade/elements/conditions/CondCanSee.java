@@ -40,7 +40,7 @@ public class CondCanSee extends Condition {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "can see";
+        return entity1.toString(event, b) + " can see " + entity2.toString(event, b);
     }
 
     @Override

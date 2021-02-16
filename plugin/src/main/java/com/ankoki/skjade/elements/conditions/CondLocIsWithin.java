@@ -44,7 +44,7 @@ public class CondLocIsWithin extends Condition {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "location is within";
+        return location.toString(event, b) + " is within " + locationOne.toString(event, b) + " and " + locationTwo.toString(event, b);
     }
 
     private boolean contains(Location loc, Location loc1, Location loc2) {

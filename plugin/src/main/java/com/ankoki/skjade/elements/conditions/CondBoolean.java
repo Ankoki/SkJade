@@ -27,12 +27,13 @@ public class CondBoolean extends Condition {
 
     @Override
     public boolean check(Event event) {
+        if (bool == null) return false;
         return bool.getSingle(event);
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "boolean";
+        return bool.toString(event, b);
     }
 
     @Override

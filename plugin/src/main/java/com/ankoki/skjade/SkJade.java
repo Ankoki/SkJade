@@ -6,14 +6,17 @@ import com.ankoki.skjade.api.NMS;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
+import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.Utils;
 import com.ankoki.skjade.utils.Version;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 /** IMPORTANT
@@ -34,6 +37,7 @@ public class SkJade extends JavaPlugin {
     private Metrics metrics;
     private static NMS nmsHandler = null;
     private static boolean nmsEnabled = false;
+    private static boolean latest = true;
 
     @Override
     public void onEnable() {
@@ -69,6 +73,7 @@ public class SkJade extends JavaPlugin {
                 logger.info("Elementals was found! However it is an early version! Please upgrade to atleast 1.4.");
             }
         }
+        this.registerListeners(new PlayerJoin());
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
                     "work correctly!");
@@ -84,9 +89,10 @@ public class SkJade extends JavaPlugin {
         /*
         //There isn't any releases on GitHub yet so this will error.
         UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
-        if (checker.isOutdated) {
+        if (!checker.isLatest()) {
             logger.info("You are not running the latest version of SkJade! Please update here:");
             logger.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
+            latest = false;
         }
          */
     }
@@ -190,6 +196,10 @@ public class SkJade extends JavaPlugin {
         return true;
     }
 
+    private void registerListeners(Listener... listeners) {
+        Arrays.stream(listeners).forEach(listener -> this.pluginManager.registerEvents(listener, this));
+    }
+
     private void registerCommand() {
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
     }
@@ -216,5 +226,9 @@ public class SkJade extends JavaPlugin {
 
     public static NMS getNmsHandler() {
         return nmsHandler;
+    }
+
+    public static boolean isLatest() {
+        return latest;
     }
 }

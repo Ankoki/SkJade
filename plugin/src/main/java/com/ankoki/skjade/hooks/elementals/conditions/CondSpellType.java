@@ -47,7 +47,7 @@ public class CondSpellType extends Condition {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "if current spell is generic, entity, or prolonged";
+        return spellExprs.toString(event, b) + " is a " + spellType.getPretty();
     }
 
     @Override

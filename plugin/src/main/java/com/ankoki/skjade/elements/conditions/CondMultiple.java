@@ -38,7 +38,7 @@ public class CondMultiple extends Condition {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "multiple conditions";
+        return cond1.toString() + (isAnd ? " && " : " || ") + cond2.toString();
     }
 
     @Override

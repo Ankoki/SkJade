@@ -53,7 +53,7 @@ public class ExprHologram extends SimpleExpression<Hologram> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "hologram";
+        return "the " + (inEvent ? "hologram with the id " + key.toString(event, b) : "event-hologram");
     }
 
     @Override

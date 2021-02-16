@@ -3,7 +3,8 @@ A Skript Addon which provides custom syntax to Skript c:
 
 # Documentation
 When this is  officially released, links to the documentation will be here. I will also add tutorials on how to use 
-seperate parts of SkJade to the wiki at some point, however when that point will be is a good question.
+seperate parts of SkJade to the wiki at some point, however when that point will be is a good question that I will not
+answer. ❤
 
 ## Forking
 If you ever find yourself wanting to fork this for whatever reason, most likely to correct something wrong I've done, 

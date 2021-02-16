@@ -22,7 +22,7 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprRomanNumerals.class, String.class, ExpressionType.PROPERTY,
-                "([[the] value of] %number% in roman numeral[s]|roman numeral[s] of %number%)");
+                "([[the] value of] %number% in roman numeral[s]|[the] roman numeral[s] [value] of %number%)");
     }
 
     private Expression<Number> num;
@@ -46,7 +46,7 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "roman numeral";
+        return "roman numeral value of " + num.toString(event, b);
     }
 
     @Override

@@ -146,9 +146,17 @@ public final class Utils {
     }
 
     public enum SpellType {
-        GENERIC,
-        ENTITY,
-        GENERIC_PROLONGED,
-        ENTITY_PROLONGED;
+        GENERIC("generic"),
+        ENTITY("entity"),
+        GENERIC_PROLONGED("prolonged generic"),
+        ENTITY_PROLONGED("prolonged entity");
+
+        private final String pretty;
+        SpellType(String pretty) {
+            this.pretty = pretty;
+        }
+        public String getPretty() {
+            return pretty;
+        }
     }
 }

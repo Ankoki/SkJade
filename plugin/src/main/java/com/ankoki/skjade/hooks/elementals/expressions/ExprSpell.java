@@ -53,7 +53,7 @@ public class ExprSpell extends SimpleExpression<Spell> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "spell";
+        return inEvent ? "the spell named " + spell.toString(event, b) : "the spell " + fromEvent(event);
     }
 
     @Override

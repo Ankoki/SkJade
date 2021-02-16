@@ -45,7 +45,7 @@ public class EffRegisterPlaceholder extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "register holographic displays placeholder";
+        return "register holographic displays placeholder " + text.toString(event, b) + " to run " + functionCall.toString(event, b);
     }
 
     @Override

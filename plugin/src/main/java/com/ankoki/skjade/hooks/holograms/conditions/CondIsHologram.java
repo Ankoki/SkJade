@@ -32,7 +32,7 @@ public class CondIsHologram extends Condition {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "is a hologram";
+        return entity.toString(event, b) + " is a hologram";
     }
 
     @Override

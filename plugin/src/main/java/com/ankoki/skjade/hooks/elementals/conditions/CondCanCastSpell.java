@@ -6,6 +6,7 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.elementals.managers.Spell;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -23,22 +24,26 @@ public class CondCanCastSpell extends Condition {
     }
 
     private Expression<Player> player;
-    private Expression<String> spell;
+    private Expression<Spell> spell;
 
     @Override
     public boolean check(Event event) {
-        return player.getSingle(event).hasPermission("elementals.spell." + spell.getSingle(event));
+        if (player == null || spell == null) return false;
+        Player p = player.getSingle(event);
+        Spell s = spell.getSingle(event);
+        if (p == null || s == null) return false;
+        return p.hasPermission("elementals.spell." + s.getSpellName());
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "can cast spell";
+        return player.toString(event, b) + " can cast " + spell.toString(event, b);
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         player = (Expression<Player>) exprs[0];
-        spell = (Expression<String>) exprs[1];
+        spell = (Expression<Spell>) exprs[1];
         return true;
     }
 }

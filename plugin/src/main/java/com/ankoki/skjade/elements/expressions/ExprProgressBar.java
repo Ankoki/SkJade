@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.awt.*;
 
+//will be fixing this at a later date because i have tried multiple things and it still has decided to hate me
 /*@Name("Progress Bar")
 @Description("Returns a progress bar with the specified colours. The default bar length/amount of bar characters is 50.")
 @Examples("send title \"Smelting...\" with subtitle progress bar with the value loop-value out of a total value of 100")

@@ -67,7 +67,7 @@ public class EffInteractableLine extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "interactable line";
+        return "make line " + lineNumber.toString(event, b) + " of " + hologram.toString(event, b) + touchType.name().toLowerCase();
     }
 
     @Override

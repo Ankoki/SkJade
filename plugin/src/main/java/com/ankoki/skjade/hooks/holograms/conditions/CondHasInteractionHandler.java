@@ -30,7 +30,9 @@ public class CondHasInteractionHandler extends Condition {
 
     @Override
     public boolean check(Event event) {
+        if (hologramLine == null) return false;
         HologramLine line = hologramLine.getSingle(event);
+        if (line == null) return false;
         switch (touchType) {
             case INTERACTABLE:
                 return ((TouchableLine) line).getTouchHandler() != null &&
@@ -45,7 +47,7 @@ public class CondHasInteractionHandler extends Condition {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return null;
+        return hologramLine.toString(event, b) + " is " + touchType.name().toLowerCase();
     }
 
     @Override

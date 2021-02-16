@@ -68,7 +68,8 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "lines of hologram";
+        return (line == null ? "all the lines of " : "line " + line.toString(event, b) + " ") + " of " +
+                hologram.toString(event, b);
     }
 
     @Override

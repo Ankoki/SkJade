@@ -58,7 +58,8 @@ public class EffRotatePlayer extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "rotate " + players.toString(event, b);
+        return "rotate " + players.toString(event, b) + " by " + horizontal.toString(event, b) +
+                (vertical == null ? " and " + vertical.toString(event, b) + " vertically" : "");
     }
 
     @Override

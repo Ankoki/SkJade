@@ -41,7 +41,7 @@ public class EffEnchantItem extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "elementals enchant";
+        return "add " + spellExprs.toString(event, b) + " to " + item.toString(event, b);
     }
 
     @Override

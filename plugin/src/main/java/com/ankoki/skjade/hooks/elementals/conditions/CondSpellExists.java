@@ -7,6 +7,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.elementals.api.ElementalsAPI;
+import com.ankoki.elementals.managers.Spell;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -22,11 +23,13 @@ public class CondSpellExists extends Condition {
                 "%spell% (is a valid spell|exists)");
     }
 
-    private Expression<String> spell;
+    private Expression<Spell> spell;
 
     @Override
     public boolean check(Event event) {
-        return ElementalsAPI.valueOf(spell.getSingle(event)) != null;
+        if (spell == null) return false;
+        Spell s = spell.getSingle(event);
+        return s != null;
     }
 
     @Override
@@ -36,7 +39,7 @@ public class CondSpellExists extends Condition {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        spell = (Expression<String>) exprs[0];
+        spell = (Expression<Spell>) exprs[0];
         return true;
     }
 }

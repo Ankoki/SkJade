@@ -28,11 +28,11 @@ public class EffRemoveLine extends Effect {
     private Expression<Number> number;
     private Expression<Hologram> hologram;
     private Expression<HologramLine> hologramLine;
-    private boolean is2nd;
+    private boolean isNumber;
 
     @Override
     protected void execute(Event event) {
-        if (is2nd) {
+        if (isNumber) {
             HologramLine line = hologramLine.getSingle(event);
             if (line == null) return;
             HologramManager.removeLine(line);
@@ -46,13 +46,14 @@ public class EffRemoveLine extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "remove line";
+        return hologramLine == null ? "remove line " + number.toString(event, b) + "from the hologram " + hologram.toString(event, b)
+                : "remove " + hologramLine.toString(event, b);
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         if (parseResult.mark == 1) {
-            is2nd = true;
+            isNumber = true;
             number = (Expression<Number>) exprs[0];
             hologram = (Expression<Hologram>) exprs[1];
         } else {

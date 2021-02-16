@@ -49,7 +49,7 @@ public class ExprSpellBook extends SimpleExpression<ItemType> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "elementals spell book";
+        return "elementals spell book with" + spellExprs.toString(event, b);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class ExprSpellID extends SimpleExpression<Number> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "id of spell";
+        return "the id of " + spell.toString(event, b);
     }
 
     @Override
