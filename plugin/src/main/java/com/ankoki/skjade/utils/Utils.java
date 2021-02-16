@@ -15,22 +15,22 @@ import java.util.TreeMap;
 public final class Utils {
     private Utils(){}
     private static final double _2PI = 6.283185307179586;
-    private static final TreeMap<Integer, String> rn = new TreeMap<>();
+    private static final TreeMap<Integer, String> ROMAN_NUMERALS = new TreeMap<>();
 
     static {
-        rn.put(1000, "M");
-        rn.put(900, "CM");
-        rn.put(500, "D");
-        rn.put(400, "CD");
-        rn.put(100, "C");
-        rn.put(90, "XC");
-        rn.put(50, "L");
-        rn.put(40, "XL");
-        rn.put(10, "X");
-        rn.put(9, "IX");
-        rn.put(5, "V");
-        rn.put(4, "IV");
-        rn.put(1, "I");
+        ROMAN_NUMERALS.put(1000, "M");
+        ROMAN_NUMERALS.put(900, "CM");
+        ROMAN_NUMERALS.put(500, "D");
+        ROMAN_NUMERALS.put(400, "CD");
+        ROMAN_NUMERALS.put(100, "C");
+        ROMAN_NUMERALS.put(90, "XC");
+        ROMAN_NUMERALS.put(50, "L");
+        ROMAN_NUMERALS.put(40, "XL");
+        ROMAN_NUMERALS.put(10, "X");
+        ROMAN_NUMERALS.put(9, "IX");
+        ROMAN_NUMERALS.put(5, "V");
+        ROMAN_NUMERALS.put(4, "IV");
+        ROMAN_NUMERALS.put(1, "I");
     }
 
     public static String coloured(String s) {
@@ -59,11 +59,11 @@ public final class Utils {
     }
 
     public static String toRoman(int number) {
-        int l = rn.floorKey(number);
+        int l = ROMAN_NUMERALS.floorKey(number);
         if (number == l) {
-            return rn.get(number);
+            return ROMAN_NUMERALS.get(number);
         }
-        return rn.get(l) + toRoman(number - l);
+        return ROMAN_NUMERALS.get(l) + toRoman(number - l);
     }
 
     public static boolean versionIsMinimum(Version version) {
