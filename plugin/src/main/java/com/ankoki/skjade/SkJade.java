@@ -82,7 +82,7 @@ public class SkJade extends JavaPlugin {
             beta = true;
         }
         metrics = new Metrics(this, pluginId);
-        this.registerCommand();
+        this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
         this.loadServerVersion();
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
@@ -198,10 +198,6 @@ public class SkJade extends JavaPlugin {
 
     private void registerListeners(Listener... listeners) {
         Arrays.stream(listeners).forEach(listener -> this.pluginManager.registerEvents(listener, this));
-    }
-
-    private void registerCommand() {
-        this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
     }
 
     public static boolean isBeta() {
