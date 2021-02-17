@@ -7,6 +7,7 @@ import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import com.ankoki.skjade.listeners.PlayerJoin;
+import com.ankoki.skjade.utils.UpdateChecker;
 import com.ankoki.skjade.utils.Utils;
 import com.ankoki.skjade.utils.Version;
 import org.bstats.bukkit.Metrics;
@@ -86,15 +87,12 @@ public class SkJade extends JavaPlugin {
         this.loadServerVersion();
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
-        /*
-        //There isn't any releases on GitHub yet so this will error.
         UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
         if (!checker.isLatest()) {
             logger.info("You are not running the latest version of SkJade! Please update here:");
             logger.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
             latest = false;
         }
-         */
     }
 
     private void loadNMS() {
