@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Rainbow Text")
 @Description({"Returns the specified text in rainbow.",
               "Just a note this looks crazy in console, but theres nothing we can do about it:p (like this: \"\")"})
-@Examples("broadcast pastel rainbow \"hi! this is a rainbow string\"")
+@Examples("broadcast pastel rainbow \"hi! this is a pastel rainbow string\"")
 @RequiredPlugins("Spigot 1.16+")
 @Since("1.0.0")
 public class ExprRainbow extends SimpleExpression<String> {

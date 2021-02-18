@@ -6,7 +6,7 @@
 
     <packaging>jar</packaging>
     <artifactId>SkJade</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-beta</version>
 
     <parent>
         <artifactId>SkJade-parent</artifactId>
@@ -27,6 +27,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>plugin.yml</include>
+                    <include>config.yml</include>
                 </includes>
             </resource>
         </resources>
@@ -142,11 +143,13 @@
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>20.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- This is for the NMS Handling, ignore this -->

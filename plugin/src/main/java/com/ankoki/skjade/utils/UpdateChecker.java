@@ -10,7 +10,7 @@ public class UpdateChecker {
     private final String user;
     private final String repo;
     private String latestTag;
-    private boolean isLatest;
+    private boolean isLatest = true;
 
     public UpdateChecker(String user, String repo) {
         this.user = user;
@@ -36,7 +36,7 @@ public class UpdateChecker {
                 latestTag = tag;
                 return tag;
             } catch (ArrayIndexOutOfBoundsException ex) {
-                isLatest = false;
+                isLatest = true;
                 return "UNKNOWN";
             }
         }

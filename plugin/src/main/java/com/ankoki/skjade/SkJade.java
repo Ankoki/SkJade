@@ -7,6 +7,7 @@ import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.hooks.elementals.EleClassInfo;
 import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import com.ankoki.skjade.listeners.PlayerJoin;
+import com.ankoki.skjade.utils.Config;
 import com.ankoki.skjade.utils.UpdateChecker;
 import com.ankoki.skjade.utils.Utils;
 import com.ankoki.skjade.utils.Version;
@@ -39,6 +40,7 @@ public class SkJade extends JavaPlugin {
     private static NMS nmsHandler = null;
     private static boolean nmsEnabled = false;
     private static boolean latest = true;
+    private static Config config = null;
 
     @Override
     public void onEnable() {
@@ -52,19 +54,19 @@ public class SkJade extends JavaPlugin {
             pluginManager.disablePlugin(this);
             return;
         }
+        config = new Config(this);
         loadNMS();
         addon = Skript.registerAddon(this);
         this.loadElements();
-
-        if (isPluginEnabled("ProtocolLib")) {
+        if (isPluginEnabled("ProtocolLib") && Config.PROTOCOL_LIB_ENABLED) {
             logger.info("ProtocolLib was found! Enabling support");
             this.loadProtocolElements();
         }
-        if (isPluginEnabled("HolographicDisplays")) {
+        if (isPluginEnabled("HolographicDisplays") && Config.HOLOGRAPHIC_DISPLAYS_ENABLED) {
             logger.info("HolographicDisplays was found! Enabling support");
             this.loadHDElements();
         }
-        if (isPluginEnabled("Elementals")) {
+        if (isPluginEnabled("Elementals") && Config.ELEMENTALS_ENABLED) {
             Plugin elementals = pluginManager.getPlugin("Elementals");
             assert elementals != null;
             if (Utils.checkPluginVersion(elementals, 1, 4)) {
@@ -224,5 +226,9 @@ public class SkJade extends JavaPlugin {
 
     public static boolean isLatest() {
         return latest;
+    }
+
+    public static Config getOwnConfig() {
+        return config;
     }
 }
