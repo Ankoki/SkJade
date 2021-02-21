@@ -25,7 +25,7 @@ public class EvtAsyncPreLogin extends SimpleEvent {
             }
         }, 0);
         EventValues.registerEventValue(AsyncPlayerPreLoginEvent.class, String.class, new Getter<String, AsyncPlayerPreLoginEvent>() {
-            @org.jetbrains.annotations.Nullable
+            @Nullable
             @Override
             public String get(AsyncPlayerPreLoginEvent e) {
                 return e.getAddress().toString();

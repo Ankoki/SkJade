@@ -24,9 +24,9 @@ public class CondMultiple extends Condition {
                 "<.+> \\|\\| <.+>");
     }
 
-    Condition cond1;
-    Condition cond2;
-    boolean isAnd;
+    private Condition cond1;
+    private Condition cond2;
+    private boolean isAnd;
 
     @Override
     public boolean check(Event event) {
