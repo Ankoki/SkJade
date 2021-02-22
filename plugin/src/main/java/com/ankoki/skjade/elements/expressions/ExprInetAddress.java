@@ -2,6 +2,10 @@ package com.ankoki.skjade.elements.expressions;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -11,11 +15,15 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Inet Address")
+@Description("Used for event-address in the AsyncPlayerPreLoginEvent")
+@Examples("send \"event-address\"")
+@Since("insert version")
 public class ExprInetAddress extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprInetAddress.class, String.class, ExpressionType.SIMPLE,
-                "event-[inet]address");
+                "event(-| )[inet]address");
     }
     @Nullable
     @Override

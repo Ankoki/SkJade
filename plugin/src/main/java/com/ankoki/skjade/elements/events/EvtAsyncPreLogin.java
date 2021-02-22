@@ -24,15 +24,7 @@ public class EvtAsyncPreLogin extends SimpleEvent {
                 return e.getUniqueId();
             }
         }, 0);
-        EventValues.registerEventValue(AsyncPlayerPreLoginEvent.class, String.class, new Getter<String, AsyncPlayerPreLoginEvent>() {
-            @Nullable
-            @Override
-            public String get(AsyncPlayerPreLoginEvent e) {
-                return e.getAddress().toString();
-            }
-        }, 0);
-        //also event-address, for inetaddress to string. probs convert this into an expression so its event-address
-        //set kick message, set login result and player profile. all should be expressions.
+        //  set login result and player profile. all should be expressions.
     }
 
     @Override
