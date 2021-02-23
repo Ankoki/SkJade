@@ -1,7 +1,10 @@
 package com.ankoki.skjade.elements.events;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
@@ -12,6 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.UUID;
 
 @Name("Async PreLogin")
+@Description("Called when a player is connecting/logging on. You cannot get the player here.")
+@Examples("on async pre-login:")
+@Since("insert version")
 public class EvtAsyncPreLogin extends SimpleEvent {
 
     static {
@@ -24,7 +30,7 @@ public class EvtAsyncPreLogin extends SimpleEvent {
                 return e.getUniqueId();
             }
         }, 0);
-        //  set login result and player profile. all should be expressions.
+        //set login result.
     }
 
     @Override

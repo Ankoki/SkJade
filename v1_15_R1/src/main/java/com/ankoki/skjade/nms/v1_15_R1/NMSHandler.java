@@ -5,6 +5,8 @@ import net.minecraft.server.v1_15_R1.*;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class NMSHandler implements NMS {
 
     @Override
@@ -23,5 +25,13 @@ public class NMSHandler implements NMS {
                 ((CraftPlayer) p1).getHandle().playerConnection.sendPacket(packet);
             }
         }
+    }
+
+    @Override
+    public void changeSkyColour(int colour, Player[] who) {
+    }
+
+    @Override
+    public void rain(Player[] players, boolean rain) {
     }
 }

@@ -32,11 +32,12 @@ public class ExprRainbow extends SimpleExpression<String> {
         if (ver <= 16) {
             Skript.registerExpression(ExprRainbow.class, String.class, ExpressionType.SIMPLE,
                     "(rainbow %-string%|[make] %-string% [(as|be)] rainbow)",
-                    "(pastel rainbow %-string%|[make] %-string% [to] [be] rainbow [and] [[to] be] pastel)");
+                    "(pastel rainbow %-string%|[make] %-string% [to] [be] rainbow [and] [[to] be] pastel)",
+                    "monochrome %string%");
         }
     }
 
-    private boolean pastel;
+    private boolean pastel, monochrome;
     private Expression<String> message;
 
     @Nullable
@@ -44,6 +45,9 @@ public class ExprRainbow extends SimpleExpression<String> {
     protected String[] get(Event e) {
         String str = message.getSingle(e);
         if (str == null) return null;
+        if (monochrome) {
+            return new String[]{Utils.monochrome(str)};
+        }
         return new String[]{Utils.rainbow(str, 0.3, 0.3, 0.3, 0, 2, 4, pastel)};
     }
 
@@ -59,12 +63,14 @@ public class ExprRainbow extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return (pastel ? "" : "pastel ") + "rainbow " + message.toString(e, debug);
+        return monochrome ? "monochrome" + message.toString(e, debug) :
+                (pastel ? "" : "pastel ") + "rainbow " + message.toString(e, debug);
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         pastel = matchedPattern == 1;
+        monochrome = matchedPattern == 2;
         message = (Expression<String>) exprs[0];
         return true;
     }

@@ -26,4 +26,12 @@ public class NMSHandler implements NMS {
             }
         }
     }
+
+    @Override
+    public void changeSkyColour(int colour, Player[] who) {
+    }
+
+    @Override
+    public void rain(Player[] players, boolean rain) {
+    }
 }

@@ -99,6 +99,21 @@ public final class Utils {
         return builder.toString();
     }
 
+    public static String monochrome(String string) {
+        double frequency = 0.3;
+        int amplitude = 127;
+        int center = 128;
+
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        for (String s : string.split("")) {
+            double v = Math.sin(frequency * i) * amplitude + center;
+            builder.append(net.md_5.bungee.api.ChatColor.of(new Color((int) v, (int) v, (int) v))).append(s);
+            i++;
+        }
+        return builder.toString();
+    }
+
     public static List<Location> getCircle(Location centre, double radius, double totalBlocks) {
         World world = centre.getWorld();
         double increment = _2PI/totalBlocks;

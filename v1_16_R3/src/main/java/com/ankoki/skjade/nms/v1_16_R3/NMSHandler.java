@@ -7,6 +7,8 @@ import net.minecraft.server.v1_16_R3.PacketPlayOutGameStateChange;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class NMSHandler implements NMS {
 
     @Override
@@ -25,5 +27,17 @@ public class NMSHandler implements NMS {
                 ((CraftPlayer) p1).getHandle().playerConnection.sendPacket(packet);
             }
         }
+    }
+
+    @Override
+    public void changeSkyColour(int colour, Player[] who) {
+        PacketPlayOutGameStateChange packet = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.h, colour);
+        Arrays.stream(who).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
+    }
+
+    @Override
+    public void rain(Player[] players, boolean rain) {
+        PacketPlayOutGameStateChange packet = new PacketPlayOutGameStateChange(rain ? PacketPlayOutGameStateChange.c : PacketPlayOutGameStateChange.b, 0);
+        Arrays.stream(players).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
     }
 }
