@@ -36,7 +36,7 @@ public class EffForceRain extends Effect {
     protected void execute(Event e) {
         if (players == null) return;
         Player[] player = players.getArray(e);
-        Arrays.stream(player).forEach(p -> SkJade.getNmsHandler());
+        SkJade.getNmsHandler().rain(player, rain);
     }
 
     @Override
