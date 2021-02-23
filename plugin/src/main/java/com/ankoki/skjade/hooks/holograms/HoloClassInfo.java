@@ -25,7 +25,7 @@ import java.io.StreamCorruptedException;
 
 public class HoloClassInfo {
 
-    public HoloClassInfo() {
+    static {
         Classes.registerClass(new ClassInfo<>(Hologram.class, "hologram")
         .user("holo(gram)?s?")
         .name("Hologram")

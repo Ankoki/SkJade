@@ -151,7 +151,6 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "conditions",
                     "events"*/);
-            new HoloClassInfo();
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -172,7 +171,6 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "events",
                     "conditions"*/);
-            new EleClassInfo();
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();

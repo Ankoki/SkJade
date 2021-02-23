@@ -9,7 +9,7 @@ import com.ankoki.elementals.managers.Spell;
 
 public class EleClassInfo {
 
-    public EleClassInfo() {
+    static {
         Classes.registerClass(new ClassInfo<>(Spell.class, "spell")
         .user("spell?s?")
         .name("Spell")
