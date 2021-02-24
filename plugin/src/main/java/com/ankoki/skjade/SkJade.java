@@ -4,8 +4,6 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import com.ankoki.skjade.api.NMS;
 import com.ankoki.skjade.commands.SkJadeCmd;
-import com.ankoki.skjade.hooks.elementals.EleClassInfo;
-import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.Config;
 import com.ankoki.skjade.utils.UpdateChecker;
