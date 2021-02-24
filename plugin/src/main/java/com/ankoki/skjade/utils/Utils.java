@@ -80,16 +80,16 @@ public final class Utils {
 
     //testing use 0.3, 0.3, 0.3, 0, 2, 4
     public static String rainbow(String message, double freq1, double freq2, double freq3,
-                                 double phase1, double phase2, double phase3, boolean pastel) {
+                                 double amp1, double amp2, double amp3, boolean pastel) {
         int center = pastel ? 200 : 128;
         int width = pastel ? 55 : 127;
         StringBuilder builder = new StringBuilder();
 
         int i = 0;
         for (String s : message.split("")) {
-            float red = (float) (Math.sin(freq1 * i + phase1) * width + center);
-            float green = (float) (Math.sin(freq2 * i + phase2) * width + center);
-            float blue = (float) (Math.sin(freq3 * i + phase3) * width + center);
+            float red = (float) (Math.sin(freq1 * i + amp1) * width + center);
+            float green = (float) (Math.sin(freq2 * i + amp2) * width + center);
+            float blue = (float) (Math.sin(freq3 * i + amp3) * width + center);
             if (red > 255 || red < 0) red = 0;
             if (green > 255 || green < 0) green = 0;
             if (blue > 255 || blue < 0) blue = 0;
@@ -103,7 +103,6 @@ public final class Utils {
         double frequency = 0.3;
         int amplitude = 127;
         int center = 128;
-
         StringBuilder builder = new StringBuilder();
         int i = 0;
         for (String s : string.split("")) {

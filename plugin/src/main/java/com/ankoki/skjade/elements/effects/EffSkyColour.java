@@ -32,6 +32,7 @@ public class EffSkyColour extends Effect {
         if (numbers == null || players == null) return;
         int i = numbers.getSingle(e).intValue();
         Player[] p = players.getArray(e);
+        if (p.length <= 0) return;
         SkJade.getNmsHandler().changeSkyColour(i, p);
     }
 

@@ -36,7 +36,7 @@ public class NMSHandler implements NMS {
     }
 
     @Override
-    public void rain(Player[] players, boolean rain) {
+    public void setRaining(Player[] players, boolean rain) {
         PacketPlayOutGameStateChange packet = new PacketPlayOutGameStateChange(rain ? PacketPlayOutGameStateChange.c : PacketPlayOutGameStateChange.b, 0);
         Arrays.stream(players).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
     }

@@ -36,7 +36,6 @@ public class EffShowLight extends Effect {
             packet.getIntegers().write(1, l.getChunk().getZ());
             packet.getBooleans().write(0, true);
             packet.getIntegers().write(2, (int) Math.floor(l.getY()));
-            
         }
     }
 

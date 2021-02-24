@@ -14,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-
 
 //thank you pesekjan c:
 @Name("Force Rain")
@@ -36,7 +34,7 @@ public class EffForceRain extends Effect {
     protected void execute(Event e) {
         if (players == null) return;
         Player[] player = players.getArray(e);
-        SkJade.getNmsHandler().rain(player, rain);
+        SkJade.getNmsHandler().setRaining(player, rain);
     }
 
     @Override

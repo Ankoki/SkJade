@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Hologram")
 @Description("A HolographicDisplays Hologram. The ID of every hologram should be unique.")
 @Examples({"event-holo",
-            "the hologram with id \"id\""})
+            "the hologram with id the \"id\""})
 @RequiredPlugins("HolographicDisplays")
 @Since("1.0.0")
 public class ExprHologram extends SimpleExpression<Hologram> {

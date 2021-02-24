@@ -32,6 +32,6 @@ public class NMSHandler implements NMS {
     }
 
     @Override
-    public void rain(Player[] players, boolean rain) {
+    public void setRaining(Player[] players, boolean rain) {
     }
 }

@@ -59,7 +59,7 @@ public class EffSort extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         sort = (Expression<Object>) exprs[0];
         if (exprs[0].isSingle() || !(exprs[1] instanceof Variable) || exprs[1].isSingle()) {
-            Skript.error("You cannot sort a single variable.");
+            Skript.error("You cannot sort a single variable!");
         }
         store = (Expression<Variable<Object>>) exprs[1];
         ascending = parseResult.mark != 1;

@@ -6,5 +6,5 @@ public interface NMS {
     void sendDemo(Player player);
     void playFakeDamage(Player[] of, Player[] to);
     void changeSkyColour(int colour, Player[] who);
-    void rain(Player[] players, boolean rain);
+    void setRaining(Player[] players, boolean rain);
 }
