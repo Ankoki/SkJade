@@ -14,5 +14,6 @@ public class DefaultClassInfo {
         .since("insert version"));
 
         Converters.registerConverter(Character.class, String.class, String::valueOf);
+        Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);
     }
 }
