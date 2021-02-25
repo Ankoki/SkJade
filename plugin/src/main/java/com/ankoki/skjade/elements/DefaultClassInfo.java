@@ -7,7 +7,7 @@ import ch.njol.skript.registrations.Converters;
 public class DefaultClassInfo {
 
     static {
-        Classes.registerClass(new ClassInfo<>(Character.class, "Character")
+        Classes.registerClass(new ClassInfo<>(Character.class, "character")
         .user("char(acter)?s?")
         .name("Character")
         .description("A single character.")

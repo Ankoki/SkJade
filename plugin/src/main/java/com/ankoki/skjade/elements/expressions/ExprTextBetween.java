@@ -21,24 +21,30 @@ public class ExprTextBetween extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprTextBetween.class, String.class, ExpressionType.SIMPLE,
-                "[the] text between %string% from %string%");
+                "[the] text between %character% and %character% (from|in) %string%");
     }
 
-    private Expression<String> between;
+    private Expression<Character> between1;
+    private Expression<Character> between2;
     private Expression<String> string;
 
     @Nullable
     @Override
     protected String[] get(Event e) {
-        if (between == null || string == null) return null;
-        String btwn = between.getSingle(e);
+        if (between1 == null || between2 == null || string == null) return null;
+        String first = String.valueOf(between1.getSingle(e));
+        String second = String.valueOf(between2.getSingle(e));
         String str = string.getSingle(e);
-        if (btwn == null || str == null) return null;
-        String[] split = btwn.split("");
-        if (split.length != 2) return null;
-        String[] spltStr = str.split(split[0]);
-        if (spltStr.length <= 1) return null;
-        return new String[]{spltStr[1].split(split[1])[0]};
+        if (str == null) return null;
+
+        first = illegal(first);
+        second = illegal(second);
+
+        String[] split1 = str.split(first);
+        if (split1.length < 2) return null;
+        String[] split2 = split1[split1.length - 1].split(String.valueOf(second));
+
+        return new String[]{split2[0]};
     }
 
     @Override
@@ -53,13 +59,49 @@ public class ExprTextBetween extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "text between " + between.toString(e, debug) + " from " + string.toString(e, debug);
+        return "text between " + between1.toString(e, debug) + " and " + between2.toString(e, debug) + " from " + string.toString(e, debug);
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        between = (Expression<String>) exprs[0];
-        string = (Expression<String>) exprs[1];
+        between1 = (Expression<Character>) exprs[0];
+        between2 = (Expression<Character>) exprs[1];
+        string = (Expression<String>) exprs[2];
         return true;
+    }
+
+    private String illegal(String s) {
+        switch (s) {
+            case "[":
+                s = "\\[";
+                break;
+            case "(":
+                s = "\\(";
+                break;
+            case "{":
+                s = "\\{";
+                break;
+            case "|":
+                s = "\\|";
+                break;
+            case ".":
+                s = "\\.";
+                break;
+            case "^":
+                s = "\\^";
+                break;
+            case "$":
+                s = "\\$";
+                break;
+            case "*":
+                s = "\\*";
+                break;
+            case "+":
+                s = "\\+";
+                break;
+            case "\\":
+                s = "\\\\";
+        }
+        return s;
     }
 }

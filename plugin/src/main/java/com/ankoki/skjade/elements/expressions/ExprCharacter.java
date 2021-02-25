@@ -21,7 +21,7 @@ public class ExprCharacter extends SimpleExpression<Character> {
 
     static {
         Skript.registerExpression(ExprCharacter.class, Character.class, ExpressionType.SIMPLE,
-                "'<(\\S$)>'");
+                "'<(.)>'");
     }
 
     private String string;
@@ -50,6 +50,10 @@ public class ExprCharacter extends SimpleExpression<Character> {
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        if (parseResult.regexes.get(0).end() > 1) {
+            Skript.error("You can only have one character in ''!");
+            return false;
+        }
         string = parseResult.regexes.get(0).group(1);
         return true;
     }
