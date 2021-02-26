@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-
 //thank you pesekjan c:
 @Name("Force Rain")
 @Description("Make it start/stop raining for players.")

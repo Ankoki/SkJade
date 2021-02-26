@@ -2,10 +2,7 @@ package com.ankoki.skjade.hooks.elementals.effects;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -19,6 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Enchant Item")
 @Description("Add an elementals spell to an item")
 @Examples("add the elementals enchant \"umbrial\" to player's tool")
+@RequiredPlugins("Elementals")
 @Since("1.0.0")
 public class EffEnchantItem extends Effect {
 

@@ -15,8 +15,6 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.Arrays;
-
 /**
  * @author Mr. Darth c: tyty for da help w function parsing<3
  */

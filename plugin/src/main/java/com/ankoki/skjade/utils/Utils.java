@@ -1,6 +1,5 @@
 package com.ankoki.skjade.utils;
 
-import com.ankoki.skjade.SkJade;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -64,18 +63,6 @@ public final class Utils {
             return ROMAN_NUMERALS.get(number);
         }
         return ROMAN_NUMERALS.get(l) + toRoman(number - l);
-    }
-
-    public static boolean versionIsMinimum(Version version) {
-        Version serverVersion = SkJade.getServerVersion();
-        if (serverVersion == null || version == null) return true;
-        int svMaj = Integer.parseInt(serverVersion.name().split("_")[1]);
-        int svMin = Integer.parseInt(serverVersion.name().split("_")[2]);
-        int vMaj = Integer.parseInt(version.name().split("_")[1]);
-        int vMin = Integer.parseInt(version.name().split("_")[2]);
-        int sv = (svMaj * 10) + svMin;
-        int v = (vMaj * 10) + vMin;
-        return sv >= v;
     }
 
     //testing use 0.3, 0.3, 0.3, 0, 2, 4

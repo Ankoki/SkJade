@@ -30,11 +30,10 @@ public class EvtAsyncPreLogin extends SimpleEvent {
                 return e.getUniqueId();
             }
         }, 0);
-        //set login result.
     }
 
     @Override
     public boolean check(Event event) {
-        return true;
+        return event instanceof AsyncPlayerPreLoginEvent;
     }
 }
