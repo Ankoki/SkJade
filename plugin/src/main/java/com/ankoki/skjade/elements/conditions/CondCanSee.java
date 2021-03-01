@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("if player can see loop-player:")
 @Since("1.0")
 public class CondCanSee extends Condition {
-    //TODO Change to property condition
 
     static {
         Skript.registerCondition(CondCanSee.class,
