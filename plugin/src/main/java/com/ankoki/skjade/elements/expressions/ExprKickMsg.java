@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Kick Message")
 @Description("Gets/sets the kick message in an AsyncPlayerPreLoginEvent")
 @Examples("set kick-message to \"lol u got kicked\"")
-@Since("insert version")
+@Since("1.1.0")
 public class ExprKickMsg extends SimpleExpression<String> {
 
     static {

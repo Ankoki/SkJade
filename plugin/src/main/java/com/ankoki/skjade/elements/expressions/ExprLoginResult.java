@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Login Result")
 @Description("Gets/sets the login result for an async prelogin event. Please note this can only be set to \"kick other\", \"allowed\", \"kick banned\", \"kick full\", or \"kick whitelist\"")
 @Examples("broadcast event-login-result")
-@Since("insert version")
+@Since("1.1.0")
 public class ExprLoginResult extends SimpleExpression<String> {
 
     static {

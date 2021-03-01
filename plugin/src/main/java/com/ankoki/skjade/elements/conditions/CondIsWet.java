@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Is Wet")
 @Description("Checks if a player is in any type of liquid.")
 @Examples("if player is wet:")
-@Since("insert version")
+@Since("1.1.0")
 public class CondIsWet extends Condition {
 
     static {

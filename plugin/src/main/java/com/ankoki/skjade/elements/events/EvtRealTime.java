@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 @Name("Real Time")
 @Description("An event called at a real time, GMT time.")
 @Examples("when it's 12:15 in the real world:")
-@Since("insert version")
+@Since("1.1.0")
 public class EvtRealTime extends SkriptEvent {
     private static final DateFormat format = new SimpleDateFormat("HH:mm");
 

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Force Rain")
 @Description("Make it start/stop raining for players.")
 @Examples("make the rain stop for {queue::*}")
-@Since("insert version")
+@Since("1.1.0")
 public class EffForceRain extends Effect {
 
     static {

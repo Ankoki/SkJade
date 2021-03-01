@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Exact Target Block")
 @Description("Gets the exact target block of player.")
 @Examples("set {-target::%player's uuid%} to player's exact target block")
-@Since("insert version")
+@Since("1.1.0")
 public class ExprExactTargetBlock extends SimpleExpression<Block> {
 
     static {

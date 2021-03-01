@@ -46,7 +46,7 @@ public class DefaultClassInfo {
         .user("char(acter)?s?")
         .name("Character")
         .description("A single character.")
-        .since("insert version"));
+        .since("1.1.0"));
 
         Converters.registerConverter(Character.class, String.class, String::valueOf);
         Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);

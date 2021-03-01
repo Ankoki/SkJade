@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Change the Sky Colour")
 @Description("Changes the sky colour for players. The maximum number is 200 to make sure clients aren't crashed.")
 @Examples("change the sky colour to 5 for all players")
-@Since("insert version")
+@Since("1.1.0")
 @RequiredPlugins("1.16+")
 public class EffSkyColour extends Effect {
 

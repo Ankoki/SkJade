@@ -17,12 +17,12 @@ import java.util.UUID;
 @Name("Async PreLogin")
 @Description("Called when a player is connecting/logging on. You cannot get the player here.")
 @Examples("on async player pre-login:")
-@Since("insert version")
+@Since("1.1.0")
 public class EvtAsyncPreLogin extends SimpleEvent {
 
     static {
         Skript.registerEvent("Async PreLogin", EvtAsyncPreLogin.class, AsyncPlayerPreLoginEvent.class,
-                "on [async] [player] pre( |-)login");
+                "[async] [player] pre( |-)login");
         EventValues.registerEventValue(AsyncPlayerPreLoginEvent.class, UUID.class, new Getter<UUID, AsyncPlayerPreLoginEvent>() {
             @Nullable
             @Override

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Lasagna")
 @Description("Lasagna.")
 @Examples("lasagna")
-@Since("insert version")
+@Since("1.1.0")
 public class EffLasagna extends Effect {
 
     static {

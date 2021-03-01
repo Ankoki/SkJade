@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Inet Address")
 @Description("Used for event-address in the AsyncPlayerPreLoginEvent")
 @Examples("send \"event-address\"")
-@Since("insert version")
+@Since("1.1.0")
 public class ExprInetAddress extends SimpleExpression<String> {
 
     static {
