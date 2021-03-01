@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 //thank you pesekjan c:
 @Name("Change the Sky Colour")
-@Description("Changes the sky colour for players. Rain has to be on for this to work.")
+@Description("Changes the sky colour for players. The maximum number is 200 to make sure clients aren't crashed.")
 @Examples("change the sky colour to 5 for all players")
 @Since("insert version")
 @RequiredPlugins("1.16+")
@@ -33,6 +33,7 @@ public class EffSkyColour extends Effect {
         int i = numbers.getSingle(e).intValue();
         Player[] p = players.getArray(e);
         if (p.length <= 0) return;
+        i = Math.min(i, 200);
         SkJade.getNmsHandler().changeSkyColour(i, p);
     }
 

@@ -9,7 +9,9 @@ import com.ankoki.skjade.utils.Config;
 import com.ankoki.skjade.utils.UpdateChecker;
 import com.ankoki.skjade.utils.Utils;
 import com.ankoki.skjade.utils.Version;
+import com.ankoki.skjade.utils.events.RealTimeEvent;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -17,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /** IMPORTANT
@@ -85,6 +88,7 @@ public class SkJade extends JavaPlugin {
         metrics = new Metrics(this, pluginId);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
         this.loadServerVersion();
+        this.startRealTime();
         logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
                 version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
@@ -226,5 +230,9 @@ public class SkJade extends JavaPlugin {
 
     public static Config getOwnConfig() {
         return config;
+    }
+
+    private void startRealTime() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getPluginManager().callEvent(new RealTimeEvent(new Date())), 0L, 20 * 60L);
     }
 }
