@@ -208,10 +208,6 @@ public class SkJade extends JavaPlugin {
         return version;
     }
 
-    public static Version getServerVersion() {
-        return serverVersion;
-    }
-
     public static SkJade getInstance() {
         return instance;
     }
