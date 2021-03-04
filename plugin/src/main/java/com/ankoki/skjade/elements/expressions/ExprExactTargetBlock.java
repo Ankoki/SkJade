@@ -2,6 +2,8 @@ package com.ankoki.skjade.elements.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.aliases.ItemType;
+import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -11,6 +13,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -65,5 +68,23 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
         }
         player = (Expression<Player>) exprs[0];
         return true;
+    }
+
+    @Nullable
+    @Override
+    public Class<?>[] acceptChange(ChangeMode mode) {
+        return mode == ChangeMode.SET ? CollectionUtils.array(ItemType.class) : null;
+    }
+
+    @Override
+    public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
+        if (mode == ChangeMode.SET && delta != null && delta.length >= 1 && delta[0] instanceof ItemType) {
+            ItemType item = (ItemType) delta[0];
+            Block[] target = get(e);
+            if (target.length < 1) return;
+            Block block = target[0];
+            if (block == null) return;
+            block.setType(item.getMaterial());
+        }
     }
 }
