@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Can See")
 @Description("Checks if a living entity can see another living entity.")
 @Examples("if player can see loop-player:")
-@Since("1.0")
+@Since("1.0.0")
 public class CondCanSee extends Condition {
 
     static {
