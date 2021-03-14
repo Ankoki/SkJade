@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.utils.Shapes;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -43,13 +44,13 @@ public class ExprStar extends SimpleExpression<Location> {
         double d = density.getSingle(event).doubleValue();
         if (c == null) return null;
         if (p < 2) return new Location[]{c};
-        List<Location> points = Utils.getStarPoints(c, r, p);
+        List<Location> points = Shapes.getStarPoints(c, r, p);
         List<Location> allLines = new ArrayList<>();
         for (int i = 0; i < points.size(); i++) {
             int pI1 = (i + 2) > (points.size() - 1) ? ((i + 2) == points.size() ? 0 : 1) : (i + 2);
             int pI2 = (i - 2) < 0 ? ((i - 2) == -1 ? (points.size() - 1) : (points.size() - 2)) : (i - 2);
-            allLines.addAll(Utils.getLine(points.get(i), points.get(pI1), 1 / d));
-            allLines.addAll(Utils.getLine(points.get(i), points.get(pI2), 1 / d));
+            allLines.addAll(Shapes.getLine(points.get(i), points.get(pI1), 1 / d));
+            allLines.addAll(Shapes.getLine(points.get(i), points.get(pI2), 1 / d));
         }
         return allLines.toArray(new Location[0]);
     }

@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.utils.Shapes;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -37,7 +38,7 @@ public class ExprCircle extends SimpleExpression<Location> {
         double r = radius.getSingle(event).doubleValue();
         double t = total == null ? r * 10 : total.getSingle(event).doubleValue();
         if (c == null) return null;
-        return Utils.getCircle(c, r, t).toArray(new Location[0]);
+        return Shapes.getCircle(c, r, t).toArray(new Location[0]);
     }
 
     @Override

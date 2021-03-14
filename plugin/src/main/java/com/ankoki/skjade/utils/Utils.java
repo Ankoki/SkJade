@@ -1,5 +1,6 @@
 package com.ankoki.skjade.utils;
 
+import ch.njol.util.VectorMath;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,6 +15,7 @@ import java.util.TreeMap;
 public final class Utils {
     private Utils(){}
     private static final double _2PI = 6.283185307179586;
+    private static final double _3PI = Math.PI + Math.PI + Math.PI;
     private static final TreeMap<Integer, String> ROMAN_NUMERALS = new TreeMap<>();
 
     static {
@@ -98,52 +100,6 @@ public final class Utils {
             i++;
         }
         return builder.toString();
-    }
-
-    public static List<Location> getCircle(Location centre, double radius, double totalBlocks) {
-        World world = centre.getWorld();
-        double increment = _2PI/totalBlocks;
-        List<Location> locations = new ArrayList<>();
-        for (int i = 0; i < totalBlocks; i++) {
-            double angle = i * increment;
-            double x = centre.getX() + (radius * Math.cos(angle));
-            double z = centre.getZ() + (radius * Math.sin(angle));
-            locations.add(new Location(world, x, centre.getY(), z));
-        }
-        return locations;
-    }
-
-    public static List<Location> getStarPoints(Location center, double radius, int vertices) {
-        List<Location> locations = new ArrayList<>();
-        double delta = _2PI / vertices;
-        boolean bug = false;
-        for (double theta = 0; theta < _2PI; theta += delta) {
-            if (!bug && vertices == 6) {
-                bug = true;
-                continue;
-            }
-            Vector offset = new Vector(Math.sin(theta) * radius, 0, Math.cos(theta) * radius);
-            //gigi said suck it twink
-            Location vertex = center.clone();
-            vertex.add(offset);
-            if (!locations.contains(vertex)) {
-                locations.add(vertex);
-            }
-        }
-        return locations;
-    }
-
-    public static List<Location> getLine(Location loc1, Location loc2, double space) {
-        List<Location> points = new ArrayList<>();
-        double distance = loc1.distance(loc2);
-        Vector p1 = loc1.toVector();
-        Vector p2 = loc2.toVector();
-        Vector vector = p2.clone().subtract(p1).normalize().multiply(space);
-        for (double length = 0; length < distance; p1.add(vector)) {
-            points.add(p1.toLocation(loc1.getWorld()));
-            length += space;
-        }
-        return points;
     }
 
     public enum SpellType {
