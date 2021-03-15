@@ -3,9 +3,10 @@ package com.ankoki.skjade.elements.expressions;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
-import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.utils.Shapes;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
@@ -14,13 +15,21 @@ public class ExprCone extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprCone.class, Location.class, ExpressionType.SIMPLE,
-                "[a] cone with [a] radius %number% and [a] height [of] %number%");
+                "[a] cone (with [a] cent(re|er) [of]|around) %location%(,| and) [a] radius [of] %number%[(,| and)] [a] height [of] %number%[(,| and)] [a] density [of] %number%");
     }
+
+    private Expression<Location> centre;
+    private Expression<Number> radius, height, density;
 
     @Nullable
     @Override
     protected Location[] get(Event e) {
-        return new Location[0];
+        if (centre == null || radius == null || height == null || density == null) return null;
+        Location l = centre.getSingle(e);
+        double r = radius.getSingle(e).doubleValue();
+        double h = height.getSingle(e).doubleValue();
+        double d = density.getSingle(e).doubleValue();
+        return Shapes.drawCone(l, r, h, d, 100).toArray(new Location[0]);
     }
 
     @Override
@@ -30,16 +39,20 @@ public class ExprCone extends SimpleExpression<Location> {
 
     @Override
     public Class<? extends Location> getReturnType() {
-        return null;
+        return Location.class;
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return null;
+        return "do this lol";
     }
 
     @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        return false;
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        centre = (Expression<Location>) exprs[0];
+        radius = (Expression<Number>) exprs[1];
+        height = (Expression<Number>) exprs[2];
+        density = (Expression<Number>) exprs[3];
+        return true;
     }
 }

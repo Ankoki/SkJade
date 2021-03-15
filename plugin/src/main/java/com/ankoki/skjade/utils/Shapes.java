@@ -122,16 +122,20 @@ public class Shapes {
      * @param centre The centre of the bottom of the cone.
      * @param radius The radius of the face.
      * @param height The height of the cone.
+     * @param density The density of the cone.
      * @param pointsPerCircle The amount of points per circle.
      * @return A list of locations to make up a cone.
      */
-    public static List<Location> drawCone(Location centre, double radius, double height, double pointsPerCircle) {
+    public static List<Location> drawCone(Location centre, double radius, double height, double density, double pointsPerCircle) {
         List<Location> points = new ArrayList<>();
-        double interval = radius / height;
-        for (int i = 0; i < height; i++) {
+        double space = 1 / density;
+        double amount = height / space;
+        double interval = radius / amount;
+        for (int i = 0; i <= amount; i++) {
+            centre.add(0, space, 0);
             points.addAll(Shapes.getCircle(centre, radius, pointsPerCircle));
-            radius =- interval;
+            radius = radius - interval;
         }
         return points;
     }
-}
+}I
