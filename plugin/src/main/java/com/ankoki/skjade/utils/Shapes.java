@@ -13,7 +13,7 @@ public class Shapes {
     private static final double _3PI = Math.PI + Math.PI + Math.PI;
 
     /**
-     * A method to get all the points to make up a giant donut looking thing.
+     * (W.I.P) A method to get all the points to make up a giant donut looking thing.
      *
      * @param centre The center of the torus.
      * @param majorRadius The radius of the outside.
@@ -69,7 +69,7 @@ public class Shapes {
     }
 
     /**
-     * A list of locations of the points of a star.
+     * A method to get a list of locations of the points of a star.
      *
      * @param centre The centre of the star.
      * @param radius The radius of the circle which makes up the outer edge of the star.
@@ -96,7 +96,7 @@ public class Shapes {
     }
 
     /**
-     * Returns a list of locations to make up a line.
+     * A method to get a list of locations to make up a line.
      *
      * @param pointOne The first point of the line.
      * @param pointTwo The second point of the line.
@@ -112,6 +112,25 @@ public class Shapes {
         for (double length = 0; length < distance; p1.add(vector)) {
             points.add(p1.toLocation(pointOne.getWorld()));
             length += space;
+        }
+        return points;
+    }
+
+    /**
+     * (W.I.P) A method to get a list of locations to make up a cone.
+     *
+     * @param centre The centre of the bottom of the cone.
+     * @param radius The radius of the face.
+     * @param height The height of the cone.
+     * @param pointsPerCircle The amount of points per circle.
+     * @return A list of locations to make up a cone.
+     */
+    public static List<Location> drawCone(Location centre, double radius, double height, double pointsPerCircle) {
+        List<Location> points = new ArrayList<>();
+        double interval = radius / height;
+        for (int i = 0; i < height; i++) {
+            points.addAll(Shapes.getCircle(centre, radius, pointsPerCircle));
+            radius =- interval;
         }
         return points;
     }
