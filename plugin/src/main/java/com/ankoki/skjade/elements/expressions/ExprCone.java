@@ -1,6 +1,10 @@
 package com.ankoki.skjade.elements.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -11,6 +15,10 @@ import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Cone")
+@Description("Returns a list of locations to make up a cone.")
+@Examples("show blue dust at cone around player, radius 5, height 8 and density 10")
+@Since("insert version")
 public class ExprCone extends SimpleExpression<Location> {
 
     static {
@@ -44,7 +52,8 @@ public class ExprCone extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "do this lol";
+        return "cone around " + centre.toString(e, debug) + ", a radius of " + radius.toString(e, debug) + ", height of " +
+                height.toString(e, debug) + " and density of " + density.toString(e, debug);
     }
 
     @Override
