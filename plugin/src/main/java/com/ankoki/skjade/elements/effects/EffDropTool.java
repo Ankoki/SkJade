@@ -14,7 +14,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Drop Item")
-@Description("Makes the player drop one of their current item, or the whole stack.")
+@Description("Makes the player drop one of their current item, or their inventory.")
 @Examples("make event-player drop their current item")
 @Since("1.0.0")
 public class EffDropTool extends Effect {
