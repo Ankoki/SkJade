@@ -117,7 +117,7 @@ public class Shapes {
     }
 
     /**
-     * (W.I.P) A method to get a list of locations to make up a cone.
+     * A method to get a list of locations to make up a cone.
      *
      * @param centre The centre of the bottom of the cone.
      * @param radius The radius of the face.
