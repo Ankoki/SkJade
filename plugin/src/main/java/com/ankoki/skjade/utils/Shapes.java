@@ -12,6 +12,51 @@ public class Shapes {
     private static final double _2PI = 6.283185307179586;
     private static final double _3PI = Math.PI + Math.PI + Math.PI;
 
+    /*
+function torus(center: location, majorRadius: number, minorRadius: number, density: number = 1) :: locations:
+    set {_pointsOnMajorCircle} to 6.283185307179586 * {_majorRadius} * {_density}
+    set {_pointsOnMinorCircle} to 6.283185307179586 * {_minorRadius} * {_density}
+    set {_deltaMajor} to 360 / {_pointsOnMajorCircle}
+    set {_deltaMinor} to 360 / {_pointsOnMinorCircle}
+    set {_thetaMajor} to 0
+    loop {_pointsOnMajorCircle} times:
+        set {_tubeOffset} to vector (cos({_thetaMajor}) * {_majorRadius}), 0, (sin({_thetaMajor}) * {_majorRadius})
+        set {_tube} to {_center} ~ {_tubeOffset}
+        set {_rotationAngle} to 540 - {_thetaMajor}
+        set {_thetaMinor} to 0
+        loop {_pointsOnMinorCircle} times:
+            set {_offset} to vector (cos({_thetaMinor}) * {_minorRadius}), (sin({_thetaMinor}) * {_minorRadius}), 0
+            rotate {_offset} around y-axis by {_rotationAngle}
+            set {_points::%loop-value-1%/%loop-value-2%} to {_tube} ~ {_offset}
+            add {_deltaMinor} to {_thetaMinor}
+        add {_deltaMajor} to {_thetaMajor}
+    return {_points::*}
+     */
+    public static List<Location> getTorus2(Location centre, double majorRadius, double minorRadius, double density) {
+        List<Location> points = new ArrayList<>();
+        double majorPoints = _2PI * majorRadius * density;
+        double minorPoints = _2PI * minorRadius * density;
+        double deltaMajor = _2PI / majorPoints;
+        double deltaMinor = _2PI / minorPoints;
+        double thetaMajor = 0;
+        for (int i = 0; i < majorPoints; i++) {
+            Vector tubeOffset = new Vector(Math.cos(thetaMajor) * minorRadius, 0, Math.sin(thetaMajor * majorRadius));
+            Location clone = centre.clone();
+            Location tube = clone.add(tubeOffset);
+            double rotAngle = 540 - thetaMajor;
+            double thetaMinor = 0;
+            for (int ii = 0; ii < minorPoints; ii++) {
+                Vector offset = new Vector(Math.cos(thetaMinor) * minorRadius, Math.sin(thetaMinor) * minorRadius, 0);
+                VectorMath.rotY(offset, rotAngle);
+                Location fin = tube.clone();
+                fin.add(offset);
+                points.add(fin);
+                thetaMinor += deltaMinor;
+            }
+            thetaMajor += deltaMajor;
+        }
+        return points;
+    }
     /**
      * (W.I.P) A method to get all the points to make up a giant donut looking thing.
      *
