@@ -11,17 +11,19 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.utils.Shapes;
-import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 @Name("Torus/Giant Donut")
 @Description("Returns the locations to make up a giant donut/torus.")
-@Examples("play happy villager at a giant donut around player's location with major radius 5 and minor radius 2")
+@Examples("play green spark at a giant donut around player's location with major radius 5 and minor radius 2")
 @Since("insert version")
 public class ExprTorus extends SimpleExpression<Location> {
 
+    /*
+!play green spark at a giant donut around player's location with major radius 5 and minor radius 2
+     */
     static {
         Skript.registerExpression(ExprTorus.class, Location.class, ExpressionType.SIMPLE,
                 "[a] (torus|[giant ]donut) around %location% with [a] major radius [of] %number% and [a] minor radius [of] %number% [with [a] density [of] %-number%]");
@@ -41,7 +43,7 @@ public class ExprTorus extends SimpleExpression<Location> {
         double minor = minorRadius.getSingle(e).doubleValue();
         double d = density == null ? 1 : density.getSingle(e).doubleValue();
         if (loc == null) return null;
-        return Shapes.getTorus(loc, major, minor, d).toArray(new Location[0]);
+        return Shapes.getTorus2(loc, major, minor, d).toArray(new Location[0]);
     }
 
     @Override

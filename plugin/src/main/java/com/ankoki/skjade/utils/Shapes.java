@@ -41,9 +41,9 @@ function torus(center: location, majorRadius: number, minorRadius: number, densi
         double thetaMajor = 0;
         for (int i = 0; i < majorPoints; i++) {
             Vector tubeOffset = new Vector(Math.cos(thetaMajor) * minorRadius, 0, Math.sin(thetaMajor * majorRadius));
-            Location clone = centre.clone();
-            Location tube = clone.add(tubeOffset);
-            double rotAngle = 540 - thetaMajor;
+            Location tube = centre.clone();
+            tube.add(tubeOffset);
+            double rotAngle = _3PI - thetaMajor;
             double thetaMinor = 0;
             for (int ii = 0; ii < minorPoints; ii++) {
                 Vector offset = new Vector(Math.cos(thetaMinor) * minorRadius, Math.sin(thetaMinor) * minorRadius, 0);
@@ -173,12 +173,13 @@ function torus(center: location, majorRadius: number, minorRadius: number, densi
      */
     public static List<Location> drawCone(Location centre, double radius, double height, double density, double pointsPerCircle) {
         List<Location> points = new ArrayList<>();
+        Location loc = centre.clone();
         double space = 1 / density;
         double amount = height / space;
         double interval = radius / amount;
         for (int i = 0; i <= amount; i++) {
-            centre.add(0, space, 0);
-            points.addAll(Shapes.getCircle(centre, radius, pointsPerCircle));
+            loc.add(0, space, 0);
+            points.addAll(Shapes.getCircle(loc, radius, pointsPerCircle));
             radius = radius - interval;
         }
         return points;
