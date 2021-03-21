@@ -32,13 +32,9 @@ public class HologramManager {
     }
 
     public static void deleteHologram(Hologram... holograms) {
-        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
-            for (Hologram hologram : holograms) {
-                if (entry.getValue() == hologram) allHolograms.remove(entry.getKey());
-                if (!hologram.isDeleted()) {
-                    hologram.delete();
-                }
-            }
+        for (Hologram hologram : holograms) {
+            allHolograms.entrySet().removeIf(entry -> entry.getValue().equals(hologram));
+            if (!hologram.isDeleted()) hologram.delete();
         }
     }
 
