@@ -67,9 +67,8 @@ public final class Utils {
         return ROMAN_NUMERALS.get(l) + toRoman(number - l);
     }
 
-    //testing use 0.3, 0.3, 0.3, 0, 2, 4
     public static String rainbow(String message, double freq1, double freq2, double freq3,
-                                 double amp1, double amp2, double amp3, boolean pastel) {
+                                 double amp1, double amp2, double amp3, boolean pastel, boolean bold) {
         int center = pastel ? 200 : 128;
         int width = pastel ? 55 : 127;
         StringBuilder builder = new StringBuilder();
@@ -82,13 +81,15 @@ public final class Utils {
             if (red > 255 || red < 0) red = 0;
             if (green > 255 || green < 0) green = 0;
             if (blue > 255 || blue < 0) blue = 0;
-            builder.append(net.md_5.bungee.api.ChatColor.of(new Color((int) red, (int) green, (int) blue))).append(s);
+            builder.append(net.md_5.bungee.api.ChatColor.of(new Color((int) red, (int) green, (int) blue)));
+            if (bold) builder.append("§l");
+            builder.append(s);
             i++;
         }
         return builder.toString();
     }
 
-    public static String monochrome(String string) {
+    public static String monochrome(String string, boolean bold) {
         double frequency = 0.3;
         int amplitude = 127;
         int center = 128;
@@ -96,7 +97,9 @@ public final class Utils {
         int i = 0;
         for (String s : string.split("")) {
             double v = Math.sin(frequency * i) * amplitude + center;
-            builder.append(net.md_5.bungee.api.ChatColor.of(new Color((int) v, (int) v, (int) v))).append(s);
+            builder.append(net.md_5.bungee.api.ChatColor.of(new Color((int) v, (int) v, (int) v)));
+            if (bold) builder.append("§l");
+            builder.append(s);
             i++;
         }
         return builder.toString();
