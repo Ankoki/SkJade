@@ -55,6 +55,8 @@ public class Config {
             }
             if (hasUpdated)
                 config.save(cfile);
+            is.close();
+            stream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
