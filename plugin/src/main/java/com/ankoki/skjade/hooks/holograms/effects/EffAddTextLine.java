@@ -11,6 +11,8 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Arrays;
+
 @Name("Add Text Line")
 @Description("Adds a line of text to the hologram.")
 @Examples("add line \"This is a hologram!\" to the hologram with id \"testHolo\"")
@@ -20,7 +22,7 @@ public class EffAddTextLine extends Effect {
 
     static {
         Skript.registerEffect(EffAddTextLine.class,
-                "add [the] [text] line %string% to %hologram%");
+                "add [the] [text] line %strings% to %hologram%");
     }
 
     private Expression<String> line;
@@ -29,9 +31,9 @@ public class EffAddTextLine extends Effect {
     @Override
     protected void execute(Event event) {
         Hologram holo = hologram.getSingle(event);
-        String text = line.getSingle(event);
-        if (holo == null || text == null) return;
-        HologramManager.addTextLine(holo, text);
+        String[] text = line.getArray(event);
+        if (holo == null || text.length < 1) return;
+        Arrays.stream(text).forEach(l -> HologramManager.addTextLine(holo, l));
     }
 
     @Override
