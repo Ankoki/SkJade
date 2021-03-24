@@ -24,7 +24,7 @@ public class EffSetPasteText extends Effect {
 
     static {
         Skript.registerEffect(EffSetPasteText.class,
-                "set [the] [raw] text of %pastes% to %string%");
+                "set [the] [raw] text of %pastes% to %strings%");
     }
 
     private Expression<PasteBuilder> pasteBuilder;
@@ -33,9 +33,13 @@ public class EffSetPasteText extends Effect {
     @Override
     protected void execute(Event e) {
         PasteBuilder[] builders = pasteBuilder.getArray(e);
-        String s = text.getSingle(e);
-        if (s == null || s.isEmpty() || builders.length < 1) return;
-        Arrays.stream(builders).forEach(builder -> PasteManager.setText(builder, s));
+        String[] strs = text.getArray(e);
+        if (strs.length < 1 || builders.length < 1) return;
+        StringBuilder b = new StringBuilder();
+        for (String s : strs) {
+            b.append(s).append("\n");
+        }
+        Arrays.stream(builders).forEach(builder -> PasteManager.setText(builder, b.toString()));
     }
 
     @Override
