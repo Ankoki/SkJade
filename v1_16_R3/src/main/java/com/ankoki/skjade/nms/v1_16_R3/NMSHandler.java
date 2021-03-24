@@ -1,9 +1,8 @@
 package com.ankoki.skjade.nms.v1_16_R3;
 
 import com.ankoki.skjade.api.NMS;
-import net.minecraft.server.v1_16_R3.EntityPlayer;
-import net.minecraft.server.v1_16_R3.PacketPlayOutAnimation;
-import net.minecraft.server.v1_16_R3.PacketPlayOutGameStateChange;
+import net.minecraft.server.v1_16_R3.*;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -39,5 +38,16 @@ public class NMSHandler implements NMS {
     public void setRaining(Player[] players, boolean rain) {
         PacketPlayOutGameStateChange packet = new PacketPlayOutGameStateChange(rain ? PacketPlayOutGameStateChange.c : PacketPlayOutGameStateChange.b, 0);
         Arrays.stream(players).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
+    }
+
+    @Override
+    public void showMiningStage(int stage, Location[] locations, Player[] players, boolean remove) {
+        stage = Math.min(stage, 9);
+        stage = Math.max(stage, 0);
+        if (remove) stage = 100;
+        for (Location loc : locations) {
+            PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(loc.getX(), loc.getY(), loc.getZ()), stage);
+            Arrays.stream(players).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
+        }
     }
 }
