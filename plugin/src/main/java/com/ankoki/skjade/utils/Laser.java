@@ -175,7 +175,8 @@ public class Laser {
         private static int lastIssuedEID = 2000000000;
 
         static int generateEID() {
-            return lastIssuedEID++;
+            lastIssuedEID = lastIssuedEID + 1;
+            return lastIssuedEID;
         }
 
         private static String[] versions = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3].substring(1).split("_");
@@ -257,7 +258,7 @@ public class Laser {
                 packetMetadata = Class.forName(npack + "PacketPlayOutEntityMetadata");
 
                 packetTeamCreate = packetTeam.newInstance();
-                setField(packetTeamCreate, "a", "noclip");
+                setField(packetTeamCreate, "a", "noclip-" + System.nanoTime());
                 setField(packetTeamCreate, "i", 0);
                 setField(packetTeamCreate, "f", "never");
 
@@ -340,7 +341,7 @@ public class Laser {
 
         public static Object createPacketTeamAddEntities(UUID squidUUID, UUID guardianUUID) throws ReflectiveOperationException {
             Object packet = packetTeam.newInstance();
-            setField(packet, "a", "noclip");
+            setField(packet, "a", "noclip-" + System.nanoTime());
             setField(packet, "i", 3);
             Collection<String> players = (Collection<String>) getField(packetTeam, "h", packet);
             players.add(squidUUID.toString());
