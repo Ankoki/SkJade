@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Show Mining Stage")
 @Description("Shows the block break animation/stage to players.")
 @Examples("show mining stage 5 at player's target block")
-@Since("insert version")
+@Since("1.2.0")
 public class EffShowMiningStage extends Effect {
 
     static {

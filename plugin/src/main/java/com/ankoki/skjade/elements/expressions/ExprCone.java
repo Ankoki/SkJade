@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Cone")
 @Description("Returns a list of locations to make up a cone.")
 @Examples("show blue dust at cone around player, radius 5, height 8 and density 10")
-@Since("insert version")
+@Since("1.2.0")
 public class ExprCone extends SimpleExpression<Location> {
 
     static {

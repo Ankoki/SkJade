@@ -1,4 +1,4 @@
-package com.ankoki.skjade.elements;
+package com.ankoki.skjade.elements.utils;
 
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
@@ -7,6 +7,7 @@ import ch.njol.skript.registrations.Converters;
 import ch.njol.util.coll.CollectionUtils;
 import com.ankoki.pastebinapi.api.PasteBuilder;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
+import com.ankoki.skjade.utils.Laser;
 import org.jetbrains.annotations.Nullable;
 
 public class DefaultClassInfo {
@@ -50,5 +51,13 @@ public class DefaultClassInfo {
 
         Converters.registerConverter(Character.class, String.class, String::valueOf);
         Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);
+
+        //Laser Classinfo
+        Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
+                .user("laser?s?")
+                .name("Laser")
+                .description("A guardian beam.")
+                .since("insert version"));
+
     }
 }
