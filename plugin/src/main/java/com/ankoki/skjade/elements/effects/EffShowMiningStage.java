@@ -24,11 +24,11 @@ public class EffShowMiningStage extends Effect {
 
     static {
         Skript.registerEffect(EffShowMiningStage.class,
-                "(show|play) (mining|block break) (stage|animation) %number% at %locations% [to %-players%]",
+                "(show|play) (mining|block break) (stage|animation) %number% at %locations% [to %-players%] [(1¦with the entity id %-number%|)]",
                 "remove [the] (mining|block break) (stage|animation) at %locations% [for %-players%]");
     }
 
-    private Expression<Number> stage;
+    private Expression<Number> stage, entityId;
     private Expression<Location> location;
     private Expression<Player> players;
     private boolean remove = false;
@@ -40,10 +40,14 @@ public class EffShowMiningStage extends Effect {
         if (stage != null) {
             i = stage.getSingle(e).intValue();
         }
+        int ent = 0;
+        if (entityId != null) {
+            ent = entityId.getSingle(e).intValue();
+        }
         Location[] locs = location.getArray(e);
         Player[] ps = players != null ? players.getArray(e) : Bukkit.getOnlinePlayers().toArray(new Player[0]);
         if (locs.length < 1) return;
-        SkJade.getNmsHandler().showMiningStage(i, locs, ps, remove);
+        SkJade.getNmsHandler().showMiningStage(i, locs, ps, ent, remove);
     }
 
     @Override
@@ -57,7 +61,14 @@ public class EffShowMiningStage extends Effect {
         if (matchedPattern == 0) {
             stage = (Expression<Number>) exprs[0];
             location = (Expression<Location>) exprs[1];
-            if (exprs.length > 2) players = (Expression<Player>) exprs[2];
+            if (exprs.length == 3 && parseResult.mark == 1) {
+                entityId = (Expression<Number>) exprs[2];
+            } else if (exprs.length == 3) {
+                players = (Expression<Player>) exprs[2];
+            } else if (exprs.length == 4) {
+                players = (Expression<Player>) exprs[2];
+                entityId = (Expression<Number>) exprs[3];
+            }
         } else {
             remove = true;
             location = (Expression<Location>) exprs[0];

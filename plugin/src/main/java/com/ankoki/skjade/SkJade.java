@@ -77,6 +77,9 @@ public class SkJade extends JavaPlugin {
                 logger.info("Elementals was found! However it is an early version! Please upgrade to atleast 1.4.");
             }
         }
+        if (Config.LASERS_ENABLED) {
+            this.loadLaserElements();
+        }
         this.registerListeners(new PlayerJoin());
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
@@ -133,11 +136,11 @@ public class SkJade extends JavaPlugin {
 
     private boolean loadElements() {
         try {
-            addon.loadClasses("com.ankoki.skjade.elements"/*,
+            addon.loadClasses("com.ankoki.skjade.elements",
                     "expressions",
                     "effects",
                     "events",
-                    "conditions"*/);
+                    "conditions");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -153,6 +156,17 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "conditions",
                     "events"*/);
+        } catch (IOException ex) {
+            logger.info("Something went horribly wrong!");
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean loadLaserElements() {
+        try {
+            addon.loadClasses("com.ankoki.skjade.elements.lasers");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();

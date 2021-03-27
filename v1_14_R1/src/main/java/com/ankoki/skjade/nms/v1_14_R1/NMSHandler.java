@@ -37,12 +37,12 @@ public class NMSHandler implements NMS {
     }
 
     @Override
-    public void showMiningStage(int stage, Location[] locations, Player[] players, boolean remove) {
+    public void showMiningStage(int stage, Location[] locations, Player[] players, int entityId, boolean remove) {
         stage = Math.min(stage, 9);
         stage = Math.max(stage, 0);
         if (remove) stage = 100;
         for (Location loc : locations) {
-            PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(0, new BlockPosition(loc.getX(), loc.getY(), loc.getZ()), stage);
+            PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(entityId, new BlockPosition(loc.getX(), loc.getY(), loc.getZ()), stage);
             Arrays.stream(players).forEach(p -> ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet));
         }
     }
