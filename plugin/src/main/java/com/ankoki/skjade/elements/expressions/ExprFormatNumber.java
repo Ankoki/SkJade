@@ -13,6 +13,8 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.NumberFormat;
+
 @Name("Formatted Number")
 @Description("Formats a number over 999 to be in readable form, such as 2000 -> 2,000")
 @Examples("broadcast \"%player%'s Balance: $%formatted number {eco::%%player's uuid%%}%")
@@ -21,7 +23,7 @@ public class ExprFormatNumber extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprFormatNumber.class, String.class, ExpressionType.SIMPLE,
-                "[the] format[ted [number]] %number%");
+                "[the] formatted number %number%");
     }
 
     private Expression<Number> number;
@@ -31,13 +33,7 @@ public class ExprFormatNumber extends SimpleExpression<String> {
     protected String[] get(Event e) {
         if (number == null) return null;
         double num = number.getSingle(e).doubleValue();
-        String n = "" + num;
-        String[] split = n.split("(?<=\\d(?=(\\d{3}) (?!\\d)))");
-        StringBuilder builder = new StringBuilder();
-        for (String s : split) {
-            builder.append(s).append(",");
-        }
-        return new String[]{builder.toString()};
+        return new String[]{NumberFormat.getInstance().format(num)};
     }
 
     @Override

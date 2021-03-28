@@ -1,4 +1,4 @@
-package com.ankoki.skjade.elements.utils;
+package com.ankoki.skjade.elements.lasers;
 
 import com.ankoki.skjade.utils.Laser;
 

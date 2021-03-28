@@ -2,13 +2,17 @@ package com.ankoki.skjade;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
+import ch.njol.skript.classes.Changer;
+import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.registrations.Converters;
+import ch.njol.util.coll.CollectionUtils;
+import com.ankoki.pastebinapi.api.PasteBuilder;
 import com.ankoki.skjade.api.NMS;
 import com.ankoki.skjade.commands.SkJadeCmd;
+import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import com.ankoki.skjade.listeners.PlayerJoin;
-import com.ankoki.skjade.utils.Config;
-import com.ankoki.skjade.utils.UpdateChecker;
-import com.ankoki.skjade.utils.Utils;
-import com.ankoki.skjade.utils.Version;
+import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -16,14 +20,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Logger;
 
-/** IMPORTANT
- *
+/**
+ * IMPORTANT
+ * <p>
  * SkJade is named SkJade because Jade West from Victorious is absolutely
  * gorgeous. We love Liz Gillies. Ok bye now <3
  */
@@ -56,7 +62,8 @@ public class SkJade extends JavaPlugin {
             return;
         }
         config = new Config(this);
-        loadNMS();
+        this.loadNMS();
+        this.loadClassInfo();
         addon = Skript.registerAddon(this);
         this.loadElements();
         if (isPluginEnabled("ProtocolLib") && Config.PROTOCOL_LIB_ENABLED) {
@@ -140,7 +147,8 @@ public class SkJade extends JavaPlugin {
                     "expressions",
                     "effects",
                     "events",
-                    "conditions");
+                    "conditions",
+                    "pastebinapi");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -212,6 +220,56 @@ public class SkJade extends JavaPlugin {
 
     private void registerListeners(Listener... listeners) {
         Arrays.stream(listeners).forEach(listener -> this.pluginManager.registerEvents(listener, this));
+    }
+
+    private void loadClassInfo() {
+        //Pastebin ClassInfo
+        Classes.registerClass(new ClassInfo<>(PasteBuilder.class, "paste")
+                .user("paste?s?")
+                .name("Paste")
+                .description("A PasteBuilder created with SkJade.")
+                .since("1.0.0")
+                .changer(new Changer<PasteBuilder>() {
+                    @Nullable
+                    @Override
+                    public Class<?>[] acceptChange(ChangeMode mode) {
+                        if (mode == ChangeMode.DELETE || mode == ChangeMode.RESET || mode == ChangeMode.REMOVE_ALL) {
+                            return CollectionUtils.array();
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public void change(PasteBuilder[] what, @Nullable Object[] delta, ChangeMode mode) {
+                        switch (mode) {
+                            case DELETE:
+                                PasteManager.deletePaste(what);
+                                break;
+                            case RESET:
+                            case REMOVE_ALL:
+                                PasteManager.resetPaste(what);
+                        }
+                    }
+                }));
+
+        //Character ClassInfo
+        Classes.registerClass(new ClassInfo<>(Character.class, "character")
+                .user("char(acter)?s?")
+                .name("Character")
+                .description("A single character.")
+                .since("1.1.0"));
+
+        Converters.registerConverter(Character.class, String.class, String::valueOf);
+        Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);
+
+        //Laser Classinfo
+        if (Config.LASERS_ENABLED) {
+            Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
+                    .user("laser?s?")
+                    .name("Laser")
+                    .description("A guardian beam.")
+                    .since("insert version"));
+        }
     }
 
     public static boolean isBeta() {
