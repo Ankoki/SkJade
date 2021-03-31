@@ -16,6 +16,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
+ * Clearly i didnt make this because i dont like reflecc i use paccc
  * @author SkytAsul
  */
 public class Laser {
