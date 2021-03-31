@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 /**
  * IMPORTANT
- * <p>
+ *
  * SkJade is named SkJade because Jade West from Victorious is absolutely
  * gorgeous. We love Liz Gillies. Ok bye now <3
  */
@@ -159,11 +159,7 @@ public class SkJade extends JavaPlugin {
 
     private boolean loadHDElements() {
         try {
-            addon.loadClasses("com.ankoki.skjade.hooks.holograms"/*,
-                    "expressions",
-                    "effects",
-                    "conditions",
-                    "events"*/);
+            addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -190,11 +186,7 @@ public class SkJade extends JavaPlugin {
 
     private boolean loadElementalsElements() {
         try {
-            addon.loadClasses("com.ankoki.skjade.hooks.elementals"/*,
-                    "expressions",
-                    "effects",
-                    "events",
-                    "conditions"*/);
+            addon.loadClasses("com.ankoki.skjade.hooks.elementals");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -205,11 +197,7 @@ public class SkJade extends JavaPlugin {
 
     private boolean loadProtocolElements() {
         try {
-            addon.loadClasses("com.ankoki.skjade.hooks.protocollib"/*,
-                    "expressions",
-                    "effects",
-                    "events",
-                    "conditions"*/);
+            addon.loadClasses("com.ankoki.skjade.hooks.protocollib");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
