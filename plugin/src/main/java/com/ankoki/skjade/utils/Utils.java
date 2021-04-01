@@ -77,6 +77,10 @@ public final class Utils {
         int i = 0;
         String currentColourCode = "";
         for (String s : message.split("")) {
+            if (s.equals("§")) {
+                i++;
+                continue;
+            }
             if (i > 0) {
                 if (message.charAt(i - 1) == '§') {
                     if (s.equalsIgnoreCase("r")) {
