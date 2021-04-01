@@ -1,10 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -21,6 +18,7 @@ import java.util.Collection;
 @Name("All Holograms")
 @Description("Returns all holograms created by SkJade.")
 @Examples("delete all skjade holograms")
+@RequiredPlugins("Holographic Displays")
 @Since("1.2.0")
 public class ExprAllHolograms extends SimpleExpression<Hologram> {
 

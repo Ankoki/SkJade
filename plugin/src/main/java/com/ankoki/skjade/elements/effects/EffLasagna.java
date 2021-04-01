@@ -9,6 +9,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +26,7 @@ public class EffLasagna extends Effect {
 
     @Override
     protected void execute(Event e) {
-        Bukkit.broadcastMessage("lasagna");
+        Bukkit.broadcastMessage(Utils.rainbow("&l&o&nlasagna", 0.3, 0.3, 0.3, 0, 2, 4, true));
     }
 
     @Override
