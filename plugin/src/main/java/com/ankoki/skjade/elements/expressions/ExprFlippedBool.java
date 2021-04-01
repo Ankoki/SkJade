@@ -31,7 +31,7 @@ public class ExprFlippedBool extends SimpleExpression<Boolean> {
     @Override
     protected Boolean[] get(Event e) {
         if (bool == null) return new Boolean[]{false};
-        return new Boolean[]{Boolean.FALSE.equals(bool.getSingle(e)) ? Boolean.FALSE : Boolean.TRUE};
+        return new Boolean[]{Boolean.FALSE.equals(bool.getSingle(e)) ? Boolean.TRUE : Boolean.FALSE};
     }
 
     @Override
