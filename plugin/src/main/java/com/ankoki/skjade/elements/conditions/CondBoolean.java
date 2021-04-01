@@ -26,9 +26,11 @@ public class CondBoolean extends Condition {
     private Expression<Boolean> bool;
 
     @Override
-    public boolean check(Event event) {
+    public boolean check(Event e) {
         if (bool == null) return false;
-        return bool.getSingle(event);
+        Boolean b = bool.getSingle(e);
+        if (b == null) return false;
+        return b;
     }
 
     @Override

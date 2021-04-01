@@ -25,7 +25,7 @@ public class ExprLaserPoints extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprLaserPoints.class, Location.class, ExpressionType.SIMPLE,
-                "[the] (1¦start|end)[ing] loc[ation] of %laser%");
+                "[the] (1¦start|end)[ing] [loc[ation]] of %laser%");
     }
 
     private Expression<Laser> laser;
