@@ -93,6 +93,27 @@ function torus(center: location, majorRadius: number, minorRadius: number, densi
     }
 
     /**
+     * A method to get the list of locations to make up a star.
+     *
+     * @param centre The centre of the star.
+     * @param radius The radius of the star.
+     * @param density The density between each location.
+     * @param pointsAmount The amount of points on the star.
+     * @return All locations of the star.
+     */
+    public static List<Location> getStar(Location centre, double radius, double density, int pointsAmount) {
+        List<Location> points = Shapes.getStarPoints(centre, radius, pointsAmount);
+        List<Location> allLines = new ArrayList<>();
+        for (int i = 0; i < points.size(); i++) {
+            int pI1 = (i + 2) > (points.size() - 1) ? ((i + 2) == points.size() ? 0 : 1) : (i + 2);
+            int pI2 = (i - 2) < 0 ? ((i - 2) == -1 ? (points.size() - 1) : (points.size() - 2)) : (i - 2);
+            allLines.addAll(Shapes.getLine(points.get(i), points.get(pI1), 1 / density));
+            allLines.addAll(Shapes.getLine(points.get(i), points.get(pI2), 1 / density));
+        }
+        return allLines;
+    }
+
+    /**
      * A method to get the list of locations in a circle.
      *
      * @param centre The centre of the circle.
@@ -171,7 +192,7 @@ function torus(center: location, majorRadius: number, minorRadius: number, densi
      * @param pointsPerCircle The amount of points per circle.
      * @return A list of locations to make up a cone.
      */
-    public static List<Location> drawCone(Location centre, double radius, double height, double density, double pointsPerCircle) {
+    public static List<Location> getCone(Location centre, double radius, double height, double density, double pointsPerCircle) {
         List<Location> points = new ArrayList<>();
         Location loc = centre.clone();
         double space = 1 / density;

@@ -37,7 +37,7 @@ public class ExprCone extends SimpleExpression<Location> {
         double r = radius.getSingle(e).doubleValue();
         double h = height.getSingle(e).doubleValue();
         double d = density.getSingle(e).doubleValue();
-        return Shapes.drawCone(l, r, h, d, 100).toArray(new Location[0]);
+        return Shapes.getCone(l, r, h, d, 100).toArray(new Location[0]);
     }
 
     @Override
