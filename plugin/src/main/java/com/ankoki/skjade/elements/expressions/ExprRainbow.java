@@ -31,7 +31,7 @@ public class ExprRainbow extends SimpleExpression<String> {
         }
         if (ver <= 16) {
             Skript.registerExpression(ExprRainbow.class, String.class, ExpressionType.SIMPLE,
-                    "(1¦pastel rainbow|2¦monochrome |rainbow ) %string%");
+                    "(1¦pastel rainbow|2¦monochrome |[normal ]rainbow ) %string%");
         }
     }
 

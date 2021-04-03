@@ -29,7 +29,7 @@ public class CondIsWet extends Condition {
                 "%player% is (wet|soaked|moist|damp|drenched|sopping|soggy|dripping)",
                 "%player% is in lava",
                 "%player% is [standing] in lava or water",
-                "%player% is (in|touching) any liquid");
+                "%player% is (in|touching) any [type of] liquid");
     }
 
     private Expression<Player> player;

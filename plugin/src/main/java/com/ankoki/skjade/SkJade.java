@@ -107,6 +107,11 @@ public class SkJade extends JavaPlugin {
             logger.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
             latest = false;
         }
+        if (serverVersion.isLegacy()) {
+            logger.warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
+            logger.warning("You have no reason to not use the latest server version. SkJade will still be enabled, " +
+                    "however you may encounter some issues which may not get fixed due to not supporting fossil versions.");
+        }
     }
 
     private void loadNMS() {
@@ -119,12 +124,14 @@ public class SkJade extends JavaPlugin {
                 nmsEnabled = true;
                 logger.info("NMS Support for " + version + " loaded!");
             } else {
-                logger.severe("Could not find any NMS support for this version! Please note SkJade only supports the latest sub-version of each version.");
-                logger.info("SkJade will remain enabled, however anything using NMS will not function!");
+                logger.severe("Could not find any NMS support for this version! Please note SkJade only supports " +
+                        "the latest sub-version of each version above 1.13.");
+                logger.info("SkJade will remain enabled, however anything using NMS will not function as intended!");
             }
         } catch (Exception ex) {
-            logger.severe("Could not find any NMS support for this version! Please note SkJade only supports the latest sub-version of each version.");
-            logger.info("SkJade will remain enabled, however anything using NMS will not function!");
+            logger.severe("Could not find any NMS support for this version! Please note SkJade only supports " +
+                    "the latest sub-version of each version above 1.13.");
+            logger.info("SkJade will remain enabled, however anything using NMS will not function as intended!");
         }
     }
 

@@ -51,7 +51,7 @@ public class EffBuildPaste extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "build " + pasteBuilder.toString(e, debug);
+        return "build " + pasteBuilder.toString(e, debug) + " with the developer key " + developerKey.toString(e, debug);
     }
 
     @Override

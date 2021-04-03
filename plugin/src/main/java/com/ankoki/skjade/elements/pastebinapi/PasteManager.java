@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class PasteManager {
     private static final Map<String, PasteBuilder> pasteBuilders = new HashMap<>();
-    private static String linkToLastBuiltPaste;
+    private static String linkToLastBuiltPaste = "<none>";
 
     public static void createPasteBuilder(String key) {
         PasteBuilder pasteBuilder = new PasteBuilder();

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Name("Text Between")
 @Description("Gets the text between two characters.")
-@Examples("set {_money} to the text between \"[]\" from line 1 of event-item's lore")
+@Examples("set {_money} to the text between '[' and ']' from line 1 of event-item's lore")
 @Since("1.1.0")
 public class ExprTextBetween extends SimpleExpression<String> {
 

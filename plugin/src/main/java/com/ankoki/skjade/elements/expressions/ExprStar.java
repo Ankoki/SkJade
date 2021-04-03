@@ -72,8 +72,3 @@ public class ExprStar extends SimpleExpression<Location> {
         return true;
     }
 }
-
-/*
-!show happy villager at star at block 2 in front of player with 5 points, with radius 2 and density 5
-!set all blocks at (star at player's location with 6 points, with radius 20 and density 10) to red wool
- */

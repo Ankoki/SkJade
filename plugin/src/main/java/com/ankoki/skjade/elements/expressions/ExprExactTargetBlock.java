@@ -29,7 +29,7 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
     static {
         Skript.registerExpression(ExprExactTargetBlock.class, Block.class, ExpressionType.SIMPLE,
                 "%player%'s exact target[ed] block",
-                "%player%'s exact target[ed] block including (1¦source|) fluids");
+                "%player%'s exact target[ed] block including (1¦[only ]source|[any] [type of]) fluid[s]");
     }
 
     private Expression<Player> player;

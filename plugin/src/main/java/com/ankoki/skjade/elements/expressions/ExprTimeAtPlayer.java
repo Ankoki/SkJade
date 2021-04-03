@@ -31,13 +31,6 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
 
     private Expression<Player> player;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        player = (Expression<Player>) exprs[0];
-        return true;
-    }
-
     @Nullable
     @Override
     protected Time[] get(Event event) {
@@ -57,6 +50,12 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "the time at " + player.toString(event, b);
+    }
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        player = (Expression<Player>) exprs[0];
+        return true;
     }
 
     @Nullable
