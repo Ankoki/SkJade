@@ -43,7 +43,7 @@ public class ExprTorus extends SimpleExpression<Location> {
         double minor = minorRadius.getSingle(e).doubleValue();
         double d = density == null ? 1 : density.getSingle(e).doubleValue();
         if (loc == null) return null;
-        return Shapes.getTorus2(loc, major, minor, d).toArray(new Location[0]);
+        return Shapes.getTorus(loc, major, minor, d).toArray(new Location[0]);
     }
 
     @Override

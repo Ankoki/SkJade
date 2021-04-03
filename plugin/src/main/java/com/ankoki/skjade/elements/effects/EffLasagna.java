@@ -26,7 +26,7 @@ public class EffLasagna extends Effect {
 
     @Override
     protected void execute(Event e) {
-        Bukkit.broadcastMessage(Utils.rainbow("&l&o&nlasagna", 0.3, 0.3, 0.3, 0, 2, 4, true));
+        Bukkit.broadcastMessage(Utils.simpleRainbow("&l&o&nlasagna", true));
     }
 
     @Override

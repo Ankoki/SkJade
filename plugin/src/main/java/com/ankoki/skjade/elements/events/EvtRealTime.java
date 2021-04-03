@@ -26,7 +26,7 @@ public class EvtRealTime extends SkriptEvent {
 
     static {
         Skript.registerEvent("real time", EvtRealTime.class, RealTimeEvent.class,
-                "(at|when it([']s|is)) %times% (((in|of) [the] real world|irl)|GMT)");
+                "(at|when it([']s| is)) %times% (((in|of) [the] real world|irl)|GMT)");
     }
 
     private Expression<Time> times;

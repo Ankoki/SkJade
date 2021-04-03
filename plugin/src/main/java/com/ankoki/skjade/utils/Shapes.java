@@ -68,26 +68,10 @@ function torus(center: location, majorRadius: number, minorRadius: number, densi
      */
     public static List<Location> getTorus(Location centre, double majorRadius, double minorRadius, double density) {
         List<Location> torusPoints = new ArrayList<>();
-        double pointsOnMajor = _2PI * majorRadius * density;
-        double pointsOnMinor = _2PI * minorRadius * density;
-        double deltaMajor = _3PI / pointsOnMajor;
-        double deltaMinor = _3PI / pointsOnMinor;
-        double thetaMajor = 0;
-        for (int i = 0; i < pointsOnMajor; i++) {
-            Vector tubeOffset = new Vector(Math.cos(thetaMajor * majorRadius), 0, Math.sin(thetaMajor * majorRadius));
-            Location tube = centre.clone();
-            tube.add(tubeOffset);
-            double rotationAngle = 540 - thetaMajor;
-            double thetaMinor = 0;
-            for (int ii = 0; ii < pointsOnMinor; ii++) {
-                Vector offset = new Vector(Math.cos(thetaMinor * minorRadius), Math.sin(thetaMinor * minorRadius), 0);
-                VectorMath.rotY(offset, rotationAngle);
-                Location toOffset = tube.clone();
-                toOffset.add(offset);
-                torusPoints.add(toOffset);
-                thetaMinor += deltaMinor;
-            }
-            thetaMajor += deltaMajor;
+        double midpoint = (majorRadius + minorRadius) / 2;
+        List<Location> circle = Shapes.getCircle(centre, majorRadius - minorRadius, density * 100);
+        for (Location location : circle) {
+            torusPoints.addAll(Shapes.getUprightCircle(location, midpoint, density * 100));
         }
         return torusPoints;
     }
@@ -204,5 +188,26 @@ function torus(center: location, majorRadius: number, minorRadius: number, densi
             radius = radius - interval;
         }
         return points;
+    }
+
+    /**
+     * A method to get the list of locations in a circle.
+     *
+     * @param centre The centre of the circle.
+     * @param radius The radius of the circle.
+     * @param totalPoints The total amount of points to make up the circle.
+     * @return The list of locations to make up a circle.
+     */
+    public static List<Location> getUprightCircle(Location centre, double radius, double totalPoints) {
+        World world = centre.getWorld();
+        double increment = _2PI/totalPoints;
+        List<Location> locations = new ArrayList<>();
+        for (int i = 0; i < totalPoints; i++) {
+            double angle = i * increment;
+            double x = centre.getX() + (radius * Math.cos(angle));
+            double y = centre.getY() + (radius * Math.sin(angle));
+            locations.add(new Location(world, x, y, centre.getZ()));
+        }
+        return locations;
     }
 }

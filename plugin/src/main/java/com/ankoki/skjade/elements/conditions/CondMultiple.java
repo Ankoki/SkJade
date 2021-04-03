@@ -32,8 +32,7 @@ public class CondMultiple extends Condition {
     public boolean check(Event event) {
         boolean b1 = cond1.check(event);
         boolean b2 = cond2.check(event);
-        if (isAnd) return b1 && b2;
-        return b1 || b2;
+        return isAnd ? b1 && b2 : b1 || b2;
     }
 
     @Override
