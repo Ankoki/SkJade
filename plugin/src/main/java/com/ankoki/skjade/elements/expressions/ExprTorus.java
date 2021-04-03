@@ -18,15 +18,12 @@ import org.jetbrains.annotations.Nullable;
 @Name("Torus/Giant Donut")
 @Description("Returns the locations to make up a giant donut/torus.")
 @Examples("play green spark at a giant donut around player's location with major radius 5 and minor radius 2")
-@Since("insert version")
+@Since("1.2.0")
 public class ExprTorus extends SimpleExpression<Location> {
 
-    /*
-!play green spark at a giant donut around player's location with major radius 5 and minor radius 2
-     */
     static {
         Skript.registerExpression(ExprTorus.class, Location.class, ExpressionType.SIMPLE,
-                "[a] (torus|[giant ]donut) around %location% with [a] major radius [of] %number% and [a] minor radius [of] %number% [with [a] density [of] %-number%]");
+                "[a] (torus|[giant ]donut) (at|around) %location% with [a] major radius [of] %number% and [a] minor radius [of] %number% [with [a] density [of] %-number%]");
     }
 
     private Expression<Location> center;

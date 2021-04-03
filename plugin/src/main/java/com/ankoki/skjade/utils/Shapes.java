@@ -66,14 +66,24 @@ function torus(center: location, majorRadius: number, minorRadius: number, densi
      * @param density The density of the particles.
      * @return All locations to make up the torus.
      */
+
     public static List<Location> getTorus(Location centre, double majorRadius, double minorRadius, double density) {
-        List<Location> torusPoints = new ArrayList<>();
-        double midpoint = (majorRadius + minorRadius) / 2;
-        List<Location> circle = Shapes.getCircle(centre, majorRadius - minorRadius, density * 100);
-        for (Location location : circle) {
-            torusPoints.addAll(Shapes.getUprightCircle(location, midpoint, density * 100));
-        }
-        return torusPoints;
+        double majorCircumference = _2PI * majorRadius * density;
+        double minorCircumference = _2PI * minorRadius * density;
+        List<Location> points = new ArrayList<>();
+        double deltaMajor = _2PI / majorCircumference;
+        double deltaMinor = _2PI / minorCircumference;
+        for (int i = 0; i < (int) minorCircumference; i++) {
+            double cosTheta = Math.cos(i * deltaMinor), sinTheta = Math.sin(i * deltaMinor);
+            for (int j = 0; j < (int) majorCircumference; j++) {
+                double x = (majorRadius + minorRadius * cosTheta) * Math.cos(j * deltaMajor);
+                double y = minorRadius * sinTheta;
+                double z = (majorRadius + minorRadius * cosTheta) * Math.sin(j * deltaMajor);
+                Location point = centre.clone();
+                point.add(new Vector(x, y, z));
+                points.add(point);
+            }
+        } return points;
     }
 
     /**
