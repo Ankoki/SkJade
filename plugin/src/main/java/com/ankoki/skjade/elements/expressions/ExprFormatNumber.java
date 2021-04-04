@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.text.NumberFormat;
 
 @Name("Formatted Number")
-@Description("Formats a number over 999 to be in readable form, such as 2000 -> 2,000")
+@Description("Formats a number over 999 to be in readable form, such as 2000 -> 2,000.")
 @Examples("broadcast \"%player%'s Balance: $%formatted number {eco::%%player's uuid%%}%")
 @Since("1.2.0")
 public class ExprFormatNumber extends SimpleExpression<String> {

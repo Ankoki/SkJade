@@ -24,8 +24,8 @@ public class EffShowMiningStage extends Effect {
 
     static {
         Skript.registerEffect(EffShowMiningStage.class,
-                "(show|play) (mining|block break) (stage|animation) %number% at %locations% [to %-players%] [(1¦with the entity id %-number%|)]",
-                "remove [the] (mining|block break) (stage|animation) at %locations% [for %-players%]");
+                "(show|play) (mining|block break) (stage|animation) %number% at %locations% [to %-players%] [(1¦with [the] [entity] id %-number%|)]",
+                "remove [the] (mining|block break) (stage|animation) at %locations% [for %-players%] [(1¦with [the] [entity] id %-number%|)]");
     }
 
     private Expression<Number> stage, entityId;
@@ -72,7 +72,12 @@ public class EffShowMiningStage extends Effect {
         } else {
             remove = true;
             location = (Expression<Location>) exprs[0];
-            if (exprs.length > 1) players = (Expression<Player>) exprs[1];
+            if (exprs.length > 1) {
+                players = (Expression<Player>) exprs[1];
+            } else {
+                if (parseResult.mark == 1) entityId = (Expression<Number>) exprs[1];
+            }
+            if (exprs.length == 3) entityId = (Expression<Number>) exprs[2];
         }
         return true;
     }

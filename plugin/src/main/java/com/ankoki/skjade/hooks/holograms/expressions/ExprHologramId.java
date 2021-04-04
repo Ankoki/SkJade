@@ -16,7 +16,7 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 @Name("ID of a Hologram")
-@Description("Returns the ID of a hologram")
+@Description("Returns the ID of a hologram.")
 @Examples("broadcast event-hologram's id")
 @Since("1.2.0")
 public class ExprHologramId extends SimpleExpression<String> {
