@@ -42,7 +42,9 @@ public class EffShowMiningStage extends Effect {
         }
         int ent = 0;
         if (entityId != null) {
-            ent = entityId.getSingle(e).intValue();
+            Number num = entityId.getSingle(e);
+            if (num == null) return;
+            ent = num.intValue();
         }
         Location[] locs = location.getArray(e);
         Player[] ps = players != null ? players.getArray(e) : Bukkit.getOnlinePlayers().toArray(new Player[0]);
@@ -52,8 +54,8 @@ public class EffShowMiningStage extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return remove ? "show mining stage " + stage.toString(e, debug) + " at " + location.toString(e, debug) + (players != null ? " to " + players.toString(e, debug) : "") :
-                "remove the mining stage at " + location.toString(e, debug) + (players != null ? " for " + players.toString(e, debug) : "");
+        return remove ? "remove the mining stage at " + location.toString(e, debug) + (players != null ? " for " + players.toString(e, debug) : "") :
+                "show mining stage " + stage.toString(e, debug) + " at " + location.toString(e, debug) + (players != null ? " to " + players.toString(e, debug) : "");
     }
 
     @Override
