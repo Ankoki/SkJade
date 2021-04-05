@@ -34,9 +34,9 @@ public class ExprLaserPoints extends SimpleExpression<Location> {
     @Nullable
     @Override
     protected Location[] get(Event e) {
-        if (laser == null) return null;
+        if (laser == null) return new Location[0];
         Laser l = laser.getSingle(e);
-        if (l == null) return null;
+        if (l == null) return new Location[0];
         return new Location[]{start ? l.getStart() : l.getEnd()};
     }
 

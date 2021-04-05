@@ -31,8 +31,10 @@ public class ExprFormatNumber extends SimpleExpression<String> {
     @Nullable
     @Override
     protected String[] get(Event e) {
-        if (number == null) return null;
-        double num = number.getSingle(e).doubleValue();
+        if (number == null) return new String[0];
+        Number n = number.getSingle(e);
+        if (n == null) return new String[0];
+        double num = n.doubleValue();
         return new String[]{NumberFormat.getInstance().format(num)};
     }
 

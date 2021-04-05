@@ -29,8 +29,10 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
 
     @Override
     protected String[] get(Event event) {
-        if (num == null) return new String[]{""};
-        int i = num.getSingle(event).intValue();
+        if (num == null) return new String[0];
+        Number n = num.getSingle(event);
+        if (n == null) return new String[0];
+        int i = n.intValue();
         return new String[]{Utils.toRoman(i)};
     }
 

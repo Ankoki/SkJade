@@ -38,9 +38,9 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
     @Nullable
     @Override
     protected Block[] get(Event e) {
-        if (player == null) return null;
+        if (player == null) return new Block[0];
         Player p = player.getSingle(e);
-        if (p == null) return null;
+        if (p == null) return new Block[0];
         return new Block[]{p.getTargetBlockExact(SkriptConfig.maxTargetBlockDistance.value(), mode)};
     }
 

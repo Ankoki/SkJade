@@ -38,7 +38,9 @@ public class EffShowMiningStage extends Effect {
         if (location == null) return;
         int i = 100;
         if (stage != null) {
-            i = stage.getSingle(e).intValue();
+            Number num = stage.getSingle(e);
+            if (num == null) return;
+            i = num.intValue();
         }
         int ent = 0;
         if (entityId != null) {

@@ -32,11 +32,15 @@ public class ExprCone extends SimpleExpression<Location> {
     @Nullable
     @Override
     protected Location[] get(Event e) {
-        if (centre == null || radius == null || height == null || density == null) return null;
+        if (centre == null || radius == null || height == null || density == null) return new Location[0];
         Location l = centre.getSingle(e);
-        double r = radius.getSingle(e).doubleValue();
-        double h = height.getSingle(e).doubleValue();
-        double d = density.getSingle(e).doubleValue();
+        Number num1 = radius.getSingle(e);
+        Number num2 = height.getSingle(e);
+        Number num3 = density.getSingle(e);
+        if (num1 == null || num2 == null || num3 == null || l == null) return new Location[0];
+        double r = num1.doubleValue();
+        double h = num2.doubleValue();
+        double d = num3.doubleValue();
         return Shapes.getCone(l, r, h, d, 100).toArray(new Location[0]);
     }
 

@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import org.apache.commons.lang.math.NumberRange;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.event.Event;
@@ -32,11 +33,14 @@ public class ExprChunkAt extends SimpleExpression<Chunk> {
 
     @Override
     protected Chunk[] get(Event event) {
-        if (chunkX == null || chunkZ == null || world == null) return null;
-        int x = chunkX.getSingle(event).intValue();
-        int z = chunkZ.getSingle(event).intValue();
+        if (chunkX == null || chunkZ == null || world == null) return new Chunk[0];
+        Number num1 = chunkX.getSingle(event);
+        Number num2 = chunkZ.getSingle(event);
+        if (num1 == null || num2 == null) return new Chunk[0];
+        int x = num1.intValue();
+        int z = num2.intValue();
         World w = world.getSingle(event);
-        if (w == null) return null;
+        if (w == null) return new Chunk[0];
         Chunk chunk = w.getChunkAt(x, z);
         return new Chunk[]{chunk};
     }

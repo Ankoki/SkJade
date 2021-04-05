@@ -37,7 +37,7 @@ public class ExprPasteResponse extends SimpleExpression<String> {
         String key = pasteKey.getSingle(e);
         String devKey = developerKey.getSingle(e);
         if (key == null || devKey == null ||
-        key.isEmpty() || devKey.isEmpty()) return null;
+        key.isEmpty() || devKey.isEmpty()) return new String[0];
 
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
             Pastebin pastebin = new Pastebin(key);

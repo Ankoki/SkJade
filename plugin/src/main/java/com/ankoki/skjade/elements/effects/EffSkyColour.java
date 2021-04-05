@@ -30,7 +30,9 @@ public class EffSkyColour extends Effect {
     @Override
     protected void execute(Event e) {
         if (numbers == null || players == null) return;
-        int i = numbers.getSingle(e).intValue();
+        Number num = numbers.getSingle(e);
+        if (num == null) return;
+        int i = num.intValue();
         Player[] p = players.getArray(e);
         if (p.length <= 0) return;
         i = Math.min(i, 200);

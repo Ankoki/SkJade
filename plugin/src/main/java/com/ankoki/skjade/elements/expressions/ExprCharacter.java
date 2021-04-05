@@ -29,7 +29,7 @@ public class ExprCharacter extends SimpleExpression<Character> {
     @Nullable
     @Override
     protected Character[] get(Event e) {
-        if (string == null || string.isEmpty()) return null;
+        if (string == null || string.isEmpty()) return new Character[0];
         return new Character[]{string.toCharArray()[0]};
     }
 

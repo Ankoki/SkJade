@@ -32,7 +32,7 @@ public class ExprKickMsg extends SimpleExpression<String> {
     @Override
     protected String[] get(Event e) {
         if (!(e instanceof AsyncPlayerPreLoginEvent)) {
-            return null;
+            return new String[0];
         }
         return new String[]{((AsyncPlayerPreLoginEvent) e).getKickMessage()};
     }

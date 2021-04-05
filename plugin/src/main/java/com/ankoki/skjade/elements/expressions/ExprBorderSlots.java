@@ -39,7 +39,7 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
     @Override
     protected Integer[] get(Event e) {
         Inventory inv = inventory.getSingle(e);
-        if (inv == null) return null;
+        if (inv == null) return new Integer[0];
         return getBorderSlots(inv);
     }
 

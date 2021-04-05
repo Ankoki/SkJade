@@ -38,11 +38,11 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
         Entity ent = null;
         if (location == null) {
             ent = entity.getSingle(e);
-            if (ent == null) return null;
-            if (!(ent instanceof LivingEntity)) return null;
+            if (ent == null) return new Entity[0];
+            if (!(ent instanceof LivingEntity)) return new Entity[0];
             loc = ent.getLocation();
         } else loc = location.getSingle(e);
-        if (loc == null) return null;
+        if (loc == null) return new Entity[0];
 
         Entity result = null;
         double lastDistance = Double.MAX_VALUE;

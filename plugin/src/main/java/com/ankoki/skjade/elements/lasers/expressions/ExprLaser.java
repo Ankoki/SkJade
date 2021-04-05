@@ -31,9 +31,9 @@ public class ExprLaser extends SimpleExpression<Laser> {
     @Nullable
     @Override
     protected Laser[] get(Event e) {
-        if (string == null) return null;
+        if (string == null) return new Laser[0];
         String id = string.getSingle(e);
-        if (id == null || id.isEmpty()) return null;
+        if (id == null || id.isEmpty()) return new Laser[0];
         return new Laser[]{LaserManager.getLaser(id)};
     }
 

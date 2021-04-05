@@ -33,8 +33,11 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
 
     @Nullable
     @Override
-    protected Time[] get(Event event) {
-        return new Time[]{new Time((int) player.getSingle(event).getPlayerTime())};
+    protected Time[] get(Event e) {
+        if (player == null) return new Time[0];
+        Player p = player.getSingle(e);
+        if (p == null) return new Time[0];
+        return new Time[]{new Time((int) p.getPlayerTime())};
     }
 
     @Override

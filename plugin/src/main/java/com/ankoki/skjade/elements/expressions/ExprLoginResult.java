@@ -31,7 +31,7 @@ public class ExprLoginResult extends SimpleExpression<String> {
     @Nullable
     @Override
     protected String[] get(Event e) {
-        if (!(e instanceof AsyncPlayerPreLoginEvent)) return null;
+        if (!(e instanceof AsyncPlayerPreLoginEvent)) return new String[0];
         return new String[]{((AsyncPlayerPreLoginEvent) e).getLoginResult().name().replace("_", " ").toLowerCase()};
     }
 

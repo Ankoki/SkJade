@@ -44,7 +44,7 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
             else if (event instanceof HologramTouchEvent) {
                 return new HologramLine[]{((HologramTouchEvent) event).getLine()};
             }
-            return null;
+            return new HologramLine[0];
         }
         Hologram holo = hologram.getSingle(event);
         if (line != null) {

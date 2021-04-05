@@ -37,11 +37,19 @@ public class EffRotatePlayer extends Effect {
     private Expression<Number> vertical;
 
     @Override
-    protected void execute(Event event) {
+    protected void execute(Event e) {
         if (players == null) return;
-        float h = horizontal.getSingle(event).floatValue();
-        float v = vertical == null ? 0 : vertical.getSingle(event).floatValue();
-        Arrays.stream(players.getArray(event)).forEach(player -> {
+        Number num1 = horizontal.getSingle(e);
+        if (num1 == null) return;
+        float h = num1.floatValue();
+        float v = 0;
+        if (vertical != null) {
+            Number num2 = vertical.getSingle(e);
+            if (num2 == null) return;
+            v = num2.floatValue();
+        }
+        float finalV = v;
+        Arrays.stream(players.getArray(e)).forEach(player -> {
             if (player == null) return;
             Location loc = player.getLocation();
             PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.POSITION);
@@ -49,7 +57,7 @@ public class EffRotatePlayer extends Effect {
             packet.getDoubles().write(1, loc.getY());
             packet.getDoubles().write(2, loc.getZ());
             packet.getFloat().write(0, loc.getYaw() + h);
-            packet.getFloat().write(1, loc.getPitch() + v);
+            packet.getFloat().write(1, loc.getPitch() + finalV);
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
             } catch (InvocationTargetException ignored) {}

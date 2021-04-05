@@ -31,9 +31,9 @@ public class ExprHologramId extends SimpleExpression<String> {
     @Nullable
     @Override
     protected String[] get(Event e) {
-        if (hologram == null) return null;
+        if (hologram == null) return new String[0];
         Hologram holo = hologram.getSingle(e);
-        if (holo == null) return null;
+        if (holo == null) return new String[0];
         return new String[]{HologramManager.getIDFromHolo(holo)};
     }
 

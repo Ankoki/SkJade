@@ -31,17 +31,17 @@ public class ExprTextBetween extends SimpleExpression<String> {
     @Nullable
     @Override
     protected String[] get(Event e) {
-        if (between1 == null || between2 == null || string == null) return null;
+        if (between1 == null || between2 == null || string == null) return new String[0];
         String first = String.valueOf(between1.getSingle(e));
         String second = String.valueOf(between2.getSingle(e));
         String str = string.getSingle(e);
-        if (str == null) return null;
+        if (str == null) return new String[0];
 
         first = illegal(first);
         second = illegal(second);
 
         String[] split1 = str.split(first);
-        if (split1.length < 2) return null;
+        if (split1.length < 2) return new String[0];
         String[] split2 = split1[split1.length - 1].split(String.valueOf(second));
 
         return new String[]{split2[0]};

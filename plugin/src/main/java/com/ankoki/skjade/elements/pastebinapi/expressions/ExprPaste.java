@@ -32,7 +32,7 @@ public class ExprPaste extends SimpleExpression<PasteBuilder> {
     @Override
     protected PasteBuilder[] get(Event e) {
         String id = pasteId.getSingle(e);
-        if (id == null || id.isEmpty()) return null;
+        if (id == null || id.isEmpty()) return new PasteBuilder[0];
         return new PasteBuilder[]{PasteManager.getFromID(id)};
     }
 

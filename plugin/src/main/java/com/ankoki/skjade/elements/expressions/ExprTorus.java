@@ -34,12 +34,22 @@ public class ExprTorus extends SimpleExpression<Location> {
     @Nullable
     @Override
     protected Location[] get(Event e) {
-        if (center == null || majorRadius == null || minorRadius == null) return null;
+        if (center == null || majorRadius == null || minorRadius == null) return new Location[0];
         Location loc = center.getSingle(e);
-        double major = majorRadius.getSingle(e).doubleValue();
-        double minor = minorRadius.getSingle(e).doubleValue();
-        double d = density == null ? 1 : density.getSingle(e).doubleValue();
-        if (loc == null) return null;
+        Number num1 = majorRadius.getSingle(e);
+        Number num2 = minorRadius.getSingle(e);
+        if (num1 == null || num2 == null) return new Location[0];
+        double major = num1.doubleValue();
+        double minor = num2.doubleValue();
+        double d;
+        if (density == null) {
+            d = 1;
+        } else {
+            Number num3 = density.getSingle(e);
+            if (num3 == null) return new Location[0];
+            d = num3.doubleValue();
+        }
+        if (loc == null) return new Location[0];
         return Shapes.getTorus(loc, major, minor, d).toArray(new Location[0]);
     }
 

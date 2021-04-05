@@ -31,9 +31,9 @@ public class ExprEntityId extends SimpleExpression<Number> {
     @Nullable
     @Override
     protected Number[] get(Event e) {
-        if (entity == null) return null;
+        if (entity == null) return new Number[0];
         Entity ent = entity.getSingle(e);
-        if (ent == null) return null;
+        if (ent == null) return new Number[0];
         return new Number[]{ent.getEntityId()};
     }
 

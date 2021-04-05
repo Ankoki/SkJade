@@ -35,9 +35,18 @@ public class ExprCircle extends SimpleExpression<Location> {
     @Override
     protected Location[] get(Event event) {
         Location c = center.getSingle(event);
-        double r = radius.getSingle(event).doubleValue();
-        double t = total == null ? r * 10 : total.getSingle(event).doubleValue();
-        if (c == null) return null;
+        Number num1 = radius.getSingle(event);
+        if (num1 == null) return new Location[0];
+        double r = num1.doubleValue();
+        double t;
+        if (total == null) {
+            t = r * 10;
+        } else {
+            Number num2 = total.getSingle(event);
+            if (num2 == null) return new Location[0];
+            t = num2.doubleValue();
+        }
+        if (c == null) return new Location[0];
         return Shapes.getCircle(c, r, t).toArray(new Location[0]);
     }
 

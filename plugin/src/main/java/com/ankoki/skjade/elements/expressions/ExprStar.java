@@ -27,22 +27,26 @@ public class ExprStar extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprStar.class, Location.class, ExpressionType.SIMPLE,
-                "[(all [[of] the]|the)] [(loc[ation]s|points) of] [a] star (at|from) %location% with %integer% points(,| and) [with] [a] radius [of] %number%(,| and) [a] density [of] %number%");
+                "[(all [[of] the]|the)] [(loc[ation]s|points) of] [a] star (at|from) %location% with %number% points(,| and) [with] [a] radius [of] %number%(,| and) [a] density [of] %number%");
     }
 
     private Expression<Location> center;
-    private Expression<Integer> points;
+    private Expression<Number> points;
     private Expression<Number> radius;
     private Expression<Number> density;
 
     @Nullable
     @Override
-    protected Location[] get(Event event) {
-        Location c = center.getSingle(event);
-        int p = points.getSingle(event);
-        double r = radius.getSingle(event).doubleValue();
-        double d = density.getSingle(event).doubleValue();
-        if (c == null) return null;
+    protected Location[] get(Event e) {
+        Location c = center.getSingle(e);
+        Number num1 = points.getSingle(e);
+        Number num2 = radius.getSingle(e);
+        Number num3 = density.getSingle(e);
+        if (num1 == null || num2 == null || num3 == null) return new Location[0];
+        int p = num1.intValue();
+        double r = num2.doubleValue();
+        double d = num3.doubleValue();
+        if (c == null) return new Location[0];
         if (p < 2) return new Location[]{c};
         return Shapes.getStar(c, r, d, p).toArray(new Location[0]);
     }
@@ -66,7 +70,7 @@ public class ExprStar extends SimpleExpression<Location> {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         center = (Expression<Location>) exprs[0];
-        points = (Expression<Integer>) exprs[1];
+        points = (Expression<Number>) exprs[1];
         radius = (Expression<Number>) exprs[2];
         density = (Expression<Number>) exprs[3];
         return true;
