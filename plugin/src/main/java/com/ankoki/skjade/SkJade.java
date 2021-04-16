@@ -12,6 +12,7 @@ import com.ankoki.skjade.api.NMS;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import com.ankoki.skjade.listeners.PlayerJoin;
+import com.ankoki.skjade.listeners.ScriptLoad;
 import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
 import org.bstats.bukkit.Metrics;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -48,6 +51,7 @@ public class SkJade extends JavaPlugin {
     private static boolean nmsEnabled = false;
     private static boolean latest = true;
     private static Config config = null;
+    public Map<String, Map<String, String>> allOptions = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -87,7 +91,7 @@ public class SkJade extends JavaPlugin {
         if (Config.LASERS_ENABLED) {
             this.loadLaserElements();
         }
-        this.registerListeners(new PlayerJoin());
+        this.registerListeners(new PlayerJoin()/*, new ScriptLoad()*/);
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
                     "work correctly!");
