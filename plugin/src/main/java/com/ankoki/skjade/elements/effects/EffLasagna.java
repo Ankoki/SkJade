@@ -9,6 +9,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
@@ -23,10 +24,22 @@ public class EffLasagna extends Effect {
     static {
         Skript.registerEffect(EffLasagna.class, "lasagna");
     }
-
+    
     @Override
     protected void execute(Event e) {
-        Bukkit.broadcastMessage(Utils.simpleRainbow("&l&o&nlasagna", true));
+        int ver = 0;
+        try {
+            String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
+            String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+            ver = Integer.parseInt(version.split("_")[1]);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (Utils.getServerMajorVersion() > 16) {
+            Bukkit.broadcastMessage(Utils.simpleRainbow("&l&o&nlasagna", true));
+        } else {
+            Bukkit.broadcastMessage("lasagna");
+        }
     }
 
     @Override

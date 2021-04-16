@@ -21,19 +21,20 @@ public class CondIsWet extends Condition {
 
     static {
         Skript.registerCondition(CondIsWet.class,
-                "%player% is [standing] in water",
-                "%player% is [standing] in [the] rain",
-                "%player% is [standing] in a bubble column",
-                "%player% is [standing] in water or [a] bubble column",
-                "%player% is [standing] in [the] rain or [a] bubble column",
-                "%player% is (wet|soaked|moist|damp|drenched|sopping|soggy|dripping)",
-                "%player% is in lava",
-                "%player% is [standing] in lava or water",
-                "%player% is (in|touching) any [type of] liquid");
+                "%player% is(1¦(n[']t| not)|) [standing] in water",
+                "%player% is(1¦(n[']t| not)|) [standing] in [the] rain",
+                "%player% is(1¦(n[']t| not)|) [standing] in a bubble column",
+                "%player% is(1¦(n[']t| not)|) [standing] in water or [a] bubble column",
+                "%player% is(1¦(n[']t| not)|) [standing] in [the] rain or [a] bubble column",
+                "%player% is(1¦(n[']t| not)|) (wet|soaked|moist|damp|drenched|sopping|soggy|dripping)",
+                "%player% is(1¦(n[']t| not)|) in lava",
+                "%player% is(1¦(n[']t| not)|) [standing] in lava or water",
+                "%player% is(1¦(n[']t| not)|) (in|touching) any [type of] liquid");
     }
 
     private Expression<Player> player;
-    int pattern;
+    private int pattern;
+    private boolean negate;
 
     @Override
     public boolean check(Event e) {
@@ -42,23 +43,23 @@ public class CondIsWet extends Condition {
         if (p == null) return false;
         switch (pattern) {
             case 0:
-                return p.isInWater();
+                return negate != p.isInWater();
             case 1:
-                return p.isInRain();
+                return negate != p.isInRain();
             case 2:
-                return p.isInBubbleColumn();
+                return negate != p.isInBubbleColumn();
             case 3:
-                return p.isInWaterOrBubbleColumn();
+                return negate != p.isInWaterOrBubbleColumn();
             case 4:
-                return p.isInRain() || p.isInBubbleColumn();
+                return negate != (p.isInRain() || p.isInBubbleColumn());
             case 5:
-                return p.isInWaterOrRainOrBubbleColumn();
+                return negate != p.isInWaterOrRainOrBubbleColumn();
             case 6:
-                return p.isInLava();
+                return negate != p.isInLava();
             case 7:
-                return p.isInWater() || p.isInLava();
+                return negate != (p.isInWater() || p.isInLava());
             case 8:
-                return p.isInWaterOrRainOrBubbleColumn() || p.isInLava();
+                return negate != (p.isInWaterOrRainOrBubbleColumn() || p.isInLava());
         }
         return false;
     }
@@ -72,6 +73,7 @@ public class CondIsWet extends Condition {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         player = (Expression<Player>) exprs[0];
         pattern = matchedPattern;
+        negate = parseResult.mark == 1;
         return true;
     }
 }

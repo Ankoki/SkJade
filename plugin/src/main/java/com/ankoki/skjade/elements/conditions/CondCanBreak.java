@@ -19,18 +19,19 @@ public class CondCanBreak extends Condition {
 
     static {
         Skript.registerCondition(CondCanBreak.class,
-                "%itemtype% can break %block%");
+                "%itemtype% can(1¦(not|[']t)|) break %block%");
     }
 
     private Expression<ItemType> item1;
     private Expression<Block> block;
+    private boolean negate;
 
     @Override
     public boolean check(Event event) {
         ItemType i1 = item1.getSingle(event);
         Block b = block.getSingle(event);
         if (i1 == null || b == null) return false;
-        return !b.getDrops(i1.getRandom()).isEmpty();
+        return negate == b.getDrops(i1.getRandom()).isEmpty();
     }
 
     @Override
@@ -42,6 +43,7 @@ public class CondCanBreak extends Condition {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         item1 = (Expression<ItemType>) exprs[0];
         block = (Expression<Block>) exprs[1];
+        negate = parseResult.mark == 1;
         return true;
     }
 }

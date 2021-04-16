@@ -1,6 +1,7 @@
 package com.ankoki.skjade.utils;
 
 import ch.njol.util.VectorMath;
+import com.ankoki.skjade.SkJade;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -138,6 +139,18 @@ public final class Utils {
             i++;
         }
         return builder.toString();
+    }
+
+    public static int getServerMajorVersion() {
+        int ver = 0;
+        try {
+            String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
+            String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+            ver = Integer.parseInt(version.split("_")[1]);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return ver;
     }
 
     public enum SpellType {

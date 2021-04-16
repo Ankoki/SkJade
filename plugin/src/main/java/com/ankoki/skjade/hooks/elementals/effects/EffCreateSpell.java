@@ -106,7 +106,7 @@ public class EffCreateSpell extends Effect {
             return false;
         }
         if (function.getReturnType() != Boolean.class) {
-            Skript.error("You cannot have a return value when casting a spell!");
+            Skript.error("You need to have a boolean return value when casting a spell!");
         }
         functionCall = new ExprFunctionCall(function);
         return true;

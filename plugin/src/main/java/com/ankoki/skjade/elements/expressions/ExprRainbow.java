@@ -7,7 +7,6 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
@@ -21,15 +20,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprRainbow extends SimpleExpression<String> {
 
     static {
-        int ver = 0;
-        try {
-            String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
-            String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-            ver = Integer.parseInt(version.split("_")[1]);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        if (ver <= 16) {
+        if (Utils.getServerMajorVersion() <= 16) {
             Skript.registerExpression(ExprRainbow.class, String.class, ExpressionType.SIMPLE,
                     "(1¦pastel rainbow|2¦monochrome |[normal ]rainbow ) %string%");
         }
