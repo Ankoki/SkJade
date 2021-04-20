@@ -16,32 +16,34 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 @Name("Exact Target Block")
-@Description("Gets the exact target block of player.")
+@Description("Gets the exact target block of an entity.")
 @Examples("set {-target::%player's uuid%} to player's exact target block")
 @Since("1.1.0")
 public class ExprExactTargetBlock extends SimpleExpression<Block> {
 
     static {
         Skript.registerExpression(ExprExactTargetBlock.class, Block.class, ExpressionType.SIMPLE,
-                "%player%'s exact target[ed] block",
-                "%player%'s exact target[ed] block including (1¦[only ]source|[any] [type of]) fluid[s]");
+                "%entity%'s exact target[ed] block",
+                "%entity%'s exact target[ed] block including (1¦[only ]source|[any] [type of]) fluid[s]");
     }
 
-    private Expression<Player> player;
+    private Expression<Entity> entity;
     private FluidCollisionMode mode = FluidCollisionMode.NEVER;
 
     @Nullable
     @Override
     protected Block[] get(Event e) {
-        if (player == null) return new Block[0];
-        Player p = player.getSingle(e);
-        if (p == null) return new Block[0];
-        return new Block[]{p.getTargetBlockExact(SkriptConfig.maxTargetBlockDistance.value(), mode)};
+        if (entity == null) return new Block[0];
+        Entity ent = entity.getSingle(e);
+        if (ent == null || !(ent instanceof LivingEntity)) return new Block[0];
+        return new Block[]{((LivingEntity) ent).getTargetBlockExact(SkriptConfig.maxTargetBlockDistance.value(), mode)};
     }
 
     @Override
@@ -56,7 +58,7 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return player.toString(e, debug) + "'s exact target block";
+        return entity.toString(e, debug) + "'s exact target block";
     }
 
     @Override
@@ -66,7 +68,7 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
         } else if (i == 1) {
             mode = FluidCollisionMode.ALWAYS;
         }
-        player = (Expression<Player>) exprs[0];
+        entity = (Expression<Entity>) exprs[0];
         return true;
     }
 
