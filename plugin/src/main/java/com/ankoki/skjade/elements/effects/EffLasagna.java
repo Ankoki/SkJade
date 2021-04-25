@@ -27,14 +27,6 @@ public class EffLasagna extends Effect {
     
     @Override
     protected void execute(Event e) {
-        int ver = 0;
-        try {
-            String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
-            String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-            ver = Integer.parseInt(version.split("_")[1]);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
         if (Utils.getServerMajorVersion() > 16) {
             Bukkit.broadcastMessage(Utils.simpleRainbow("&l&o&nlasagna", true));
         } else {
