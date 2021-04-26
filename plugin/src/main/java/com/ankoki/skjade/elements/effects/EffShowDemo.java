@@ -45,6 +45,6 @@ public class EffShowDemo extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         player = (Expression<Player>) exprs[0];
-        return SkJade.isNmsEnabled() && new Version(String.valueOf(Skript.getMinecraftVersion())).isLargerThan(new Version("1.13.2"));
+        return new Version(String.valueOf(Skript.getMinecraftVersion())).isLargerThan(new Version("1.13.2"));
     }
 }
