@@ -1,45 +1,37 @@
+
 name: Bug Report
-description: Create a bug report for Tailwind CSS.
-title: '[Bug]: '
-labels: []
+description: Create a bug report for SKJade.
+title: ' '
+labels: bug
+assignees: ''
 body:
   - type: input
     attributes:
-      label: What version of Tailwind CSS are you using?
-      description: 'For example: v2.0.4'
+      label: What version of SKJade are you using?
+      description: 'For example: v1.20. Don't just say "latest".'
     validations:
       required: true
   - type: input
     attributes:
-      label: What build tool (or framework if it abstracts the build tool) are you using?
-      description: 'For example: postcss-cli 8.3.1, Next.js 10.0.9, webpack 5.28.0'
-    validations:
-      required: true  
-  - type: input
-    attributes:
-      label: What version of Node.js are you using?
-      description: 'For example: v12.0.0'
+      label: What type of server are you using?
+      description: 'For example: Paper, Tunity, Vannilla, etc.'
     validations:
       required: true
-  - type: input
+    - type: input
     attributes:
-      label: What browser are you using?
-      description: 'For example: Chrome, Safari, or N/A'
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: What operating system are you using?
-      description: 'For example: macOS, Windows'
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: Reproduction repository
-      description: A public GitHub repo that includes a minimal reproduction of the bug. Unfortunately we can't provide support without a reproduction, and your issue will be closed and locked with no comment if this is not provided.
+      label: Reproduceable
+      description: 'How can we recreate this bug?'
     validations:
       required: true
   - type: textarea
     attributes:
       label: Describe your issue
-      description: Describe the problem you're seeing, any important steps to reproduce and what behavior you expect instead
+      description: Describe the problem you're seeing, anything else you think was missed above.
+    validations:
+      required: true
+    - type: input
+    attributes:
+      label: Expected Behavior
+      description: 'What did you expect to happen?'
+    validations:
+      required: true
