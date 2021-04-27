@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 @Since("1.3.0")
 public class EffShowBrand extends Effect {
     private static final MinecraftKey BRAND_KEY = new MinecraftKey("brand");
+    private static final PacketContainer PAYLOAD_PACKET = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.CUSTOM_PAYLOAD);
 
     static {
         Skript.registerEffect(EffShowBrand.class,
@@ -43,20 +44,19 @@ public class EffShowBrand extends Effect {
         if (brand == null || players == null) return;
         String b = brand.getSingle(e);
         Player[] p = players.getArray(e);
-        if (b == null) return;
+        if (b == null || p.length == 0) return;
 
-        PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.CUSTOM_PAYLOAD);
-        packet.getMinecraftKeys().write(0, BRAND_KEY);
+        PAYLOAD_PACKET.getMinecraftKeys().write(0, BRAND_KEY);
         byte[] bytes = b.getBytes(StandardCharsets.UTF_8);
         byte[] byt = new byte[256];
         byt[0] = (byte) b.length();
         System.arraycopy(bytes, 0, byt, 1, 255);
         ByteBuf buffer = Unpooled.copiedBuffer(byt);
         Object seraliser = MinecraftReflection.getPacketDataSerializer(buffer);
-        packet.getModifier().withType(ByteBuf.class).write(0, seraliser);
+        PAYLOAD_PACKET.getModifier().withType(ByteBuf.class).write(0, seraliser);
         for (Player player : p) {
             try {
-                ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
+                ProtocolLibrary.getProtocolManager().sendServerPacket(player, PAYLOAD_PACKET);
             } catch (InvocationTargetException ignored) {}
         }
     }

@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class EffLasagna extends Effect {
 
     static {
-        Skript.registerEffect(EffLasagna.class, "lasagna");
+        Skript.registerEffect(EffLasagna.class, "(lasagna|an Italian dish made of stacked layers of thin flat pasta alternating with fillings and other vegetables, cheese and seasonings and spices)");
     }
     
     @Override
