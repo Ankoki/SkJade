@@ -32,14 +32,18 @@ public class EffRemoveLine extends Effect {
 
     @Override
     protected void execute(Event event) {
-        if (isNumber) {
+        if (!isNumber) {
+            if (hologramLine == null) return;
             HologramLine line = hologramLine.getSingle(event);
             if (line == null) return;
             HologramManager.removeLine(line);
             return;
         }
+        if (hologram == null) return;
         Hologram holo = hologram.getSingle(event);
-        int i = number.getSingle(event).intValue();
+        Number num = number.getSingle(event);
+        if (num == null) return;
+        int i = num.intValue();
         if (holo == null) return;
         HologramManager.removeLine(holo, i);
     }
