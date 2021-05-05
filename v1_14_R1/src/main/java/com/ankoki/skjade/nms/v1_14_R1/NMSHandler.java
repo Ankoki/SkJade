@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
+//TODO Rewrite lasers into packets instead of reflection (this probably isnt necessary)
 public class NMSHandler implements NMS {
 
     @Override

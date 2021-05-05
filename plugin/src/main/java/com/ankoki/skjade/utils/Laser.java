@@ -42,8 +42,9 @@ public class Laser {
 
     /**
      * Create a Laser instance
-     * @param start Location where laser will starts
-     * @param end Location where laser will ends
+     *
+     * @param start    Location where laser will starts
+     * @param end      Location where laser will ends
      * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
      * @param distance Distance where laser will be visible
      */
@@ -143,7 +144,7 @@ public class Laser {
         return end;
     }
 
-    public void callColorChange() throws ReflectiveOperationException{
+    public void callColorChange() throws ReflectiveOperationException {
         for (Player p : show) {
             Packets.sendPacket(p, metadataPacketGuardian);
         }
@@ -168,7 +169,6 @@ public class Laser {
         return start.distanceSquared(location) <= distanceSquared ||
                 end.distanceSquared(location) <= distanceSquared;
     }
-
 
 
     private static class Packets {
@@ -212,31 +212,31 @@ public class Laser {
                     watcherName3 = "bB";
                     squidID = 94;
                     guardianID = 68;
-                }else if (version == 13) {
+                } else if (version == 13) {
                     watcherName1 = "ac";
                     watcherName2 = "bF";
                     watcherName3 = "bG";
                     squidID = 70;
                     guardianID = 28;
-                }else if (version == 14) {
+                } else if (version == 14) {
                     watcherName1 = "W";
                     watcherName2 = "b";
                     watcherName3 = "bD";
                     squidID = 73;
                     guardianID = 30;
-                }else if (version == 15) {
+                } else if (version == 15) {
                     watcherName1 = "T";
                     watcherName2 = "b";
                     watcherName3 = "bA";
                     squidID = 74;
                     guardianID = 31;
-                }else if (version == 16 && versionMinor < 2) {
+                } else if (version == 16 && versionMinor < 2) {
                     watcherName1 = "T";
                     watcherName2 = "b";
                     watcherName3 = "d";
                     squidID = 74;
                     guardianID = 31;
-                }else {
+                } else {
                     watcherName1 = "S";
                     watcherName2 = "b";
                     watcherName3 = "d";
@@ -258,18 +258,18 @@ public class Laser {
                 packetMetadata = Class.forName(npack + "PacketPlayOutEntityMetadata");
 
                 packetTeamCreate = packetTeam.newInstance();
-                setField(packetTeamCreate, "a", ("skjade-" + UUID.randomUUID().toString()).substring(0, 16));
+                setField(packetTeamCreate, "a", ("skjade-" + UUID.randomUUID()).substring(0, 16));
                 setField(packetTeamCreate, "i", 0);
                 setField(packetTeamCreate, "f", "never");
 
                 Object world = Class.forName(cpack + "CraftWorld").getDeclaredMethod("getHandle").invoke(Bukkit.getWorlds().get(0));
-                Object[] entityConstructorParams = version < 14 ? new Object[] { world } : new Object[] { Class.forName(npack + "EntityTypes").getDeclaredField("SQUID").get(null), world };
+                Object[] entityConstructorParams = version < 14 ? new Object[]{world} : new Object[]{Class.forName(npack + "EntityTypes").getDeclaredField("SQUID").get(null), world};
                 fakeSquid = getMethod(Class.forName(cpack + "entity.CraftSquid"), "getHandle").invoke(Class.forName(cpack + "entity.CraftSquid").getDeclaredConstructors()[0].newInstance(
                         null, Class.forName(npack + "EntitySquid").getDeclaredConstructors()[0].newInstance(
                                 entityConstructorParams)));
                 fakeSquidWatcher = createFakeDataWatcher();
                 tryWatcherSet(fakeSquidWatcher, watcherObject1, (byte) 32);
-            }catch (ReflectiveOperationException e) {
+            } catch (ReflectiveOperationException e) {
                 e.printStackTrace();
             }
         }
@@ -323,7 +323,7 @@ public class Laser {
 
         public static Object createPacketRemoveEntities(int squidId, int guardianId) throws ReflectiveOperationException {
             Object packet = packetRemove.newInstance();
-            setField(packet, "a", new int[] { squidId, guardianId });
+            setField(packet, "a", new int[]{squidId, guardianId});
             return packet;
         }
 
@@ -341,7 +341,7 @@ public class Laser {
 
         public static Object createPacketTeamAddEntities(UUID squidUUID, UUID guardianUUID) throws ReflectiveOperationException {
             Object packet = packetTeam.newInstance();
-            setField(packet, "a", ("skjade-" + UUID.randomUUID().toString()).substring(0, 16));
+            setField(packet, "a", ("skjade-" + UUID.randomUUID()).substring(0, 16));
             setField(packet, "i", 3);
             Collection<String> players = (Collection<String>) getField(packetTeam, "h", packet);
             players.add(squidUUID.toString());
@@ -356,7 +356,7 @@ public class Laser {
         private static void tryWatcherSet(Object watcher, Object watcherObject, Object watcherData) throws ReflectiveOperationException {
             try {
                 watcherSet.invoke(watcher, watcherObject, watcherData);
-            }catch (InvocationTargetException ex) {
+            } catch (InvocationTargetException ex) {
                 watcherRegister.invoke(watcher, watcherObject, watcherData);
                 if (version >= 15) watcherDirty.invoke(watcher, watcherObject);
             }

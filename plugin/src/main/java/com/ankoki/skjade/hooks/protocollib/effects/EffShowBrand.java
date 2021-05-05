@@ -50,7 +50,7 @@ public class EffShowBrand extends Effect {
         byte[] bytes = b.getBytes(StandardCharsets.UTF_8);
         byte[] byt = new byte[256];
         byt[0] = (byte) b.length();
-        System.arraycopy(bytes, 0, byt, 1, 255);
+        System.arraycopy(bytes, 0, byt, 1, Math.min(bytes.length, 255));
         ByteBuf buffer = Unpooled.copiedBuffer(byt);
         Object seraliser = MinecraftReflection.getPacketDataSerializer(buffer);
         PAYLOAD_PACKET.getModifier().withType(ByteBuf.class).write(0, seraliser);

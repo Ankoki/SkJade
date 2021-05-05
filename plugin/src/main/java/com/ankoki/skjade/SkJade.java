@@ -103,8 +103,6 @@ public class SkJade extends JavaPlugin {
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
         this.loadServerVersion();
         this.startRealTime();
-        logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
-                version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
         UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
         if (!checker.isLatest()) {
             logger.info("You are not running the latest version of SkJade! Please update here:");
@@ -116,6 +114,8 @@ public class SkJade extends JavaPlugin {
             logger.warning("You have no reason to not use the latest server version. SkJade will still be enabled, " +
                     "however you may encounter some issues which may not get fixed due to not supporting fossil versions.");
         }
+        logger.info(String.format("SkJade v%s has been successfully enabled in %.2f seconds (%sms)",
+                version, (float) System.currentTimeMillis() - start, System.currentTimeMillis() - start));
     }
 
     private void loadNMS() {
