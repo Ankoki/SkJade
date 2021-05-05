@@ -3,7 +3,6 @@ package com.ankoki.skjade.api;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-//TODO Rewrite lasers into packets instead of reflection (this probably isnt necessary)
 public interface NMS {
     void sendDemo(Player player);
     void playFakeDamage(Player[] of, Player[] to);
