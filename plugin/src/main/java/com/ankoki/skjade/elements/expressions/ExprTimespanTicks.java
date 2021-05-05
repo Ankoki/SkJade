@@ -22,7 +22,9 @@ public class ExprTimespanTicks extends SimpleExpression<Number> {
 
     static {
         Skript.registerExpression(ExprTimespanTicks.class, Number.class, ExpressionType.SIMPLE,
-                "(%timespan% in ticks|ticks of %timespan%)");
+                "%timespan% in ticks",
+                "ticks of %timespan%",
+                "[the] amount of ticks in %timespan%");
     }
 
     private Expression<Timespan> timespanExpr;
