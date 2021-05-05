@@ -1,0 +1,84 @@
+package com.ankoki.skjade.elements.expressions;
+
+import ch.njol.skript.Skript;
+import ch.njol.skript.classes.Changer.ChangeMode;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
+import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.Timespan;
+import ch.njol.util.Kleenean;
+import ch.njol.util.coll.CollectionUtils;
+import org.bukkit.World;
+import org.bukkit.event.Event;
+import org.jetbrains.annotations.Nullable;
+
+@Name("World Border Warning Time")
+@Description("Allows you to get and set the warning time of a world border.")
+@Examples("set the warning time of player's world's world border to 20 seconds")
+@Since("1.3.0")
+public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
+
+    static {
+        Skript.registerExpression(ExprWorldBorderWarningTime.class, Timespan.class, ExpressionType.SIMPLE,
+                "([world][ ]border warning time of %world%|%world%'s [world][ ]border warning time|[the] warning time of %world%'s world border)");
+    }
+
+    private Expression<World> worldExpr;
+
+    @Nullable
+    @Override
+    protected Timespan[] get(Event e) {
+        if (worldExpr == null) return new Timespan[0];
+        World world = worldExpr.getSingle(e);
+        if (world == null) return new Timespan[0];
+        return new Timespan[]{Timespan.fromTicks_i(world.getWorldBorder().getWarningTime() * 20L)};
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<? extends Timespan> getReturnType() {
+        return Timespan.class;
+    }
+
+    @Override
+    public String toString(@Nullable Event e, boolean debug) {
+        return worldExpr.toString(e, debug) + "'s world border warning time";
+    }
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        worldExpr = (Expression<World>) exprs[0];
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public Class<?>[] acceptChange(ChangeMode mode) {
+        if (mode == ChangeMode.SET || mode == ChangeMode.RESET || mode == ChangeMode.DELETE) {
+            return CollectionUtils.array(Timespan.class);
+        }
+        return null;
+    }
+
+    @Override
+    public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
+        World world = worldExpr.getSingle(e);
+        if (world == null) return;
+        if (mode == ChangeMode.SET) {
+            if (delta.length < 1 || !(delta[0] instanceof Timespan)) return;
+            Timespan timespan = (Timespan) delta[0];
+            world.getWorldBorder().setWarningTime(Math.max(0, (int) timespan.getTicks_i() / 20));
+            return;
+        }
+        world.getWorldBorder().setWarningTime(0);
+    }
+}

@@ -18,14 +18,14 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 @Name("World Border Center")
-@Description("Allows you to get and set the center of a worlds world border.")
+@Description("Allows you to get and set the center of a world border.")
 @Examples("set the centre of player's world's world border to player's location")
 @Since("1.3.0")
 public class ExprWorldBorderCenter extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprWorldBorderCenter.class, Location.class, ExpressionType.SIMPLE,
-                "[the] cent(re|er) of %world%'s world border");
+                "([world][ ]border center of %world%|%world%'s [world][ ]border center|[the] cent(re|er) of %world%'s world border)");
     }
 
     private Expression<World> world;
