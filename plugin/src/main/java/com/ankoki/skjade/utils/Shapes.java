@@ -20,7 +20,6 @@ public class Shapes {
      * @param density The density of the particles.
      * @return All locations to make up the torus.
      */
-
     public static List<Location> getTorus(Location centre, double majorRadius, double minorRadius, double density) {
         double majorCircumference = _2PI * majorRadius * density;
         double minorCircumference = _2PI * minorRadius * density;

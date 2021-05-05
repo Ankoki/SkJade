@@ -27,7 +27,7 @@ public class EffLasagna extends Effect {
     
     @Override
     protected void execute(Event e) {
-        if (Utils.getServerMajorVersion() > 16) {
+        if (Utils.getServerMajorVersion() >= 16) {
             Bukkit.broadcastMessage(Utils.simpleRainbow("&l&o&nlasagna", true));
         } else {
             Bukkit.broadcastMessage("lasagna");
