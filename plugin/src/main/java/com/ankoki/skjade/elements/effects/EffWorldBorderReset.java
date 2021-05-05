@@ -21,7 +21,7 @@ public class EffWorldBorderReset extends Effect {
 
     static {
         Skript.registerEffect(EffWorldBorderReset.class,
-                "reset ([the] world border [of] %worlds%|%worlds%'s world border)");
+                "[skjade] reset ([the] [world[ ]]border [of] %worlds%|%worlds%'s world border)");
     }
 
     private Expression<World> worldExpr;

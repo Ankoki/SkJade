@@ -24,7 +24,9 @@ public class ExprWorldBorderSize extends SimpleExpression<Number> {
 
     static {
         Skript.registerExpression(ExprWorldBorderSize.class, Number.class, ExpressionType.SIMPLE,
-                "([world][ ]border size of %world%|%world%'s [world][ ]border size|[the] size of %world%'s world border)");
+                "[skjade] [world[ ]]border size of %world%",
+                "[skjade] %world%'s [world[ ]]border size",
+                "[skjade] [the] size of %world%'s [world[ ]]border");
     }
 
     private Expression<World> worldExpr;
@@ -70,14 +72,16 @@ public class ExprWorldBorderSize extends SimpleExpression<Number> {
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         World world = worldExpr.getSingle(e);
         if (world == null) return;
-        if (mode == ChangeMode.ADD || mode == ChangeMode.SET) {
+        if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.REMOVE) {
             if (delta.length < 1 || !(delta[0] instanceof Number)) return;
             Number number = (Number) delta[0];
             double i = number.doubleValue();
-            double currentAmount = world.getWorldBorder().getSize();
+            double currentSize = world.getWorldBorder().getSize();
             if (mode == ChangeMode.ADD) {
-                world.getWorldBorder().setSize(Math.max(0, currentAmount + i));
-            } else {
+                world.getWorldBorder().setSize(Math.max(0, currentSize + i));
+            } else if (mode == ChangeMode.REMOVE) {
+                world.getWorldBorder().setSize(Math.max(0, currentSize - i));
+            }  else {
                 world.getWorldBorder().setSize(Math.max(0, i));
             }
             return;

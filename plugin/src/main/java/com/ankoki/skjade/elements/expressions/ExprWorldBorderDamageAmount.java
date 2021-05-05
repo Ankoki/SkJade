@@ -24,7 +24,9 @@ public class ExprWorldBorderDamageAmount extends SimpleExpression<Number> {
 
     static {
         Skript.registerExpression(ExprWorldBorderDamageAmount.class, Number.class, ExpressionType.SIMPLE,
-                "([world][ ]border damage amount of %world%|%world%'s [world][ ]border damage amount|[the] damage amount of %world%'s world border)");
+                "[skjade] [world[ ]]border damage amount of %world%",
+                "[skjade] %world%'s [world[ ]]border damage amount",
+                "[skjade] [the] damage amount of %world%'s [world[ ]]border");
     }
 
     private Expression<World> worldExpr;
@@ -70,14 +72,16 @@ public class ExprWorldBorderDamageAmount extends SimpleExpression<Number> {
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         World world = worldExpr.getSingle(e);
         if (world == null) return;
-        if (mode == ChangeMode.ADD || mode == ChangeMode.SET) {
+        if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.REMOVE) {
             if (delta.length < 1 || !(delta[0] instanceof Number)) return;
             Number number = (Number) delta[0];
             double i = number.doubleValue();
-            double currentAmount = world.getWorldBorder().getDamageBuffer();
+            double currentAmount = world.getWorldBorder().getDamageAmount();
             if (mode == ChangeMode.ADD) {
                 world.getWorldBorder().setDamageAmount(Math.max(0, currentAmount + i));
-            } else {
+            } else if (mode == ChangeMode.REMOVE) {
+                world.getWorldBorder().setDamageAmount(Math.max(0, currentAmount - i));
+            }  else {
                 world.getWorldBorder().setDamageAmount(Math.max(0, i));
             }
             return;

@@ -25,7 +25,9 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
 
     static {
         Skript.registerExpression(ExprWorldBorderWarningTime.class, Timespan.class, ExpressionType.SIMPLE,
-                "([world][ ]border warning time of %world%|%world%'s [world][ ]border warning time|[the] warning time of %world%'s world border)");
+                "[skjade] [world[ ]]border warning time of %world%",
+                "[skjade] %world%'s [world[ ]]border warning time",
+                "[skjade] [the] warning time of %world%'s [world[ ]]border");
     }
 
     private Expression<World> worldExpr;
@@ -63,7 +65,7 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
     @Nullable
     @Override
     public Class<?>[] acceptChange(ChangeMode mode) {
-        if (mode == ChangeMode.SET || mode == ChangeMode.RESET || mode == ChangeMode.DELETE) {
+        if (mode != ChangeMode.REMOVE_ALL) {
             return CollectionUtils.array(Timespan.class);
         }
         return null;
@@ -73,10 +75,18 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         World world = worldExpr.getSingle(e);
         if (world == null) return;
-        if (mode == ChangeMode.SET) {
+        if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.REMOVE) {
             if (delta.length < 1 || !(delta[0] instanceof Timespan)) return;
             Timespan timespan = (Timespan) delta[0];
-            world.getWorldBorder().setWarningTime(Math.max(0, (int) timespan.getTicks_i() / 20));
+            int i = (int) timespan.getTicks_i() / 20;
+            int currentTime = world.getWorldBorder().getWarningTime();
+            if (mode == ChangeMode.ADD) {
+                world.getWorldBorder().setWarningTime(Math.max(0, currentTime + i));
+            } else if (mode == ChangeMode.REMOVE) {
+                world.getWorldBorder().setWarningTime(Math.max(0, currentTime - i));
+            } else {
+                world.getWorldBorder().setWarningTime(Math.max(0, i));
+            }
             return;
         }
         world.getWorldBorder().setWarningTime(0);

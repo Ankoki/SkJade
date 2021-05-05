@@ -24,7 +24,9 @@ public class ExprWorldBorderWarningDistance extends SimpleExpression<Number> {
 
     static {
         Skript.registerExpression(ExprWorldBorderWarningDistance.class, Number.class, ExpressionType.SIMPLE,
-                "([world][ ]border warning distance of %world%|%world%'s [world][ ]border warning distance|[the] warning distance of %world%'s world border)");
+                "[skjade] [world[ ]]border warning distance of %world%",
+                "[skjade] %world%'s [world[ ]]border warning distance",
+                "[skjade] [the] warning distance of %world%'s [world[ ]]border");
     }
 
     private Expression<World> worldExpr;
@@ -70,13 +72,15 @@ public class ExprWorldBorderWarningDistance extends SimpleExpression<Number> {
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         World world = worldExpr.getSingle(e);
         if (world == null) return;
-        if (mode == ChangeMode.ADD || mode == ChangeMode.SET) {
+        if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.REMOVE) {
             if (delta.length < 1 || !(delta[0] instanceof Number)) return;
             Number number = (Number) delta[0];
             int i = number.intValue();
             int currentDistance = world.getWorldBorder().getWarningDistance();
             if (mode == ChangeMode.ADD) {
                 world.getWorldBorder().setWarningDistance(Math.max(0, currentDistance + i));
+            } else if (mode == ChangeMode.REMOVE) {
+                world.getWorldBorder().setWarningDistance(Math.max(0, currentDistance - i));
             } else {
                 world.getWorldBorder().setWarningDistance(Math.max(0, i));
             }

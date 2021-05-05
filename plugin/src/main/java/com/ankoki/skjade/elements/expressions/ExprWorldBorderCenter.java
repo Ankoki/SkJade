@@ -25,7 +25,9 @@ public class ExprWorldBorderCenter extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprWorldBorderCenter.class, Location.class, ExpressionType.SIMPLE,
-                "([world][ ]border cent(er|re) of %world%|%world%'s [world][ ]border cent(er|re)|[the] cent(re|er) of %world%'s world border)");
+                "[skjade] [world[ ]]border cent(er|re) of %world%",
+                "[skjade] [the] %world%'s [world[ ]]border cent(re|er)",
+                "[skjade] [the] center of %world%'s [world[ ]]border");
     }
 
     private Expression<World> world;
