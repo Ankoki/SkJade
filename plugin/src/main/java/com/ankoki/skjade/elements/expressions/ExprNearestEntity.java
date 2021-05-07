@@ -12,6 +12,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -24,24 +25,30 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
 
     static {
         Skript.registerExpression(ExprNearestEntity.class, Entity.class, ExpressionType.SIMPLE,
-                "[the] (nearest|closest) entity to %entity%",
-                "[the] (nearest|closest) entity to %location%");
+                "[the] (nearest|closest) (1¦[entity of type] %-entitytype%|entity) to %entity%",
+                "[the] (nearest|closest) entity (1¦[entity of type] %-entitytype%|entity) to %location%");
     }
 
-    private Expression<Location> location;
-    private Expression<Entity> entity;
+    private Expression<Location> locationExpr;
+    private Expression<Entity> entityExpr;
+    private Expression<EntityType> entityTypeExpr;
 
     @Nullable
     @Override
     protected Entity[] get(Event e) {
         Location loc;
         Entity ent = null;
-        if (location == null) {
-            ent = entity.getSingle(e);
+        EntityType type = null;
+        if (entityTypeExpr != null) {
+            type = entityTypeExpr.getSingle(e);
+        }
+
+        if (locationExpr == null) {
+            ent = entityExpr.getSingle(e);
             if (ent == null) return new Entity[0];
             if (!(ent instanceof LivingEntity)) return new Entity[0];
             loc = ent.getLocation();
-        } else loc = location.getSingle(e);
+        } else loc = locationExpr.getSingle(e);
         if (loc == null) return new Entity[0];
 
         Entity result = null;
@@ -50,8 +57,15 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
             if (ent != null && allEnts == ent) continue;
             double dist = loc.distanceSquared(allEnts.getLocation());
             if (dist < lastDistance) {
-                result = allEnts;
-                lastDistance = dist;
+                if (type != null) {
+                    if (type == allEnts.getType()) {
+                        result = allEnts;
+                        lastDistance = dist;
+                    }
+                } else {
+                    result = allEnts;
+                    lastDistance = dist;
+                }
             }
         }
         return new Entity[]{result};
@@ -69,13 +83,19 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "closest entity to " + (location == null ? entity.toString(e, debug) : location.toString(e, debug));
+        return "closest entity to " + (locationExpr == null ? entityExpr.toString(e, debug) : locationExpr.toString(e, debug));
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        if (matchedPattern == 0) entity = (Expression<Entity>) exprs[0];
-        else location = (Expression<Location>) exprs[0];
+        boolean entityType = parseResult.mark == 1;
+        if (matchedPattern == 1) {
+            entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
+            locationExpr = entityType ? (Expression<Location>) exprs[1] : (Expression<Location>) exprs[0];
+            return true;
+        }
+        entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
+        entityExpr = entityType ? (Expression<Entity>) exprs[1] : (Expression<Entity>) exprs[0];
         return true;
     }
 }

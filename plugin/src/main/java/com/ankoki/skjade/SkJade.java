@@ -52,8 +52,8 @@ public class SkJade extends JavaPlugin {
     private static boolean nmsEnabled = false;
     private static boolean latest = true;
     private static Config config = null;
+    private final DecimalFormat df = new DecimalFormat("0.00");
     public Map<String, Map<String, String>> allOptions = new HashMap<>();
-    DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     public void onEnable() {
@@ -71,6 +71,7 @@ public class SkJade extends JavaPlugin {
         this.loadNMS();
         this.loadClassInfo();
         addon = Skript.registerAddon(this);
+
         this.loadElements();
         if (isPluginEnabled("ProtocolLib") && Config.PROTOCOL_LIB_ENABLED) {
             logger.info("ProtocolLib was found! Enabling support");
@@ -87,12 +88,13 @@ public class SkJade extends JavaPlugin {
                 logger.info("Elementals was found! Enabling support");
                 this.loadElementalsElements();
             } else {
-                logger.info("Elementals was found! However it is an early version! Please upgrade to atleast 1.4.");
+                logger.info("Elementals was found, however it is an outdated version! Please upgrade to atleast version 1.4.");
             }
         }
         if (Config.LASERS_ENABLED) {
             this.loadLaserElements();
         }
+
         this.registerListeners(new PlayerJoin()/*, new ScriptLoad()*/);
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
@@ -105,15 +107,18 @@ public class SkJade extends JavaPlugin {
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
         this.loadServerVersion();
         this.startRealTime();
+
         long fin = System.currentTimeMillis() - start;
         logger.info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
                 fin + "ms)");
+
         UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
         if (!checker.isLatest()) {
             logger.info("You are not running the latest version of SkJade! Please update here:");
             logger.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
             latest = false;
         }
+
         if (serverVersion.isLegacy()) {
             logger.warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
             logger.warning("You have no reason to not use the latest server version. SkJade will still be enabled, " +
