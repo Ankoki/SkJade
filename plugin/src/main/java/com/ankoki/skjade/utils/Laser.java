@@ -205,7 +205,7 @@ public class Laser {
 
         static {
             try {
-                String watcherName1 = null, watcherName2 = null, watcherName3 = null;
+                String watcherName1, watcherName2, watcherName3;
                 if (version < 13) {
                     watcherName1 = "Z";
                     watcherName2 = "bA";
@@ -258,7 +258,7 @@ public class Laser {
                 packetMetadata = Class.forName(npack + "PacketPlayOutEntityMetadata");
 
                 packetTeamCreate = packetTeam.newInstance();
-                setField(packetTeamCreate, "a", ("skjade-" + UUID.randomUUID()).substring(0, 16));
+                setField(packetTeamCreate, "a", ("skjade-lasers"));
                 setField(packetTeamCreate, "i", 0);
                 setField(packetTeamCreate, "f", "never");
 
@@ -341,7 +341,7 @@ public class Laser {
 
         public static Object createPacketTeamAddEntities(UUID squidUUID, UUID guardianUUID) throws ReflectiveOperationException {
             Object packet = packetTeam.newInstance();
-            setField(packet, "a", ("skjade-" + UUID.randomUUID()).substring(0, 16));
+            setField(packet, "a", ("skjade-lasers"));
             setField(packet, "i", 3);
             Collection<String> players = (Collection<String>) getField(packetTeam, "h", packet);
             players.add(squidUUID.toString());

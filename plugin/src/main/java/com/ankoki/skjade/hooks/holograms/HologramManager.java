@@ -5,10 +5,7 @@ import com.ankoki.skjade.hooks.holograms.bukkitevents.HologramClickEvent;
 import com.ankoki.skjade.hooks.holograms.bukkitevents.HologramTouchEvent;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import com.gmail.filoghost.holographicdisplays.api.line.CollectableLine;
-import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
-import com.gmail.filoghost.holographicdisplays.api.line.ItemLine;
-import com.gmail.filoghost.holographicdisplays.api.line.TouchableLine;
+import com.gmail.filoghost.holographicdisplays.api.line.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -19,60 +16,73 @@ import java.util.List;
 import java.util.Map;
 
 public class HologramManager {
-    private static final Map<String, Hologram> allHolograms = new HashMap<>();
-    private static final Map<Hologram, List<HologramLine>> allLines = new HashMap<>();
-    private static final Map<Hologram, Location> allLocations = new HashMap<>();
+    private static final Map<String, Hologram> ALL_HOLOGRAMS = new HashMap<>();
+    private static final Map<Hologram, List<HologramLine>> ALL_LINES = new HashMap<>();
+    private static final Map<Hologram, Location> ALL_LOCATIONS = new HashMap<>();
 
     public static void createHologram(String key, Location location, boolean visibility, boolean allowPlaceholders) {
         Hologram hologram = HologramsAPI.createHologram(SkJade.getInstance(), location);
         hologram.getVisibilityManager().setVisibleByDefault(visibility);
         hologram.setAllowPlaceholders(allowPlaceholders);
-        allHolograms.put(key, hologram);
-        allLocations.put(hologram, location);
+        ALL_HOLOGRAMS.put(key, hologram);
+        ALL_LOCATIONS.put(hologram, location);
     }
 
     public static void deleteHologram(Hologram... holograms) {
         for (Hologram hologram : holograms) {
-            allHolograms.entrySet().removeIf(entry -> entry.getValue().equals(hologram));
+            ALL_HOLOGRAMS.entrySet().removeIf(entry -> entry.getValue().equals(hologram));
             if (!hologram.isDeleted()) hologram.delete();
         }
     }
 
     public static void deleteHologram(String key) {
-        Hologram hologram = allHolograms.get(key);
-        allHolograms.remove(key);
+        Hologram hologram = ALL_HOLOGRAMS.get(key);
+        ALL_HOLOGRAMS.remove(key);
         hologram.delete();
     }
 
     public static void addTextLine(Hologram hologram, String line) {
-        List<HologramLine> lines = allLines.get(hologram);
+        List<HologramLine> lines = ALL_LINES.get(hologram);
         if (lines == null) {
             lines = new ArrayList<>();
         }
         lines.add(hologram.appendTextLine(line));
-        allLines.remove(hologram);
-        allLines.put(hologram, lines);
-        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
+        ALL_LINES.remove(hologram);
+        ALL_LINES.put(hologram, lines);
+        for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
-                allHolograms.remove(entry.getKey());
-                allHolograms.put(entry.getKey(), hologram);
+                ALL_HOLOGRAMS.remove(entry.getKey());
+                ALL_HOLOGRAMS.put(entry.getKey(), hologram);
                 return;
             }
         }
     }
 
     public static void addItemLine(Hologram hologram, ItemStack item) {
-        List<HologramLine> lines = allLines.get(hologram);
+        List<HologramLine> lines = ALL_LINES.get(hologram);
         if (lines == null) {
             lines = new ArrayList<>();
         }
         lines.add(hologram.appendItemLine(item));
-        allLines.remove(hologram);
-        allLines.put(hologram, lines);
-        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
+        ALL_LINES.remove(hologram);
+        ALL_LINES.put(hologram, lines);
+        for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
-                allHolograms.remove(entry.getKey());
-                allHolograms.put(entry.getKey(), hologram);
+                ALL_HOLOGRAMS.remove(entry.getKey());
+                ALL_HOLOGRAMS.put(entry.getKey(), hologram);
+                return;
+            }
+        }
+    }
+
+    public static void setLine(Hologram hologram, int index, String text) {
+        if (!(hologram.getLine(index) instanceof TextLine)) return;
+        TextLine line = (TextLine) hologram.getLine(index);
+        line.setText(text);
+        for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
+            if (entry.getValue() == hologram) {
+                ALL_HOLOGRAMS.remove(entry.getKey());
+                ALL_HOLOGRAMS.put(entry.getKey(), hologram);
                 return;
             }
         }
@@ -81,18 +91,18 @@ public class HologramManager {
     public static void removeLine(Hologram hologram, int line) {
         line--;
         if (line < 0) line = 0;
-        List<HologramLine> lines = allLines.get(hologram);
+        List<HologramLine> lines = ALL_LINES.get(hologram);
         if (lines == null) {
             lines = new ArrayList<>();
         }
         lines.remove(line);
         hologram.removeLine(line);
-        allLines.remove(hologram);
-        allLines.put(hologram, lines);
-        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
+        ALL_LINES.remove(hologram);
+        ALL_LINES.put(hologram, lines);
+        for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
-                allHolograms.remove(entry.getKey());
-                allHolograms.put(entry.getKey(), hologram);
+                ALL_HOLOGRAMS.remove(entry.getKey());
+                ALL_HOLOGRAMS.put(entry.getKey(), hologram);
                 return;
             }
         }
@@ -101,17 +111,17 @@ public class HologramManager {
     public static void removeLine(HologramLine line) {
         Hologram hologram = line.getParent();
         if (hologram == null) return;
-        List<HologramLine> lines = allLines.get(hologram);
+        List<HologramLine> lines = ALL_LINES.get(hologram);
         if (lines == null) {
             lines = new ArrayList<>();
         }
         lines.remove(line);
         line.removeLine();
-        allLines.put(hologram, lines);
-        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
+        ALL_LINES.put(hologram, lines);
+        for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
-                allHolograms.remove(entry.getKey());
-                allHolograms.put(entry.getKey(), hologram);
+                ALL_HOLOGRAMS.remove(entry.getKey());
+                ALL_HOLOGRAMS.put(entry.getKey(), hologram);
                 return;
             }
         }
@@ -120,7 +130,7 @@ public class HologramManager {
     public static HologramLine getLine(Hologram hologram, int line) {
         line--;
         if (line < 0) line = 0;
-        List<HologramLine> lines = allLines.get(hologram);
+        List<HologramLine> lines = ALL_LINES.get(hologram);
         if (lines == null) {
             lines = new ArrayList<>();
         }
@@ -128,19 +138,19 @@ public class HologramManager {
     }
 
     public static HologramLine[] getLines(Hologram hologram) {
-        return (HologramLine[]) allLines.get(hologram).toArray();
+        return (HologramLine[]) ALL_LINES.get(hologram).toArray();
     }
 
     public static Hologram getHologram(String key) {
-        return allHolograms.get(key);
+        return ALL_HOLOGRAMS.get(key);
     }
 
     public static Location getHoloLocation(Hologram holo) {
-        return allLocations.get(holo);
+        return ALL_LOCATIONS.get(holo);
     }
 
     public static String getIDFromHolo(Hologram hologram) {
-        for (Map.Entry<String, Hologram> entry : allHolograms.entrySet()) {
+        for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
                 return entry.getKey();
             }
@@ -175,6 +185,10 @@ public class HologramManager {
 
     public static void removePickup(HologramLine line) {
         ((CollectableLine) line).setPickupHandler(null);
+    }
+
+    //looking into
+    public static void imageHologram() {
     }
 
     public enum TouchType {
