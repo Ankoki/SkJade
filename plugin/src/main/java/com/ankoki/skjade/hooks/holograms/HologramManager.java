@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HologramManager {
-    private static final Map<String, Hologram> ALL_HOLOGRAMS = new HashMap<>();
-    private static final Map<Hologram, List<HologramLine>> ALL_LINES = new HashMap<>();
-    private static final Map<Hologram, Location> ALL_LOCATIONS = new HashMap<>();
+    private static final Map<String, Hologram> ALL_HOLOGRAMS = new ConcurrentHashMap<>();
+    private static final Map<Hologram, List<HologramLine>> ALL_LINES = new ConcurrentHashMap<>();
+    private static final Map<Hologram, Location> ALL_LOCATIONS = new ConcurrentHashMap<>();
 
     public static void createHologram(String key, Location location, boolean visibility, boolean allowPlaceholders) {
         Hologram hologram = HologramsAPI.createHologram(SkJade.getInstance(), location);
