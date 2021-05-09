@@ -11,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,12 +33,6 @@ public class HologramManager {
             ALL_HOLOGRAMS.entrySet().removeIf(entry -> entry.getValue().equals(hologram));
             if (!hologram.isDeleted()) hologram.delete();
         }
-    }
-
-    public static void deleteHologram(String key) {
-        Hologram hologram = ALL_HOLOGRAMS.get(key);
-        ALL_HOLOGRAMS.remove(key);
-        hologram.delete();
     }
 
     public static void addTextLine(Hologram hologram, String line) {
