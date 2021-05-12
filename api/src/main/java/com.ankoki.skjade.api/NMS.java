@@ -1,6 +1,7 @@
 package com.ankoki.skjade.api;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public interface NMS {
@@ -9,4 +10,5 @@ public interface NMS {
     void changeSkyColour(int colour, Player[] who);
     void setRaining(Player[] players, boolean rain);
     void showMiningStage(int stage, Location[] locations, Player[] players, int entityId, boolean remove);
+    void hideEntity(Player[] players, Entity[] entities);
 }

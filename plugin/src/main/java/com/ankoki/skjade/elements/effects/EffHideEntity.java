@@ -1,15 +1,25 @@
 package com.ankoki.skjade.elements.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.SkJade;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Hide Entity")
+@Description("Hides an entity from a player or all players.")
+@Examples("hide player's target entity for all players")
+@Since("1.3.0")
 public class EffHideEntity extends Effect {
 
     static {
@@ -22,7 +32,14 @@ public class EffHideEntity extends Effect {
 
     @Override
     protected void execute(Event e) {
-
+        if (entity == null) return;
+        Entity[] entities = entity.getAll(e);
+        if (player == null) {
+            SkJade.getNmsHandler().hideEntity(Bukkit.getOnlinePlayers().toArray(new Player[0]), entities);
+            return;
+        }
+        Player[] players = player.getAll(e);
+        SkJade.getNmsHandler().hideEntity(players, entities);
     }
 
     @Override
