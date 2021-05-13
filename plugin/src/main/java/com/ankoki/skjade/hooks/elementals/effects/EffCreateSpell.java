@@ -51,7 +51,7 @@ public class EffCreateSpell extends Effect {
                 private final Spell spell = new Spell(name, i, false);
                 @Override
                 public boolean onCast(Player player) {
-                    return (Boolean) functionCall.getAll(event)[0];
+                    return (Boolean) functionCall.getArray(event)[0];
                 }
 
                 @Override
@@ -70,7 +70,7 @@ public class EffCreateSpell extends Effect {
             private final Spell spell = new Spell(name, i, false);
             @Override
             public boolean onCast(Player player, Entity entity) {
-                return (Boolean) functionCall.getAll(event)[0];
+                return (Boolean) functionCall.getArray(event)[0];
             }
 
             @Override

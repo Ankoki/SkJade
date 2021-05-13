@@ -29,7 +29,7 @@ public class EffWorldBorderReset extends Effect {
     @Override
     protected void execute(Event e) {
         if (worldExpr == null) return;
-        World[] worlds = worldExpr.getAll(e);
+        World[] worlds = worldExpr.getArray(e);
         for (World world : worlds) {
             world.getWorldBorder().reset();
         }

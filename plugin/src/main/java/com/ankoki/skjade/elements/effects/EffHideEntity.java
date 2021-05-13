@@ -33,12 +33,12 @@ public class EffHideEntity extends Effect {
     @Override
     protected void execute(Event e) {
         if (entity == null) return;
-        Entity[] entities = entity.getAll(e);
+        Entity[] entities = entity.getArray(e);
         if (player == null) {
             SkJade.getNmsHandler().hideEntity(Bukkit.getOnlinePlayers().toArray(new Player[0]), entities);
             return;
         }
-        Player[] players = player.getAll(e);
+        Player[] players = player.getArray(e);
         SkJade.getNmsHandler().hideEntity(players, entities);
     }
 

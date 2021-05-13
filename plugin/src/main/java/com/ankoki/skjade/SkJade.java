@@ -17,6 +17,7 @@ import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.StructureType;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -33,7 +34,7 @@ import java.util.logging.Logger;
 
 /**
  * IMPORTANT
- *
+ * <p>
  * SkJade is named SkJade because Jade West from Victorious is absolutely
  * gorgeous. We love Liz Gillies. Ok bye now <3
  */
@@ -269,7 +270,14 @@ public class SkJade extends JavaPlugin {
         Converters.registerConverter(Character.class, String.class, String::valueOf);
         Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);
 
-        //Laser Classinfo
+        //StructureType ClassInfo
+        Classes.registerClass(new ClassInfo<>(StructureType.class, "structure")
+                .user("structure(type)?s?")
+                .name("Structure Type")
+                .description("A specified structure type")
+                .since("1.3.0"));
+
+        //Laser ClassInfo
         if (Config.LASERS_ENABLED) {
             Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
                     .user("laser?s?")

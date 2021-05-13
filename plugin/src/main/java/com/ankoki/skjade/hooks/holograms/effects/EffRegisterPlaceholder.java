@@ -38,7 +38,7 @@ public class EffRegisterPlaceholder extends Effect {
     protected void execute(Event event) {
         HologramsAPI.registerPlaceholder(SkJade.getInstance(),
                 text.getSingle(event),
-                1, () -> functionCall.getAll(event)[0] == null ? "" : ((String) functionCall.getAll(event)[0]).replaceAll(".$", ""));
+                1, () -> functionCall.getArray(event)[0] == null ? "" : ((String) functionCall.getArray(event)[0]).replaceAll(".$", ""));
     }
 
     @Override

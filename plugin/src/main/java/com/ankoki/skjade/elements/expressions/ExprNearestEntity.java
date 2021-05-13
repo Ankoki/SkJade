@@ -5,6 +5,7 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
+import ch.njol.skript.entity.EntityType;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -12,7 +13,6 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -58,7 +58,7 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
             double dist = loc.distanceSquared(allEnts.getLocation());
             if (dist < lastDistance) {
                 if (type != null) {
-                    if (type == allEnts.getType()) {
+                    if (type.isInstance(allEnts)) {
                         result = allEnts;
                         lastDistance = dist;
                     }
