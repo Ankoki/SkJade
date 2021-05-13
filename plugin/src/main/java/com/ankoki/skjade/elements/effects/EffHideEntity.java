@@ -24,7 +24,7 @@ public class EffHideEntity extends Effect {
 
     static {
         Skript.registerEffect(EffHideEntity.class,
-                "hide [the] [entity] %entities% (1¦from %-players%|)");
+                "[skjade] (hide|destory|send [a] destroy packet for) [the] [entity] %entities% (1¦(from|for) %-players%|)");
     }
 
     private Expression<Entity> entity;
@@ -32,6 +32,7 @@ public class EffHideEntity extends Effect {
 
     @Override
     protected void execute(Event e) {
+        System.out.println("execute");
         if (entity == null) return;
         Entity[] entities = entity.getArray(e);
         if (player == null) {

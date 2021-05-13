@@ -21,7 +21,7 @@ public class ExprUnary extends SimpleExpression<Number> {
 
     static {
         Skript.registerExpression(ExprUnary.class, Number.class, ExpressionType.SIMPLE,
-                "(-|unary [value of ])%number%");
+                "(-|unary [value of ])%~number%");
     }
 
     private Expression<Number> numberExpr;

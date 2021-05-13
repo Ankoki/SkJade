@@ -67,6 +67,6 @@ public class Config {
         HOLOGRAPHIC_DISPLAYS_ENABLED = config.getBoolean("holographic-displays-enabled");
         ELEMENTALS_ENABLED = config.getBoolean("elementals-enabled");
         VERSION_ALERTS = config.getBoolean("new-version-alerts");
-        LASERS_ENABLED = config.getBoolean("lasers-enabled");
+        //LASERS_ENABLED = config.getBoolean("lasers-enabled");
     }
 }

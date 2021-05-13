@@ -23,10 +23,10 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 
-@Name("Server Brand")
-@Description("Sends a server brand to players.")
-@Examples("send brand \"washing machine heart by mitski\" to all players")
-@Since("1.3.0")
+//@Name("Server Brand")
+//@Description("Sends a server brand to players.")
+//@Examples("send brand \"washing machine heart by mitski\" to all players")
+//@Since("INSERT VERSION")
 public class EffShowBrand extends Effect {
     private static final MinecraftKey BRAND_KEY = new MinecraftKey("brand");
     private static final PacketContainer PAYLOAD_PACKET = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.CUSTOM_PAYLOAD);

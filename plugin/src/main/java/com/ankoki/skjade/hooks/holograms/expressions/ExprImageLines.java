@@ -2,20 +2,25 @@ package com.ankoki.skjade.hooks.holograms.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
+import ch.njol.skript.effects.Delay;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
+import io.netty.util.concurrent.CompleteFuture;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.concurrent.CompletableFuture;
 
 @Name("Image Lines")
 @Description("Returns all the lines to make up an image. Max width is 150 and the image should be in the SkJade plugin folder.")
@@ -26,11 +31,13 @@ public class ExprImageLines extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprImageLines.class, String.class, ExpressionType.SIMPLE,
-                "[hologram] lines of [the] image %string% with [(a|the)] width [of] %number%");
+                "[hologram] lines of [the] image %string% with [(a|the)] width [of] %number%",
+                "[hologram] lines of [the] image from [the] url %string% with [(a|the)] width [of] %number%");
     }
 
-    Expression<String> imageName;
-    Expression<Number> widthExpr;
+    private boolean fromUrl;
+    private Expression<String> imageName;
+    private Expression<Number> widthExpr;
 
     @Nullable
     @Override
@@ -44,9 +51,25 @@ public class ExprImageLines extends SimpleExpression<String> {
             Class clazz = Class.forName("com.gmail.filoghost.holographicdisplays.image.ImageMessage");
             Constructor<?> constructor = clazz.getDeclaredConstructor(BufferedImage.class, int.class);
             constructor.setAccessible(true);
-            File file = new File(SkJade.getInstance().getDataFolder() + File.separator + name);
-            if (!file.exists() || file.isDirectory()) return new String[0];
-            Object object = constructor.newInstance(ImageIO.read(file), width);
+            BufferedImage bufferedImage;
+            if (fromUrl) {
+                Delay.addDelayedEvent(e);
+                CompletableFuture<BufferedImage> future = CompletableFuture.supplyAsync(() -> {
+                    try {
+                        URL url = new URL(name);
+                        return ImageIO.read(url);
+                    } catch (Exception ignored) {}
+                    return null;
+                });
+                while (!future.isDone()) {}
+                bufferedImage = future.get();
+            } else {
+                File file = new File(SkJade.getInstance().getDataFolder() + File.separator + name);
+                if (!file.exists() || file.isDirectory()) return new String[0];
+                bufferedImage = ImageIO.read(file);
+            }
+            if (bufferedImage == null) return new String[0];
+            Object object = constructor.newInstance(bufferedImage, width);
             Method method = clazz.getDeclaredMethod("getLines");
             method.setAccessible(true);
             return (String[]) method.invoke(object);
@@ -75,6 +98,7 @@ public class ExprImageLines extends SimpleExpression<String> {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         imageName = (Expression<String>) exprs[0];
         widthExpr = (Expression<Number>) exprs[1];
+        fromUrl = matchedPattern == 1;
         return true;
     }
 }
