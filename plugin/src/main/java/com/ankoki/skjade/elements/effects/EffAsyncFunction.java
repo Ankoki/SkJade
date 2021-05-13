@@ -17,13 +17,12 @@ import org.jetbrains.annotations.Nullable;
 /*Don't think this will go anywhere, however im keeping it on the table.
   I really think this would be useful, ESPECIALLY on minehut who do
   not have skript-reflect, however it comes with too many risks and
-  errors that could be thrown that i could not handle manually.*/
+  errors that could be thrown that i don't think i could handle manually.*/
 public class EffAsyncFunction extends Effect {
 
-    /*
-    static {
+    /*static {
         Skript.registerEffect(EffAsyncFunction.class,
-                "run [[the] function] <(.+)>\\([<.*?>]\\ async");
+                "run [[the] function] <(.+)>\\([<.*?>]\\) async");
     }*/
 
     private EffFunctionCall functionCall;

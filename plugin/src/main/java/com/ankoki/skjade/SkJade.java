@@ -4,6 +4,9 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.classes.EnumSerializer;
+import ch.njol.skript.classes.Parser;
+import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.util.coll.CollectionUtils;
@@ -26,10 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -272,10 +272,32 @@ public class SkJade extends JavaPlugin {
 
         //StructureType ClassInfo
         Classes.registerClass(new ClassInfo<>(StructureType.class, "structure")
-                .user("structure(type)?s?")
+                .user("(building)structure?s?")
                 .name("Structure Type")
-                .description("A specified structure type")
-                .since("1.3.0"));
+                .description("A specified structure type.")
+                .since("1.3.0")
+                .parser(new Parser<StructureType>() {
+                    @Nullable
+                    @Override
+                    public StructureType parse(String s, ParseContext context) {
+                        return StructureType.getStructureTypes().get(s);
+                    }
+
+                    @Override
+                    public String toString(StructureType o, int flags) {
+                        return o.getName().replace("_", " ");
+                    }
+
+                    @Override
+                    public String toVariableNameString(StructureType o) {
+                        return o.getName().toLowerCase().replace("_", " ");
+                    }
+
+                    @Override
+                    public String getVariableNamePattern() {
+                        return "[a-z ]+";
+                    }
+                }));
 
         //Laser ClassInfo
         if (Config.LASERS_ENABLED) {

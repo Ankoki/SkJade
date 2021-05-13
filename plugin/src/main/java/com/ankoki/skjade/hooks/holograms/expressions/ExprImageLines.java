@@ -1,6 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -11,13 +12,16 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.util.List;
+import java.lang.reflect.Method;
 
-//Ignore this class. Its a test as the HolographicDisplays API doesn't include the
-//ImageMessage class, yet i still want to have a go to try and get it.
+@Name("Image Lines")
+@Description("Returns all the lines to make up an image. Max width is 150 and the image should be in the SkJade plugin folder.")
+@Examples("add line hologram lines of image \"urmum.png\" with a width of 30 to hologram with id \"test-holo\"")
+@RequiredPlugins("HolographicDisplays")
+@Since("1.3.0")
 public class ExprImageLines extends SimpleExpression<String> {
 
     static {
@@ -35,14 +39,17 @@ public class ExprImageLines extends SimpleExpression<String> {
         Number number = widthExpr.getSingle(e);
         if (number == null || name == null) return new String[0];
         int width = number.intValue();
+        if (width > 150) return new String[0];
         try {
             Class clazz = Class.forName("com.gmail.filoghost.holographicdisplays.image.ImageMessage");
-            Constructor<?> constructor = clazz.getDeclaredConstructor();
+            Constructor<?> constructor = clazz.getDeclaredConstructor(BufferedImage.class, int.class);
             constructor.setAccessible(true);
-            constructor.newInstance(ImageIO.read(new File(SkJade.getInstance().getDataFolder() + File.separator + name)), width);
-            Field field = clazz.getDeclaredField("getLines");
-            field.setAccessible(true);
-            return ((List<String>) field.get(null)).toArray(new String[0]);
+            File file = new File(SkJade.getInstance().getDataFolder() + File.separator + name);
+            if (!file.exists() || file.isDirectory()) return new String[0];
+            Object object = constructor.newInstance(ImageIO.read(file), width);
+            Method method = clazz.getDeclaredMethod("getLines");
+            method.setAccessible(true);
+            return (String[]) method.invoke(object);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
