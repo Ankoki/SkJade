@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Item Cooldown")
 @Description("Gets and sets the cooldown for a material for a player.")
 @Examples("set the cooldown of wool for player to 10 seconds")
-@Since("insert version")
+@Since("1.3.0")
 public class ExprItemCooldown extends SimpleExpression<Timespan> {
 
     static {
