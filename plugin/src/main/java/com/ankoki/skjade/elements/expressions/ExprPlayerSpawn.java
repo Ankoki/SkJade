@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Player's Spawn Point")
 @Description("Gets and sets the spawn point of a player.")
 @Examples("set player's spawn point to event-location")
-@Since("1.4.0")
+@Since("INSERT VERSION")
 public class ExprPlayerSpawn extends SimpleExpression<Location> {
 
     static {
