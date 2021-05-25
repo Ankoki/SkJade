@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class HologramManager {
     private static final Map<String, Hologram> ALL_HOLOGRAMS = new ConcurrentHashMap<>();
     private static final Map<Hologram, List<HologramLine>> ALL_LINES = new ConcurrentHashMap<>();
+    private static final Map<HologramLine, Object> TEXT_LINES = new ConcurrentHashMap<>();
     private static final Map<Hologram, Location> ALL_LOCATIONS = new ConcurrentHashMap<>();
 
     public static void createHologram(String key, Location location, boolean visibility, boolean allowPlaceholders) {
@@ -40,9 +41,11 @@ public class HologramManager {
         if (lines == null) {
             lines = new ArrayList<>();
         }
-        lines.add(hologram.appendTextLine(line));
+        HologramLine l = hologram.appendTextLine(line);
+        lines.add(l);
         ALL_LINES.remove(hologram);
         ALL_LINES.put(hologram, lines);
+        TEXT_LINES.put(l, line);
         for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
                 ALL_HOLOGRAMS.remove(entry.getKey());
@@ -69,6 +72,7 @@ public class HologramManager {
         }
     }
 
+    //not done
     public static void setLine(Hologram hologram, int index, String text) {
         if (!(hologram.getLine(index) instanceof TextLine)) return;
         TextLine line = (TextLine) hologram.getLine(index);
@@ -90,9 +94,11 @@ public class HologramManager {
             lines = new ArrayList<>();
         }
         lines.remove(line);
+        HologramLine l = hologram.getLine(line);
         hologram.removeLine(line);
         ALL_LINES.remove(hologram);
         ALL_LINES.put(hologram, lines);
+        TEXT_LINES.remove(l);
         for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
                 ALL_HOLOGRAMS.remove(entry.getKey());
@@ -112,6 +118,7 @@ public class HologramManager {
         lines.remove(line);
         line.removeLine();
         ALL_LINES.put(hologram, lines);
+        TEXT_LINES.remove(line);
         for (Map.Entry<String, Hologram> entry : ALL_HOLOGRAMS.entrySet()) {
             if (entry.getValue() == hologram) {
                 ALL_HOLOGRAMS.remove(entry.getKey());

@@ -32,7 +32,6 @@ public class EffHideEntity extends Effect {
 
     @Override
     protected void execute(Event e) {
-        System.out.println("execute");
         if (entity == null) return;
         Entity[] entities = entity.getArray(e);
         if (player == null) {
