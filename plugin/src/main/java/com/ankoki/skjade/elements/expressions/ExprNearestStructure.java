@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.StructureType;
 import org.bukkit.event.Event;
@@ -21,16 +22,18 @@ import org.jetbrains.annotations.Nullable;
         "This can lead to the world temporarily freezing while locating an unexplored structure.",
         "The radius is not a rigid square radius. Each structure may alter how many chunks to check for each iteration. " +
         "Do not assume that only a radius x radius chunk area will be checked. For example, a woodland mansion can " +
-        "potentially check up to 20,000 blocks away (or more) regardless of the radius used.",
+                "potentially check up to 20,000 blocks away (or more) regardless of the radius used.",
         "This will not load or generate chunks. This can also lead to instances where the server can hang if you are only " +
-        "looking for unexplored structures. This is because it will keep looking further and further out in order to find the structure."})
+                "looking for unexplored structures. This is because it will keep looking further and further out in order to find the structure."})
 @Examples("teleport player to the closest village within radius 10 around player")
 @Since("1.3.0")
 public class ExprNearestStructure extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprNearestStructure.class, Location.class, ExpressionType.SIMPLE,
-                "[the] (nearest|closest) (1¦(not |un)(explored|discovered)|) [structure [of]] %structure% (in|within) [a] radius [of] %number% (around|at|from|of) %location%");
+        if (Utils.getServerMajorVersion() > 12) {
+            Skript.registerExpression(ExprNearestStructure.class, Location.class, ExpressionType.SIMPLE,
+                    "[the] (nearest|closest) (1¦(not |un)(explored|discovered)|) [structure [of]] %structure% (in|within) [a] radius [of] %number% (around|at|from|of) %location%");
+        }
     }
 
     //It seems as though it will always include unexplored anyway.
@@ -63,7 +66,7 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "closest structure of " + structureTypeExpr.toString(e, debug ) + " in radius " +
+        return "closest structure of " + structureTypeExpr.toString(e, debug) + " in radius " +
                 radiusExpr.toString(e, debug) + " from " + centerExpr.toString(e, debug);
     }
 

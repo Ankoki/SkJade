@@ -4,8 +4,6 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
-import ch.njol.skript.classes.Parser;
-import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.util.coll.CollectionUtils;
@@ -19,7 +17,6 @@ import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.StructureType;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -70,6 +67,9 @@ public class SkJade extends JavaPlugin {
         config = new Config(this);
         this.loadNMS();
         this.loadClassInfo();
+        if (Utils.getServerMajorVersion() > 12) {
+            new NonLegacyClassInfo();
+        }
         addon = Skript.registerAddon(this);
 
         this.loadElements();
@@ -268,35 +268,6 @@ public class SkJade extends JavaPlugin {
 
         Converters.registerConverter(Character.class, String.class, String::valueOf);
         Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);
-
-        //StructureType ClassInfo
-        Classes.registerClass(new ClassInfo<>(StructureType.class, "structure")
-                .user("(building)structure?s?")
-                .name("Structure Type")
-                .description("A specified structure type.")
-                .since("1.3.0")
-                .parser(new Parser<StructureType>() {
-                    @Nullable
-                    @Override
-                    public StructureType parse(String s, ParseContext context) {
-                        return StructureType.getStructureTypes().get(s);
-                    }
-
-                    @Override
-                    public String toString(StructureType o, int flags) {
-                        return o.getName().replace("_", " ");
-                    }
-
-                    @Override
-                    public String toVariableNameString(StructureType o) {
-                        return o.getName().toLowerCase().replace("_", " ");
-                    }
-
-                    @Override
-                    public String getVariableNamePattern() {
-                        return "[a-z ]+";
-                    }
-                }));
 
         //Laser ClassInfo
         if (Config.LASERS_ENABLED) {

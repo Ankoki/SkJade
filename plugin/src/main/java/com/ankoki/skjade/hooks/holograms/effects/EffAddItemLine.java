@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Add Item Line")
 @Description("Adds an item to the hologram.")
-@Examples("add a glowing diamond to the hologram with id \"testHolo\"")
+@Examples("add glowing diamond to the hologram with id \"testHolo\"")
 @RequiredPlugins("HolographicDisplays")
 @Since("1.0.0")
 public class EffAddItemLine extends Effect {

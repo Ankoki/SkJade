@@ -29,7 +29,7 @@ public class ExprPlayerSpawn extends SimpleExpression<Location> {
                 "[the] spawn [point] of %player%");
     }
 
-    Expression<Player> playerExpr;
+    private Expression<Player> playerExpr;
 
     @Nullable
     @Override
