@@ -139,7 +139,7 @@ public class HologramManager {
     }
 
     public static HologramLine[] getLines(Hologram hologram) {
-        return (HologramLine[]) ALL_LINES.get(hologram).toArray();
+        return ALL_LINES.get(hologram).toArray(new HologramLine[0]);
     }
 
     public static Hologram getHologram(String key) {
