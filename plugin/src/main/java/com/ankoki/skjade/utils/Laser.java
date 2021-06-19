@@ -97,7 +97,7 @@ public class Laser {
         destroyPackets = Packets.createPacketsRemoveEntities(squidID, guardianID);
     }
 
-    public void start(Plugin plugin) {
+    public void start(Plugin plugin, Player[] players) {
         this.plugin = plugin;
         Validate.isTrue(main == null, "Task already started");
         main = new BukkitRunnable() {
@@ -110,7 +110,8 @@ public class Laser {
                         cancel();
                         return;
                     }
-                    for (Player p : start.getWorld().getPlayers()) {
+                    for (Player p : players) {
+                        if (p.getWorld() != start.getWorld()) continue;
                         if (isCloseEnough(p.getLocation())) {
                             if (!show.contains(p)) {
                                 sendStartPackets(p);
@@ -122,7 +123,7 @@ public class Laser {
                         }
                     }
                     if (time != -1) time--;
-                }catch (ReflectiveOperationException e) {
+                } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                 }
             }
