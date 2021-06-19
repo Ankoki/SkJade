@@ -12,7 +12,6 @@ import com.ankoki.skjade.api.NMS;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import com.ankoki.skjade.listeners.PlayerJoin;
-import com.ankoki.skjade.listeners.ScriptLoad;
 import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
 import org.bstats.bukkit.Metrics;
@@ -44,13 +43,11 @@ public class SkJade extends JavaPlugin {
     private SkriptAddon addon;
     private Logger logger;
     private final int pluginId = Integer.parseInt(Integer.toString(10131));
-    private Metrics metrics;
     private static NMS nmsHandler = null;
     private static boolean nmsEnabled = false;
     private static boolean latest = true;
     private static Config config = null;
     private final DecimalFormat df = new DecimalFormat("0.00");
-    public Map<String, Map<String, String>> allOptions = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -95,7 +92,7 @@ public class SkJade extends JavaPlugin {
             this.loadLaserElements();
         }
 
-        this.registerListeners(new PlayerJoin()/*, new ScriptLoad()*/);
+        this.registerListeners(new PlayerJoin());
         if (version.endsWith("-beta")) {
             logger.warning("You are running on an unstable release and SkJade could potentionally not " +
                     "work correctly!");
@@ -103,7 +100,7 @@ public class SkJade extends JavaPlugin {
                     "runninng on a production server, as data might be lost!");
             beta = true;
         }
-        metrics = new Metrics(this, pluginId);
+        new Metrics(this, pluginId);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
         this.loadServerVersion();
         this.startRealTime();
@@ -136,12 +133,12 @@ public class SkJade extends JavaPlugin {
                 nmsEnabled = true;
                 logger.info("NMS Support for " + version + " loaded!");
             } else {
-                logger.severe("Could not find any NMS support for this version! Please note SkJade only supports " +
+                logger.severe("Could not find any NMS support for " + version + "! Please note SkJade only supports " +
                         "the latest sub-version of each version above 1.13.");
                 logger.info("SkJade will remain enabled, however anything using NMS will not function as intended!");
             }
         } catch (Exception ex) {
-            logger.severe("Could not find any NMS support for this version! Please note SkJade only supports " +
+            logger.severe("Could not find any NMS support for " + version + "! Please note SkJade only supports " +
                     "the latest sub-version of each version above 1.13.");
             logger.info("SkJade will remain enabled, however anything using NMS will not function as intended!");
         }

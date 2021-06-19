@@ -163,6 +163,14 @@
         </dependency>
         <dependency>
             <groupId>com.ankoki</groupId>
+            <artifactId>v1_17_R1</artifactId>
+            <version>1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.ankoki</groupId>
             <artifactId>v1_16_R3</artifactId>
             <version>1</version>
             <type>jar</type>
