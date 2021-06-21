@@ -26,7 +26,7 @@ import java.util.Arrays;
 public class EffRotatePlayer extends Effect {
 
     static {
-        if (SkJade.isNmsEnabled()) {
+        if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffRotatePlayer.class,
                     "rotate %players% by %number% [horizontally] [[and] %-number% [vertically]]");
         }

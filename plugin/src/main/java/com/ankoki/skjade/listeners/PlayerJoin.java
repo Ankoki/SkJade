@@ -18,7 +18,7 @@ public class PlayerJoin implements Listener {
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        if (Config.VERSION_ALERTS && (player.hasPermission("skjade.notify") || player.isOp()) && !SkJade.isLatest()) {
+        if (Config.VERSION_ALERTS && (player.hasPermission("skjade.notify") || player.isOp()) && !SkJade.getInstance().isLatest()) {
             player.sendMessage("§8[§6Sk§aJade§8] §cYou are running an outdated version of §6Sk§aJade§c!");
             TextComponent github =
                     new TextComponent(Utils.coloured("           &a[&cClick me to download the latest version!&a]"));

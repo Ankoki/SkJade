@@ -22,7 +22,8 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffShowDemo extends Effect {
 
     static {
-        if (SkJade.isNmsEnabled()) {
+        if (SkJade.getInstance().isNmsEnabled() &&
+                new Version(String.valueOf(Skript.getMinecraftVersion())).isLargerThan(new Version("1.13.2"))) {
             Skript.registerEffect(EffShowDemo.class,
                     "show [the] demo[nstration] screen to %player%");
         }
@@ -34,7 +35,7 @@ public class EffShowDemo extends Effect {
     protected void execute(Event event) {
         Player p = player.getSingle(event);
         if (p == null) return;
-        SkJade.getNmsHandler().sendDemo(p);
+        SkJade.getInstance().getNmsHandler().sendDemo(p);
     }
 
     @Override
@@ -45,6 +46,6 @@ public class EffShowDemo extends Effect {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         player = (Expression<Player>) exprs[0];
-        return new Version(String.valueOf(Skript.getMinecraftVersion())).isLargerThan(new Version("1.13.2"));
+        return true;
     }
 }

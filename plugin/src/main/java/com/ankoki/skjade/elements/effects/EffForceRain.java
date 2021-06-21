@@ -22,8 +22,10 @@ import org.jetbrains.annotations.Nullable;
 public class EffForceRain extends Effect {
 
     static {
-        Skript.registerEffect(EffForceRain.class,
-                "((1¦force [it] to rain|force it to stop raining)|make it (1¦|stop) rain[ing]) for %players%");
+        if (SkJade.getInstance().isNmsEnabled()) {
+            Skript.registerEffect(EffForceRain.class,
+                    "((1¦force [it] to rain|force it to stop raining)|make it (1¦|stop) rain[ing]) for %players%");
+        }
     }
 
     private Expression<Player> players;
@@ -33,7 +35,7 @@ public class EffForceRain extends Effect {
     protected void execute(Event e) {
         if (players == null) return;
         Player[] player = players.getArray(e);
-        SkJade.getNmsHandler().setRaining(player, rain);
+        SkJade.getInstance().getNmsHandler().setRaining(player, rain);
     }
 
     @Override

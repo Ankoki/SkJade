@@ -35,18 +35,17 @@ import java.util.logging.Logger;
  */
 public class SkJade extends JavaPlugin {
 
-    private static boolean beta;
+    private boolean beta;
     private static SkJade instance;
-    private static String version;
-    private static Version serverVersion;
+    private String version;
+    private Version serverVersion;
     private PluginManager pluginManager;
     private SkriptAddon addon;
     private Logger logger;
-    private final int pluginId = Integer.parseInt(Integer.toString(10131));
-    private static NMS nmsHandler = null;
-    private static boolean nmsEnabled = false;
-    private static boolean latest = true;
-    private static Config config = null;
+    private NMS nmsHandler = null;
+    private boolean nmsEnabled = false;
+    private boolean latest = true;
+    private Config config = null;
     private final DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
@@ -100,7 +99,7 @@ public class SkJade extends JavaPlugin {
                     "runninng on a production server, as data might be lost!");
             beta = true;
         }
-        new Metrics(this, pluginId);
+        new Metrics(this, 10131);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
         this.loadServerVersion();
         this.startRealTime();
@@ -276,11 +275,11 @@ public class SkJade extends JavaPlugin {
         }
     }
 
-    public static boolean isBeta() {
+    public boolean isBeta() {
         return beta;
     }
 
-    public static String getVersion() {
+    public String getVersion() {
         return version;
     }
 
@@ -288,19 +287,19 @@ public class SkJade extends JavaPlugin {
         return instance;
     }
 
-    public static boolean isNmsEnabled() {
+    public boolean isNmsEnabled() {
         return nmsEnabled;
     }
 
-    public static NMS getNmsHandler() {
+    public NMS getNmsHandler() {
         return nmsHandler;
     }
 
-    public static boolean isLatest() {
+    public boolean isLatest() {
         return latest;
     }
 
-    public static Config getOwnConfig() {
+    public Config getOwnConfig() {
         return config;
     }
 

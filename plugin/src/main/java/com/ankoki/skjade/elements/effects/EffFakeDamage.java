@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffFakeDamage extends Effect {
 
     static {
-        if (SkJade.isNmsEnabled()) {
+        if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffFakeDamage.class,
                     "make %players% take fake damage [for %-players%]");
         }
@@ -37,7 +37,7 @@ public class EffFakeDamage extends Effect {
         if (sendTo != null) sending = sendTo.getArray(e);
         else sending = Bukkit.getOnlinePlayers().toArray(new Player[0]);
         Player[] damagers = player.getArray(e);
-        SkJade.getNmsHandler().playFakeDamage(damagers, sending);
+        SkJade.getInstance().getNmsHandler().playFakeDamage(damagers, sending);
     }
 
     @Override
@@ -49,6 +49,6 @@ public class EffFakeDamage extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         player = (Expression<Player>) exprs[0];
         sendTo = (Expression<Player>) exprs[1];
-        return SkJade.isNmsEnabled();
+        return true;
     }
 }

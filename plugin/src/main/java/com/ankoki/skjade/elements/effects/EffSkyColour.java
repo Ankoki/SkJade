@@ -20,8 +20,10 @@ import org.jetbrains.annotations.Nullable;
 public class EffSkyColour extends Effect {
 
     static {
-        Skript.registerEffect(EffSkyColour.class,
-                "change [the] sky colo[u]r to %number% for %players%");
+        if (SkJade.getInstance().isNmsEnabled()) {
+            Skript.registerEffect(EffSkyColour.class,
+                    "change [the] sky colo[u]r to %number% for %players%");
+        }
     }
 
     private Expression<Number> numbers;
@@ -36,7 +38,7 @@ public class EffSkyColour extends Effect {
         Player[] p = players.getArray(e);
         if (p.length <= 0) return;
         i = Math.min(i, 200);
-        SkJade.getNmsHandler().changeSkyColour(i, p);
+        SkJade.getInstance().getNmsHandler().changeSkyColour(i, p);
     }
 
     @Override

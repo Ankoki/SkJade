@@ -23,9 +23,11 @@ import org.jetbrains.annotations.Nullable;
 public class EffShowMiningStage extends Effect {
 
     static {
-        Skript.registerEffect(EffShowMiningStage.class,
-                "(show|play) (mining|block break) (stage|animation) %number% at %locations% [to %-players%] [(1¦with [the] [entity] id %-number%|)]",
-                "remove [the] (mining|block break) (stage|animation) at %locations% [for %-players%] [(1¦with [the] [entity] id %-number%|)]");
+        if (SkJade.getInstance().isNmsEnabled()) {
+            Skript.registerEffect(EffShowMiningStage.class,
+                    "(show|play) (mining|block break) (stage|animation) %number% at %locations% [to %-players%] [(1¦with [the] [entity] id %-number%|)]",
+                    "remove [the] (mining|block break) (stage|animation) at %locations% [for %-players%] [(1¦with [the] [entity] id %-number%|)]");
+        }
     }
 
     private Expression<Number> stage, entityId;
@@ -51,7 +53,7 @@ public class EffShowMiningStage extends Effect {
         Location[] locs = location.getArray(e);
         Player[] ps = players != null ? players.getArray(e) : Bukkit.getOnlinePlayers().toArray(new Player[0]);
         if (locs.length < 1) return;
-        SkJade.getNmsHandler().showMiningStage(i, locs, ps, ent, remove);
+        SkJade.getInstance().getNmsHandler().showMiningStage(i, locs, ps, ent, remove);
     }
 
     @Override

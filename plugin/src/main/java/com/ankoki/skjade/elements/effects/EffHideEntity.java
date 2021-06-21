@@ -23,8 +23,10 @@ import org.jetbrains.annotations.Nullable;
 public class EffHideEntity extends Effect {
 
     static {
-        Skript.registerEffect(EffHideEntity.class,
-                "[skjade] (hide|destory|send [a] destroy packet for) [the] [entity] %entities% (1¦(from|for) %-players%|)");
+        if (SkJade.getInstance().isNmsEnabled()) {
+            Skript.registerEffect(EffHideEntity.class,
+                    "[skjade] (hide|destory|send [a] destroy packet for) [the] [entity] %entities% (1¦(from|for) %-players%|)");
+        }
     }
 
     private Expression<Entity> entity;
@@ -35,11 +37,11 @@ public class EffHideEntity extends Effect {
         if (entity == null) return;
         Entity[] entities = entity.getArray(e);
         if (player == null) {
-            SkJade.getNmsHandler().hideEntity(Bukkit.getOnlinePlayers().toArray(new Player[0]), entities);
+            SkJade.getInstance().getNmsHandler().hideEntity(Bukkit.getOnlinePlayers().toArray(new Player[0]), entities);
             return;
         }
         Player[] players = player.getArray(e);
-        SkJade.getNmsHandler().hideEntity(players, entities);
+        SkJade.getInstance().getNmsHandler().hideEntity(players, entities);
     }
 
     @Override
