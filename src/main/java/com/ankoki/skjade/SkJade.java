@@ -103,12 +103,14 @@ public class SkJade extends JavaPlugin {
         logger.info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
                 fin + "ms)");
 
-        UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
-        if (!checker.isLatest()) {
-            logger.info("You are not running the latest version of SkJade! Please update here:");
-            logger.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
-            latest = false;
-        }
+        new Thread(() -> {
+            UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
+            if (!checker.isLatest()) {
+                logger.info("You are not running the latest version of SkJade! Please update here:");
+                logger.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
+                latest = false;
+            }
+        }).start();
 
         if (serverVersion.isLegacy()) {
             logger.warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
@@ -147,7 +149,8 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "events",
                     "conditions",
-                    "pastebinapi");
+                    "pastebinapi",
+                    "lasers");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -157,15 +160,6 @@ public class SkJade extends JavaPlugin {
     private void loadHDElements() {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
-        } catch (IOException ex) {
-            logger.info("Something went horribly wrong!");
-            ex.printStackTrace();
-        }
-    }
-
-    private void loadLaserElements() {
-        try {
-            addon.loadClasses("com.ankoki.skjade.elements.lasers");
         } catch (IOException ex) {
             logger.info("Something went horribly wrong!");
             ex.printStackTrace();
@@ -240,11 +234,11 @@ public class SkJade extends JavaPlugin {
         Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);
 
         //Laser ClassInfo
-            Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
-                    .user("laser?s?")
-                    .name("Laser")
-                    .description("A guardian beam.")
-                    .since("1.3.1"));
+        Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
+                .user("laser?s?")
+                .name("Laser")
+                .description("A guardian beam.")
+                .since("1.3.1"));
     }
 
     public boolean isBeta() {

@@ -31,9 +31,9 @@ public class EffShowMiningStage extends Effect {
         }
     }
 
-    private Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
+    private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
             "PacketPlayOutBlockBreakAnimation");
-    private Class<?> blockPosition = ReflectionUtils.getNMSClass("core",
+    private static Class<?> blockPosition = ReflectionUtils.getNMSClass("core",
             "BlockPosition");
     private Expression<Number> stageExpr, entityId;
     private Expression<Location> location;
