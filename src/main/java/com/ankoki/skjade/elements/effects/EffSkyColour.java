@@ -13,8 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
-
 //thank you pesekjan c:
 @Name("Change the Sky Colour")
 @Description("Changes the sky colour for players. The maximum number is 200 to make sure clients aren't crashed.")
@@ -30,9 +28,11 @@ public class EffSkyColour extends Effect {
         }
     }
 
-    private static Field h;
+    private static Object h;
     private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
-            "PacketPlayOutGameStateChange");    private Expression<Number> numbers;
+            "PacketPlayOutGameStateChange");
+    private static Class<?> innerClass = packet.getDeclaredClasses()[0];
+    private Expression<Number> numbers;
     private Expression<Player> playerExpr;
 
     @Override
@@ -40,20 +40,21 @@ public class EffSkyColour extends Effect {
         if (numbers == null || playerExpr == null || Utils.getServerMajorVersion() < 16) return;
         Number num = numbers.getSingle(e);
         if (num == null) return;
-        int i = num.intValue();
+        float i = num.intValue();
         Player[] players = playerExpr.getArray(e);
         if (players.length <= 0) return;
         i = Math.min(i, 200);
         if (h == null) {
             try {
-                h = packet.getDeclaredField("h");
+                h = innerClass.getConstructor(int.class)
+                                .newInstance(7);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
                 return;
             }
         }
         try {
-            Object instance = packet.getConstructor(packet, int.class)
+            Object instance = packet.getConstructor(innerClass, float.class)
                     .newInstance(h, i);
             for (Player p : players) {
                 ReflectionUtils.sendPacket(p, instance);

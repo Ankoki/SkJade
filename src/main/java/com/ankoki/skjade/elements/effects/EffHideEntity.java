@@ -42,12 +42,13 @@ public class EffHideEntity extends Effect {
         Player[] players;
         if (playerExpr == null) {
             players = Bukkit.getOnlinePlayers().toArray(new Player[0]);
+        } else {
+            players = playerExpr.getArray(e);
         }
-        players = playerExpr.getArray(e);
         for (Entity entity : entities) {
             try {
-                Object instance = packet.getConstructor(int.class)
-                        .newInstance(entity.getEntityId());
+                Object instance = packet.newInstance();
+                ReflectionUtils.setField(instance, "a", new int[]{entity.getEntityId()});
                 for (Player p : players) {
                     ReflectionUtils.sendPacket(p, instance);
                 }

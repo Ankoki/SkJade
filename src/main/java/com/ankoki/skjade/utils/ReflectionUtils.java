@@ -44,13 +44,6 @@ public class ReflectionUtils {
         return null;
     }
 
-    public static void setField(Object instance, String name, Object value) throws ReflectiveOperationException {
-        Validate.notNull(instance);
-        Field field = instance.getClass().getDeclaredField(name);
-        field.setAccessible(true);
-        field.set(instance, value);
-    }
-
     public static Object getField(Class<?> clazz, String name, Object instance) throws ReflectiveOperationException {
         Field field = clazz.getDeclaredField(name);
         field.setAccessible(true);
@@ -61,6 +54,17 @@ public class ReflectionUtils {
         Field field = instance.getClass().getDeclaredField(name);
         field.setAccessible(true);
         return field.get(instance);
+    }
+
+    public static void setField(Object instance, String name, Object value) {
+        Validate.notNull(instance);
+        try {
+            Field field = instance.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            field.set(instance, value);
+        } catch (ReflectiveOperationException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static Class<?> getNMSClass(String package17, String className) {

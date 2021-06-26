@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
 //thank you pesekjan c:
 @Name("Force Rain")
 @Description("Make it start/stop raining for players.")
-@Examples("make the rain stop for {queue::*}")
+@Examples("make it stop raining for {queue::*}")
 @Since("1.1.0")
 public class EffForceRain extends Effect {
 
@@ -32,9 +32,10 @@ public class EffForceRain extends Effect {
         }
     }
 
-    private static Field c, b;
+    private static Object c, b;
     private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
             "PacketPlayOutGameStateChange");
+    private static Class<?> innerClass = packet.getDeclaredClasses()[0];
     private Expression<Player> playerExpr;
     private boolean rain;
 
@@ -44,16 +45,18 @@ public class EffForceRain extends Effect {
         Player[] players = playerExpr.getArray(e);
         if (c == null || b == null) {
             try {
-                c = packet.getDeclaredField("c");
-                b = packet.getDeclaredField("b");
+                c = innerClass.getConstructor(int.class)
+                        .newInstance(2);
+                b = innerClass.getConstructor(int.class)
+                        .newInstance(1);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
                 return;
             }
         }
         try {
-            Object instance = packet.getConstructor(packet, int.class)
-                    .newInstance(rain ? c : b, 0);
+            Object instance = packet.getConstructor(innerClass, float.class)
+                    .newInstance(rain ? c : b, 0F);
             for (Player p : players) {
                 ReflectionUtils.sendPacket(p, instance);
             }

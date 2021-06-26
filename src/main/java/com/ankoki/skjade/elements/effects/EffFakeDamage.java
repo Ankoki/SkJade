@@ -42,9 +42,10 @@ public class EffFakeDamage extends Effect {
         Player[] damaged = damagedExpr.getArray(e);
         for (Player p : damaged) {
             try {
-                Object handle = ReflectionUtils.getHandle.invoke(p);
-                Object instance = packet.getConstructor(handle.getClass(), int.class)
-                        .newInstance(handle, 1);
+                Object instance = packet.getConstructor()
+                        .newInstance();
+                ReflectionUtils.setField(instance, "a", p.getEntityId());
+                ReflectionUtils.setField(instance, "b", 1);
                 for (Player v : viewers) {
                     ReflectionUtils.sendPacket(v, instance);
                 }

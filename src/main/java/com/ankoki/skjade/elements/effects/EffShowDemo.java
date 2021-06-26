@@ -17,8 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.lang.reflect.Field;
-
 @Name("Show Demo")
 @Description("Shows the minecraft demonstration screen to a player.")
 @Examples("show demo screen to event-player")
@@ -33,9 +31,10 @@ public class EffShowDemo extends Effect {
         }
     }
 
-    private static Field f;
+    private static Object f;
     private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
             "PacketPlayOutGameStateChange");
+    private static Class<?> innerClass = packet.getDeclaredClasses()[0];
     private Expression<Player> playersExpr;
 
     @Override
@@ -44,8 +43,8 @@ public class EffShowDemo extends Effect {
         if (f == null) {
             if (Utils.getServerMajorVersion() < 16) {
                 try {
-                    Object instance = packet.getConstructor(int.class, int.class)
-                            .newInstance(5, 0);
+                    Object instance = packet.getConstructor(int.class, float.class)
+                            .newInstance(5, 0F);
                     for (Player p : players) {
                         ReflectionUtils.sendPacket(p, instance);
                     }
@@ -55,15 +54,16 @@ public class EffShowDemo extends Effect {
                 return;
             }
             try {
-                f = packet.getDeclaredField("f");
+                f = innerClass.getConstructor(int.class)
+                                .newInstance(5);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
                 return;
             }
         }
         try {
-            Object instance = packet.getConstructor(packet, int.class)
-                    .newInstance(f, 0);
+            Object instance = packet.getConstructor(innerClass, float.class)
+                    .newInstance(f, 0F);
             for (Player p : players) {
                 ReflectionUtils.sendPacket(p, instance);
             }
