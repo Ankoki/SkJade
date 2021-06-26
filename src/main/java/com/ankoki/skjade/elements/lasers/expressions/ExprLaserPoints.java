@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Start Location of a Laser")
 @Description("Returns the start or end location of a laser.")
 @Examples("broadcast \"%the start location of the lazer with id \"\"i got a big batty\"%\"\"")
-@Since("insert version")
+@Since("1.3.1")
 public class ExprLaserPoints extends SimpleExpression<Location> {
 
     static {

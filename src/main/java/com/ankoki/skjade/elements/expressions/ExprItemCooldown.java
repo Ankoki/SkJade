@@ -27,7 +27,7 @@ public class ExprItemCooldown extends SimpleExpression<Timespan> {
 
     static {
         Skript.registerExpression(ExprItemCooldown.class, Timespan.class, ExpressionType.SIMPLE,
-                "[the] cooldown of %itemtype% for %player%");
+                "[the] cooldown of %itemtypes% for %player%");
     }
 
     private Expression<Player> playerExpr;
@@ -38,14 +38,20 @@ public class ExprItemCooldown extends SimpleExpression<Timespan> {
     protected Timespan[] get(Event e) {
         if (playerExpr == null || itemTypeExpr == null) return new Timespan[0];
         Player player = playerExpr.getSingle(e);
-        ItemType item = itemTypeExpr.getSingle(e);
-        if (player == null || item == null) return new Timespan[0];
-        return new Timespan[]{Timespan.fromTicks_i(player.getCooldown(item.getMaterial()))};
+        ItemType[] items = itemTypeExpr.getArray(e);
+        if (player == null || items.length == 0) return new Timespan[0];
+        Timespan[] timespans = new Timespan[items.length];
+        int i = 0;
+        for (ItemType item : items) {
+            timespans[i] = Timespan.fromTicks_i(player.getCooldown(item.getMaterial()));
+            i++;
+        }
+        return timespans;
     }
 
     @Override
     public boolean isSingle() {
-        return true;
+        return itemTypeExpr.isSingle();
     }
 
     @Override
@@ -77,16 +83,22 @@ public class ExprItemCooldown extends SimpleExpression<Timespan> {
     @Override
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         Player player = playerExpr.getSingle(e);
-        ItemType item = itemTypeExpr.getSingle(e);
+        ItemType[] items = itemTypeExpr.getArray(e);
         Timespan time = mode == ChangeMode.SET ? (Timespan) delta[0] : null;
-        if (player == null || item == null) return;
+        if (player == null) return;
         switch (mode) {
             case SET:
-                if (time != null) player.setCooldown(item.getMaterial(), (int) time.getTicks_i());
+                if (time != null) {
+                    for (ItemType item : items) {
+                        player.setCooldown(item.getMaterial(), (int) time.getTicks_i());
+                    }
+                }
                 break;
             case DELETE:
             case RESET:
-                player.setCooldown(item.getMaterial(), 0);
+                for (ItemType item : items) {
+                    player.setCooldown(item.getMaterial(), 0);
+                }
         }
     }
 }

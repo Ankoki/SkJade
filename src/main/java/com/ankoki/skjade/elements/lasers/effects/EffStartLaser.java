@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Start Laser/Beam")
 @Description("Starts a stored laser.")
 @Examples("start the laser with id \"nicki minaj is the queen of rap\"")
-@Since("insert version")
+@Since("1.3.1")
 public class EffStartLaser extends Effect {
 
     static {
