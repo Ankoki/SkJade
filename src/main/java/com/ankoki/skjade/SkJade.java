@@ -85,9 +85,6 @@ public class SkJade extends JavaPlugin {
                 logger.info("Elementals was found, however it is an outdated version! Please upgrade to atleast version 1.4.");
             }
         }
-        if (Config.LASERS_ENABLED) {
-            this.loadLaserElements();
-        }
 
         this.registerListeners(new PlayerJoin());
         if (version.endsWith("-beta")) {
@@ -248,7 +245,7 @@ public class SkJade extends JavaPlugin {
                     .user("laser?s?")
                     .name("Laser")
                     .description("A guardian beam.")
-                    .since("insert version"));
+                    .since("1.3.1"));
         }
     }
 

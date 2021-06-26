@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Stop Laser")
 @Description("Stops any lasers in progress.")
 @Examples("stop the laser with id \"my twins big like tia tamara ugh wha\"")
-@Since("insert version")
+@Since("1.3.1")
 public class EffStopLaser extends Effect {
 
     static {

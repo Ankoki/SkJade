@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Create Laser/Guardian Beam")
 @Description("Creates a laser/guardian beam. Does NOT show it. For an infinite beam, use -1 seconds.")
 @Examples("create a new laser from player to player's target block for 10 seconds with the id \"kachow\"")
-@Since("insert version")
+@Since("1.3.1")
 public class EffCreateLaser extends Effect {
 
     static {

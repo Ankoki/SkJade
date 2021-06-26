@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Laser/Guardian Beam")
 @Description("Gets the laser/beam with the given id.")
 @Examples("start the laser beam with id \"my laser\" for all players")
-@Since("insert version")
+@Since("1.3.1")
 public class ExprLaser extends SimpleExpression<Laser> {
 
     static {

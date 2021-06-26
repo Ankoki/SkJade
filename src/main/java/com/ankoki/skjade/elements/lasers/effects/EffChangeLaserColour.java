@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Make Laser Change Colour")
 @Description("Makes a laser change colour. You cannot specify this coloUr.")
 @Examples("force the laser with id \"coochie vegan she a veggie\" to change colour")
-@Since("insert version")
+@Since("1.3.1")
 public class EffChangeLaserColour extends Effect {
 
     static {

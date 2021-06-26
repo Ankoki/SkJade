@@ -26,7 +26,7 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
     static {
         Skript.registerExpression(ExprHologramLine.class, HologramLine.class, ExpressionType.PROPERTY,
                 "[all] [the] lines of %holograms%",
-                "line %number% of [the] holo[gram] %hologram%",
+                "line %number% of [the] [holo[gram]] %hologram%",
                 "event( |-)[holo[gram]][(-| )]line");
     }
 
@@ -51,7 +51,9 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
             int i = line.getSingle(event).intValue();
             i--;
             if (i < 0) i = 0;
-            return new HologramLine[]{holo.getLine(i)};
+            HologramLine line = holo.getLine(i);
+            return line == null ? new HologramLine[0] :
+                    new HologramLine[]{line};
         }
         return HologramManager.getLines(holo);
     }

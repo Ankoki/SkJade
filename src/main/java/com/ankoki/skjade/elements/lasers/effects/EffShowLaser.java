@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Show Laser/Guardian Beam")
 @Description("Shows a guardiam beam between two points.")
 @Examples("show a laser from player to player's target block for 10 seconds for player")
-@Since("insert version")
+@Since("1.3.1")
 public class EffShowLaser extends Effect {
 
     static {
