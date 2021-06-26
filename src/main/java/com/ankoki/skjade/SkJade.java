@@ -240,13 +240,11 @@ public class SkJade extends JavaPlugin {
         Converters.registerConverter(Character.class, Integer.class, Character::getNumericValue);
 
         //Laser ClassInfo
-        if (Config.LASERS_ENABLED) {
             Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
                     .user("laser?s?")
                     .name("Laser")
                     .description("A guardian beam.")
                     .since("1.3.1"));
-        }
     }
 
     public boolean isBeta() {
