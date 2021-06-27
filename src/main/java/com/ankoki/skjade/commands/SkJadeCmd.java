@@ -11,12 +11,12 @@ public class SkJadeCmd implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (args.length == 1 && args[0].equalsIgnoreCase("reload") && (sender.isOp() || sender.hasPermission("skjade.admin"))) {
             SkJade.getInstance().getOwnConfig().reloadConfig();
-            sender.sendMessage("§8Sk§7Jade §f| §7§oYou have sucessfully reloaded the config!");
+            sender.sendMessage("§fSk§aJade §f| §7§oYou have sucessfully reloaded the config!");
         } else {
-            sender.sendMessage("§8Sk§7Jade §f| §7§oYou are currently running §8§oSk§7§oJade v" +
+            sender.sendMessage("§fSk§aJade §f| §7§oYou are currently running §f§oSk§a§oJade §7§ov" +
                     (SkJade.getInstance().isLatest() ? "§a§o" : "§c§o") + SkJade.getInstance().getVersion());
             if (SkJade.getInstance().isBeta()) {
-                sender.sendMessage("§8Sk§7Jade §f| §7§oDo note that you are currently running an unstable version " +
+                sender.sendMessage("§fSk§aJade §f| §7§oDo note that you are currently running an unstable version " +
                         "of this plugin, which is strongly discouraged as it may result in unexpected and/or breaking " +
                         "behavior. Please switch to a stable version if possible!");
             }

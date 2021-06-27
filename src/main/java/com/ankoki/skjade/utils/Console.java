@@ -3,11 +3,11 @@ package com.ankoki.skjade.utils;
 public class Console {
 
     public static void info(String info) {
-        System.out.println("§8Sk§7Jade §f| §7" + info);
+        System.out.println("§fSk§aJade §f| §7" + info);
     }
 
     public static void warning(String warning) {
-        System.out.println("§8Sk§7Jade" + ConsoleColors.WHITE + " | " + ConsoleColors.YELLOW + warning);
+        System.out.println("§fSk§aJade" + ConsoleColors.WHITE + " | " + ConsoleColors.YELLOW + warning);
     }
 
     @SuppressWarnings("unused")
