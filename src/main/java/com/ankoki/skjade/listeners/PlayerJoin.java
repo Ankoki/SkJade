@@ -19,12 +19,12 @@ public class PlayerJoin implements Listener {
     private void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         if (Config.VERSION_ALERTS && (player.hasPermission("skjade.notify") || player.isOp()) && !SkJade.getInstance().isLatest()) {
-            player.sendMessage("§8[§6Sk§aJade§8] §cYou are running an outdated version of §6Sk§aJade§c!");
+            player.sendMessage("§8Sk§7Jade §f| §7§oYou are running an outdated version of §8§oSk§7§oJade!");
             TextComponent github =
-                    new TextComponent(Utils.coloured("           &a[&cClick me to download the latest version!&a]"));
+                    new TextComponent(Utils.coloured("§8Sk§7Jade §f| §7§oClick me to download the latest version!"));
             github.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                     new ComponentBuilder("Click me to go to the latest release!")
-                            .color(ChatColor.DARK_RED)
+                            .color(ChatColor.GRAY)
                             .italic(true)
                             .create()));
             github.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,

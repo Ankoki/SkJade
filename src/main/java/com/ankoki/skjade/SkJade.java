@@ -40,7 +40,6 @@ public class SkJade extends JavaPlugin {
     private Version serverVersion;
     private PluginManager pluginManager;
     private SkriptAddon addon;
-    private Logger logger;
     private boolean nmsEnabled = false;
     private boolean latest = true;
     private Config config = null;
@@ -51,10 +50,9 @@ public class SkJade extends JavaPlugin {
         long start = System.currentTimeMillis();
         instance = this;
         pluginManager = this.getServer().getPluginManager();
-        logger = this.getLogger();
         version = this.getDescription().getVersion();
         if (!isSkriptEnabled()) {
-            logger.info("Skript wasn't found. Are you sure it's installed and up to date?");
+            Console.info("Skript wasn't found. Are you sure it's installed and up to date?");
             pluginManager.disablePlugin(this);
             return;
         }
@@ -68,29 +66,29 @@ public class SkJade extends JavaPlugin {
 
         this.loadElements();
         if (isPluginEnabled("ProtocolLib") && Config.PROTOCOL_LIB_ENABLED) {
-            logger.info("ProtocolLib was found! Enabling support");
+            Console.info("ProtocolLib was found! Enabling support");
             this.loadProtocolElements();
         }
         if (isPluginEnabled("HolographicDisplays") && Config.HOLOGRAPHIC_DISPLAYS_ENABLED) {
-            logger.info("HolographicDisplays was found! Enabling support");
+            Console.info("HolographicDisplays was found! Enabling support");
             this.loadHDElements();
         }
         if (isPluginEnabled("Elementals") && Config.ELEMENTALS_ENABLED) {
             Plugin elementals = pluginManager.getPlugin("Elementals");
             assert elementals != null;
             if (Utils.checkPluginVersion(elementals, 1, 4)) {
-                logger.info("Elementals was found! Enabling support");
+                Console.info("Elementals was found! Enabling support");
                 this.loadElementalsElements();
             } else {
-                logger.info("Elementals was found, however it is an outdated version! Please upgrade to atleast version 1.4.");
+                Console.info("Elementals was found, however it is an outdated version! Please upgrade to atleast version 1.4.");
             }
         }
 
         this.registerListeners(new PlayerJoin());
         if (version.endsWith("-beta")) {
-            logger.warning("You are running on an unstable release and SkJade could potentionally not " +
-                    "work correctly!");
-            logger.warning("I recommend switching to a non-beta version of SkJade, especially if you're " +
+            Console.warning("You are running on an unstable release, SkJade could potentionally " +
+                    "function incorrectly!");
+            Console.warning("Switching to a non-beta version of SkJade is HIGHLY recommended, especially if you're " +
                     "runninng on a production server, as data might be lost!");
             beta = true;
         }
@@ -100,30 +98,30 @@ public class SkJade extends JavaPlugin {
         this.startRealTime();
 
         long fin = System.currentTimeMillis() - start;
-        logger.info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
+        Console.info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
                 fin + "ms)");
 
         new Thread(() -> {
             UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
             if (!checker.isLatest()) {
-                logger.info("You are not running the latest version of SkJade! Please update here:");
-                logger.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
+                Console.info("You are not running the latest version of SkJade! Please update here:");
+                Console.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
                 latest = false;
             }
         }).start();
 
         if (serverVersion.isLegacy()) {
-            logger.warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
-            logger.warning("You have no reason to not use the latest server version. SkJade will still be enabled, " +
+            Console.warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
+            Console.warning("You have no reason to not use the latest server version. SkJade will still be enabled, " +
                     "however you may encounter some issues which may not get fixed due to not supporting fossil versions.");
         }
     }
 
     private void loadNMS() {
         if (Utils.getServerMajorVersion() < 13) {
-            logger.severe("Could not find any NMS support for " + version + "! Please note SkJade only supports " +
+            Console.warning("Could not find any NMS support for " + version + "! Please note SkJade only supports " +
                     "the latest sub-version of each version above 1.13.");
-            logger.info("SkJade will remain enabled, however anything using NMS will not be enabled!");
+            Console.info("SkJade will remain enabled, however anything using NMS will not be enabled!");
         } else {
             nmsEnabled = true;
         }
@@ -152,7 +150,7 @@ public class SkJade extends JavaPlugin {
                     "pastebinapi",
                     "lasers");
         } catch (IOException ex) {
-            logger.info("Something went horribly wrong!");
+            Console.info("Something went horribly wrong!");
             ex.printStackTrace();
         }
     }
@@ -161,7 +159,7 @@ public class SkJade extends JavaPlugin {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {
-            logger.info("Something went horribly wrong!");
+            Console.info("Something went horribly wrong!");
             ex.printStackTrace();
         }
     }
@@ -175,7 +173,7 @@ public class SkJade extends JavaPlugin {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.elementals");
         } catch (IOException ex) {
-            logger.info("Something went horribly wrong!");
+            Console.info("Something went horribly wrong!");
             ex.printStackTrace();
         }
     }
@@ -184,7 +182,7 @@ public class SkJade extends JavaPlugin {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.protocollib");
         } catch (IOException ex) {
-            logger.info("Something went horribly wrong!");
+            Console.info("Something went horribly wrong!");
             ex.printStackTrace();
         }
     }

@@ -11,13 +11,13 @@ public class SkJadeCmd implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (args.length == 1 && args[0].equalsIgnoreCase("reload") && (sender.isOp() || sender.hasPermission("skjade.admin"))) {
             SkJade.getInstance().getOwnConfig().reloadConfig();
-            sender.sendMessage("§8[§6Sk§aJade§8] §7You have sucessfully reloaded the config! Reloading the config does " +
-                    "absolutely nothing, as you have to restart the server for the changes to take place anyway:)");
+            sender.sendMessage("§8Sk§7Jade §f| §7§oYou have sucessfully reloaded the config!");
         } else {
-            sender.sendMessage("§8[§6Sk§aJade§8] §7You are currently running §eSk§aJade§7 v" + SkJade.getInstance().getVersion());
+            sender.sendMessage("§8Sk§7Jade §f| §7§oYou are currently running §8§oSk§7§oJade v" +
+                    (SkJade.getInstance().isLatest() ? "§a§o" : "§c§o") + SkJade.getInstance().getVersion());
             if (SkJade.getInstance().isBeta()) {
-                sender.sendMessage("§8[§6Sk§aJade§8] §7Do note that you are currently running an unstable version " +
-                        "of this plugin which is strongly discouraged as it may result in unexpected and/or breaking " +
+                sender.sendMessage("§8Sk§7Jade §f| §7§oDo note that you are currently running an unstable version " +
+                        "of this plugin, which is strongly discouraged as it may result in unexpected and/or breaking " +
                         "behavior. Please switch to a stable version if possible!");
             }
         }
