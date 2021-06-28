@@ -188,10 +188,6 @@ public class HologramManager {
         ((CollectableLine) line).setPickupHandler(null);
     }
 
-    //looking into
-    public static void imageHologram() {
-    }
-
     public enum TouchType {
         INTERACTABLE,
         CLICKABLE,

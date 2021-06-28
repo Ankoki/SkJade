@@ -14,8 +14,6 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.MinecraftKey;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
@@ -51,9 +49,9 @@ public class EffShowBrand extends Effect {
         byte[] byt = new byte[256];
         byt[0] = (byte) b.length();
         System.arraycopy(bytes, 0, byt, 1, Math.min(bytes.length, 255));
-        ByteBuf buffer = Unpooled.copiedBuffer(byt);
-        Object seraliser = MinecraftReflection.getPacketDataSerializer(buffer);
-        PAYLOAD_PACKET.getModifier().withType(ByteBuf.class).write(0, seraliser);
+        //ByteBuf buffer = Unpooled.copiedBuffer(byt);
+        //Object seraliser = MinecraftReflection.getPacketDataSerializer(buffer);
+        //PAYLOAD_PACKET.getModifier().withType(ByteBuf.class).write(0, seraliser);
         for (Player player : p) {
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(player, PAYLOAD_PACKET);
