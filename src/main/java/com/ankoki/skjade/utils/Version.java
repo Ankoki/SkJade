@@ -18,6 +18,7 @@ public enum Version {
     v1_16_R2(false),
     v1_16_R3(false),
     v1_16_R4(false),
+    v1_17_R1(false),
     UNKNOWN(false);
 
     private final boolean legacy;

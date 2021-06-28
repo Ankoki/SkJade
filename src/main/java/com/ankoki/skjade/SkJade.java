@@ -166,7 +166,12 @@ public class SkJade extends JavaPlugin {
 
     private void loadServerVersion() {
         String packageName = this.getServer().getClass().getPackage().getName();
-        serverVersion = Version.valueOf(packageName.substring(packageName.lastIndexOf('.') + 1));
+        String ver = packageName.substring(packageName.lastIndexOf('.') + 1);
+        try {
+            serverVersion = Version.valueOf(ver);
+        } catch (Exception ex) {
+            Console.warning("You are using an unknown version (" + ver + ")! SkJade will not function as intended");
+        }
     }
 
     private void loadElementalsElements() {
