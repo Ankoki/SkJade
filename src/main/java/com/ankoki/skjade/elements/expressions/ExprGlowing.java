@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @Name("Glowing ItemStack")
 @Description("Makes a glowing(enchanted with no enchant flag) item.")
@@ -44,7 +45,10 @@ public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> 
         } else {
             itemStack.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
         }
-        itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        ItemMeta meta = itemStack.getItemMeta();
+        if (meta == null) return itemStack;
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemStack.setItemMeta(meta);
         return itemStack;
     }
 }

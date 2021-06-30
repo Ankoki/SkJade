@@ -63,6 +63,14 @@
             <url>https://repo.destroystokyo.com/content/repositories/snapshots/</url>
         </repository>
         <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
             <id>codemc-repo</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
@@ -99,10 +107,6 @@
                     <groupId>net.milkbowl.vault</groupId>
                     <artifactId>Vault</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>com.destroystokyo.paper</groupId>
-                    <artifactId>paper-api</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -118,9 +122,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.17-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.17-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
