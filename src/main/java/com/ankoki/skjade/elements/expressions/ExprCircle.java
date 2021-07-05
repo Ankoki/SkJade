@@ -24,12 +24,13 @@ public class ExprCircle extends SimpleExpression<Location> {
 
     static {
         Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE,
-                "[a] circle (at|from) %location% with [a] radius [of] %number% [and %-number% total (points|blocks|locations)]");
+                "[a[n]] (1¦upright|) circle (at|from) %location% with [a] radius [of] %number% [and %-number% total (points|blocks|locations)]");
     }
 
     private Expression<Location> center;
     private Expression<Number> radius;
     private Expression<Number> total;
+    private boolean upright;
 
     @Nullable
     @Override
@@ -47,7 +48,8 @@ public class ExprCircle extends SimpleExpression<Location> {
             t = num2.doubleValue();
         }
         if (c == null) return new Location[0];
-        return Shapes.getCircle(c, r, t).toArray(new Location[0]);
+        return upright ? Shapes.getUprightCircle(c, r, t).toArray(new Location[0]) :
+                Shapes.getCircle(c, r, t).toArray(new Location[0]);
     }
 
     @Override
@@ -70,7 +72,8 @@ public class ExprCircle extends SimpleExpression<Location> {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
         center = (Expression<Location>) exprs[0];
         radius = (Expression<Number>) exprs[1];
-        total = (Expression<Number>) exprs[2];
+        if (exprs.length >= 3) total = (Expression<Number>) exprs[2];
+        upright = parseResult.mark == 1;
         return true;
     }
 }

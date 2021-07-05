@@ -154,7 +154,7 @@ public class Shapes {
     }
 
     /**
-     * A method to get the list of locations in a circle.
+     * A method to get the list of locations in an upright circle.
      *
      * @param centre The centre of the circle.
      * @param radius The radius of the circle.
