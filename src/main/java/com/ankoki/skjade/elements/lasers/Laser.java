@@ -1,4 +1,4 @@
-package com.ankoki.skjade.utils;
+package com.ankoki.skjade.elements.lasers;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -350,8 +350,8 @@ public class Laser {
                 watcherSet = getMethod(dataWatcherClass, "set");
                 watcherRegister = getMethod(dataWatcherClass, "register");
                 if (version >= 15) watcherDirty = getMethod(dataWatcherClass, "markDirty");
-                packetSpawn = getNMSClass("network.protocol.game", "PacketPlayOutSpawnEntityLiving").getDeclaredConstructor(version < 17 ? new Class<?>[0] : new Class<?>[]{getNMSClass("world.entity", "EntityLiving")});
-                packetRemove = getNMSClass("network.protocol.game", "PacketPlayOutEntityDestroy").getDeclaredConstructor(version < 17 ? int[].class : int.class);
+                packetSpawn = getNMSClass("network.protocol.game", "PacketPlayOutSpawnEntityLiving").getDeclaredConstructor(version < 17 ? new Class<?>[0] : new Class<?>[]{getNMSClass("world.entity", "EntityLiving")});				packetRemove = getNMSClass("network.protocol.game", "PacketPlayOutEntityDestroy").getDeclaredConstructor(version == 17 && versionMinor == 0 ? int.class : int[].class);
+                packetRemove = getNMSClass("network.protocol.game", "PacketPlayOutEntityDestroy").getDeclaredConstructor(version == 17 && versionMinor == 0 ? int.class : int[].class);
                 packetMetadata = getNMSClass("network.protocol.game", "PacketPlayOutEntityMetadata").getDeclaredConstructor(int.class, dataWatcherClass, boolean.class);
                 packetTeleport = getNMSClass("network.protocol.game", "PacketPlayOutEntityTeleport").getDeclaredConstructor(version < 17 ? new Class<?>[0] : new Class<?>[]{entityClass});
                 packetTeam = getNMSClass("network.protocol.game", "PacketPlayOutScoreboardTeam");
@@ -457,7 +457,7 @@ public class Laser {
 
         public static Object[] createPacketsRemoveEntities(int... entitiesId) throws ReflectiveOperationException {
             Object[] packets;
-            if (version < 17) {
+            if (version < 17 || (version == 17 && versionMinor != 0)) {
                 packets = new Object[]{packetRemove.newInstance(entitiesId)};
             } else {
                 packets = new Object[entitiesId.length];

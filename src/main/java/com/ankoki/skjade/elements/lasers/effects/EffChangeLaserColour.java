@@ -9,7 +9,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.utils.Laser;
+import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 

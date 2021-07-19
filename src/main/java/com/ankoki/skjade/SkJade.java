@@ -9,6 +9,7 @@ import ch.njol.skript.registrations.Converters;
 import ch.njol.util.coll.CollectionUtils;
 import com.ankoki.pastebinapi.api.PasteBuilder;
 import com.ankoki.skjade.commands.SkJadeCmd;
+import com.ankoki.skjade.elements.lasers.Laser;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.*;
@@ -24,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * IMPORTANT
@@ -244,6 +244,10 @@ public class SkJade extends JavaPlugin {
                 .since("1.3.1"));
     }
 
+    private void startRealTime() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getPluginManager().callEvent(new RealTimeEvent(new Date())), 0L, 20 * 60L);
+    }
+
     public boolean isBeta() {
         return beta;
     }
@@ -266,9 +270,5 @@ public class SkJade extends JavaPlugin {
 
     public Config getOwnConfig() {
         return config;
-    }
-
-    private void startRealTime() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getPluginManager().callEvent(new RealTimeEvent(new Date())), 0L, 20 * 60L);
     }
 }

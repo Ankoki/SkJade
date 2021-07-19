@@ -11,7 +11,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.elements.lasers.LaserManager;
-import com.ankoki.skjade.utils.Laser;
+import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 

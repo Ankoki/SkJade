@@ -1,7 +1,5 @@
 package com.ankoki.skjade.elements.lasers;
 
-import com.ankoki.skjade.utils.Laser;
-
 import java.util.HashMap;
 import java.util.Map;
 
