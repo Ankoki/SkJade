@@ -38,7 +38,6 @@ public class Config {
         try {
             boolean hasUpdated = false;
             InputStream stream = plugin.getResource(cfile.getName());
-            assert stream != null;
             InputStreamReader is = new InputStreamReader(stream);
             YamlConfiguration defLand = YamlConfiguration.loadConfiguration(is);
             for (String key : defLand.getConfigurationSection("").getKeys(true)) {
@@ -57,8 +56,8 @@ public class Config {
                 config.save(cfile);
             is.close();
             stream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

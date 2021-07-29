@@ -5,11 +5,11 @@ import com.ankoki.pastebinapi.enums.PasteExpiry;
 import com.ankoki.pastebinapi.enums.PasteVisibility;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PasteManager {
-    private static final Map<String, PasteBuilder> pasteBuilders = new HashMap<>();
+    private static final Map<String, PasteBuilder> pasteBuilders = new ConcurrentHashMap<>();
     private static String linkToLastBuiltPaste = "<none>";
 
     public static void createPasteBuilder(String key) {

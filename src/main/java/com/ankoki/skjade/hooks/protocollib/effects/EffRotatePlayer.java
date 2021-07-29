@@ -26,11 +26,12 @@ import java.util.Arrays;
 public class EffRotatePlayer extends Effect {
 
     static {
-        if (SkJade.getInstance().isNmsEnabled()) {
-            Skript.registerEffect(EffRotatePlayer.class,
-                    "rotate %players% by %number% [horizontally] [[and] %-number% [vertically]]");
-        }
+        Skript.registerEffect(EffRotatePlayer.class,
+                "rotate %players% by %number% [horizontally] [[and] %-number% [vertically]]");
     }
+
+    private static final PacketContainer PACKET =
+            ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.POSITION);
 
     private Expression<Player> players;
     private Expression<Number> horizontal;
@@ -52,15 +53,15 @@ public class EffRotatePlayer extends Effect {
         Arrays.stream(players.getArray(e)).forEach(player -> {
             if (player == null) return;
             Location loc = player.getLocation();
-            PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.POSITION);
-            packet.getDoubles().write(0, loc.getX());
-            packet.getDoubles().write(1, loc.getY());
-            packet.getDoubles().write(2, loc.getZ());
-            packet.getFloat().write(0, loc.getYaw() + h);
-            packet.getFloat().write(1, loc.getPitch() + finalV);
+            PACKET.getDoubles().write(0, loc.getX());
+            PACKET.getDoubles().write(1, loc.getY());
+            PACKET.getDoubles().write(2, loc.getZ());
+            PACKET.getFloat().write(0, loc.getYaw() + h);
+            PACKET.getFloat().write(1, loc.getPitch() + finalV);
             try {
-                ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
-            } catch (InvocationTargetException ignored) {}
+                ProtocolLibrary.getProtocolManager().sendServerPacket(player, PACKET);
+            } catch (InvocationTargetException ignored) {
+            }
         });
     }
 
