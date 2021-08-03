@@ -23,8 +23,8 @@ public class ExprHologramId extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprHologramId.class, String.class, ExpressionType.SIMPLE,
-                "[the] (id|key) of [the [hologram]] %skjhologram%",
-                "%skjhologram%[']s (id|key)");
+                "[the] (id|key) of [the [hologram]] %hologram%",
+                "%hologram%[']s (id|key)");
     }
 
     private Expression<Hologram> hologram;

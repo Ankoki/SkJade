@@ -20,7 +20,7 @@ public class EffDeleteHolo extends Effect {
 
     static {
         Skript.registerEffect(EffDeleteHolo.class,
-                "delete [(hd|holographic[ ]displays)] %skjhologram%");
+                "delete [(hd|holographic[ ]displays)] %hologram%");
     }
 
     private Expression<Hologram> hologram;

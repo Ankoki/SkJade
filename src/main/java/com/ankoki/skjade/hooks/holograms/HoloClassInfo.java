@@ -24,9 +24,9 @@ import java.io.StreamCorruptedException;
 public class HoloClassInfo {
 
     static {
-        Classes.registerClass(new ClassInfo<>(Hologram.class, "skjhologram")
-        .user("skjholo(gram)?s?")
-        .name("SkJade Hologram")
+        Classes.registerClass(new ClassInfo<>(Hologram.class, "hologram")
+        .user("holo(gram)?s?")
+        .name("Hologram")
         .description("A Hologram created with Holographic displays.")
         .since("1.0.0")
         .changer(new Changer<Hologram>() {
@@ -116,9 +116,9 @@ public class HoloClassInfo {
 
         Converters.registerConverter(Hologram.class, Location.class, Hologram::getLocation);
 
-        Classes.registerClass(new ClassInfo<>(HologramLine.class, "skjhologramline")
-        .user("skjholo(gram)?( |-)?lines?")
-        .name("SkJade Hologram Line")
+        Classes.registerClass(new ClassInfo<>(HologramLine.class, "hologramline")
+        .user("holo(gram)?( |-)?lines?")
+        .name("Hologram Line")
         .description("A line of a Hologram.")
         .since("1.0.0")
         .changer(new Changer<HologramLine>() {

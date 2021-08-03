@@ -33,7 +33,7 @@ public class EffForceRain extends Effect {
     }
 
     private static Object c, b;
-    private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
+    private static Class<?> packet =ReflectionUtils.getNMSClass("network.protocol.game",
             "PacketPlayOutGameStateChange");
     private static Class<?> innerClass = packet.getDeclaredClasses()[0];
     private Expression<Player> playerExpr;

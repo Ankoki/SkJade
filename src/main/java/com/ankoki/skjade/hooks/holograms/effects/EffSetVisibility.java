@@ -21,7 +21,7 @@ public class EffSetVisibility extends Effect {
 
     static {
         Skript.registerEffect(EffSetVisibility.class,
-                "(1¦show|2¦hide) %skjholograms% (to|from) %players%");
+                "(1¦show|2¦hide) %holograms% (to|from) %players%");
     }
 
     private Expression<Hologram> holo;

@@ -22,7 +22,7 @@ public class CondHasInteractionHandler extends Condition {
 
     static {
         Skript.registerCondition(CondHasInteractionHandler.class,
-                "%skjhologramline% is (0¦interactable|1¦clickable|2¦touchable)");
+                "%hologramline% is (0¦interactable|1¦clickable|2¦touchable)");
     }
 
     private TouchType touchType;
