@@ -21,7 +21,7 @@ public class EffAddItemLine extends Effect {
 
     static {
         Skript.registerEffect(EffAddItemLine.class,
-                "add [[the] item] %itemstack% to %hologram%");
+                "add [[the] item] %itemstack% to %skjhologram%");
     }
 
     private Expression<ItemStack> item;

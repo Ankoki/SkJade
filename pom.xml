@@ -45,7 +45,7 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats.bukkit</pattern>
-                            <shadedPattern>com.ankoki.skjade.utils.metrics</shadedPattern>
+                            <shadedPattern>com.ankoki.skjade.libs.metrics</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -161,7 +161,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>20.1.0</version>
+            <version>21.0.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

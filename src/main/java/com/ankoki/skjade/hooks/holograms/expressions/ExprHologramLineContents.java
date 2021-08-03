@@ -26,7 +26,7 @@ public class ExprHologramLineContents extends SimpleExpression<Object> {
 
     static {
         Skript.registerExpression(ExprHologramLineContents.class, Object.class, ExpressionType.SIMPLE,
-                "[skjade] [the] (content[s]|text|item) (of|in|at) [[the] holo[gram]] %hologramline%");
+                "[skjade] [the] (content[s]|text|item) (of|in|at) [[the] holo[gram]] %skjhologramline%");
     }
 
     private Expression<HologramLine> lineExpr;

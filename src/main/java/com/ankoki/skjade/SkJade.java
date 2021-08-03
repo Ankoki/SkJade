@@ -101,14 +101,16 @@ public class SkJade extends JavaPlugin {
         Console.info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
                 fin + "ms)");
 
-        new Thread(() -> {
-            UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
-            if (!checker.isLatest()) {
-                Console.info("You are not running the latest version of SkJade! Please update here:");
-                Console.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
-                latest = false;
-            }
-        }).start();
+        if (!isBeta()) {
+            new Thread(() -> {
+                UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
+                if (!checker.isLatest()) {
+                    Console.info("You are not running the latest version of SkJade! Please update here:");
+                    Console.info("https://www.github.com/Ankoki-Dev/SkJade/releases/latest");
+                    latest = false;
+                }
+            }).start();
+        }
 
         if (serverVersion.isLegacy()) {
             Console.warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");

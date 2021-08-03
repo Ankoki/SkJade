@@ -23,9 +23,9 @@ public class EffInteractableLine extends Effect {
 
     static {
         Skript.registerEffect(EffInteractableLine.class,
-                "(make|set) [the] line %numbers% of %hologram% [to be] [(1¦(un|non[(-| )])|)]clickable",
-                "(make|set) [the] line %numbers% of %hologram% [to be] [(1¦(un|non[(-| )])|)]touchable",
-                "(make|set) [the] line %numbers% of %hologram% [to be] [(1¦(un|non[(-| )])|)]interactable");
+                "(make|set) [the] line %numbers% of %skjhologram% [to be] [(1¦(un|non[(-| )])|)]clickable",
+                "(make|set) [the] line %numbers% of %skjhologram% [to be] [(1¦(un|non[(-| )])|)]touchable",
+                "(make|set) [the] line %numbers% of %skjhologram% [to be] [(1¦(un|non[(-| )])|)]interactable");
     }
 
     private TouchType touchType;

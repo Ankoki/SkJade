@@ -21,7 +21,7 @@ public class EffResetVisibility extends Effect {
 
     static {
         Skript.registerEffect(EffResetVisibility.class,
-                "reset [the] visibility of %holograms% [(for all players|1¦for [the] [player] %-player%)]");
+                "reset [the] visibility of %skjholograms% [(for all players|1¦for [the] [player] %-player%)]");
     }
 
     private Expression<Hologram> holo;

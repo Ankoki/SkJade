@@ -22,7 +22,7 @@ public class EffAddTextLine extends Effect {
 
     static {
         Skript.registerEffect(EffAddTextLine.class,
-                "add [the] [text] [line[s]] %strings% to %hologram%");
+                "add [the] [text] [line[s]] %strings% to %skjhologram%");
     }
 
     private Expression<String> line;
