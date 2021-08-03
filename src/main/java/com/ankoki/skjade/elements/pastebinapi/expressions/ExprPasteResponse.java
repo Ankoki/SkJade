@@ -48,6 +48,7 @@ public class ExprPasteResponse extends SimpleExpression<String> {
             return response.get();
         });
         Delay.addDelayedEvent(e);
+        while (!future.isDone()){}
         try {
             return new String[]{future.get()};
         } catch (Exception ex) { return null; }
