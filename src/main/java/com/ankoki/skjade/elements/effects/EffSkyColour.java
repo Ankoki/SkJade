@@ -21,19 +21,21 @@ import org.jetbrains.annotations.Nullable;
 @RequiredPlugins("1.16+")
 public class EffSkyColour extends Effect {
 
+    private static Object h;
+    private static Class<?> packet;
+    private static Class<?> innerClass;
+    private Expression<Number> numbers;
+    private Expression<Player> playerExpr;
+
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffSkyColour.class,
                     "change [the] sky colo[u]r to %number% for %players%");
+            packet = ReflectionUtils.getNMSClass("network.protocol.game",
+                    "PacketPlayOutGameStateChange");
+            innerClass = packet.getDeclaredClasses()[0];
         }
     }
-
-    private static Object h;
-    private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
-            "PacketPlayOutGameStateChange");
-    private static Class<?> innerClass = packet.getDeclaredClasses()[0];
-    private Expression<Number> numbers;
-    private Expression<Player> playerExpr;
 
     @Override
     protected void execute(Event e) {

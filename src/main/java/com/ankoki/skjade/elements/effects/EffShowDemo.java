@@ -23,19 +23,21 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0.0")
 public class EffShowDemo extends Effect {
 
+    private static Class<?> packet;
+    private static Class<?> innerClass;
+    private Expression<Player> playersExpr;
+    private static Object f;
+
     static {
         if (SkJade.getInstance().isNmsEnabled() &&
                 new Version(String.valueOf(Skript.getMinecraftVersion())).isLargerThan(new Version("1.13.2"))) {
             Skript.registerEffect(EffShowDemo.class,
                     "show [the] demo[nstration] screen to %players%");
+            packet = ReflectionUtils.getNMSClass("network.protocol.game",
+                    "PacketPlayOutGameStateChange");
+            innerClass = packet.getDeclaredClasses()[0];
         }
     }
-
-    private static Object f;
-    private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
-            "PacketPlayOutGameStateChange");
-    private static Class<?> innerClass = packet.getDeclaredClasses()[0];
-    private Expression<Player> playersExpr;
 
     @Override
     protected void execute(Event event) {

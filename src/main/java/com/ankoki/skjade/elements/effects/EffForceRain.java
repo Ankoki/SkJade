@@ -18,26 +18,27 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 
-//thank you pesekjan c:
 @Name("Force Rain")
 @Description("Make it start/stop raining for players.")
 @Examples("make it stop raining for {queue::*}")
 @Since("1.1.0")
 public class EffForceRain extends Effect {
 
+    private static Class<?> packet;
+    private static Class<?> innerClass;
+    private static Object c, b;
+    private Expression<Player> playerExpr;
+    private boolean rain;
+
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffForceRain.class,
                     "((1¦force [it] to rain|force it to stop raining)|make it (1¦|stop) rain[ing]) for %players%");
+            packet = ReflectionUtils.getNMSClass("network.protocol.game",
+                    "PacketPlayOutGameStateChange");
+            innerClass = packet.getDeclaredClasses()[0];
         }
     }
-
-    private static Object c, b;
-    private static Class<?> packet =ReflectionUtils.getNMSClass("network.protocol.game",
-            "PacketPlayOutGameStateChange");
-    private static Class<?> innerClass = packet.getDeclaredClasses()[0];
-    private Expression<Player> playerExpr;
-    private boolean rain;
 
     @Override
     protected void execute(Event e) {

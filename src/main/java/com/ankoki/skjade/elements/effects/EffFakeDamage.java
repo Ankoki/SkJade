@@ -22,17 +22,18 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0.0")
 public class EffFakeDamage extends Effect {
 
+    private static Class<?> packet;
+    private Expression<Player> damagedExpr;
+    private Expression<Player> viewerExpr;
+
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffFakeDamage.class,
                     "make %players% take fake damage [for %-players%]");
+            packet = ReflectionUtils.getNMSClass("network.protocol.game",
+                    "PacketPlayOutAnimation");
         }
     }
-
-    private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
-            "PacketPlayOutAnimation");
-    private Expression<Player> damagedExpr;
-    private Expression<Player> viewerExpr;
 
     @Override
     protected void execute(Event e) {

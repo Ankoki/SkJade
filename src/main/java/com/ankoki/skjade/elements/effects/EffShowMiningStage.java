@@ -23,22 +23,24 @@ import org.jetbrains.annotations.Nullable;
 @Since("1.2.0")
 public class EffShowMiningStage extends Effect {
 
+    private static Class<?> packet;
+    private static Class<?> blockPosition;
+    private Expression<Number> stageExpr, entityId;
+    private Expression<Location> location;
+    private Expression<Player> playerExpr;
+    private boolean remove = false;
+
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffShowMiningStage.class,
                     "(show|play) (mining|block break) (stage|animation) %number% at %locations% [to %-players%] [(1¦with [the] [entity] id %-number%|)]",
                     "remove [the] (mining|block break) (stage|animation) at %locations% [for %-players%] [(1¦with [the] [entity] id %-number%|)]");
+            blockPosition = ReflectionUtils.getNMSClass("core",
+                    "BlockPosition");
+            packet = ReflectionUtils.getNMSClass("network.protocol.game",
+                    "PacketPlayOutBlockBreakAnimation");
         }
     }
-
-    private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
-            "PacketPlayOutBlockBreakAnimation");
-    private static Class<?> blockPosition = ReflectionUtils.getNMSClass("core",
-            "BlockPosition");
-    private Expression<Number> stageExpr, entityId;
-    private Expression<Location> location;
-    private Expression<Player> playerExpr;
-    private boolean remove = false;
 
     @Override
     protected void execute(Event e) {

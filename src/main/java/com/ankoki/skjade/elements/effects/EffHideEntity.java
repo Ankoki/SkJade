@@ -23,17 +23,18 @@ import org.jetbrains.annotations.Nullable;
 @Since("1.3.0")
 public class EffHideEntity extends Effect {
 
+    private static Class<?> packet;
+    private Expression<Entity> entity;
+    private Expression<Player> playerExpr;
+
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffHideEntity.class,
                     "[skjade] (hide|destory|send [a] destroy packet for) [[the] entity] %entities% (1¦(from|for) %-players%|)");
+            packet = ReflectionUtils.getNMSClass("network.protocol.game",
+                    "PacketPlayOutEntityDestroy");
         }
     }
-
-    private static Class<?> packet = ReflectionUtils.getNMSClass("network.protocol.game",
-            "PacketPlayOutEntityDestroy");
-    private Expression<Entity> entity;
-    private Expression<Player> playerExpr;
 
     @Override
     protected void execute(Event e) {
