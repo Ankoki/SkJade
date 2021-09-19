@@ -16,8 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
-
 @Name("Force Rain")
 @Description("Make it start/stop raining for players.")
 @Examples("make it stop raining for {queue::*}")
