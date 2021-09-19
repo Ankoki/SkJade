@@ -28,13 +28,13 @@ public class EffBreakBlock extends Effect {
     private static Method breakBlock;
 
     static {
-        if (Skript.getServerPlatform() == ServerPlatform.BUKKIT_SPIGOT) {
+        if (Skript.methodExists(Player.class, "breakBlock", Block.class)) {
             try {
                 breakBlock = Player.class.getMethod("breakBlock", Block.class);
             } catch (NoSuchMethodException ignored) {}
+            Skript.registerEffect(EffBreakBlock.class,
+                    "make %player% (mine|break) [the] [block [at]] %block/location%");
         }
-        Skript.registerEffect(EffBreakBlock.class,
-                "make %player% (mine|break) [the] [block [at]] %block/location%");
     }
 
     private Expression<Player> playerExpr;
@@ -42,14 +42,9 @@ public class EffBreakBlock extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        if (Skript.getServerPlatform() == ServerPlatform.BUKKIT_SPIGOT) {
-            playerExpr = (Expression<Player>) exprs[0];
-            objectExpr = (Expression<Object>) exprs[1];
-            return true;
-        } else {
-            Skript.error("Currently, this method only exists on Spigot, and not Paper.");
-            return false;
-        }
+        playerExpr = (Expression<Player>) exprs[0];
+        objectExpr = (Expression<Object>) exprs[1];
+        return true;
     }
 
     @Override
