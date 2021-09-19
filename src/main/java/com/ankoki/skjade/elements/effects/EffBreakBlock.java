@@ -2,6 +2,10 @@ package com.ankoki.skjade.elements.effects;
 
 import ch.njol.skript.ServerPlatform;
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -15,6 +19,10 @@ import org.bukkit.event.Event;
 import java.lang.reflect.Method;
 
 @Name("Break Block")
+@Description("Makes player break a block.")
+@Examples("make player break event-block")
+@Since("4.0.0")
+@RequiredPlugins("Spigot. Doesn't work on Paper.")
 public class EffBreakBlock extends Effect {
 
     private static Method breakBlock;
@@ -26,7 +34,7 @@ public class EffBreakBlock extends Effect {
             } catch (NoSuchMethodException ignored) {}
         }
         Skript.registerEffect(EffBreakBlock.class,
-                "make %player% (mine|break) [the] block [at] %block/location%");
+                "make %player% (mine|break) [the] [block [at]] %block/location%");
     }
 
     private Expression<Player> playerExpr;
