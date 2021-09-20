@@ -21,12 +21,13 @@ import java.lang.reflect.Method;
 @Name("Break Block")
 @Description("Makes player break a block.")
 @Examples("make player break event-block")
-@Since("4.0.0")
-@RequiredPlugins("Spigot. Doesn't work on Paper.")
+@Since("1.4.0")
+@RequiredPlugins("1.17+")
 public class EffBreakBlock extends Effect {
 
     private static Method breakBlock;
 
+    // IntelliJ hates me and won't let me use the method for no reason.
     static {
         if (Skript.methodExists(Player.class, "breakBlock", Block.class)) {
             try {
