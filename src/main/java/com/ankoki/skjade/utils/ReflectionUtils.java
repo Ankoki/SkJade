@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 
 public class ReflectionUtils {
 
+    private static final String NEW_PACKAGE = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName()
+            .replace(".", ",").split(",")[3];
     public static Method getHandle;
     public static Field playerConnection;
     public static Method sendPacket;
@@ -68,11 +70,9 @@ public class ReflectionUtils {
     }
 
     public static Class<?> getNMSClass(String package17, String className) {
-        String npack = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName()
-                .replace(".", ",").split(",")[3];
         try {
             return Class.forName((Utils.getServerMajorVersion() < 17 ?
-                    npack : "net.minecraft." + package17) + "." + className);
+                    NEW_PACKAGE : "net.minecraft." + package17) + "." + className);
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();
         }
