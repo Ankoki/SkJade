@@ -32,7 +32,7 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
     static {
         if (Utils.getServerMajorVersion() > 12) {
             Skript.registerExpression(ExprNearestStructure.class, Location.class, ExpressionType.SIMPLE,
-                    "[the] (nearest|closest) (1¦(not |un)(explored|discovered)|) [structure [of]] %structuretype% (in|within) [a] radius [of] %number% (around|at|from|of) %location%");
+                    "[the] (nearest|closest) (1¦(not |un)(explored|discovered)|) [structure [of]] %skjstructuretype% (in|within) [a] radius [of] %number% (around|at|from|of) %location%");
         }
     }
 

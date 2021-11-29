@@ -11,8 +11,8 @@ public class NonLegacyClassInfo {
 
     public NonLegacyClassInfo() {
         //StructureType ClassInfo
-        Classes.registerClass(new ClassInfo<>(StructureType.class, "structuretype")
-                .user("structuretype?s?")
+        Classes.registerClass(new ClassInfo<>(StructureType.class, "skjstructuretype")
+                .user("skjstructuretype?s?")
                 .name("Structure Type")
                 .description("A specified structure type.")
                 .since("1.3.0")
