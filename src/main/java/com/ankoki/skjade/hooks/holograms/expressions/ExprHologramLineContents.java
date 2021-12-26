@@ -77,6 +77,7 @@ public class ExprHologramLineContents extends SimpleExpression<Object> {
         assert mode == ChangeMode.SET;
         if (delta.length < 1 || delta[0] == null || lineExpr == null) return;
         HologramLine line = lineExpr.getSingle(e);
+        if (line == null) return;
         if (line instanceof TextLine) {
             Object obj = delta[0];
             if (!(obj instanceof String)) return;
