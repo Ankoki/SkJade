@@ -12,7 +12,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;

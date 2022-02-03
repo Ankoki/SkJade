@@ -33,7 +33,6 @@ public class NonLegacyClassInfo {
                         return o.getName().toLowerCase().replace("_", " ");
                     }
 
-                    @Override
                     public String getVariableNamePattern() {
                         return "[a-z ]+";
                     }

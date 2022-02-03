@@ -24,7 +24,8 @@ import org.jetbrains.annotations.Nullable;
 public class EffShowLaser extends Effect {
 
     static {
-        Skript.registerEffect(EffShowLaser.class,
+        if (SkJade.getInstance().isNmsEnabled())
+            Skript.registerEffect(EffShowLaser.class,
                 "show [a] [new] (la(s|z)er [beam]|guardian beam) from %location% to %location% for %timespan% [for %-players%]");
     }
 
@@ -47,7 +48,7 @@ public class EffShowLaser extends Effect {
         }
         int seconds = (int) Math.ceil(sec.getTicks_i() / 20D);
         try {
-            Laser laser = new Laser(loc1, loc2, seconds, 100);
+            Laser laser = new Laser.GuardianLaser(loc1, loc2, seconds, 100);
             laser.start(SkJade.getInstance(), players);
         } catch (Exception ex) {
             ex.printStackTrace(); //could probably ignore this after testing

@@ -12,7 +12,7 @@ import com.ankoki.elementals.managers.BookManager;
 import com.ankoki.elementals.managers.Spell;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Spell Book")
 @Description("An elemental spell book with the spell name")

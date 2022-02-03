@@ -37,7 +37,6 @@ public class SkJade extends JavaPlugin {
     private boolean beta;
     private static SkJade instance;
     private String version;
-    private Version serverVersion;
     private PluginManager pluginManager;
     private SkriptAddon addon;
     private boolean nmsEnabled = false;
@@ -94,7 +93,6 @@ public class SkJade extends JavaPlugin {
         }
         new Metrics(this, 10131);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
-        this.loadServerVersion();
         this.startRealTime();
 
         long fin = System.currentTimeMillis() - start;
@@ -112,7 +110,7 @@ public class SkJade extends JavaPlugin {
             }).start();
         }
 
-        if (serverVersion.isLegacy()) {
+        if (Version.currentIsLegacy()) {
             Console.warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
             Console.warning("You have no reason to not use the latest server version. SkJade will still be enabled, " +
                     "however you may encounter some issues which may not get fixed due to not supporting fossil versions.");
@@ -120,9 +118,10 @@ public class SkJade extends JavaPlugin {
     }
 
     private void loadNMS() {
-        if (Utils.getServerMajorVersion() < 13) {
+        if (Version.currentIsLegacy() || Version.CURRENT_VERSION == Version.UNKNOWN) {
             Console.warning("Could not find any NMS support for " + version + "! Please note SkJade only supports " +
                     "the latest sub-version of each version above 1.13.");
+            Console.warning("There is also a chance you are using a version I haven't implemented support for yet.");
             Console.info("SkJade will remain enabled, however anything using NMS will not be enabled!");
         } else {
             nmsEnabled = true;
@@ -163,16 +162,6 @@ public class SkJade extends JavaPlugin {
         } catch (IOException ex) {
             Console.info("Something went horribly wrong!");
             ex.printStackTrace();
-        }
-    }
-
-    private void loadServerVersion() {
-        String packageName = this.getServer().getClass().getPackage().getName();
-        String ver = packageName.substring(packageName.lastIndexOf('.') + 1);
-        try {
-            serverVersion = Version.valueOf(ver);
-        } catch (Exception ex) {
-            Console.warning("You are using an unknown version (" + ver + ")! SkJade will not function as intended");
         }
     }
 

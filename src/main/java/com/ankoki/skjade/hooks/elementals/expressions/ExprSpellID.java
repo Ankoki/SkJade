@@ -9,7 +9,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.elementals.managers.Spell;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Spell's ID")
 @Description("An elemental spells ID.")

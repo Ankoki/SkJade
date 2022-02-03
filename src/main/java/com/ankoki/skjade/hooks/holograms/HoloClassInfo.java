@@ -16,7 +16,7 @@ import com.gmail.filoghost.holographicdisplays.api.line.ItemLine;
 import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
@@ -78,11 +78,6 @@ public class HoloClassInfo {
                         @Override
                         public String toVariableNameString(Hologram hologram) {
                             return "hologram:" + hologram.getCreationTimestamp();
-                        }
-
-                        @Override
-                        public String getVariableNamePattern() {
-                            return "hologram:\\d+";
                         }
                     })
                     .serializer(new Serializer<Hologram>() {
@@ -152,11 +147,6 @@ public class HoloClassInfo {
                         @Override
                         public String toVariableNameString(HologramLine hologramLine) {
                             return hologramLine instanceof ItemLine ? "hologram item line" : "hologram text line";
-                        }
-
-                        @Override
-                        public String getVariableNamePattern() {
-                            return "\\S+";
                         }
                     }));
 

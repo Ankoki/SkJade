@@ -12,7 +12,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Hologram Line Touch")
 @Description("Called when an interactable hologram line is touched.")

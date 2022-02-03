@@ -9,7 +9,7 @@ import com.ankoki.elementals.events.ProlongedSpellCancelEvent;
 import com.ankoki.elementals.managers.Spell;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Prolonged Spell Cancel")
 @Description("This is called whenever any prolonged spell is cancelled.")

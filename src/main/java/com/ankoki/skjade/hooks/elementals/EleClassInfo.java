@@ -31,7 +31,6 @@ public class EleClassInfo {
                 return spell.getSpellName().toLowerCase();
             }
 
-            @Override
             public String getVariableNamePattern() {
                 return "\\S+";
             }

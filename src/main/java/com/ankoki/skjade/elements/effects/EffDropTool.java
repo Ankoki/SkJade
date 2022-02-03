@@ -11,7 +11,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Drop Item")
 @Description("Makes the player drop one of their current item, or their inventory.")

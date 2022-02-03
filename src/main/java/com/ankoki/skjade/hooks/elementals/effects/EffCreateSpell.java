@@ -18,7 +18,7 @@ import com.ankoki.skjade.SkJade;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Register Elementals Spell")
 @Description({"Registers a new elementals spell which can be cast.",

@@ -11,7 +11,7 @@ import com.ankoki.skjade.hooks.holograms.HologramManager.TouchType;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Interactive Hologram Line")
 @Description("Makes a line of a hologram clickable(triggers the on hologram click), touchable(triggers on hologram touch)," +

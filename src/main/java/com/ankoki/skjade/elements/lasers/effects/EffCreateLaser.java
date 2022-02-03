@@ -10,6 +10,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.elements.lasers.LaserManager;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.Location;
@@ -23,7 +24,8 @@ import org.jetbrains.annotations.Nullable;
 public class EffCreateLaser extends Effect {
 
     static {
-        Skript.registerEffect(EffCreateLaser.class,
+        if (SkJade.getInstance().isNmsEnabled())
+            Skript.registerEffect(EffCreateLaser.class,
                 "create [a] [new] (la(s|z)er [beam]|guardian beam) from %location% to %location% for %timespan% with [the] id %string%");
     }
 
@@ -41,7 +43,7 @@ public class EffCreateLaser extends Effect {
         if (loc1 == null || loc2 == null || sec == null || id == null || id.isEmpty()) return;
         int seconds = (int) Math.ceil(sec.getTicks_i() / 20D);
         try {
-            Laser laser = new Laser(loc1, loc2, seconds, 100);
+            Laser laser = new Laser.GuardianLaser(loc1, loc2, seconds, 100);
             LaserManager.createLaser(id, laser);
         } catch (Exception ex) {
             ex.printStackTrace();

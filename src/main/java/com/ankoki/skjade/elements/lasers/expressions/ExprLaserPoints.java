@@ -12,6 +12,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -24,7 +25,8 @@ import org.jetbrains.annotations.Nullable;
 public class ExprLaserPoints extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprLaserPoints.class, Location.class, ExpressionType.SIMPLE,
+        if (SkJade.getInstance().isNmsEnabled())
+            Skript.registerExpression(ExprLaserPoints.class, Location.class, ExpressionType.SIMPLE,
                 "[the] (1¦start|end)[ing] [loc[ation]] of %laser%");
     }
 

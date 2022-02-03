@@ -22,7 +22,8 @@ import org.jetbrains.annotations.Nullable;
 public class EffStartLaser extends Effect {
 
     static {
-        Skript.registerEffect(EffStartLaser.class,
+        if (SkJade.getInstance().isNmsEnabled())
+            Skript.registerEffect(EffStartLaser.class,
                 "start %laser% [for %-players%]");
     }
 

@@ -14,7 +14,7 @@ import com.ankoki.elementals.events.GenericSpellCastEvent;
 import com.ankoki.elementals.events.SpellCastEvent;
 import com.ankoki.elementals.managers.Spell;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Spell")
 @Description("An elemental spell")

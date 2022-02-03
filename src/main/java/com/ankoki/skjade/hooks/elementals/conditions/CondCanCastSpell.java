@@ -9,7 +9,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.elementals.managers.Spell;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Can Cast Spell")
 @Description("Checks if a player can cast the spell specified")

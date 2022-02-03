@@ -9,7 +9,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 

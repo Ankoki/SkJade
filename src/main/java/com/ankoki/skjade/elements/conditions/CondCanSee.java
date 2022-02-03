@@ -12,7 +12,7 @@ import ch.njol.util.Kleenean;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Can See")
 @Description("Checks if a living entity can see another living entity.")

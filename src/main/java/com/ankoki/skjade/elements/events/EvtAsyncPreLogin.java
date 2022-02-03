@@ -10,7 +10,7 @@ import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 

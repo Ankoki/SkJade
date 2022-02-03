@@ -13,7 +13,7 @@ import ch.njol.util.Kleenean;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Chunk at Location")
 @Description("Returns the chunk in a world from the x and y coordinates.")

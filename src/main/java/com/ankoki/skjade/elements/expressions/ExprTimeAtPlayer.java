@@ -16,7 +16,7 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Time at Player")
 @Description("Returns the player's time.")

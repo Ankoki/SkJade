@@ -11,7 +11,7 @@ import com.ankoki.elementals.api.GenericSpell;
 import com.ankoki.elementals.managers.Spell;
 import com.ankoki.skjade.utils.Utils.SpellType;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Spell Type")
 @Description("Checks if the spell is either generic, entity, prolonged generic, or prolonged entity.")

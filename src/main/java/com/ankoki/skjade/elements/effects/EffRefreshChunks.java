@@ -11,7 +11,7 @@ import ch.njol.skript.util.AsyncEffect;
 import ch.njol.util.Kleenean;
 import org.bukkit.Chunk;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 

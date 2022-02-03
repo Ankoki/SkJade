@@ -11,7 +11,7 @@ import com.ankoki.elementals.managers.ItemManager;
 import com.ankoki.elementals.managers.Spell;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Enchant Item")
 @Description("Add an elementals spell to an item")

@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.elements.lasers.LaserManager;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.event.Event;
@@ -22,7 +23,8 @@ import org.jetbrains.annotations.Nullable;
 public class ExprLaser extends SimpleExpression<Laser> {
 
     static {
-        Skript.registerExpression(ExprLaser.class, Laser.class, ExpressionType.SIMPLE,
+        if (SkJade.getInstance().isNmsEnabled())
+            Skript.registerExpression(ExprLaser.class, Laser.class, ExpressionType.SIMPLE,
                 "[the] (la(s|z)er [beam]|guardian beam) with [the] id %string%");
     }
 

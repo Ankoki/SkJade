@@ -9,7 +9,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Unregister Placeholder")
 @Description("Unregisters a Holographic Displays placeholder.")

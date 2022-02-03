@@ -9,6 +9,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +21,8 @@ import org.jetbrains.annotations.Nullable;
 public class EffStopLaser extends Effect {
 
     static {
-        Skript.registerEffect(EffStopLaser.class,
+        if (SkJade.getInstance().isNmsEnabled())
+            Skript.registerEffect(EffStopLaser.class,
                 "stop %lasers%");
     }
 

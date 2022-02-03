@@ -10,7 +10,7 @@ import com.ankoki.skjade.hooks.holograms.HologramManager;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Add Item Line")
 @Description("Adds an item to the hologram.")

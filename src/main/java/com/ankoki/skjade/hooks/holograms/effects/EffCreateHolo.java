@@ -9,7 +9,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Create Hologram")
 @Description({"Creates a hologram at the specified location with the id specified. The ID must be unique.",
