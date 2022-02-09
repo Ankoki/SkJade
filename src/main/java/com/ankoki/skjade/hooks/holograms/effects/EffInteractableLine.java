@@ -34,6 +34,24 @@ public class EffInteractableLine extends Effect {
     private Expression<Hologram> hologram;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        lineNumber = (Expression<Number>) exprs[0];
+        hologram = (Expression<Hologram>) exprs[1];
+        switch (i) {
+            case 0:
+                touchType = TouchType.CLICKABLE;
+                break;
+            case 1:
+                touchType = TouchType.TOUCHABLE;
+                break;
+            case 2:
+                touchType = TouchType.INTERACTABLE;
+        }
+        negated = parseResult.mark == 1;
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         Hologram holo = hologram.getSingle(event);
         Number num = lineNumber.getSingle(event);
@@ -71,23 +89,5 @@ public class EffInteractableLine extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "make line " + lineNumber.toString(event, b) + " of " + hologram.toString(event, b) + touchType.name().toLowerCase();
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        lineNumber = (Expression<Number>) exprs[0];
-        hologram = (Expression<Hologram>) exprs[1];
-        switch (i) {
-            case 0:
-                touchType = TouchType.CLICKABLE;
-                break;
-            case 1:
-                touchType = TouchType.TOUCHABLE;
-                break;
-            case 2:
-                touchType = TouchType.INTERACTABLE;
-        }
-        negated = parseResult.mark == 1;
-        return true;
     }
 }

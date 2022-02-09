@@ -30,6 +30,12 @@ public class ExprHologramLineContents extends SimpleExpression<Object> {
 
     private Expression<HologramLine> lineExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        lineExpr = (Expression<HologramLine>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Object[] get(Event e) {
@@ -55,12 +61,6 @@ public class ExprHologramLineContents extends SimpleExpression<Object> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "contents of " + lineExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        lineExpr = (Expression<HologramLine>) exprs[0];
-        return true;
     }
 
     @Nullable

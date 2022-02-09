@@ -37,6 +37,14 @@ public class ExprImageLines extends SimpleExpression<String> {
     private Expression<String> imageName;
     private Expression<Number> widthExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        imageName = (Expression<String>) exprs[0];
+        widthExpr = (Expression<Number>) exprs[1];
+        fromUrl = matchedPattern == 1;
+        return true;
+    }
+
     @Nullable
     @Override
     protected String[] get(Event e) {
@@ -90,13 +98,5 @@ public class ExprImageLines extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "lines of the image " + imageName.toString(e, debug) + " with width " + widthExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        imageName = (Expression<String>) exprs[0];
-        widthExpr = (Expression<Number>) exprs[1];
-        fromUrl = matchedPattern == 1;
-        return true;
     }
 }

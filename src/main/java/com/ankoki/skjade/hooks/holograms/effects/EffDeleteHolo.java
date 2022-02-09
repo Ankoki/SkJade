@@ -26,6 +26,12 @@ public class EffDeleteHolo extends Effect {
     private Expression<Hologram> hologram;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        hologram = (Expression<Hologram>) exprs[0];
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         Hologram holo = hologram.getSingle(event);
         if (holo == null) return;
@@ -35,11 +41,5 @@ public class EffDeleteHolo extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "delete " + hologram.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        hologram = (Expression<Hologram>) exprs[0];
-        return true;
     }
 }

@@ -29,6 +29,22 @@ public class CondHasInteractionHandler extends Condition {
     private Expression<HologramLine> hologramLine;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        switch (parseResult.mark) {
+            case 0:
+                touchType = TouchType.INTERACTABLE;
+                break;
+            case 1:
+                touchType = TouchType.CLICKABLE;
+                break;
+            default:
+                touchType = TouchType.TOUCHABLE;
+        }
+        hologramLine = (Expression<HologramLine>) exprs[0];
+        return true;
+    }
+
+    @Override
     public boolean check(Event event) {
         if (hologramLine == null) return false;
         HologramLine line = hologramLine.getSingle(event);
@@ -48,18 +64,5 @@ public class CondHasInteractionHandler extends Condition {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return hologramLine.toString(event, b) + " is " + touchType.name().toLowerCase();
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        if (parseResult.mark == 0) {
-            touchType = TouchType.INTERACTABLE;
-        } else if (parseResult.mark == 1) {
-            touchType = TouchType.CLICKABLE;
-        } else if (parseResult.mark == 2) {
-            touchType = TouchType.TOUCHABLE;
-        }
-        hologramLine = (Expression<HologramLine>) exprs[0];
-        return true;
     }
 }

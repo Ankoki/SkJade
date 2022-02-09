@@ -26,6 +26,12 @@ public class EffUnregisterPlaceholder extends Effect {
     private Expression<String> placeholder;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        placeholder = (Expression<String>) exprs[0];
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         String s = placeholder.getSingle(event);
         if (s == null) return;
@@ -35,11 +41,5 @@ public class EffUnregisterPlaceholder extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "unregister holographic placeholder " + placeholder.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        placeholder = (Expression<String>) exprs[0];
-        return true;
     }
 }

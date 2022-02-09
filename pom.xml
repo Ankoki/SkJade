@@ -6,7 +6,7 @@
 
     <groupId>com.ankoki</groupId>
     <artifactId>SkJade</artifactId>
-    <version>1.4</version>
+    <version>1.4.1-beta</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -122,7 +122,7 @@
         <dependency>
             <groupId>com.gmail.filoghost.holographicdisplays</groupId>
             <artifactId>holographicdisplays-api</artifactId>
-            <version>2.4.0</version>
+            <version>2.4.9</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

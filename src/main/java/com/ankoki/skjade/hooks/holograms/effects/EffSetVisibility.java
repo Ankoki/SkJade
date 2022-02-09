@@ -29,6 +29,14 @@ public class EffSetVisibility extends Effect {
     private boolean show;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        holo = (Expression<Hologram>) exprs[0];
+        player = (Expression<Player>) exprs[1];
+        show = parseResult.mark == 1;
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         Hologram hologram = holo.getSingle(event);
         Player p = player.getSingle(event);
@@ -43,13 +51,5 @@ public class EffSetVisibility extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return (show ? "show " : "hide ") + holo.toString(event, b) + (show ? " to " : " from ") + player.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        holo = (Expression<Hologram>) exprs[0];
-        player = (Expression<Player>) exprs[1];
-        show = parseResult.mark == 1;
-        return true;
     }
 }

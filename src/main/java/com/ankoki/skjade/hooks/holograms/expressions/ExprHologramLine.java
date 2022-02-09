@@ -5,6 +5,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
@@ -33,6 +34,26 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
     private boolean single, inEvent;
     private Expression<Number> line;
     private Expression<Hologram> hologram;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int pattern, Kleenean kleenean, ParseResult parseResult) {
+        if (pattern == 2 && !ScriptLoader.isCurrentEvent(HologramClickEvent.class) && !ScriptLoader.isCurrentEvent(HologramTouchEvent.class)) {
+            Skript.error("You cannot use event-hologram outside a hologram interact event!");
+            return false;
+        }
+        if (pattern == 2) {
+            inEvent = true;
+            return true;
+        }
+        int i = 0;
+        if (pattern == 1) {
+            single = true;
+            line = (Expression<Number>) exprs[i];
+            i++;
+        }
+        hologram = (Expression<Hologram>) exprs[i];
+        return true;
+    }
 
     @Nullable
     @Override
@@ -72,25 +93,5 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
     public String toString(@Nullable Event event, boolean b) {
         return inEvent ? "event-line" : (line == null ? "all the lines of " : "line " + line.toString(event, b) + " ") + " of " +
                 hologram.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int pattern, Kleenean kleenean, ParseResult parseResult) {
-        if (pattern == 2 && !ScriptLoader.isCurrentEvent(HologramClickEvent.class) && !ScriptLoader.isCurrentEvent(HologramTouchEvent.class)) {
-            Skript.error("You cannot use event-hologram outside a hologram interact event!");
-            return false;
-        }
-        if (pattern == 2) {
-            inEvent = true;
-            return true;
-        }
-        int i = 0;
-        if (pattern == 1) {
-            single = true;
-            line = (Expression<Number>) exprs[i];
-            i++;
-        }
-        hologram = (Expression<Hologram>) exprs[i];
-        return true;
     }
 }

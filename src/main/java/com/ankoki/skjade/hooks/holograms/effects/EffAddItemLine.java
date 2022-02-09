@@ -28,6 +28,13 @@ public class EffAddItemLine extends Effect {
     private Expression<Hologram> hologram;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        item = (Expression<ItemStack>) exprs[0];
+        hologram = (Expression<Hologram>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         Hologram holo = hologram.getSingle(event);
         ItemStack i = item.getSingle(event);
@@ -38,12 +45,5 @@ public class EffAddItemLine extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "add item line " + item.toString(event, b) + " to " + hologram.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        item = (Expression<ItemStack>) exprs[0];
-        hologram = (Expression<Hologram>) exprs[1];
-        return true;
     }
 }

@@ -29,6 +29,12 @@ public class ExprHologramId extends SimpleExpression<String> {
 
     private Expression<Hologram> hologram;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        hologram = (Expression<Hologram>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected String[] get(Event e) {
@@ -51,11 +57,5 @@ public class ExprHologramId extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return hologram.toString(e, debug) + "'s id";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        hologram = (Expression<Hologram>) exprs[0];
-        return true;
     }
 }

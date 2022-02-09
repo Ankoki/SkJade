@@ -26,6 +26,12 @@ public class CondIsHologram extends Condition {
     private Expression<Entity> entity;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        entity = (Expression<Entity>) exprs[0];
+        return true;
+    }
+
+    @Override
     public boolean check(Event event) {
         return HologramsAPI.isHologramEntity(entity.getSingle(event));
     }
@@ -33,11 +39,5 @@ public class CondIsHologram extends Condition {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return entity.toString(event, b) + " is a hologram";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        entity = (Expression<Entity>) exprs[0];
-        return true;
     }
 }

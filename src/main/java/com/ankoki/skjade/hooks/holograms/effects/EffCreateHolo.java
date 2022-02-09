@@ -29,6 +29,15 @@ public class EffCreateHolo extends Effect {
     private boolean hidden, notAccepting;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        location = (Expression<Location>) exprs[0];
+        key = (Expression<String>) exprs[1];
+        hidden = parseResult.mark == 1 || parseResult.mark == 3;
+        notAccepting = parseResult.mark == 2 || parseResult.mark == 3;
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         String k = key.getSingle(event);
         Location loc = location.getSingle(event);
@@ -39,14 +48,5 @@ public class EffCreateHolo extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "create hologram at " + location.toString(event, b) + " with the id " + key.toString(event, b) + (hidden ? " to be hidden " : "") + (notAccepting ? "to not allow placeholders" : "");
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        location = (Expression<Location>) exprs[0];
-        key = (Expression<String>) exprs[1];
-        hidden = parseResult.mark == 1 || parseResult.mark == 3;
-        notAccepting = parseResult.mark == 2 || parseResult.mark == 3;
-        return true;
     }
 }

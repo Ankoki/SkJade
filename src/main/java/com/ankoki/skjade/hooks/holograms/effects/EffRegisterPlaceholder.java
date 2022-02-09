@@ -9,6 +9,7 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.function.ExprFunctionCall;
 import ch.njol.skript.lang.function.FunctionReference;
+import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
@@ -23,32 +24,23 @@ import org.eclipse.jdt.annotation.Nullable;
               "IMPORTANT: If a hologram is created before a placeholder is registered, you need to recreate the placeholder."})
 @Examples("register placeholder \"onlinePlayers\" to run funcThatReturnsString()")
 @RequiredPlugins("HolographicDisplays")
-@Since("1.0.0")
+@Since("1.0.0, specifying a refresh rate since 1.4.1.")
 public class EffRegisterPlaceholder extends Effect {
 
     static {
         Skript.registerEffect(EffRegisterPlaceholder.class,
-                "register [[a] holo[graphic[ displays]]] placeholder %string% to run [[the] function] <(.+)>\\([<.*?>]\\)");
+                "register [[a] holo[graphic[ displays]]] placeholder %string% to run [[the] function] <(.+)>\\([<.*?>]\\)",
+                "register [[a] holo[graphic[ displays]]] placeholder %string% to run [[the] function] <(.+)>\\([<.*?>]\\) (with|at) [a] [refresh] rate of %timespan%");
     }
 
-    private Expression<String> text;
+    private Expression<String> textExpr;
+    private Expression<Timespan> timespanExpr;
     private ExprFunctionCall functionCall;
 
     @Override
-    protected void execute(Event event) {
-        HologramsAPI.registerPlaceholder(SkJade.getInstance(),
-                text.getSingle(event),
-                1, () -> functionCall.getArray(event)[0] == null ? "" : ((String) functionCall.getArray(event)[0]).replaceAll(".$", ""));
-    }
-
-    @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "register holographic displays placeholder " + text.toString(event, b) + " to run " + functionCall.toString(event, b);
-    }
-
-    @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        text = (Expression<String>) exprs[0];
+        textExpr = (Expression<String>) exprs[0];
+        timespanExpr = i == 1 ?(Expression<Timespan>) exprs[1] : null;
         String unparsed = parseResult.regexes.get(0).group(0) + "(" + (parseResult.regexes.size() > 1 ? parseResult.regexes.get(1).group(0) : "") + ")";
         FunctionReference<?> function = new SkriptParser(unparsed, SkriptParser.ALL_FLAGS, ParseContext.DEFAULT)
                 .parseFunction((Class<?>[]) null);
@@ -57,9 +49,22 @@ public class EffRegisterPlaceholder extends Effect {
             return false;
         }
         functionCall = new ExprFunctionCall(function);
-        if (functionCall != null) {
-            functionCall.getReturnType();
-        }
+        functionCall.getReturnType();
         return true;
+    }
+
+    @Override
+    protected void execute(Event event) {
+        String text = textExpr.getSingle(event);
+        Timespan timespan = timespanExpr == null ? Timespan.fromTicks_i(20) : timespanExpr.getSingle(event);
+        if (text == null || timespan == null) return;
+        double rate = Double.max(20, timespan.getTicks_i()) / 20;
+        HologramsAPI.registerPlaceholder(SkJade.getInstance(), text, rate,
+                () -> functionCall.getArray(event)[0] == null ? "" : ((String) functionCall.getArray(event)[0]).replaceAll(".$", ""));
+    }
+
+    @Override
+    public String toString(@Nullable Event event, boolean b) {
+        return "register holographic displays placeholder " + textExpr.toString(event, b) + " to run " + functionCall.toString(event, b);
     }
 }

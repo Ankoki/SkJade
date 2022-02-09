@@ -29,6 +29,20 @@ public class ExprHologram extends SimpleExpression<Hologram> {
                 "event(-| )holo[gram]");
     }
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        if (i == 1 && !ScriptLoader.isCurrentEvent(HologramClickEvent.class) && !ScriptLoader.isCurrentEvent(HologramTouchEvent.class)) {
+            Skript.error("You cannot use event-hologram outside a hologram interact event!");
+            return false;
+        }
+        if (i == 1) {
+            inEvent = true;
+            return true;
+        }
+        key = (Expression<String>) exprs[0];
+        return true;
+    }
+
     private Expression<String> key;
     private boolean inEvent;
 
@@ -54,20 +68,6 @@ public class ExprHologram extends SimpleExpression<Hologram> {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "the " + (inEvent ? "hologram with the id " + key.toString(event, b) : "event-hologram");
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        if (i == 1 && !ScriptLoader.isCurrentEvent(HologramClickEvent.class) && !ScriptLoader.isCurrentEvent(HologramTouchEvent.class)) {
-            Skript.error("You cannot use event-hologram outside a hologram interact event!");
-            return false;
-        }
-        if (i == 1) {
-            inEvent = true;
-            return true;
-        }
-        key = (Expression<String>) exprs[0];
-        return true;
     }
 
     private Hologram getFromEvent(Event e) {

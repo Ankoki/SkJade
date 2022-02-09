@@ -27,6 +27,11 @@ public class ExprAllHolograms extends SimpleExpression<Hologram> {
                 "all [of] [the] [skjade[s]] holograms");
     }
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        return true;
+    }
+
     @Nullable
     @Override
     protected Hologram[] get(Event e) {
@@ -47,10 +52,5 @@ public class ExprAllHolograms extends SimpleExpression<Hologram> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "all holograms";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        return true;
     }
 }

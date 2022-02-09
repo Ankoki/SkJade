@@ -29,6 +29,14 @@ public class EffResetVisibility extends Effect {
     private boolean specP;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        specP = parseResult.mark == 1;
+        holo = (Expression<Hologram>) exprs[0];
+        player = specP ? (Expression<Player>) exprs[1] : null;
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         Hologram hologram = holo.getSingle(event);
         if (hologram == null) return;
@@ -43,15 +51,5 @@ public class EffResetVisibility extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "reset visibility of " + (specP ? "all players" : "player " + player.getSingle(event));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        specP = parseResult.mark == 1;
-        holo = (Expression<Hologram>) exprs[0];
-        if (specP) {
-            player = (Expression<Player>) exprs[1];
-        }
-        return true;
     }
 }
