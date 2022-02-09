@@ -13,7 +13,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.HologramManager;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("ID of a Hologram")
 @Description("Returns the ID of a hologram.")

@@ -14,7 +14,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.pastebinapi.Pastebin;
 import com.ankoki.pastebinapi.utils.Response;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 

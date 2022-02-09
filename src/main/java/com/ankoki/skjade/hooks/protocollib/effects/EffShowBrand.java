@@ -11,7 +11,7 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.MinecraftKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;

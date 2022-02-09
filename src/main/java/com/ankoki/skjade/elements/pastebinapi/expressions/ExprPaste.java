@@ -13,7 +13,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.pastebinapi.api.PasteBuilder;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Paste")
 @Description("Returns the pastebin paste with that id if it exists, else, it will be null.")

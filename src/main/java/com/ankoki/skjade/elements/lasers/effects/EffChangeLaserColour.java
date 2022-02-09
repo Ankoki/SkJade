@@ -12,7 +12,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Make Laser Change Colour")
 @Description("Makes a laser change colour. You cannot specify this coloUr.")

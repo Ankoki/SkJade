@@ -9,7 +9,7 @@ import ch.njol.util.Kleenean;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Is Wet")
 @Description("Checks if a player (1.1.0) or an entity (1.3.2) is in any type of liquid.")

@@ -11,7 +11,7 @@ import com.gmail.filoghost.holographicdisplays.api.line.CollectableLine;
 import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import com.gmail.filoghost.holographicdisplays.api.line.TouchableLine;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Hologram is Interactable/Clickable/Touchable")
 @Description("Checks if a hologram is interactable, clickable, or touchable")

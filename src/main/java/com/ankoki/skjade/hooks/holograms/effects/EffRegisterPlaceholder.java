@@ -13,7 +13,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Mr. Darth c: tyty for da help w function parsing<3

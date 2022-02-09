@@ -20,7 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -50,18 +50,18 @@ public class SkJade extends JavaPlugin {
         instance = this;
         pluginManager = this.getServer().getPluginManager();
         version = this.getDescription().getVersion();
-        if (!isSkriptEnabled()) {
+        if (!this.isSkriptEnabled()) {
             Console.info("Skript wasn't found. Are you sure it's installed and up to date?");
             pluginManager.disablePlugin(this);
             return;
         }
         config = new Config(this);
+        addon = Skript.registerAddon(this);
         this.loadNMS();
         this.loadClassInfo();
         if (Utils.getServerMajorVersion() > 12) {
             new NonLegacyClassInfo();
         }
-        addon = Skript.registerAddon(this);
 
         this.loadElements();
         if (isPluginEnabled("ProtocolLib") && Config.PROTOCOL_LIB_ENABLED) {

@@ -15,7 +15,7 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Login Result")
 @Description("Gets/sets the login result for an async prelogin event. Please note this can only be set to \"kick other\", \"allowed\", \"kick banned\", \"kick full\", or \"kick whitelist\"")

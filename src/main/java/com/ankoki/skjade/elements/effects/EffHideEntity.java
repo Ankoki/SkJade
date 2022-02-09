@@ -10,12 +10,14 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
+import com.ankoki.skjade.utils.Console;
 import com.ankoki.skjade.utils.ReflectionUtils;
+import com.ankoki.skjade.utils.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Hide Entity")
 @Description("Hides an entity from a player or all players.")
@@ -30,10 +32,18 @@ public class EffHideEntity extends Effect {
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffHideEntity.class,
-                    "[skjade] (hide|destory|send [a] destroy packet for) [[the] entity] %entities% (1¦(from|for) %-players%|)");
+                    "[skjade] (hide|destroy|send [a] destroy packet for) [[the] entity] %entities% (1¦(from|for) %-players%|)");
             packet = ReflectionUtils.getNMSClass("network.protocol.game",
                     "PacketPlayOutEntityDestroy");
         }
+    }
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        Console.info("INIT EffHideEntity");
+        entity = (Expression<Entity>) exprs[0];
+        playerExpr = parseResult.mark == 1 ? (Expression<Player>) exprs[1] : null;
+        return true;
     }
 
     @Override
@@ -48,8 +58,9 @@ public class EffHideEntity extends Effect {
         }
         for (Entity entity : entities) {
             try {
-                Object instance = packet.newInstance();
-                ReflectionUtils.setField(instance, "a", new int[]{entity.getEntityId()});
+                Object instance = Version.v1_16_R4.isOlder() ? packet.getConstructor(int[].class).newInstance(new int[]{entity.getEntityId()}) :
+                    packet.newInstance();
+                if (Version.v1_17_R1.isNewer()) ReflectionUtils.setField(instance, "a", new int[]{entity.getEntityId()});
                 for (Player p : players) {
                     ReflectionUtils.sendPacket(p, instance);
                 }
@@ -62,12 +73,5 @@ public class EffHideEntity extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "destroy " + entity.toString(e, debug) + (playerExpr == null ? "" : " from " + playerExpr.toString(e, debug));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        entity = (Expression<Entity>) exprs[0];
-        playerExpr = parseResult.mark == 1 ? (Expression<Player>) exprs[1] : null;
-        return true;
     }
 }

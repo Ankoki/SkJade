@@ -15,7 +15,7 @@ import com.ankoki.skjade.utils.ReflectionUtils;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Show Demo")
 @Description("Shows the minecraft demonstration screen to a player.")

@@ -15,7 +15,7 @@ import com.ankoki.skjade.elements.lasers.LaserManager;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Create Laser/Guardian Beam")
 @Description("Creates a laser/guardian beam. Does NOT show it. For an infinite beam, use -1 seconds.")

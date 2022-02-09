@@ -13,7 +13,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.utils.Shapes;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Cone")
 @Description("Returns a list of locations to make up a cone.")

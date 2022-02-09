@@ -15,7 +15,7 @@ import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("World Border Center")
 @Description("Allows you to get and set the center of a world border.")

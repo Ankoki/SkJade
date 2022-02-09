@@ -10,7 +10,7 @@ import com.ankoki.skjade.hooks.holograms.HologramManager;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Remove Line")
 @Description("Removes a line from a hologram")

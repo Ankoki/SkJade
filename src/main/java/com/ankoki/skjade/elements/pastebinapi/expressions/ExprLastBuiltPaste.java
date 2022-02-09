@@ -12,7 +12,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Last Built Paste")
 @Description("Returns the link of the last built pastebin. If you build a new paste, this will be overridden.")

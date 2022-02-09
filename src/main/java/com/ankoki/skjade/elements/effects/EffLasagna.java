@@ -12,7 +12,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Lasagna")
 @Description("Lasagna.")

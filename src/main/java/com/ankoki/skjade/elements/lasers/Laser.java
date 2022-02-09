@@ -668,15 +668,6 @@ public abstract class Laser {
         static {
             if (SkJade.getInstance().isNmsEnabled()) {
                 try {
-                    logger = new Logger("GuardianBeam", null) {
-                        @Override
-                        public void log(LogRecord logRecord) {
-                            logRecord.setMessage("[GuardianBeam] " + logRecord.getMessage());
-                            super.log(logRecord);
-                        }
-                    };
-                    logger.setParent(Bukkit.getServer().getLogger());
-                    logger.setLevel(Level.ALL);
 
                     // e.g. Bukkit.getServer().getClass().getPackage().getName() -> org.bukkit.craftbukkit.v1_17_R1
                     String[] versions = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1).split("_");
@@ -692,7 +683,6 @@ public abstract class Laser {
                         mappings = ProtocolMappings.values()[ProtocolMappings.values().length - 1];
                         logger.warning("Loaded not matching version of the mappings for your server version (1." + version + "." + versionMinor + ")");
                     }
-                    logger.info("Loaded mappings " + mappings.name());
 
                     Class<?> entityTypesClass = getNMSClass("world.entity", "EntityTypes");
                     Class<?> entityClass = getNMSClass("world.entity", "Entity");

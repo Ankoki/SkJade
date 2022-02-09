@@ -9,7 +9,7 @@ import ch.njol.util.Kleenean;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Is A Hologram")
 @Description("Checks if an entity is a hologram")

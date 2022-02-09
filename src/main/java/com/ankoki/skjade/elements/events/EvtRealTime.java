@@ -12,7 +12,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Time;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

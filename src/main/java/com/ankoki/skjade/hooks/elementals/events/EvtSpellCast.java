@@ -10,7 +10,7 @@ import com.ankoki.elementals.managers.Spell;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Spell Cast")
 @Description("This is called whenever any spell is called.")

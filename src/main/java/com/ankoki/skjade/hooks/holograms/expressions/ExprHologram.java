@@ -13,7 +13,7 @@ import com.ankoki.skjade.hooks.holograms.bukkitevents.HologramClickEvent;
 import com.ankoki.skjade.hooks.holograms.bukkitevents.HologramTouchEvent;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Hologram")
 @Description("A HolographicDisplays Hologram. The ID of every hologram should be unique.")

@@ -11,7 +11,7 @@ import com.ankoki.skjade.utils.ReflectionUtils;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 //thank you pesekjan c:
 @Name("Change the Sky Colour")

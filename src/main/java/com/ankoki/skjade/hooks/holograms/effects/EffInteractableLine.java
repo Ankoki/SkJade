@@ -11,7 +11,7 @@ import com.ankoki.skjade.hooks.holograms.HologramManager.TouchType;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.line.HologramLine;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Interactive Hologram Line")
 @Description("Makes a line of a hologram clickable(triggers the on hologram click), touchable(triggers on hologram touch)," +
@@ -37,10 +37,10 @@ public class EffInteractableLine extends Effect {
     protected void execute(Event event) {
         Hologram holo = hologram.getSingle(event);
         Number num = lineNumber.getSingle(event);
-        if (num == null) return;
+        if (num == null || holo == null) return;
         int i = num.intValue();
         HologramLine line = HologramManager.getLine(holo, i);
-        if (holo == null || line == null) return;
+        if (line == null) return;
         if (negated) {
             switch (touchType) {
                 case CLICKABLE:

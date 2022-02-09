@@ -14,7 +14,7 @@ import com.ankoki.skjade.utils.ReflectionUtils;
 import com.ankoki.skjade.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Force Rain")
 @Description("Make it start/stop raining for players.")

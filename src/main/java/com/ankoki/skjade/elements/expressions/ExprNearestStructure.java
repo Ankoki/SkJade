@@ -14,7 +14,7 @@ import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.StructureType;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Nearest Structure")
 @Description({"Find the closest nearby structure of a given structure type. Will not be set if not found. " +

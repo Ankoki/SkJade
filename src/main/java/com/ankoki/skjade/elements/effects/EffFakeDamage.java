@@ -14,7 +14,7 @@ import com.ankoki.skjade.utils.ReflectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Fake Damage")
 @Description("Makes a player look like they took damage.")

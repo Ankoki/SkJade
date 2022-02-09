@@ -12,7 +12,7 @@ import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 import org.bukkit.World;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("World Border Size Over Time")
 @Description("Sets the worldborder of a world over time.")

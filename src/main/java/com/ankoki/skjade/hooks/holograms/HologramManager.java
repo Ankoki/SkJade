@@ -129,6 +129,7 @@ public class HologramManager {
     }
 
     public static HologramLine getLine(Hologram hologram, int line) {
+        if (hologram == null) return null;
         line--;
         if (line < 0) line = 0;
         List<HologramLine> lines = ALL_LINES.get(hologram);

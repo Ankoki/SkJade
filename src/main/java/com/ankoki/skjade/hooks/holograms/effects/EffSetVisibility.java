@@ -9,7 +9,7 @@ import ch.njol.util.Kleenean;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Set Visibility")
 @Description("Sets the visibility of a hologram to show or hide certain players.")

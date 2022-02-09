@@ -22,7 +22,7 @@ public class ReflectionUtils {
             playerConnection = getNMSClass("server.level", "EntityPlayer")
                     .getDeclaredField(Utils.getServerMajorVersion() < 17 ? "playerConnection" : "b");
             sendPacket = getNMSClass("server.network", "PlayerConnection")
-                    .getMethod("sendPacket", getNMSClass("network.protocol", "Packet"));
+                    .getMethod(Utils.getServerMajorVersion() < 18 ? "sendPacket" : "a", getNMSClass("network.protocol", "Packet"));
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();
         }

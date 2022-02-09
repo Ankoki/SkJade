@@ -12,7 +12,7 @@ import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 /*Don't think this will go anywhere, however im keeping it on the table.
   I really think this would be useful, ESPECIALLY on minehut who do

@@ -13,7 +13,7 @@ import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Attach Entity to Laser")
 @Description("Attaches a living entity to the end of a laser.")
