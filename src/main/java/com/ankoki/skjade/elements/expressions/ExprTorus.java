@@ -31,6 +31,15 @@ public class ExprTorus extends SimpleExpression<Location> {
     private Expression<Number> minorRadius;
     private Expression<Number> density;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        center = (Expression<Location>) exprs[0];
+        majorRadius = (Expression<Number>) exprs[1];
+        minorRadius = (Expression<Number>) exprs[2];
+        density = exprs.length == 4 ? (Expression<Number>) exprs[3] : null;
+        return true;
+    }
+
     @Nullable
     @Override
     protected Location[] get(Event e) {
@@ -67,14 +76,5 @@ public class ExprTorus extends SimpleExpression<Location> {
     public String toString(@Nullable Event e, boolean debug) {
         return "torus around " + center.toString(e, debug) + " with a major radius of " + majorRadius.toString(e, debug) +
                 " and a minor radius of " + minorRadius.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        center = (Expression<Location>) exprs[0];
-        majorRadius = (Expression<Number>) exprs[1];
-        minorRadius = (Expression<Number>) exprs[2];
-        density = exprs.length == 4 ? (Expression<Number>) exprs[3] : null;
-        return true;
     }
 }

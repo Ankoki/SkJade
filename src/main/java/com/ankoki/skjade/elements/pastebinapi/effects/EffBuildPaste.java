@@ -33,6 +33,13 @@ public class EffBuildPaste extends Effect {
     private Expression<String> developerKey;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
+        developerKey = (Expression<String>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         PasteBuilder builder = pasteBuilder.getSingle(e);
         String devKey = developerKey.getSingle(e);
@@ -52,12 +59,5 @@ public class EffBuildPaste extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "build " + pasteBuilder.toString(e, debug) + " with the developer key " + developerKey.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
-        developerKey = (Expression<String>) exprs[1];
-        return true;
     }
 }

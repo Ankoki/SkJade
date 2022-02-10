@@ -36,6 +36,14 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
     private Expression<Entity> entity;
     private FluidCollisionMode mode = FluidCollisionMode.NEVER;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean isDelayed, ParseResult parseResult) {
+        if (i == 1 && parseResult.mark == 1) mode = FluidCollisionMode.SOURCE_ONLY;
+        else if (i == 1) mode = FluidCollisionMode.ALWAYS;
+        entity = (Expression<Entity>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Block[] get(Event e) {
@@ -58,17 +66,6 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return entity.toString(e, debug) + "'s exact target block";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean isDelayed, ParseResult parseResult) {
-        if (i == 1 && parseResult.mark == 1) {
-            mode = FluidCollisionMode.SOURCE_ONLY;
-        } else if (i == 1) {
-            mode = FluidCollisionMode.ALWAYS;
-        }
-        entity = (Expression<Entity>) exprs[0];
-        return true;
     }
 
     @Nullable

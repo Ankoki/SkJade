@@ -35,6 +35,12 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
 
     private Expression<Inventory> inventory;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        inventory = (Expression<Inventory>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Integer[] get(Event e) {
@@ -56,12 +62,6 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "border slots of " + inventory.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        inventory = (Expression<Inventory>) exprs[0];
-        return true;
     }
 
     @Nullable

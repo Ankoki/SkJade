@@ -31,6 +31,14 @@ public class EffWorldBorderSizeOverTime extends Effect {
     private Expression<Timespan> timeExpr;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        worldExpr = (Expression<World>) exprs[0];
+        sizeExpr = (Expression<Number>) exprs[1];
+        timeExpr = (Expression<Timespan>) exprs[2];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         World world = worldExpr.getSingle(e);
         Number number = sizeExpr.getSingle(e);
@@ -42,13 +50,5 @@ public class EffWorldBorderSizeOverTime extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "set world border size of " + worldExpr.toString(e, debug) + " to " + sizeExpr.toString(e, debug) + " over " + timeExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        worldExpr = (Expression<World>) exprs[0];
-        sizeExpr = (Expression<Number>) exprs[1];
-        timeExpr = (Expression<Timespan>) exprs[2];
-        return true;
     }
 }

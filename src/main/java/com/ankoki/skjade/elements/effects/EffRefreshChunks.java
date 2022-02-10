@@ -29,6 +29,11 @@ public class EffRefreshChunks extends AsyncEffect {
     private Expression<Chunk> chunks;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         if (chunks == null) return;
         Arrays.stream(chunks.getArray(event)).forEach(chunk -> {
@@ -40,10 +45,5 @@ public class EffRefreshChunks extends AsyncEffect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "refresh chunks " + chunks.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        return true;
     }
 }

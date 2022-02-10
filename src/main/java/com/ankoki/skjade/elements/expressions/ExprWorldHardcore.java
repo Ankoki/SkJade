@@ -30,6 +30,12 @@ public class ExprWorldHardcore extends SimpleExpression<Boolean> {
 
     private Expression<World> worldExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        worldExpr = (Expression<World>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Boolean[] get(Event e) {
@@ -52,12 +58,6 @@ public class ExprWorldHardcore extends SimpleExpression<Boolean> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "hardcore value of " + worldExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        worldExpr = (Expression<World>) exprs[0];
-        return true;
     }
 
     @Nullable

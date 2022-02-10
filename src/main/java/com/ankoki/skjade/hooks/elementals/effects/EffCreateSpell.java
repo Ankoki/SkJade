@@ -41,6 +41,26 @@ public class EffCreateSpell extends Effect {
     private boolean generic;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        spellName = (Expression<String>) exprs[0];
+        id = (Expression<Number>) exprs[1];
+        cooldown = (Expression<Number>) exprs[2];
+        generic = parseResult.mark == 1;
+        String unparsed = parseResult.regexes.get(0).group(0) + "(" + (parseResult.regexes.size() > 1 ? parseResult.regexes.get(1).group(0) : "") + ")";
+        FunctionReference<?> function = new SkriptParser(unparsed, SkriptParser.ALL_FLAGS, ParseContext.DEFAULT)
+                .parseFunction((Class<?>[]) null);
+        if (function == null) {
+            Skript.error("This isn't a valid function! Your function needs to return a value!");
+            return false;
+        }
+        if (function.getReturnType() != Boolean.class) {
+            Skript.error("You need to have a boolean return value when casting a spell!");
+        }
+        functionCall = new ExprFunctionCall(function);
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         String name = spellName.getSingle(event);
         int i = id.getSingle(event).intValue();
@@ -90,25 +110,5 @@ public class EffCreateSpell extends Effect {
         return "create a new " + (generic ? " entity " : " generic ") + " spell named " +
                 spellName.toString(event, b) + " with the id " + id.toString(event, b) + " to run " +
                 functionCall.toString(event, b) + " on cast with a cooldown of " + cooldown.toString(event, b) + " seconds";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        spellName = (Expression<String>) exprs[0];
-        id = (Expression<Number>) exprs[1];
-        cooldown = (Expression<Number>) exprs[2];
-        generic = parseResult.mark == 1;
-        String unparsed = parseResult.regexes.get(0).group(0) + "(" + (parseResult.regexes.size() > 1 ? parseResult.regexes.get(1).group(0) : "") + ")";
-        FunctionReference<?> function = new SkriptParser(unparsed, SkriptParser.ALL_FLAGS, ParseContext.DEFAULT)
-                .parseFunction((Class<?>[]) null);
-        if (function == null) {
-            Skript.error("This isn't a valid function! Your function needs to return a value!");
-            return false;
-        }
-        if (function.getReturnType() != Boolean.class) {
-            Skript.error("You need to have a boolean return value when casting a spell!");
-        }
-        functionCall = new ExprFunctionCall(function);
-        return true;
     }
 }

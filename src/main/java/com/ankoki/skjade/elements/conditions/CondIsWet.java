@@ -41,6 +41,14 @@ public class CondIsWet extends Condition {
     private boolean negate;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        entityExpr = (Expression<Entity>) exprs[0];
+        pattern = matchedPattern;
+        negate = parseResult.mark == 1;
+        return true;
+    }
+
+    @Override
     public boolean check(Event e) {
         if (entityExpr == null) return false;
         Entity entity = entityExpr.getSingle(e);
@@ -89,13 +97,5 @@ public class CondIsWet extends Condition {
                 return entityExpr.toString(e, debug) + " is" + (negate ? "n't " : " ") + "touching any type of liquid";
         }
         return null;
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        entityExpr = (Expression<Entity>) exprs[0];
-        pattern = matchedPattern;
-        negate = parseResult.mark == 1;
-        return true;
     }
 }

@@ -32,18 +32,6 @@ public class EffSetPasteVisibility extends Effect {
     private PasteVisibility visiblity;
 
     @Override
-    protected void execute(Event e) {
-        PasteBuilder[] builders = pasteBuilder.getArray(e);
-        if (builders.length < 1) return;
-        Arrays.stream(builders).forEach(builder -> PasteManager.setVisibility(builder, visiblity));
-    }
-
-    @Override
-    public String toString(@Nullable Event e, boolean debug) {
-        return "make " + pasteBuilder.toString(e, debug) + " be public, private or unlisted";
-    }
-
-    @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         switch (parseResult.mark) {
             case 1:
@@ -57,5 +45,17 @@ public class EffSetPasteVisibility extends Effect {
         }
         pasteBuilder = (Expression<PasteBuilder>) exprs[0];
         return true;
+    }
+
+    @Override
+    protected void execute(Event e) {
+        PasteBuilder[] builders = pasteBuilder.getArray(e);
+        if (builders.length < 1) return;
+        Arrays.stream(builders).forEach(builder -> PasteManager.setVisibility(builder, visiblity));
+    }
+
+    @Override
+    public String toString(@Nullable Event e, boolean debug) {
+        return "make " + pasteBuilder.toString(e, debug) + " be public, private or unlisted";
     }
 }

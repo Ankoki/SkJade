@@ -33,6 +33,13 @@ public class EffShowBrand extends Effect {
     private Expression<Player> players;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        brand = (Expression<String>) exprs[0];
+        players = (Expression<Player>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         if (brand == null || players == null) return;
         String b = brand.getSingle(e);
@@ -57,12 +64,5 @@ public class EffShowBrand extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "send brand " + brand.toString(e, debug) + " to " + players.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        brand = (Expression<String>) exprs[0];
-        players = (Expression<Player>) exprs[1];
-        return true;
     }
 }

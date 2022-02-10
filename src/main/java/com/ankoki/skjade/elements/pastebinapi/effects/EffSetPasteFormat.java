@@ -31,6 +31,13 @@ public class EffSetPasteFormat extends Effect {
     private Expression<String> formatting;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
+        formatting = (Expression<String>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         PasteBuilder[] builders = pasteBuilder.getArray(e);
         String format = formatting.getSingle(e);
@@ -42,12 +49,5 @@ public class EffSetPasteFormat extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "set the format of " + pasteBuilder.toString(e, debug) + " to " + formatting.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
-        formatting = (Expression<String>) exprs[1];
-        return true;
     }
 }

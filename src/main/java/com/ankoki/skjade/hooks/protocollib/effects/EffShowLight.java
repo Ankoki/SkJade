@@ -24,6 +24,14 @@ public class EffShowLight extends Effect {
     private Expression<Player> players;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        number = (Expression<Number>) exprs[0];
+        location = (Expression<Location>) exprs[1];
+        players = (Expression<Player>) exprs[2];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         if (number == null || location == null) return;
         int n = number.getSingle(e).intValue();
@@ -42,13 +50,5 @@ public class EffShowLight extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "show light with a light level of " + number.toString(e, debug) + " at " + location.toString(e, debug) +
                 (players == null ? "" : " to " + players.toString(e, debug));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        number = (Expression<Number>) exprs[0];
-        location = (Expression<Location>) exprs[1];
-        players = (Expression<Player>) exprs[2];
-        return true;
     }
 }

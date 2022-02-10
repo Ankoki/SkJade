@@ -28,6 +28,17 @@ public class ExprProgressBar extends SimpleExpression<String> {
     private Expression<Color> colours;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        currentValue = (Expression<Number>) exprs[0];
+        maxValue = (Expression<Number>) exprs[1];
+        barCharacter = (Expression<String>) exprs[2];
+        if (barCharacter == null) colours = (Expression<Color>) exprs[2];
+        else colours = (Expression<Color>) exprs[3];
+        if (parseResult.mark == 1) barLength = (Expression<Number>) exprs[exprs.length - 1];
+        return true;
+    }
+
+    @Override
     protected String[] get(Event e) {
         Color[] allColours;
         if (colours == null || colours.getSingle(e) == null) allColours = defaultColours;
@@ -53,17 +64,6 @@ public class ExprProgressBar extends SimpleExpression<String> {
                 " and max value " + maxValue.toString(e, debug) +
                 " with the bar character " + barCharacter.toString(e, debug) +
                 (colours == null ? "" : " and the colours " + colours.toString(e, debug));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        currentValue = (Expression<Number>) exprs[0];
-        maxValue = (Expression<Number>) exprs[1];
-        barCharacter = (Expression<String>) exprs[2];
-        if (barCharacter == null) colours = (Expression<Color>) exprs[2];
-        else colours = (Expression<Color>) exprs[3];
-        if (parseResult.mark == 1) barLength = (Expression<Number>) exprs[exprs.length - 1];
-        return true;
     }
 
     @Override

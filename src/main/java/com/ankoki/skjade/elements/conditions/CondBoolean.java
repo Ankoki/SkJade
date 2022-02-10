@@ -26,6 +26,12 @@ public class CondBoolean extends Condition {
     private Expression<Boolean> bool;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        bool = (Expression<Boolean>) exprs[0];
+        return true;
+    }
+
+    @Override
     public boolean check(Event e) {
         if (bool == null) return false;
         Boolean b = bool.getSingle(e);
@@ -36,11 +42,5 @@ public class CondBoolean extends Condition {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return bool.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        bool = (Expression<Boolean>) exprs[0];
-        return true;
     }
 }

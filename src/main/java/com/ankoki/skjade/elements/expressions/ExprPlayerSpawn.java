@@ -31,6 +31,12 @@ public class ExprPlayerSpawn extends SimpleExpression<Location> {
 
     private Expression<Player> playerExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        playerExpr = (Expression<Player>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Location[] get(Event e) {
@@ -54,12 +60,6 @@ public class ExprPlayerSpawn extends SimpleExpression<Location> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return playerExpr.toString(e, debug) + "'s spawn point'";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        playerExpr = (Expression<Player>) exprs[0];
-        return true;
     }
 
     @Nullable

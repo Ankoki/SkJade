@@ -27,32 +27,32 @@ public class EffStartLaser extends Effect {
                 "start %laser% [for %-players%]");
     }
 
-    private Expression<Laser> laser;
-    private Expression<Player> allPlayers;
+    private Expression<Laser> laserExpr;
+    private Expression<Player> playerExpr;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        laserExpr = (Expression<Laser>) exprs[0];
+        if (exprs.length > 1) playerExpr = (Expression<Player>) exprs[1];
+        return true;
+    }
 
     @Override
     protected void execute(Event e) {
-        if (laser == null) return;
-        Laser l = laser.getSingle(e);
-        if (l == null || l.isStarted()) return;
+        if (laserExpr == null) return;
+        Laser laser = laserExpr.getSingle(e);
+        if (laser == null || laser.isStarted()) return;
         Player[] players;
-        if (allPlayers == null) {
-            players = l.getStart().getWorld().getPlayers().toArray(new Player[0]);
+        if (playerExpr == null) {
+            players = laser.getStart().getWorld().getPlayers().toArray(new Player[0]);
         } else {
-            players = allPlayers.getArray(e);
+            players = playerExpr.getArray(e);
         }
-        l.start(SkJade.getInstance(), players);
+        laser.start(SkJade.getInstance(), players);
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "start " + laser.toString(e, debug) + (allPlayers == null ? "" : " for " + allPlayers.toString(e, debug));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        laser = (Expression<Laser>) exprs[0];
-        if (exprs.length > 1) allPlayers = (Expression<Player>) exprs[1];
-        return true;
+        return "start " + laserExpr.toString(e, debug) + (playerExpr == null ? "" : " for " + playerExpr.toString(e, debug));
     }
 }

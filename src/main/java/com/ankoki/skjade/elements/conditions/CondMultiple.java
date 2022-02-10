@@ -29,6 +29,16 @@ public class CondMultiple extends Condition {
     private boolean isAnd;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        String unparsed1 = parseResult.regexes.get(0).group(0);
+        String unparsed2 = parseResult.regexes.get(1).group(0);
+        cond1 = Condition.parse(unparsed1, "Can't understand this condition: " + unparsed1);
+        cond2 = Condition.parse(unparsed2, "Can't understand this condition: " + unparsed2);
+        isAnd = i == 0;
+        return cond1 != null && cond2 != null;
+    }
+
+    @Override
     public boolean check(Event event) {
         boolean b1 = cond1.check(event);
         boolean b2 = cond2.check(event);
@@ -38,15 +48,5 @@ public class CondMultiple extends Condition {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return cond1.toString() + (isAnd ? " && " : " || ") + cond2.toString();
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        String unparsed1 = parseResult.regexes.get(0).group(0);
-        String unparsed2 = parseResult.regexes.get(1).group(0);
-        cond1 = Condition.parse(unparsed1, "Can't understand this condition: " + unparsed1);
-        cond2 = Condition.parse(unparsed2, "Can't understand this condition: " + unparsed2);
-        isAnd = i == 0;
-        return cond1 != null && cond2 != null;
     }
 }

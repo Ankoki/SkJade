@@ -26,6 +26,12 @@ public class ExprUnary extends SimpleExpression<Number> {
 
     private Expression<Number> numberExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        numberExpr = (Expression<Number>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Number[] get(Event e) {
@@ -48,11 +54,5 @@ public class ExprUnary extends SimpleExpression<Number> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "unary value of " + numberExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        numberExpr = (Expression<Number>) exprs[0];
-        return true;
     }
 }

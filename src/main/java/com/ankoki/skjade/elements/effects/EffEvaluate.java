@@ -29,6 +29,12 @@ public class EffEvaluate extends Effect {
     private Expression<String> evaluate;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        evaluate = (Expression<String>) exprs[0];
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         if (evaluate == null) return;
         Arrays.stream(evaluate.getArray(event)).forEach(eval -> {
@@ -41,11 +47,5 @@ public class EffEvaluate extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "evaluate " + evaluate.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        evaluate = (Expression<String>) exprs[0];
-        return true;
     }
 }

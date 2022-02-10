@@ -29,6 +29,13 @@ public class EffEnchantItem extends Effect {
     private Expression<ItemStack> item;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        spellExprs = (Expression<Spell>) exprs[0];
+        item = (Expression<ItemStack>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         ItemStack i = item.getSingle(event);
         Spell spell = spellExprs.getSingle(event);
@@ -40,12 +47,5 @@ public class EffEnchantItem extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "add " + spellExprs.toString(event, b) + " to " + item.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        spellExprs = (Expression<Spell>) exprs[0];
-        item = (Expression<ItemStack>) exprs[1];
-        return true;
     }
 }

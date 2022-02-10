@@ -27,6 +27,13 @@ public class CondCanCastSpell extends Condition {
     private Expression<Spell> spell;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        player = (Expression<Player>) exprs[0];
+        spell = (Expression<Spell>) exprs[1];
+        return true;
+    }
+
+    @Override
     public boolean check(Event event) {
         if (player == null || spell == null) return false;
         Player p = player.getSingle(event);
@@ -38,12 +45,5 @@ public class CondCanCastSpell extends Condition {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return player.toString(event, b) + " can cast " + spell.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        player = (Expression<Player>) exprs[0];
-        spell = (Expression<Spell>) exprs[1];
-        return true;
     }
 }

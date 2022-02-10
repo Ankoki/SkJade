@@ -31,6 +31,12 @@ public class ExprWorldBorderDamageAmount extends SimpleExpression<Number> {
 
     private Expression<World> worldExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        worldExpr = (Expression<World>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Number[] get(Event e) {
@@ -53,12 +59,6 @@ public class ExprWorldBorderDamageAmount extends SimpleExpression<Number> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return worldExpr.toString(e, debug) + "'s world border damage amount";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        worldExpr = (Expression<World>) exprs[0];
-        return true;
     }
 
     @Nullable

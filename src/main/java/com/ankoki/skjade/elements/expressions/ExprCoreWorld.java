@@ -26,6 +26,11 @@ public class ExprCoreWorld extends SimpleExpression<World> {
                 "[the] (core|main|original|primary) world [of [the] server]");
     }
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        return true;
+    }
+
     @Nullable
     @Override
     protected World[] get(Event e) {
@@ -45,10 +50,5 @@ public class ExprCoreWorld extends SimpleExpression<World> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "core world";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        return true;
     }
 }

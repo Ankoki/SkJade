@@ -28,6 +28,14 @@ public class ExprTextBetween extends SimpleExpression<String> {
     private Expression<Character> between2;
     private Expression<String> string;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        between1 = (Expression<Character>) exprs[0];
+        between2 = (Expression<Character>) exprs[1];
+        string = (Expression<String>) exprs[2];
+        return true;
+    }
+
     @Nullable
     @Override
     protected String[] get(Event e) {
@@ -37,8 +45,8 @@ public class ExprTextBetween extends SimpleExpression<String> {
         String str = string.getSingle(e);
         if (str == null) return new String[0];
 
-        first = illegal(first);
-        second = illegal(second);
+        first = escape(first);
+        second = escape(second);
 
         String[] split1 = str.split(first);
         if (split1.length < 2) return new String[0];
@@ -62,15 +70,7 @@ public class ExprTextBetween extends SimpleExpression<String> {
         return "text between " + between1.toString(e, debug) + " and " + between2.toString(e, debug) + " from " + string.toString(e, debug);
     }
 
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        between1 = (Expression<Character>) exprs[0];
-        between2 = (Expression<Character>) exprs[1];
-        string = (Expression<String>) exprs[2];
-        return true;
-    }
-
-    private String illegal(String s) {
+    private String escape(String s) {
         switch (s) {
             case "[":
                 s = "\\[";

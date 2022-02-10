@@ -25,6 +25,12 @@ public class CondSpellExists extends Condition {
     private Expression<Spell> spell;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        spell = (Expression<Spell>) exprs[0];
+        return true;
+    }
+
+    @Override
     public boolean check(Event event) {
         if (spell == null) return false;
         Spell s = spell.getSingle(event);
@@ -34,11 +40,5 @@ public class CondSpellExists extends Condition {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "spell exists";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        spell = (Expression<Spell>) exprs[0];
-        return true;
     }
 }

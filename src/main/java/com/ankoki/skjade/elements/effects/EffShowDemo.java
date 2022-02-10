@@ -40,6 +40,12 @@ public class EffShowDemo extends Effect {
     }
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        playersExpr = (Expression<Player>) exprs[0];
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         Player[] players = playersExpr.getArray(event);
         if (f == null) {
@@ -78,11 +84,5 @@ public class EffShowDemo extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "show the demo screen to " + playersExpr.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        playersExpr = (Expression<Player>) exprs[0];
-        return true;
     }
 }

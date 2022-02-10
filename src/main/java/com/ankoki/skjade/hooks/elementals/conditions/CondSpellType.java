@@ -26,11 +26,30 @@ public class CondSpellType extends Condition {
     }
 
     private SpellType spellType;
-    private Expression<Spell> spellExprs;
+    private Expression<Spell> spellExpr;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        spellExpr = (Expression<Spell>) exprs[0];
+        switch (parseResult.mark) {
+            case 0:
+                spellType = SpellType.GENERIC;
+                break;
+            case 1:
+                spellType = SpellType.ENTITY;
+                break;
+            case 2:
+                spellType = SpellType.GENERIC_PROLONGED;
+                break;
+            case 3:
+                spellType = SpellType.ENTITY_PROLONGED;
+        }
+        return true;
+    }
 
     @Override
     public boolean check(Event event) {
-        Spell spell = spellExprs.getSingle(event);
+        Spell spell = spellExpr.getSingle(event);
         if (spell == null) return false;
         switch (spellType) {
             case GENERIC:
@@ -47,25 +66,6 @@ public class CondSpellType extends Condition {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return spellExprs.toString(event, b) + " is a " + spellType.getPretty();
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        spellExprs = (Expression<Spell>) exprs[0];
-        switch (parseResult.mark) {
-            case 0:
-                spellType = SpellType.GENERIC;
-                break;
-            case 1:
-                spellType = SpellType.ENTITY;
-                break;
-            case 2:
-                spellType = SpellType.GENERIC_PROLONGED;
-                break;
-            case 3:
-                spellType = SpellType.ENTITY_PROLONGED;
-        }
-        return true;
+        return spellExpr.toString(event, b) + " is a " + spellType.getPretty();
     }
 }

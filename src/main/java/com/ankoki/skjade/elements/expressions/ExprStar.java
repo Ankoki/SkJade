@@ -31,6 +31,15 @@ public class ExprStar extends SimpleExpression<Location> {
     private Expression<Number> radius;
     private Expression<Number> density;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        center = (Expression<Location>) exprs[0];
+        points = (Expression<Number>) exprs[1];
+        radius = (Expression<Number>) exprs[2];
+        density = (Expression<Number>) exprs[3];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Location[] get(Event e) {
@@ -61,14 +70,5 @@ public class ExprStar extends SimpleExpression<Location> {
     public String toString(@Nullable Event event, boolean b) {
         return "star with center " + center.toString(event, b) + " with radius " + radius.toString(event, b) +
                 " with density " + density.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        center = (Expression<Location>) exprs[0];
-        points = (Expression<Number>) exprs[1];
-        radius = (Expression<Number>) exprs[2];
-        density = (Expression<Number>) exprs[3];
-        return true;
     }
 }

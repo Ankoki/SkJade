@@ -26,25 +26,25 @@ public class EffStopLaser extends Effect {
                 "stop %lasers%");
     }
 
-    private Expression<Laser> laser;
+    private Expression<Laser> laserExpr;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        laserExpr = (Expression<Laser>) exprs[0];
+        return true;
+    }
 
     @Override
     protected void execute(Event e) {
-        if (laser == null) return;
-        Laser[] lasers = laser.getArray(e);
-        for (Laser l : lasers) {
-            if (l.isStarted()) l.stop();
+        if (laserExpr == null) return;
+        Laser[] lasers = laserExpr.getArray(e);
+        for (Laser laser : lasers) {
+            if (laser.isStarted()) laser.stop();
         }
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "stop " + laser.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        laser = (Expression<Laser>) exprs[0];
-        return true;
+        return "stop " + laserExpr.toString(e, debug);
     }
 }

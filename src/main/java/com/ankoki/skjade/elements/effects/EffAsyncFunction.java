@@ -28,17 +28,6 @@ public class EffAsyncFunction extends Effect {
     private EffFunctionCall functionCall;
 
     @Override
-    protected void execute(Event e) {
-        if (functionCall == null) return;
-        Bukkit.getScheduler().runTaskAsynchronously(SkJade.getInstance(), () -> functionCall.run(e));
-    }
-
-    @Override
-    public String toString(@Nullable Event e, boolean debug) {
-        return "run " + functionCall.toString(e, debug) + " async";
-    }
-
-    @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         String unparsed = parseResult.regexes.get(0).group(0) + "(" + (parseResult.regexes.size() > 1 ? parseResult.regexes.get(1).group(0) : "") + ")";
         FunctionReference<?> function = new SkriptParser(unparsed, SkriptParser.ALL_FLAGS, ParseContext.DEFAULT)
@@ -49,5 +38,16 @@ public class EffAsyncFunction extends Effect {
         }
         functionCall = new EffFunctionCall(function);
         return true;
+    }
+
+    @Override
+    protected void execute(Event e) {
+        if (functionCall == null) return;
+        Bukkit.getScheduler().runTaskAsynchronously(SkJade.getInstance(), () -> functionCall.run(e));
+    }
+
+    @Override
+    public String toString(@Nullable Event e, boolean debug) {
+        return "run " + functionCall.toString(e, debug) + " async";
     }
 }

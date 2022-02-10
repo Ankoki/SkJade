@@ -38,6 +38,13 @@ public class EffSkyColour extends Effect {
     }
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        numbers = (Expression<Number>) exprs[0];
+        playerExpr = (Expression<Player>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         if (numbers == null || playerExpr == null || Utils.getServerMajorVersion() < 16) return;
         Number num = numbers.getSingle(e);
@@ -69,12 +76,5 @@ public class EffSkyColour extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "change the sky colour to " + numbers.toString(e, debug) + " for " + playerExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        numbers = (Expression<Number>) exprs[0];
-        playerExpr = (Expression<Player>) exprs[1];
-        return true;
     }
 }

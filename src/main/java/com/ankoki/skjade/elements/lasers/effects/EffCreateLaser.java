@@ -29,17 +29,26 @@ public class EffCreateLaser extends Effect {
                 "create [a] [new] (la(s|z)er [beam]|guardian beam) from %location% to %location% for %timespan% with [the] id %string%");
     }
 
-    private Expression<Location> locationOne, locationTwo;
-    private Expression<Timespan> time;
-    private Expression<String> key;
+    private Expression<Location> locationOneExpr, locationTwoExpr;
+    private Expression<Timespan> timeExpr;
+    private Expression<String> keyExpr;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        locationOneExpr = (Expression<Location>) exprs[0];
+        locationTwoExpr = (Expression<Location>) exprs[1];
+        timeExpr = (Expression<Timespan>) exprs[2];
+        keyExpr = (Expression<String>) exprs[3];
+        return true;
+    }
 
     @Override
     protected void execute(Event e) {
-        if (locationOne == null || locationTwo == null || time == null || key == null) return;
-        Location loc1 = locationOne.getSingle(e);
-        Location loc2 = locationTwo.getSingle(e);
-        Timespan sec = time.getSingle(e);
-        String id = key.getSingle(e);
+        if (locationOneExpr == null || locationTwoExpr == null || timeExpr == null || keyExpr == null) return;
+        Location loc1 = locationOneExpr.getSingle(e);
+        Location loc2 = locationTwoExpr.getSingle(e);
+        Timespan sec = timeExpr.getSingle(e);
+        String id = keyExpr.getSingle(e);
         if (loc1 == null || loc2 == null || sec == null || id == null || id.isEmpty()) return;
         int seconds = (int) Math.ceil(sec.getTicks_i() / 20D);
         try {
@@ -52,16 +61,7 @@ public class EffCreateLaser extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "create a new laser from " + locationOne.toString(e, debug) + " to " + locationTwo.toString(e, debug) +
-                " for " + time.toString(e, debug) + " with the id " + key.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        locationOne = (Expression<Location>) exprs[0];
-        locationTwo = (Expression<Location>) exprs[1];
-        time = (Expression<Timespan>) exprs[2];
-        key = (Expression<String>) exprs[3];
-        return true;
+        return "create a new laser from " + locationOneExpr.toString(e, debug) + " to " + locationTwoExpr.toString(e, debug) +
+                " for " + timeExpr.toString(e, debug) + " with the id " + keyExpr.toString(e, debug);
     }
 }

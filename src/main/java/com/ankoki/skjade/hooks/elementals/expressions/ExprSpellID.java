@@ -26,6 +26,12 @@ public class ExprSpellID extends SimpleExpression<Number> {
 
     private Expression<Spell> spell;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        spell = (Expression<Spell>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Number[] get(Event event) {
@@ -46,11 +52,5 @@ public class ExprSpellID extends SimpleExpression<Number> {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "the id of " + spell.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        spell = (Expression<Spell>) exprs[0];
-        return true;
     }
 }

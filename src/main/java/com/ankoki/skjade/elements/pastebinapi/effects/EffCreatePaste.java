@@ -27,6 +27,12 @@ public class EffCreatePaste extends Effect {
     private Expression<String> pasteID;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        pasteID = (Expression<String>) exprs[0];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         String id = pasteID.getSingle(e);
         if (id == null || id.isEmpty()) return;
@@ -36,11 +42,5 @@ public class EffCreatePaste extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "create a new paste with the id " + pasteID.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        pasteID = (Expression<String>) exprs[0];
-        return true;
     }
 }

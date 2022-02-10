@@ -6,6 +6,7 @@ import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.lang.parser.ParserInstance;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.ankoki.elementals.api.ElementalsAPI;
@@ -32,6 +33,22 @@ public class ExprSpell extends SimpleExpression<Spell> {
     private Expression<String> spell;
     private boolean inEvent;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        if (i == 1) {
+            if (!ParserInstance.get().isCurrentEvent(EntitySpellCastEvent.class) &&
+                    ParserInstance.get().isCurrentEvent(GenericSpellCastEvent.class) &&
+                    ParserInstance.get().isCurrentEvent(SpellCastEvent.class)) {
+                Skript.error("You cannot use \"event-spell\" outside of a spell casting event!");
+                return false;
+            }
+            inEvent = true;
+            return true;
+        }
+        spell = (Expression<String>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Spell[] get(Event event) {
@@ -54,22 +71,6 @@ public class ExprSpell extends SimpleExpression<Spell> {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return inEvent ? "the spell named " + spell.toString(event, b) : "the spell " + fromEvent(event);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        if (i == 1) {
-            if (!ScriptLoader.isCurrentEvent(EntitySpellCastEvent.class) &&
-                    ScriptLoader.isCurrentEvent(GenericSpellCastEvent.class) &&
-                        ScriptLoader.isCurrentEvent(SpellCastEvent.class)) {
-                Skript.error("You cannot use \"event-spell\" outside of a spell casting event!");
-                return false;
-            }
-            inEvent = true;
-            return true;
-        }
-        spell = (Expression<String>) exprs[0];
-        return true;
     }
 
     private Spell fromEvent(Event e) {

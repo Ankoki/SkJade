@@ -31,6 +31,13 @@ public class ExprPasteResponse extends SimpleExpression<String> {
 
     private Expression<String> pasteKey, developerKey;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        pasteKey = (Expression<String>) exprs[0];
+        developerKey = (Expression<String>) exprs[1];
+        return true;
+    }
+
     @Nullable
     @Override
     protected String[] get(Event e) {
@@ -67,12 +74,5 @@ public class ExprPasteResponse extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "paste response from " + pasteKey.toString(e, debug) + " with the developer key " + developerKey.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        pasteKey = (Expression<String>) exprs[0];
-        developerKey = (Expression<String>) exprs[1];
-        return true;
     }
 }

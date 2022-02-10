@@ -29,44 +29,39 @@ public class EffShowLaser extends Effect {
                 "show [a] [new] (la(s|z)er [beam]|guardian beam) from %location% to %location% for %timespan% [for %-players%]");
     }
 
-    private Expression<Location> locationOne, locationTwo;
-    private Expression<Timespan> time;
-    private Expression<Player> allPlayers;
+    private Expression<Location> locationOneExpr, locationTwoExpr;
+    private Expression<Timespan> timeExpr;
+    private Expression<Player> playerExpr;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        locationOneExpr = (Expression<Location>) exprs[0];
+        locationTwoExpr = (Expression<Location>) exprs[1];
+        timeExpr = (Expression<Timespan>) exprs[2];
+        if (exprs.length > 3) playerExpr = (Expression<Player>) exprs[3];
+        return true;
+    }
 
     @Override
     protected void execute(Event e) {
-        if (locationOne == null || locationTwo == null || time == null) return;
-        Location loc1 = locationOne.getSingle(e);
-        Location loc2 = locationTwo.getSingle(e);
-        Timespan sec = time.getSingle(e);
+        if (locationOneExpr == null || locationTwoExpr == null || timeExpr == null) return;
+        Location loc1 = locationOneExpr.getSingle(e);
+        Location loc2 = locationTwoExpr.getSingle(e);
+        Timespan sec = timeExpr.getSingle(e);
         if (loc1 == null || loc2 == null || sec == null) return;
         Player[] players;
-        if (allPlayers != null) {
-            players = allPlayers.getArray(e);
-        } else {
-            players = loc1.getWorld().getPlayers().toArray(new Player[0]);
-        }
+        if (playerExpr != null) players = playerExpr.getArray(e);
+        else players = loc1.getWorld().getPlayers().toArray(new Player[0]);
         int seconds = (int) Math.ceil(sec.getTicks_i() / 20D);
         try {
             Laser laser = new Laser.GuardianLaser(loc1, loc2, seconds, 100);
             laser.start(SkJade.getInstance(), players);
-        } catch (Exception ex) {
-            ex.printStackTrace(); //could probably ignore this after testing
-        }
+        } catch (ReflectiveOperationException ignore) {}
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "show a laser from " + locationOne.toString(e, debug) + " to " + locationTwo.toString(e, debug) + " for " +
-                time.toString(e, debug) + (allPlayers == null ? "" : " for " + allPlayers.toString(e ,debug));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        locationOne = (Expression<Location>) exprs[0];
-        locationTwo = (Expression<Location>) exprs[1];
-        time = (Expression<Timespan>) exprs[2];
-        if (exprs.length > 3) allPlayers = (Expression<Player>) exprs[3];
-        return true;
+        return "show a laser from " + locationOneExpr.toString(e, debug) + " to " + locationTwoExpr.toString(e, debug) + " for " +
+                timeExpr.toString(e, debug) + (playerExpr == null ? "" : " for " + playerExpr.toString(e ,debug));
     }
 }

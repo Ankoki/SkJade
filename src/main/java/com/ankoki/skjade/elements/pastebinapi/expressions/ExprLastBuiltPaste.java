@@ -25,6 +25,11 @@ public class ExprLastBuiltPaste extends SimpleExpression<String> {
                 "[the] [(link|url) of] [the] last built paste[bin [paste]]");
     }
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        return true;
+    }
+
     @Nullable
     @Override
     protected String[] get(Event e) {
@@ -44,10 +49,5 @@ public class ExprLastBuiltPaste extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "the url of the last built paste";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        return true;
     }
 }

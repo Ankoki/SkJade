@@ -37,7 +37,7 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
 
     @Override
     public boolean init(Expression<?>[] exprs, int pattern, Kleenean kleenean, ParseResult parseResult) {
-        if (pattern == 2 && !ScriptLoader.isCurrentEvent(HologramClickEvent.class) && !ScriptLoader.isCurrentEvent(HologramTouchEvent.class)) {
+        if (pattern == 2 && !ParserInstance.get().isCurrentEvent(HologramClickEvent.class) && !ParserInstance.get().isCurrentEvent(HologramTouchEvent.class)) {
             Skript.error("You cannot use event-hologram outside a hologram interact event!");
             return false;
         }

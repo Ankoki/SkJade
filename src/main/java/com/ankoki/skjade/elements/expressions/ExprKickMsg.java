@@ -10,6 +10,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.lang.parser.ParserInstance;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
@@ -26,6 +27,15 @@ public class ExprKickMsg extends SimpleExpression<String> {
     static {
         Skript.registerExpression(ExprKickMsg.class, String.class, ExpressionType.SIMPLE,
                 "[event(-| )]kick[( |-)]message");
+    }
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+        if (ParserInstance.get().isCurrentEvent(AsyncPlayerPreLoginEvent.class)) {
+            return true;
+        }
+        Skript.error("You cannot use event-address outside of an async prelogin event!");
+        return false;
     }
 
     @Nullable
@@ -50,15 +60,6 @@ public class ExprKickMsg extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "event-kick-message";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        if (ScriptLoader.isCurrentEvent(AsyncPlayerPreLoginEvent.class)) {
-            return true;
-        }
-        Skript.error("You cannot use event-address outside of an async prelogin event!");
-        return false;
     }
 
     @Nullable

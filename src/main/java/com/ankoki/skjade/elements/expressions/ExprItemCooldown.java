@@ -32,6 +32,13 @@ public class ExprItemCooldown extends SimpleExpression<Timespan> {
     private Expression<Player> playerExpr;
     private Expression<ItemType> itemTypeExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        itemTypeExpr = (Expression<ItemType>) exprs[0];
+        playerExpr = (Expression<Player>) exprs[1];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Timespan[] get(Event e) {
@@ -61,13 +68,6 @@ public class ExprItemCooldown extends SimpleExpression<Timespan> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "the cooldown of " + itemTypeExpr.toString(e, debug) + " for " + playerExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        itemTypeExpr = (Expression<ItemType>) exprs[0];
-        playerExpr = (Expression<Player>) exprs[1];
-        return true;
     }
 
     @Nullable

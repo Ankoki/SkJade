@@ -29,6 +29,14 @@ public class EffDropTool extends Effect {
     private boolean dropStack;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        dropInv = parseResult.mark == 0;
+        dropStack = parseResult.mark == 1;
+        player = (Expression<Player>) exprs[0];
+        return true;
+    }
+
+    @Override
     protected void execute(Event event) {
         Player p = player.getSingle(event);
         if (p == null) return;
@@ -45,13 +53,5 @@ public class EffDropTool extends Effect {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "make " + player.toString(event, b)+ " drop " + (dropInv ? (dropStack ? " all items " : "") + " in their hand" : " their current inventory");
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        dropInv = parseResult.mark == 0;
-        dropStack = parseResult.mark == 1;
-        player = (Expression<Player>) exprs[0];
-        return true;
     }
 }

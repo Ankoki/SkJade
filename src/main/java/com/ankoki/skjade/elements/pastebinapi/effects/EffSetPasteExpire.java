@@ -40,19 +40,6 @@ public class EffSetPasteExpire extends Effect {
     private PasteExpiry expires;
 
     @Override
-    protected void execute(Event e) {
-        PasteBuilder[] builder = paste.getArray(e);
-        if (builder.length > 0 || expires != null) {
-            Arrays.stream(builder).forEach(b -> PasteManager.setExpires(b, expires));
-        }
-    }
-
-    @Override
-    public String toString(@Nullable Event e, boolean debug) {
-        return "set " + paste.toString(e, debug) + " to expire";
-    }
-
-    @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         switch (matchedPattern) {
             case 0:
@@ -60,8 +47,10 @@ public class EffSetPasteExpire extends Effect {
                 break;
             case 1:
                 expires = PasteExpiry.ONE_YEAR;
+                break;
             case 2:
                 expires = PasteExpiry.SIX_MONTHS;
+                break;
             case 3:
                 expires = PasteExpiry.ONE_MONTH;
                 break;
@@ -82,5 +71,18 @@ public class EffSetPasteExpire extends Effect {
         }
         paste = (Expression<PasteBuilder>) exprs[0];
         return true;
+    }
+
+    @Override
+    protected void execute(Event e) {
+        PasteBuilder[] builder = paste.getArray(e);
+        if (builder.length > 0 || expires != null) {
+            Arrays.stream(builder).forEach(b -> PasteManager.setExpires(b, expires));
+        }
+    }
+
+    @Override
+    public String toString(@Nullable Event e, boolean debug) {
+        return "set " + paste.toString(e, debug) + " to expire";
     }
 }

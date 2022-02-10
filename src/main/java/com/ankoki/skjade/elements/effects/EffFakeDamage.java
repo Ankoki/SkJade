@@ -36,6 +36,13 @@ public class EffFakeDamage extends Effect {
     }
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        damagedExpr = (Expression<Player>) exprs[0];
+        viewerExpr = (Expression<Player>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         Player[] viewers;
         if (viewerExpr != null) viewers = viewerExpr.getArray(e);
@@ -59,12 +66,5 @@ public class EffFakeDamage extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "make " + damagedExpr.toString(e, debug) + " take fake damage for " + (viewerExpr == null ? "all players" : viewerExpr.toString(e, debug));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        damagedExpr = (Expression<Player>) exprs[0];
-        viewerExpr = (Expression<Player>) exprs[1];
-        return true;
     }
 }

@@ -33,6 +33,19 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
     private Expression<Entity> entityExpr;
     private Expression<EntityType> entityTypeExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        boolean entityType = parseResult.mark == 1;
+        if (matchedPattern == 1) {
+            entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
+            locationExpr = entityType ? (Expression<Location>) exprs[1] : (Expression<Location>) exprs[0];
+            return true;
+        }
+        entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
+        entityExpr = entityType ? (Expression<Entity>) exprs[1] : (Expression<Entity>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Entity[] get(Event e) {
@@ -84,18 +97,5 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "closest entity to " + (locationExpr == null ? entityExpr.toString(e, debug) : locationExpr.toString(e, debug));
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        boolean entityType = parseResult.mark == 1;
-        if (matchedPattern == 1) {
-            entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
-            locationExpr = entityType ? (Expression<Location>) exprs[1] : (Expression<Location>) exprs[0];
-            return true;
-        }
-        entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
-        entityExpr = entityType ? (Expression<Entity>) exprs[1] : (Expression<Entity>) exprs[0];
-        return true;
     }
 }

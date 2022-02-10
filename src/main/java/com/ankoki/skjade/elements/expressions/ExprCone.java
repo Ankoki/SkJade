@@ -29,6 +29,15 @@ public class ExprCone extends SimpleExpression<Location> {
     private Expression<Location> centre;
     private Expression<Number> radius, height, density;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        centre = (Expression<Location>) exprs[0];
+        radius = (Expression<Number>) exprs[1];
+        height = (Expression<Number>) exprs[2];
+        density = (Expression<Number>) exprs[3];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Location[] get(Event e) {
@@ -58,14 +67,5 @@ public class ExprCone extends SimpleExpression<Location> {
     public String toString(@Nullable Event e, boolean debug) {
         return "cone around " + centre.toString(e, debug) + ", a radius of " + radius.toString(e, debug) + ", height of " +
                 height.toString(e, debug) + " and density of " + density.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        centre = (Expression<Location>) exprs[0];
-        radius = (Expression<Number>) exprs[1];
-        height = (Expression<Number>) exprs[2];
-        density = (Expression<Number>) exprs[3];
-        return true;
     }
 }

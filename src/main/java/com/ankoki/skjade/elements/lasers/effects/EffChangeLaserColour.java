@@ -26,11 +26,17 @@ public class EffChangeLaserColour extends Effect {
                 "(force|make) %lasers% [to] change colo[u]r[[']s]");
     }
 
-    private Expression<Laser> laser;
+    private Expression<Laser> laserExpr;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        laserExpr = (Expression<Laser>) exprs[0];
+        return true;
+    }
 
     @Override
     protected void execute(Event e) {
-        Laser[] lasers = laser.getArray(e);
+        Laser[] lasers = laserExpr.getArray(e);
         for (Laser laser : lasers) {
             if (laser.isStarted()) {
                 try {
@@ -44,12 +50,6 @@ public class EffChangeLaserColour extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "force " + laser.toString(e, debug) + " to change colours";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        laser = (Expression<Laser>) exprs[0];
-        return true;
+        return "force " + laserExpr.toString(e, debug) + " to change colours";
     }
 }

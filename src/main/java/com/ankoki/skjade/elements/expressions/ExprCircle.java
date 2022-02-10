@@ -31,6 +31,15 @@ public class ExprCircle extends SimpleExpression<Location> {
     private Expression<Number> total;
     private boolean upright;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
+        center = (Expression<Location>) exprs[0];
+        radius = (Expression<Number>) exprs[1];
+        if (exprs.length >= 3) total = (Expression<Number>) exprs[2];
+        upright = parseResult.mark == 1;
+        return true;
+    }
+
     @Nullable
     @Override
     protected Location[] get(Event event) {
@@ -65,14 +74,5 @@ public class ExprCircle extends SimpleExpression<Location> {
     public String toString(@Nullable Event event, boolean b) {
         return "circle with center " + center.toString(event, b) + " with radius " + radius.toString(event, b) +
                 (total == null ? "" : " and " + total.toString(event, b) + "total points");
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
-        center = (Expression<Location>) exprs[0];
-        radius = (Expression<Number>) exprs[1];
-        if (exprs.length >= 3) total = (Expression<Number>) exprs[2];
-        upright = parseResult.mark == 1;
-        return true;
     }
 }

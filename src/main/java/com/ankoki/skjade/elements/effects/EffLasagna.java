@@ -23,6 +23,11 @@ public class EffLasagna extends Effect {
     static {
         Skript.registerEffect(EffLasagna.class, "(lasagna|an Italian dish made of stacked layers of thin flat pasta alternating with fillings and other vegetables, cheese and seasonings and spices)");
     }
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        return true;
+    }
     
     @Override
     protected void execute(Event e) {
@@ -36,10 +41,5 @@ public class EffLasagna extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "lasagna";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        return true;
     }
 }

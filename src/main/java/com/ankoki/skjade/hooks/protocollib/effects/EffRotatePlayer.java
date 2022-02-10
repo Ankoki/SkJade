@@ -37,6 +37,14 @@ public class EffRotatePlayer extends Effect {
     private Expression<Number> vertical;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        players = (Expression<Player>) exprs[0];
+        horizontal = (Expression<Number>) exprs[1];
+        if (exprs.length > 1) vertical = (Expression<Number>) exprs[2];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         if (players == null) return;
         Number num1 = horizontal.getSingle(e);
@@ -68,15 +76,5 @@ public class EffRotatePlayer extends Effect {
     public String toString(@Nullable Event event, boolean b) {
         return "rotate " + players.toString(event, b) + " by " + horizontal.toString(event, b) +
                 (vertical == null ? " and " + vertical.toString(event, b) + " vertically" : "");
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        players = (Expression<Player>) exprs[0];
-        horizontal = (Expression<Number>) exprs[1];
-        if (exprs.length > 1) {
-            vertical = (Expression<Number>) exprs[2];
-        }
-        return true;
     }
 }

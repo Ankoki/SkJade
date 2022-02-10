@@ -31,6 +31,13 @@ public class EffSetPasteTitle extends Effect {
     private Expression<String> title;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
+        title = (Expression<String>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         PasteBuilder[] builders = pasteBuilder.getArray(e);
         String t = title.getSingle(e);
@@ -41,12 +48,5 @@ public class EffSetPasteTitle extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "set the title of " + pasteBuilder.toString(e, debug) + " to " + title.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
-        title = (Expression<String>) exprs[1];
-        return true;
     }
 }

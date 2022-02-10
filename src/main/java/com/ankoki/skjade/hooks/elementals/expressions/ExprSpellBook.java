@@ -28,6 +28,12 @@ public class ExprSpellBook extends SimpleExpression<ItemType> {
 
     private Expression<Spell> spellExprs;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        spellExprs = (Expression<Spell>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected ItemType[] get(Event event) {
@@ -50,11 +56,5 @@ public class ExprSpellBook extends SimpleExpression<ItemType> {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "elementals spell book with" + spellExprs.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        spellExprs = (Expression<Spell>) exprs[0];
-        return true;
     }
 }

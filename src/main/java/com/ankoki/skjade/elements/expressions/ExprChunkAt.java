@@ -31,6 +31,14 @@ public class ExprChunkAt extends SimpleExpression<Chunk> {
     private Expression<World> world;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        chunkX = (Expression<Number>) exprs[0];
+        chunkZ = (Expression<Number>) exprs[1];
+        world = (Expression<World>) exprs[2];
+        return true;
+    }
+
+    @Override
     protected Chunk[] get(Event event) {
         if (chunkX == null || chunkZ == null || world == null) return new Chunk[0];
         Number num1 = chunkX.getSingle(event);
@@ -57,13 +65,5 @@ public class ExprChunkAt extends SimpleExpression<Chunk> {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "chunk at " + chunkX.toString(event, b) + ", " + chunkZ.toString(event, b) + " in the world " + world.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        chunkX = (Expression<Number>) exprs[0];
-        chunkZ = (Expression<Number>) exprs[1];
-        world = (Expression<World>) exprs[2];
-        return true;
     }
 }

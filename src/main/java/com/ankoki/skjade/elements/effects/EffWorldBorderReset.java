@@ -27,6 +27,12 @@ public class EffWorldBorderReset extends Effect {
     private Expression<World> worldExpr;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        worldExpr = (Expression<World>) exprs[0];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         if (worldExpr == null) return;
         World[] worlds = worldExpr.getArray(e);
@@ -38,11 +44,5 @@ public class EffWorldBorderReset extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "reset the world border of " + worldExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        worldExpr = (Expression<World>) exprs[0];
-        return true;
     }
 }

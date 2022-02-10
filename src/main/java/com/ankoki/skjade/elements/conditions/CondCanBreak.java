@@ -27,6 +27,14 @@ public class CondCanBreak extends Condition {
     private boolean negate;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        item1 = (Expression<ItemType>) exprs[0];
+        block = (Expression<Block>) exprs[1];
+        negate = parseResult.mark == 1;
+        return true;
+    }
+
+    @Override
     public boolean check(Event event) {
         ItemType i1 = item1.getSingle(event);
         Block b = block.getSingle(event);
@@ -37,13 +45,5 @@ public class CondCanBreak extends Condition {
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return item1.toString(event, b) + " can break " + block.toString(event, b);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        item1 = (Expression<ItemType>) exprs[0];
-        block = (Expression<Block>) exprs[1];
-        negate = parseResult.mark == 1;
-        return true;
     }
 }

@@ -28,6 +28,12 @@ public class ExprFormatNumber extends SimpleExpression<String> {
 
     private Expression<Number> number;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        number = (Expression<Number>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected String[] get(Event e) {
@@ -51,11 +57,5 @@ public class ExprFormatNumber extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "the formatted number " + number.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        number = (Expression<Number>) exprs[0];
-        return true;
     }
 }

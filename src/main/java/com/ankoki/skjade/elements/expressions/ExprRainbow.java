@@ -26,6 +26,14 @@ public class ExprRainbow extends SimpleExpression<String> {
         }
     }
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+        pastel = parseResult.mark == 1;
+        monochrome = parseResult.mark == 2;
+        message = (Expression<String>) exprs[0];
+        return true;
+    }
+
     private boolean pastel, monochrome;
     private Expression<String> message;
 
@@ -51,13 +59,5 @@ public class ExprRainbow extends SimpleExpression<String> {
     public String toString(@Nullable Event e, boolean debug) {
         return monochrome ? "monochrome" + message.toString(e, debug) :
                 (pastel ? "" : "pastel ") + "rainbow " + message.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        pastel = parseResult.mark == 1;
-        monochrome = parseResult.mark == 2;
-        message = (Expression<String>) exprs[0];
-        return true;
     }
 }

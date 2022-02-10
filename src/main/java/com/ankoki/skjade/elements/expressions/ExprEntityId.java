@@ -28,6 +28,12 @@ public class ExprEntityId extends SimpleExpression<Number> {
 
     private Expression<Entity> entity;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        entity = (Expression<Entity>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Number[] get(Event e) {
@@ -50,11 +56,5 @@ public class ExprEntityId extends SimpleExpression<Number> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return entity.toString(e, debug) + "'s id";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        entity = (Expression<Entity>) exprs[0];
-        return true;
     }
 }

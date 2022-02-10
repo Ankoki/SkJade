@@ -32,6 +32,12 @@ public class ExprWorldBorderCenter extends SimpleExpression<Location> {
 
     private Expression<World> world;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+        world = (Expression<World>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Location[] get(Event e) {
@@ -54,12 +60,6 @@ public class ExprWorldBorderCenter extends SimpleExpression<Location> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "the center of " + world.toString(e, debug) + "'s world border";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        world = (Expression<World>) exprs[0];
-        return true;
     }
 
     @Nullable

@@ -39,6 +39,13 @@ public class EffForceRain extends Effect {
     }
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        playerExpr = (Expression<Player>) exprs[0];
+        rain = parseResult.mark == 1;
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         if (playerExpr == null || Utils.getServerMajorVersion() < 16) return;
         Player[] players = playerExpr.getArray(e);
@@ -67,12 +74,5 @@ public class EffForceRain extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "make it " + (rain ? "rain" : "stop raining") + " for " + playerExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        playerExpr = (Expression<Player>) exprs[0];
-        rain = parseResult.mark == 1;
-        return true;
     }
 }

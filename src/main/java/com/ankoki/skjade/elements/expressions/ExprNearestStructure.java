@@ -42,6 +42,15 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
     private Expression<Number> radiusExpr;
     private Expression<Location> centerExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        //unexplored = parseResult.mark == 1;
+        structureTypeExpr = (Expression<StructureType>) exprs[0];
+        radiusExpr = (Expression<Number>) exprs[1];
+        centerExpr = (Expression<Location>) exprs[2];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Location[] get(Event e) {
@@ -68,14 +77,5 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
     public String toString(@Nullable Event e, boolean debug) {
         return "closest structure of " + structureTypeExpr.toString(e, debug) + " in radius " +
                 radiusExpr.toString(e, debug) + " from " + centerExpr.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        //unexplored = parseResult.mark == 1;
-        structureTypeExpr = (Expression<StructureType>) exprs[0];
-        radiusExpr = (Expression<Number>) exprs[1];
-        centerExpr = (Expression<Location>) exprs[2];
-        return true;
     }
 }

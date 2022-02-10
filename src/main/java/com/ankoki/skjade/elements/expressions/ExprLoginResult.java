@@ -10,6 +10,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.lang.parser.ParserInstance;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
@@ -26,6 +27,15 @@ public class ExprLoginResult extends SimpleExpression<String> {
     static {
         Skript.registerExpression(ExprLoginResult.class, String.class, ExpressionType.SIMPLE,
                 "event( |-)login[( |-)]result");
+    }
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        if (!ParserInstance.get().isCurrentEvent(AsyncPlayerPreLoginEvent.class)) {
+            Skript.error("You cannot use event-login-result outside an async prelogin event!");
+            return false;
+        }
+        return true;
     }
 
     @Nullable
@@ -48,15 +58,6 @@ public class ExprLoginResult extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "event-login-result";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        if (!ScriptLoader.isCurrentEvent(AsyncPlayerPreLoginEvent.class)) {
-            Skript.error("You cannot use event-login-result outside an async prelogin event!");
-            return false;
-        }
-        return true;
     }
 
     @Nullable

@@ -30,16 +30,23 @@ public class ExprLaserPoints extends SimpleExpression<Location> {
                 "[the] (1¦start|end)[ing] [loc[ation]] of %laser%");
     }
 
-    private Expression<Laser> laser;
+    private Expression<Laser> laserExpr;
     private boolean start;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        laserExpr = (Expression<Laser>) exprs[0];
+        start = parseResult.mark == 1;
+        return true;
+    }
 
     @Nullable
     @Override
     protected Location[] get(Event e) {
+        if (laserExpr == null) return new Location[0];
+        Laser laser = laserExpr.getSingle(e);
         if (laser == null) return new Location[0];
-        Laser l = laser.getSingle(e);
-        if (l == null) return new Location[0];
-        return new Location[]{start ? l.getStart() : l.getEnd()};
+        return new Location[]{start ? laser.getStart() : laser.getEnd()};
     }
 
     @Override
@@ -54,14 +61,7 @@ public class ExprLaserPoints extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "the starting location of " + laser.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        laser = (Expression<Laser>) exprs[0];
-        start = parseResult.mark == 1;
-        return true;
+        return "the starting location of " + laserExpr.toString(e, debug);
     }
 
     @Nullable
@@ -77,14 +77,14 @@ public class ExprLaserPoints extends SimpleExpression<Location> {
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         if (delta.length < 1 || !(delta[0] instanceof Location)) return;
         Location location = (Location) delta[0];
+        if (laserExpr == null) return;
+        Laser laser = laserExpr.getSingle(e);
         if (laser == null) return;
-        Laser l = laser.getSingle(e);
-        if (l == null) return;
         try {
             if (start) {
-                l.moveStart(location);
+                laser.moveStart(location);
             } else {
-                l.moveEnd(location);
+                laser.moveEnd(location);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

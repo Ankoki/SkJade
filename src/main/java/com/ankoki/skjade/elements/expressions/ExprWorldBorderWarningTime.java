@@ -32,6 +32,12 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
 
     private Expression<World> worldExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        worldExpr = (Expression<World>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Timespan[] get(Event e) {
@@ -54,12 +60,6 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return worldExpr.toString(e, debug) + "'s world border warning time";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        worldExpr = (Expression<World>) exprs[0];
-        return true;
     }
 
     @Nullable

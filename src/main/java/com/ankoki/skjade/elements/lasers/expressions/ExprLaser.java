@@ -28,13 +28,19 @@ public class ExprLaser extends SimpleExpression<Laser> {
                 "[the] (la(s|z)er [beam]|guardian beam) with [the] id %string%");
     }
 
-    private Expression<String> string;
+    private Expression<String> stringExpr;
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        stringExpr = (Expression<String>) exprs[0];
+        return true;
+    }
 
     @Nullable
     @Override
     protected Laser[] get(Event e) {
-        if (string == null) return new Laser[0];
-        String id = string.getSingle(e);
+        if (stringExpr == null) return new Laser[0];
+        String id = stringExpr.getSingle(e);
         if (id == null || id.isEmpty()) return new Laser[0];
         return new Laser[]{LaserManager.getLaser(id)};
     }
@@ -51,12 +57,6 @@ public class ExprLaser extends SimpleExpression<Laser> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "the laser with the id " + string.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        string = (Expression<String>) exprs[0];
-        return true;
+        return "the laser with the id " + stringExpr.toString(e, debug);
     }
 }

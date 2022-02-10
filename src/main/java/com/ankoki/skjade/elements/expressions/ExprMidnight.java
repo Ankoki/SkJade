@@ -24,6 +24,12 @@ public class ExprMidnight extends SimpleExpression<Date> {
         Skript.registerExpression(ExprMidnight.class, Date.class, ExpressionType.SIMPLE,
                 "midnight");
     }
+
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+        return true;
+    }
+
     @Nullable
     @Override
     protected Date[] get(Event e) {
@@ -44,10 +50,5 @@ public class ExprMidnight extends SimpleExpression<Date> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "midnight";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        return true;
     }
 }

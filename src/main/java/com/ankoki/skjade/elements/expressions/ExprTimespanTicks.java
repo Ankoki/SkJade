@@ -29,6 +29,12 @@ public class ExprTimespanTicks extends SimpleExpression<Number> {
 
     private Expression<Timespan> timespanExpr;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        timespanExpr = (Expression<Timespan>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected Number[] get(Event e) {
@@ -50,11 +56,5 @@ public class ExprTimespanTicks extends SimpleExpression<Number> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return timespanExpr.toString(e, debug) + " in ticks";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        timespanExpr = (Expression<Timespan>) exprs[0];
-        return true;
     }
 }

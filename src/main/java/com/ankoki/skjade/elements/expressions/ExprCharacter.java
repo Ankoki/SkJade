@@ -26,6 +26,12 @@ public class ExprCharacter extends SimpleExpression<Character> {
 
     private String string;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        string = parseResult.regexes.get(0).group(1);
+        return true;
+    }
+
     @Nullable
     @Override
     protected Character[] get(Event e) {
@@ -46,11 +52,5 @@ public class ExprCharacter extends SimpleExpression<Character> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "'" + string + "'";
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        string = parseResult.regexes.get(0).group(1);
-        return true;
     }
 }

@@ -43,6 +43,32 @@ public class EffShowMiningStage extends Effect {
     }
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        if (matchedPattern == 0) {
+            stageExpr = (Expression<Number>) exprs[0];
+            location = (Expression<Location>) exprs[1];
+            if (exprs.length == 3 && parseResult.mark == 1) {
+                entityId = (Expression<Number>) exprs[2];
+            } else if (exprs.length == 3) {
+                playerExpr = (Expression<Player>) exprs[2];
+            } else if (exprs.length == 4) {
+                playerExpr = (Expression<Player>) exprs[2];
+                entityId = (Expression<Number>) exprs[3];
+            }
+        } else {
+            remove = true;
+            location = (Expression<Location>) exprs[0];
+            if (exprs.length > 1) {
+                playerExpr = (Expression<Player>) exprs[1];
+            } else {
+                if (parseResult.mark == 1) entityId = (Expression<Number>) exprs[1];
+            }
+            if (exprs.length == 3) entityId = (Expression<Number>) exprs[2];
+        }
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         if (location == null) return;
         int i = 100;
@@ -82,31 +108,5 @@ public class EffShowMiningStage extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return remove ? "remove the mining stage at " + location.toString(e, debug) + (playerExpr != null ? " for " + playerExpr.toString(e, debug) : "") :
                 "show mining stage " + stageExpr.toString(e, debug) + " at " + location.toString(e, debug) + (playerExpr != null ? " to " + playerExpr.toString(e, debug) : "");
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        if (matchedPattern == 0) {
-            stageExpr = (Expression<Number>) exprs[0];
-            location = (Expression<Location>) exprs[1];
-            if (exprs.length == 3 && parseResult.mark == 1) {
-                entityId = (Expression<Number>) exprs[2];
-            } else if (exprs.length == 3) {
-                playerExpr = (Expression<Player>) exprs[2];
-            } else if (exprs.length == 4) {
-                playerExpr = (Expression<Player>) exprs[2];
-                entityId = (Expression<Number>) exprs[3];
-            }
-        } else {
-            remove = true;
-            location = (Expression<Location>) exprs[0];
-            if (exprs.length > 1) {
-                playerExpr = (Expression<Player>) exprs[1];
-            } else {
-                if (parseResult.mark == 1) entityId = (Expression<Number>) exprs[1];
-            }
-            if (exprs.length == 3) entityId = (Expression<Number>) exprs[2];
-        }
-        return true;
     }
 }

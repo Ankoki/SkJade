@@ -31,6 +31,13 @@ public class EffSetPasteText extends Effect {
     private Expression<String> text;
 
     @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
+        text = (Expression<String>) exprs[1];
+        return true;
+    }
+
+    @Override
     protected void execute(Event e) {
         PasteBuilder[] builders = pasteBuilder.getArray(e);
         String[] strs = text.getArray(e);
@@ -45,12 +52,5 @@ public class EffSetPasteText extends Effect {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "set the raw text of " + pasteBuilder.toString(e, debug) + " to " + text.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        pasteBuilder = (Expression<PasteBuilder>) exprs[0];
-        text = (Expression<String>) exprs[1];
-        return true;
     }
 }

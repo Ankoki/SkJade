@@ -28,6 +28,12 @@ public class ExprPaste extends SimpleExpression<PasteBuilder> {
 
     private Expression<String> pasteId;
 
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        pasteId = (Expression<String>) exprs[0];
+        return true;
+    }
+
     @Nullable
     @Override
     protected PasteBuilder[] get(Event e) {
@@ -49,11 +55,5 @@ public class ExprPaste extends SimpleExpression<PasteBuilder> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "the paste with id " + pasteId.toString(e, debug);
-    }
-
-    @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        pasteId = (Expression<String>) exprs[0];
-        return true;
     }
 }
