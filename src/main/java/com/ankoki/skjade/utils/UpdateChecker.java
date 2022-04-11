@@ -15,7 +15,7 @@ public class UpdateChecker {
     public UpdateChecker(String user, String repo) {
         this.user = user;
         this.repo = repo;
-        this.getLatestTag(true);
+        latestTag = this.getLatestTag(true);
     }
 
     public String getLatestTag(boolean forceCheck) {

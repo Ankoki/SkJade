@@ -40,7 +40,7 @@ public class EffRotatePlayer extends Effect {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         players = (Expression<Player>) exprs[0];
         horizontal = (Expression<Number>) exprs[1];
-        if (exprs.length > 1) vertical = (Expression<Number>) exprs[2];
+        vertical = (Expression<Number>) exprs[2];
         return true;
     }
 
@@ -67,8 +67,7 @@ public class EffRotatePlayer extends Effect {
             PACKET.getFloat().write(1, loc.getPitch() + finalV);
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(player, PACKET);
-            } catch (InvocationTargetException ignored) {
-            }
+            } catch (InvocationTargetException ignored) {}
         });
     }
 

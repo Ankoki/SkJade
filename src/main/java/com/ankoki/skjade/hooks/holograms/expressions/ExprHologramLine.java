@@ -1,11 +1,9 @@
 package com.ankoki.skjade.hooks.holograms.expressions;
 
-import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
-import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.parser.ParserInstance;
 import ch.njol.skript.lang.util.SimpleExpression;
@@ -33,8 +31,8 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
     }
 
     private boolean single, inEvent;
-    private Expression<Number> line;
-    private Expression<Hologram> hologram;
+    private Expression<Number> exprNumber;
+    private Expression<Hologram> exprHologram;
 
     @Override
     public boolean init(Expression<?>[] exprs, int pattern, Kleenean kleenean, ParseResult parseResult) {
@@ -49,10 +47,10 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
         int i = 0;
         if (pattern == 1) {
             single = true;
-            line = (Expression<Number>) exprs[i];
+            exprNumber = (Expression<Number>) exprs[i];
             i++;
         }
-        hologram = (Expression<Hologram>) exprs[i];
+        exprHologram = (Expression<Hologram>) exprs[i];
         return true;
     }
 
@@ -68,9 +66,11 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
             }
             return new HologramLine[0];
         }
-        Hologram holo = hologram.getSingle(event);
-        if (line != null) {
-            int i = line.getSingle(event).intValue();
+        Hologram holo = exprHologram.getSingle(event);
+        if (exprNumber != null) {
+            Number number = exprNumber.getSingle(event);
+            if (number == null || holo == null) return new HologramLine[0];
+            int i = number.intValue();
             i--;
             if (i < 0) i = 0;
             HologramLine line = holo.getLine(i);
@@ -92,7 +92,7 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return inEvent ? "event-line" : (line == null ? "all the lines of " : "line " + line.toString(event, b) + " ") + " of " +
-                hologram.toString(event, b);
+        return inEvent ? "event-line" : (exprNumber == null ? "all the lines of " : "line " + exprNumber.toString(event, b) + " ") + " of " +
+                exprHologram.toString(event, b);
     }
 }

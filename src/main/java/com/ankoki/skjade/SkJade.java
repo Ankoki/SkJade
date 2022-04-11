@@ -123,9 +123,7 @@ public class SkJade extends JavaPlugin {
                     "the latest sub-version of each version above 1.13.");
             Console.warning("There is also a chance you are using a version I haven't implemented support for yet.");
             Console.info("SkJade will remain enabled, however anything using NMS will not be enabled!");
-        } else {
-            nmsEnabled = true;
-        }
+        } else nmsEnabled = true;
     }
 
     private boolean isSkriptEnabled() {

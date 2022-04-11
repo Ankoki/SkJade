@@ -140,6 +140,7 @@ public class HologramManager {
     }
 
     public static HologramLine[] getLines(Hologram hologram) {
+        if (hologram == null) return new HologramLine[0];
         return ALL_LINES.get(hologram).toArray(new HologramLine[0]);
     }
 

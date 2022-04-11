@@ -968,20 +968,9 @@ public abstract class Laser {
         V1_13(13, "ac", "bF", "bG", "b", "c", 70, 28),
         V1_14(14, "W", "b", "bD", "c", "d", 73, 30),
         V1_15(15, "T", "b", "bA", "c", "d", 74, 31),
-        V1_16(16, "T", "b", "d", "c", "d", 74, 31, "u", null, null){
-            @Override
-            public int getSquidID() {
-                return Packets.versionMinor < 2 ? super.getSquidID() : 81;
-            }
-
-            @Override
-            public String getWatcherFlags() {
-                return Packets.versionMinor < 2 ? super.getWatcherFlags() : "S";
-            }
-        },
+        V1_16(16, "T", "b", "d", "c", "d", 74, 31),
         V1_17(17, "Z", "b", "e", "c", "d", 86, 35, "u", "setCollisionRule", "getPlayerNameSet"),
-        V1_18(18, "aa", "b", "e", "c", "d", 86, 35, "u", "a", "g"),
-        ;
+        V1_18(18, "aa", "b", "e", "c", "d", 86, 35, "u", "a", "g");
 
         private final int major;
         private final String watcherFlags;

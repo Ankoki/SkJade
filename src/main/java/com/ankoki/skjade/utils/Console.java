@@ -1,13 +1,15 @@
 package com.ankoki.skjade.utils;
 
+import com.ankoki.skjade.SkJade;
+
 public class Console {
 
     public static void info(String info) {
-        System.out.println("§fSk§aJade §f| §7" + info);
+        SkJade.getInstance().getLogger().info("§fSk§aJade §f| §7" + info);
     }
 
     public static void warning(String warning) {
-        System.out.println("§fSk§aJade" + ConsoleColors.WHITE + " | " + ConsoleColors.YELLOW + warning);
+        SkJade.getInstance().getLogger().warning("§fSk§aJade" + ConsoleColors.WHITE + " | " + ConsoleColors.YELLOW + warning);
     }
 
     @SuppressWarnings("unused")
