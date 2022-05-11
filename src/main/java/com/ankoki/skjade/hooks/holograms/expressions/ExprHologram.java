@@ -50,9 +50,8 @@ public class ExprHologram extends SimpleExpression<Hologram> {
     @Nullable
     @Override
     protected Hologram[] get(Event event) {
-        if (inEvent) {
-            return new Hologram[]{getFromEvent(event)};
-        }
+        if (inEvent) return new Hologram[]{getFromEvent(event)};
+        else if (key == null) return new Hologram[0];
         return new Hologram[]{HologramManager.getHologram(key.getSingle(event))};
     }
 
