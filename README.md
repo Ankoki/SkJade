@@ -1,5 +1,10 @@
 # SkJade
-A Skript Addon which provides custom syntax to Skript c:
+A Skript Addon which provides useful hooks and utilities to Skript.
+
+SkJade is getting a revamp (in my disky arc ig), hence this branch being created. Here are my proposed features which im going to implement.  
+This might take a while so any bug fixes wont be addressed and instead ported to this branch.  
+2.0 will require Skript-2.6, as I will be using the SectionAPI. 
+![img.png](2.0-brief.png)
 
 # Documentation
 

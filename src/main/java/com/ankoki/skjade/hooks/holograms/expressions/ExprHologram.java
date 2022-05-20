@@ -52,6 +52,9 @@ public class ExprHologram extends SimpleExpression<Hologram> {
     protected Hologram[] get(Event event) {
         if (inEvent) return new Hologram[]{getFromEvent(event)};
         else if (key == null) return new Hologram[0];
+        String k = key.getSingle(event);
+        Hologram hologram = HologramManager.getHologram(k);
+        if (hologram == null) return new Hologram[0];
         return new Hologram[]{HologramManager.getHologram(key.getSingle(event))};
     }
 
