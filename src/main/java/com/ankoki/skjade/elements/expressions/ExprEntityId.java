@@ -26,21 +26,20 @@ public class ExprEntityId extends SimpleExpression<Number> {
                 "the id of %entity%");
     }
 
-    private Expression<Entity> entity;
+    private Expression<Entity> entityExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        entity = (Expression<Entity>) exprs[0];
+        entityExpr = (Expression<Entity>) exprs[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected Number[] get(Event e) {
+    protected Number[] get(Event event) {
+        Entity entity = entityExpr.getSingle(event);
         if (entity == null) return new Number[0];
-        Entity ent = entity.getSingle(e);
-        if (ent == null) return new Number[0];
-        return new Number[]{ent.getEntityId()};
+        return new Number[]{entity.getEntityId()};
     }
 
     @Override
@@ -55,6 +54,6 @@ public class ExprEntityId extends SimpleExpression<Number> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return entity.toString(e, debug) + "'s id";
+        return entityExpr.toString(e, debug) + "'s id";
     }
 }

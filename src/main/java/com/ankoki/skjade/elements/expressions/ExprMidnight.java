@@ -32,7 +32,7 @@ public class ExprMidnight extends SimpleExpression<Date> {
 
     @Nullable
     @Override
-    protected Date[] get(Event e) {
+    protected Date[] get(Event event) {
         long mid = ((long) (System.currentTimeMillis() / 8.64e7) + 1) * 86400000;
         return new Date[]{new Date(mid)};
     }

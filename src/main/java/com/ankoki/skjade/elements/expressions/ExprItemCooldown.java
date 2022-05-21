@@ -41,10 +41,9 @@ public class ExprItemCooldown extends SimpleExpression<Timespan> {
 
     @Nullable
     @Override
-    protected Timespan[] get(Event e) {
-        if (playerExpr == null || itemTypeExpr == null) return new Timespan[0];
-        Player player = playerExpr.getSingle(e);
-        ItemType[] items = itemTypeExpr.getArray(e);
+    protected Timespan[] get(Event event) {
+        Player player = playerExpr.getSingle(event);
+        ItemType[] items = itemTypeExpr.getArray(event);
         if (player == null || items.length == 0) return new Timespan[0];
         Timespan[] timespans = new Timespan[items.length];
         int i = 0;

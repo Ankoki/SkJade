@@ -38,9 +38,8 @@ public class ExprWorldHardcore extends SimpleExpression<Boolean> {
 
     @Nullable
     @Override
-    protected Boolean[] get(Event e) {
-        if (worldExpr == null) return new Boolean[0];
-        World world = worldExpr.getSingle(e);
+    protected Boolean[] get(Event event) {
+        World world = worldExpr.getSingle(event);
         if (world == null) return new Boolean[0];
         return new Boolean[]{world.isHardcore()};
     }

@@ -46,7 +46,7 @@ public class EffSkyColour extends Effect {
 
     @Override
     protected void execute(Event e) {
-        if (numbers == null || playerExpr == null || Utils.getServerMajorVersion() < 16) return;
+        if (numbers == null || playerExpr == null || Utils.getMinecraftMinor() < 16) return;
         Number num = numbers.getSingle(e);
         if (num == null) return;
         float i = num.intValue();

@@ -37,8 +37,8 @@ public class ExprTimespanTicks extends SimpleExpression<Number> {
 
     @Nullable
     @Override
-    protected Number[] get(Event e) {
-        Timespan timespan = timespanExpr.getSingle(e);
+    protected Number[] get(Event event) {
+        Timespan timespan = timespanExpr.getSingle(event);
         if (timespan == null) return new Number[0];
         return new Number[]{timespan.getTicks_i()};
     }

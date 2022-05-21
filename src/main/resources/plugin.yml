@@ -2,7 +2,7 @@ name: SkJade
 version: '${project.version}'
 description: "§7Enhance §eSkript §7with this add-on and use custom syntax! §c❤"
 author: Ankoki
-website: 'https://www.github.com/Ankoki-Dev/SkJade'
+website: 'https://www.github.com/Ankoki/SkJade'
 api-version: 1.16
 main: com.ankoki.skjade.SkJade
 commands:
@@ -12,6 +12,3 @@ depend:
   - Skript
 softdepend:
   - HolographicDisplays
-  - Citizens
-  - Elementals
-  - ProtocolLib

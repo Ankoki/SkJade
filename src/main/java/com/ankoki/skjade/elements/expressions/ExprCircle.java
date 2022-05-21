@@ -26,16 +26,16 @@ public class ExprCircle extends SimpleExpression<Location> {
                 "[a[n]] (1¦upright|) circle (at|from) %location% with [a] radius [of] %number% [and %-number% total (points|blocks|locations)]");
     }
 
-    private Expression<Location> center;
-    private Expression<Number> radius;
-    private Expression<Number> total;
+    private Expression<Location> centreExpr;
+    private Expression<Number> radiusExpr;
+    private Expression<Number> pointsExpr;
     private boolean upright;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
-        center = (Expression<Location>) exprs[0];
-        radius = (Expression<Number>) exprs[1];
-        if (exprs.length >= 3) total = (Expression<Number>) exprs[2];
+        centreExpr = (Expression<Location>) exprs[0];
+        radiusExpr = (Expression<Number>) exprs[1];
+        pointsExpr = (Expression<Number>) exprs[2];
         upright = parseResult.mark == 1;
         return true;
     }
@@ -43,21 +43,19 @@ public class ExprCircle extends SimpleExpression<Location> {
     @Nullable
     @Override
     protected Location[] get(Event event) {
-        Location c = center.getSingle(event);
-        Number num1 = radius.getSingle(event);
-        if (num1 == null) return new Location[0];
-        double r = num1.doubleValue();
-        double t;
-        if (total == null) {
-            t = r * 10;
-        } else {
-            Number num2 = total.getSingle(event);
-            if (num2 == null) return new Location[0];
-            t = num2.doubleValue();
+        Location centre = centreExpr.getSingle(event);
+        Number radiusNumber = radiusExpr.getSingle(event);
+        if (centre == null || radiusNumber == null) return new Location[0];
+        double radius = radiusNumber.doubleValue();
+        double points;
+        if (pointsExpr == null) points = radius * 10;
+        else {
+            Number pointsNumber = pointsExpr.getSingle(event);
+            if (pointsNumber == null) return new Location[0];
+            points = pointsNumber.doubleValue();
         }
-        if (c == null) return new Location[0];
-        return upright ? Shapes.getUprightCircle(c, r, t).toArray(new Location[0]) :
-                Shapes.getCircle(c, r, t).toArray(new Location[0]);
+        return upright ? Shapes.getUprightCircle(centre, radius, points).toArray(new Location[0]) :
+                Shapes.getCircle(centre, radius, points).toArray(new Location[0]);
     }
 
     @Override
@@ -72,7 +70,7 @@ public class ExprCircle extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "circle with center " + center.toString(event, b) + " with radius " + radius.toString(event, b) +
-                (total == null ? "" : " and " + total.toString(event, b) + "total points");
+        return "circle with center " + centreExpr.toString(event, b) + " with radius " + radiusExpr.toString(event, b) +
+                (pointsExpr == null ? "" : " and " + pointsExpr.toString(event, b) + "total points");
     }
 }

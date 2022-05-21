@@ -7,6 +7,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.lang.ExpressionType;
+import com.ankoki.roku.bukkit.misc.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -31,24 +32,11 @@ public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> 
 
     @Override
     public ItemStack convert(ItemStack itemStack) {
-        return toShiny(itemStack);
+        return ItemUtils.makeGlow(itemStack);
     }
 
     @Override
     public Class getReturnType() {
         return ItemStack.class;
-    }
-
-    private ItemStack toShiny(ItemStack itemStack) {
-        if (itemStack.getType() == Material.BOW) {
-            itemStack.addUnsafeEnchantment(Enchantment.RIPTIDE, 1);
-        } else {
-            itemStack.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
-        }
-        ItemMeta meta = itemStack.getItemMeta();
-        if (meta == null) return itemStack;
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemStack.setItemMeta(meta);
-        return itemStack;
     }
 }

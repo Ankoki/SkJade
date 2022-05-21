@@ -20,9 +20,9 @@ public class ReflectionUtils {
             getHandle = Class.forName(Bukkit.getServer().getClass().getPackage().getName() + ".entity.CraftPlayer")
                     .getDeclaredMethod("getHandle");
             playerConnection = getNMSClass("server.level", "EntityPlayer")
-                    .getDeclaredField(Utils.getServerMajorVersion() < 17 ? "playerConnection" : "b");
+                    .getDeclaredField(Utils.getMinecraftMinor() < 17 ? "playerConnection" : "b");
             sendPacket = getNMSClass("server.network", "PlayerConnection")
-                    .getMethod(Utils.getServerMajorVersion() < 18 ? "sendPacket" : "a", getNMSClass("network.protocol", "Packet"));
+                    .getMethod(Utils.getMinecraftMinor() < 18 ? "sendPacket" : "a", getNMSClass("network.protocol", "Packet"));
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();
         }
@@ -71,7 +71,7 @@ public class ReflectionUtils {
 
     public static Class<?> getNMSClass(String package17, String className) {
         try {
-            return Class.forName((Utils.getServerMajorVersion() < 17 ?
+            return Class.forName((Utils.getMinecraftMinor() < 17 ?
                     NEW_PACKAGE : "net.minecraft." + package17) + "." + className);
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();

@@ -25,19 +25,18 @@ public class ExprFlippedBool extends SimpleExpression<Boolean> {
             "(flipped |toggled |inverted |!)%boolean%");
     }
 
-    private Expression<Boolean> bool;
+    private Expression<Boolean> booleanExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        bool = (Expression<Boolean>) exprs[0];
+        booleanExpr = (Expression<Boolean>) exprs[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected Boolean[] get(Event e) {
-        if (bool == null) return new Boolean[]{false};
-        return new Boolean[]{Boolean.FALSE.equals(bool.getSingle(e)) ? Boolean.TRUE : Boolean.FALSE};
+    protected Boolean[] get(Event event) {
+        return new Boolean[]{Boolean.FALSE.equals(booleanExpr.getSingle(event)) ? Boolean.TRUE : Boolean.FALSE};
     }
 
     @Override
@@ -52,6 +51,6 @@ public class ExprFlippedBool extends SimpleExpression<Boolean> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "flipped " + bool.toString(event, b);
+        return "flipped " + booleanExpr.toString(event, b);
     }
 }

@@ -40,9 +40,8 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
 
     @Nullable
     @Override
-    protected Timespan[] get(Event e) {
-        if (worldExpr == null) return new Timespan[0];
-        World world = worldExpr.getSingle(e);
+    protected Timespan[] get(Event event) {
+        World world = worldExpr.getSingle(event);
         if (world == null) return new Timespan[0];
         return new Timespan[]{Timespan.fromTicks_i(world.getWorldBorder().getWarningTime() * 20L)};
     }

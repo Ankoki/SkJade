@@ -26,34 +26,33 @@ public class ExprStar extends SimpleExpression<Location> {
                 "[(all [[of] the]|the)] [(loc[ation]s|points) of] [a] star (at|from) %location% with %number% points(,| and) [with] [a] radius [of] %number%(,| and) [a] density [of] %number%");
     }
 
-    private Expression<Location> center;
-    private Expression<Number> points;
-    private Expression<Number> radius;
-    private Expression<Number> density;
+    private Expression<Location> centreExpr;
+    private Expression<Number> pointsExpr;
+    private Expression<Number> radiusExpr;
+    private Expression<Number> densityExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        center = (Expression<Location>) exprs[0];
-        points = (Expression<Number>) exprs[1];
-        radius = (Expression<Number>) exprs[2];
-        density = (Expression<Number>) exprs[3];
+        centreExpr = (Expression<Location>) exprs[0];
+        pointsExpr = (Expression<Number>) exprs[1];
+        radiusExpr = (Expression<Number>) exprs[2];
+        densityExpr = (Expression<Number>) exprs[3];
         return true;
     }
 
     @Nullable
     @Override
-    protected Location[] get(Event e) {
-        Location c = center.getSingle(e);
-        Number num1 = points.getSingle(e);
-        Number num2 = radius.getSingle(e);
-        Number num3 = density.getSingle(e);
-        if (num1 == null || num2 == null || num3 == null) return new Location[0];
-        int p = num1.intValue();
-        double r = num2.doubleValue();
-        double d = num3.doubleValue();
-        if (c == null) return new Location[0];
-        if (p < 2) return new Location[]{c};
-        return Shapes.getStar(c, r, d, p).toArray(new Location[0]);
+    protected Location[] get(Event event) {
+        Location centre = centreExpr.getSingle(event);
+        Number pointsNumber = pointsExpr.getSingle(event);
+        Number radiusNumber = radiusExpr.getSingle(event);
+        Number densityNumber = densityExpr.getSingle(event);
+        if (centre == null || pointsNumber == null || radiusNumber == null || densityNumber == null) return new Location[0];
+        int points = pointsNumber.intValue();
+        double radius = radiusNumber.doubleValue();
+        double density = densityNumber.doubleValue();
+        if (points < 2) return new Location[]{centre};
+        return Shapes.getStar(centre, radius, density, points).toArray(new Location[0]);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ExprStar extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "star with center " + center.toString(event, b) + " with radius " + radius.toString(event, b) +
-                " with density " + density.toString(event, b);
+        return "star with center " + centreExpr.toString(event, b) + " with radius " + radiusExpr.toString(event, b) +
+                " with density " + densityExpr.toString(event, b);
     }
 }

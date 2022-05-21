@@ -33,20 +33,20 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
                 "border slots of [the] [inventory] %inventory%");
     }
 
-    private Expression<Inventory> inventory;
+    private Expression<Inventory> inventoryExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        inventory = (Expression<Inventory>) exprs[0];
+        inventoryExpr = (Expression<Inventory>) exprs[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected Integer[] get(Event e) {
-        Inventory inv = inventory.getSingle(e);
-        if (inv == null) return new Integer[0];
-        return getBorderSlots(inv);
+    protected Integer[] get(Event event) {
+        Inventory inventory = inventoryExpr.getSingle(event);
+        if (inventory == null) return new Integer[0];
+        return getBorderSlots(inventory);
     }
 
     @Override
@@ -61,38 +61,32 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "border slots of " + inventory.toString(e, debug);
+        return "border slots of " + inventoryExpr.toString(e, debug);
     }
 
     @Nullable
     @Override
     public Class<?>[] acceptChange(ChangeMode mode) {
-        if (mode == ChangeMode.DELETE || mode == ChangeMode.RESET) {
-            return CollectionUtils.array();
-        } else if (mode == ChangeMode.SET) {
-            return CollectionUtils.array(ItemType.class);
-        }
-        return null;
+        if (mode == ChangeMode.DELETE || mode == ChangeMode.RESET) return CollectionUtils.array();
+        else if (mode == ChangeMode.SET) return CollectionUtils.array(ItemType.class);
+        else return null;
     }
 
     @Override
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
-        Inventory inv = inventory.getSingle(e);
+        Inventory inv = inventoryExpr.getSingle(e);
         if (inv == null) return;
         Integer[] slots = this.get(e);
         if (slots == null) return;
-        if (mode == ChangeMode.DELETE || mode == ChangeMode.RESET) {
-            fillBorder(inv, null);
-        } else if (mode == ChangeMode.SET) {
+        if (mode == ChangeMode.DELETE || mode == ChangeMode.RESET) this.fillBorder(inv, null);
+        else if (mode == ChangeMode.SET) {
             if (delta[0] == null || !(delta[0] instanceof ItemType)) return;
-            fillBorder(inv, ((ItemType) delta[0]).getRandom());
+            this.fillBorder(inv, ((ItemType) delta[0]).getRandom());
         }
     }
 
     private void fillBorder(Inventory inv, @Nullable ItemStack fillItem) {
-        for (int i : this.getBorderSlots(inv)) {
-            inv.setItem(i, fillItem);
-        }
+        for (int i : this.getBorderSlots(inv)) inv.setItem(i, fillItem);
     }
 
     private Integer[] getBorderSlots(Inventory inv) {
@@ -106,22 +100,16 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
         if (type == InventoryType.DISPENSER ||
             type == InventoryType.DROPPER) rows = 3;
         if (type == InventoryType.HOPPER) return new Integer[]{0, 4};
-        if (rows == 0) return new Integer[]{};
+        if (rows == 0) return new Integer[0];
         int slots = inv.getSize();
         int slotsPerRow = slots/rows;
         for (int i = 1; i <= rows; i++) {
             slotsList.add(slotsPerRow * (i - 1));
             slotsList.add((slotsPerRow * (i - 1)) + (slotsPerRow - 1));
         }
-        for (int i = 1; i <= (slotsPerRow - 2); i++) {
-            slotsList.add(i);
-        }
-        for (int i = slots - 2; i <= ((rows - 1) * slotsPerRow) + 1; i++) {
-            slotsList.add(i);
-        }
-        for (int i = (inv.getSize() - 1); i >= (inv.getSize() - slotsPerRow); i--) {
-            slotsList.add(i);
-        }
+        for (int i = 1; i <= (slotsPerRow - 2); i++) slotsList.add(i);
+        for (int i = slots - 2; i <= ((rows - 1) * slotsPerRow) + 1; i++) slotsList.add(i);
+        for (int i = (inv.getSize() - 1); i >= (inv.getSize() - slotsPerRow); i--) slotsList.add(i);
         return slotsList.toArray(new Integer[0]);
     }
 }

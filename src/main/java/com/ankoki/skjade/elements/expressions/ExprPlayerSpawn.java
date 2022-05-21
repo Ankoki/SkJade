@@ -39,9 +39,8 @@ public class ExprPlayerSpawn extends SimpleExpression<Location> {
 
     @Nullable
     @Override
-    protected Location[] get(Event e) {
-        if (playerExpr == null) return new Location[0];
-        Player player = playerExpr.getSingle(e);
+    protected Location[] get(Event event) {
+        Player player = playerExpr.getSingle(event);
         if (player == null) return new Location[0];
         return new Location[]{player.getBedSpawnLocation() == null ?
                 player.getWorld().getSpawnLocation() : player.getBedSpawnLocation()};
@@ -65,9 +64,7 @@ public class ExprPlayerSpawn extends SimpleExpression<Location> {
     @Nullable
     @Override
     public Class<?>[] acceptChange(ChangeMode mode) {
-        if (mode == ChangeMode.RESET || mode == ChangeMode.SET) {
-            return CollectionUtils.array(Location.class);
-        }
+        if (mode == ChangeMode.RESET || mode == ChangeMode.SET) return CollectionUtils.array(Location.class);
         return null;
     }
 

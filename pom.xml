@@ -47,7 +47,19 @@
                             <pattern>org.bstats.bukkit</pattern>
                             <shadedPattern>com.ankoki.skjade.libs.metrics</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>com.ankoki.roku</pattern>
+                            <shadedPattern>com.ankoki.skjade.libs.roku</shadedPattern>
+                        </relocation>
                     </relocations>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -78,14 +90,6 @@
             <id>codemc-repo</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
-        <repository>
-            <id>everything</id>
-            <url>https://repo.citizensnpcs.co/</url>
-        </repository>
-        <repository>
-            <id>dmulloy2-repo</id>
-            <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -96,16 +100,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Ankoki-Dev</groupId>
-            <artifactId>Pastebin-API</artifactId>
-            <version>1.0</version>
+            <groupId>com.github.Ankoki</groupId>
+            <artifactId>Roku</artifactId>
+            <version>master-ef1a170d0e-1</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.Ankoki-Dev</groupId>
-            <artifactId>Elementals</artifactId>
-            <version>1.4</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -130,19 +128,6 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>1.8</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.citizensnpcs</groupId>
-            <artifactId>citizens</artifactId>
-            <version>2.0.1</version>
-            <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>4.7.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jdt</groupId>

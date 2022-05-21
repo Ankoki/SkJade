@@ -33,7 +33,7 @@ import org.bukkit.scheduler.BukkitTask;
 /**
  * A whole class to create Guardian Beams by reflection </br>
  * Inspired by the API <a href="https://www.spigotmc.org/resources/guardianbeamapi.18329">GuardianBeamAPI</a></br>
- * <b>1.9 -> 1.17</b>
+ * <b>1.9 -> 1.18.1</b>
  *
  * @author SkytAsul
  * @see <a href="https://github.com/SkytAsul/GuardianBeam">GitHub page</a>
@@ -668,7 +668,6 @@ public abstract class Laser {
         static {
             if (SkJade.getInstance().isNmsEnabled()) {
                 try {
-
                     // e.g. Bukkit.getServer().getClass().getPackage().getName() -> org.bukkit.craftbukkit.v1_17_R1
                     String[] versions = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1).split("_");
                     version = Integer.parseInt(versions[1]); // 1.X
@@ -984,20 +983,20 @@ public abstract class Laser {
         private final String teamSetCollision;
         private final String teamGetPlayers;
 
-        private ProtocolMappings(int major, ProtocolMappings parent) {
+        ProtocolMappings(int major, ProtocolMappings parent) {
             this(major, parent.watcherFlags, parent.watcherSpikes, parent.watcherTargetEntity, parent.watcherTargetLocation, parent.watcherBasePlate, parent.squidID, parent.guardianID, parent.crystalTypeName, parent.teamSetCollision, parent.teamGetPlayers);
         }
 
-        private ProtocolMappings(int major,
-                                 String watcherFlags, String watcherSpikes, String watcherTargetEntity, String watcherTargetLocation, String watcherBasePlate,
-                                 int squidID, int guardianID) {
+        ProtocolMappings(int major,
+                         String watcherFlags, String watcherSpikes, String watcherTargetEntity, String watcherTargetLocation, String watcherBasePlate,
+                         int squidID, int guardianID) {
             this(major, watcherFlags, watcherSpikes, watcherTargetEntity, watcherTargetLocation, watcherBasePlate, squidID, guardianID, "END_CRYSTAL", null, null);
         }
 
-        private ProtocolMappings(int major,
-                                 String watcherFlags, String watcherSpikes, String watcherTargetEntity, String watcherTargetLocation, String watcherBasePlate,
-                                 int squidID, int guardianID,
-                                 String crystalTypeName, String teamSetCollision, String teamGetPlayers) {
+        ProtocolMappings(int major,
+                         String watcherFlags, String watcherSpikes, String watcherTargetEntity, String watcherTargetLocation, String watcherBasePlate,
+                         int squidID, int guardianID,
+                         String crystalTypeName, String teamSetCollision, String teamGetPlayers) {
             this.major = major;
             this.watcherFlags = watcherFlags;
             this.watcherSpikes = watcherSpikes;

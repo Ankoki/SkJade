@@ -39,9 +39,8 @@ public class ExprWorldBorderDamageAmount extends SimpleExpression<Number> {
 
     @Nullable
     @Override
-    protected Number[] get(Event e) {
-        if (worldExpr == null) return new Number[0];
-        World world = worldExpr.getSingle(e);
+    protected Number[] get(Event event) {
+        World world = worldExpr.getSingle(event);
         if (world == null) return new Number[0];
         return new Number[]{world.getWorldBorder().getDamageAmount()};
     }

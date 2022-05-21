@@ -26,20 +26,19 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
                 "[the] roman numeral[s] [value] of %number%");
     }
 
-    private Expression<Number> num;
+    private Expression<Number> numberExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        num = (Expression<Number>) exprs[0];
+        numberExpr = (Expression<Number>) exprs[0];
         return true;
     }
 
     @Override
     protected String[] get(Event event) {
-        if (num == null) return new String[0];
-        Number n = num.getSingle(event);
-        if (n == null) return new String[0];
-        int i = n.intValue();
+        Number number = numberExpr.getSingle(event);
+        if (number == null) return new String[0];
+        int i = number.intValue();
         return new String[]{Utils.toRoman(i)};
     }
 
@@ -55,6 +54,6 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "roman numeral value of " + num.toString(event, b);
+        return "roman numeral value of " + numberExpr.toString(event, b);
     }
 }

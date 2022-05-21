@@ -33,7 +33,7 @@ public class ExprCoreWorld extends SimpleExpression<World> {
 
     @Nullable
     @Override
-    protected World[] get(Event e) {
+    protected World[] get(Event event) {
         return new World[]{Bukkit.getWorlds().get(0)};
     }
 

@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 public class Config {
 
-    public static boolean PROTOCOL_LIB_ENABLED, HOLOGRAPHIC_DISPLAYS_ENABLED, ELEMENTALS_ENABLED, VERSION_ALERTS;
+    public static boolean PROTOCOL_LIB_ENABLED, HOLOGRAPHIC_DISPLAYS_ENABLED, VERSION_ALERTS;
 
     private final SkJade plugin;
 
@@ -30,41 +30,13 @@ public class Config {
             plugin.saveResource("config.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(cfile);
-        matchConfigFile();
         loadFile();
     }
 
-    private void matchConfigFile() {
-        try {
-            boolean hasUpdated = false;
-            InputStream stream = plugin.getResource(cfile.getName());
-            InputStreamReader is = new InputStreamReader(stream);
-            YamlConfiguration defLand = YamlConfiguration.loadConfiguration(is);
-            for (String key : defLand.getConfigurationSection("").getKeys(true)) {
-                if (!config.contains(key)) {
-                    config.set(key, defLand.get(key));
-                    hasUpdated = true;
-                }
-            }
-            for (String key : config.getConfigurationSection("").getKeys(true)) {
-                if (!defLand.contains(key)) {
-                    config.set(key, null);
-                    hasUpdated = true;
-                }
-            }
-            if (hasUpdated)
-                config.save(cfile);
-            is.close();
-            stream.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private void loadFile() {
-        PROTOCOL_LIB_ENABLED = config.getBoolean("protocol-lib-enabled");
-        HOLOGRAPHIC_DISPLAYS_ENABLED = config.getBoolean("holographic-displays-enabled");
-        ELEMENTALS_ENABLED = config.getBoolean("elementals-enabled");
-        VERSION_ALERTS = config.getBoolean("new-version-alerts");
+        if (config.contains("holograms-enabled")) HOLOGRAPHIC_DISPLAYS_ENABLED = config.getBoolean("holograms-enabled");
+        else SkJade.getInstance().getLogger().severe("Required key 'holograms-enabled' was not found.");
+        if (config.contains("new-version-alerts")) HOLOGRAPHIC_DISPLAYS_ENABLED = config.getBoolean("new-version-alerts");
+        else SkJade.getInstance().getLogger().severe("Required key 'new-version-alerts' was not found.");
     }
 }

@@ -49,7 +49,7 @@ public class EffShowDemo extends Effect {
     protected void execute(Event event) {
         Player[] players = playersExpr.getArray(event);
         if (f == null) {
-            if (Utils.getServerMajorVersion() < 16) {
+            if (Utils.getMinecraftMinor() < 16) {
                 try {
                     Object instance = packet.getConstructor(int.class, float.class)
                             .newInstance(5, 0F);

@@ -10,7 +10,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.utils.Console;
 import com.ankoki.skjade.utils.ReflectionUtils;
 import com.ankoki.skjade.utils.Version;
 import org.bukkit.Bukkit;
@@ -40,7 +39,6 @@ public class EffHideEntity extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        Console.info("INIT EffHideEntity");
         entity = (Expression<Entity>) exprs[0];
         playerExpr = parseResult.mark == 1 ? (Expression<Player>) exprs[1] : null;
         return true;

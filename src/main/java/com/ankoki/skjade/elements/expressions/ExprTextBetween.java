@@ -21,37 +21,33 @@ public class ExprTextBetween extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprTextBetween.class, String.class, ExpressionType.SIMPLE,
-                "[the] text between %character% and %character% (from|in) %string%");
+                "[the] text between %string% and %string% (from|in) %string%");
     }
 
-    private Expression<Character> between1;
-    private Expression<Character> between2;
-    private Expression<String> string;
+    private Expression<String> firstExpr;
+    private Expression<String> secondExpr;
+    private Expression<String> stringExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        between1 = (Expression<Character>) exprs[0];
-        between2 = (Expression<Character>) exprs[1];
-        string = (Expression<String>) exprs[2];
+        firstExpr = (Expression<String>) exprs[0];
+        secondExpr = (Expression<String>) exprs[1];
+        stringExpr = (Expression<String>) exprs[2];
         return true;
     }
 
     @Nullable
     @Override
-    protected String[] get(Event e) {
-        if (between1 == null || between2 == null || string == null) return new String[0];
-        String first = String.valueOf(between1.getSingle(e));
-        String second = String.valueOf(between2.getSingle(e));
-        String str = string.getSingle(e);
-        if (str == null) return new String[0];
-
+    protected String[] get(Event event) {
+        String first = firstExpr.getSingle(event);
+        String second = secondExpr.getSingle(event);
+        String string = stringExpr.getSingle(event);
+        if (first == null || second == null || string == null) return new String[0];
         first = escape(first);
         second = escape(second);
-
-        String[] split1 = str.split(first);
+        String[] split1 = string.split(first);
         if (split1.length < 2) return new String[0];
         String[] split2 = split1[split1.length - 1].split(String.valueOf(second));
-
         return new String[]{split2[0]};
     }
 
@@ -67,41 +63,21 @@ public class ExprTextBetween extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "text between " + between1.toString(e, debug) + " and " + between2.toString(e, debug) + " from " + string.toString(e, debug);
+        return "text between " + firstExpr.toString(e, debug) + " and " + secondExpr.toString(e, debug) + " from " + stringExpr.toString(e, debug);
     }
 
     private String escape(String s) {
-        switch (s) {
-            case "[":
-                s = "\\[";
-                break;
-            case "(":
-                s = "\\(";
-                break;
-            case "{":
-                s = "\\{";
-                break;
-            case "|":
-                s = "\\|";
-                break;
-            case ".":
-                s = "\\.";
-                break;
-            case "^":
-                s = "\\^";
-                break;
-            case "$":
-                s = "\\$";
-                break;
-            case "*":
-                s = "\\*";
-                break;
-            case "+":
-                s = "\\+";
-                break;
-            case "\\":
-                s = "\\\\";
-        }
-        return s;
+        return switch (s) {
+            case "[" -> "\\[";
+            case "(" -> "\\(";
+            case "{" -> "\\{";
+            case "|" -> "\\|";
+            case "." -> "\\.";
+            case "^" -> "\\^";
+            case "$" -> "\\$";
+            case "*" -> "\\*";
+            case "+" -> "\\+";
+            case "\\" -> "\\\\";
+        };
     }
 }

@@ -31,13 +31,6 @@ public final class Utils {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
-    public static boolean checkPluginVersion(Plugin plugin, int major, int minor) {
-        major *= 10;
-        int pluginVer = Integer.parseInt(plugin.getDescription().getVersion().replace(".", ""));
-        int required = major + minor;
-        return pluginVer >= required;
-    }
-
     public static String toRoman(int number) {
         int l = ROMAN_NUMERALS.floorKey(number);
         if (number == l) {
@@ -119,7 +112,7 @@ public final class Utils {
         return builder.toString();
     }
 
-    public static int getServerMajorVersion() {
+    public static int getMinecraftMinor() {
         int ver = 0;
         try {
             String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
@@ -129,20 +122,5 @@ public final class Utils {
             ex.printStackTrace();
         }
         return ver;
-    }
-
-    public enum SpellType {
-        GENERIC("generic"),
-        ENTITY("entity"),
-        GENERIC_PROLONGED("prolonged generic"),
-        ENTITY_PROLONGED("prolonged entity");
-
-        private final String pretty;
-        SpellType(String pretty) {
-            this.pretty = pretty;
-        }
-        public String getPretty() {
-            return pretty;
-        }
     }
 }

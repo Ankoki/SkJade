@@ -26,31 +26,30 @@ public class ExprCone extends SimpleExpression<Location> {
                 "[a] cone (with [a] cent(re|er) [of]|around) %location%(,| and) [a] radius [of] %number%[(,| and)] [a] height [of] %number%[(,| and)] [a] density [of] %number%");
     }
 
-    private Expression<Location> centre;
-    private Expression<Number> radius, height, density;
+    private Expression<Location> centreExpr;
+    private Expression<Number> radiusExpr, heightExpr, densityExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        centre = (Expression<Location>) exprs[0];
-        radius = (Expression<Number>) exprs[1];
-        height = (Expression<Number>) exprs[2];
-        density = (Expression<Number>) exprs[3];
+        centreExpr = (Expression<Location>) exprs[0];
+        radiusExpr = (Expression<Number>) exprs[1];
+        heightExpr = (Expression<Number>) exprs[2];
+        densityExpr = (Expression<Number>) exprs[3];
         return true;
     }
 
     @Nullable
     @Override
-    protected Location[] get(Event e) {
-        if (centre == null || radius == null || height == null || density == null) return new Location[0];
-        Location l = centre.getSingle(e);
-        Number num1 = radius.getSingle(e);
-        Number num2 = height.getSingle(e);
-        Number num3 = density.getSingle(e);
-        if (num1 == null || num2 == null || num3 == null || l == null) return new Location[0];
-        double r = num1.doubleValue();
-        double h = num2.doubleValue();
-        double d = num3.doubleValue();
-        return Shapes.getCone(l, r, h, d, 100).toArray(new Location[0]);
+    protected Location[] get(Event event) {
+        Location centre = centreExpr.getSingle(event);
+        Number radiusNumber = radiusExpr.getSingle(event);
+        Number heightNumber = heightExpr.getSingle(event);
+        Number densityNumber = densityExpr.getSingle(event);
+        if (radiusNumber == null || heightNumber == null || densityNumber == null || centre == null) return new Location[0];
+        double radius = radiusNumber.doubleValue();
+        double height = heightNumber.doubleValue();
+        double density = densityNumber.doubleValue();
+        return Shapes.getCone(centre, radius, height, density, 100).toArray(new Location[0]);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class ExprCone extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "cone around " + centre.toString(e, debug) + ", a radius of " + radius.toString(e, debug) + ", height of " +
-                height.toString(e, debug) + " and density of " + density.toString(e, debug);
+        return "cone around " + centreExpr.toString(e, debug) + ", a radius of " + radiusExpr.toString(e, debug) + ", height of " +
+                heightExpr.toString(e, debug) + " and density of " + densityExpr.toString(e, debug);
     }
 }

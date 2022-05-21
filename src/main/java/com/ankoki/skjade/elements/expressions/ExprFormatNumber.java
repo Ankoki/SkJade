@@ -26,21 +26,20 @@ public class ExprFormatNumber extends SimpleExpression<String> {
                 "[the] formatted number %number%");
     }
 
-    private Expression<Number> number;
+    private Expression<Number> numberExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        number = (Expression<Number>) exprs[0];
+        numberExpr = (Expression<Number>) exprs[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected String[] get(Event e) {
+    protected String[] get(Event event) {
+        Number number = numberExpr.getSingle(event);
         if (number == null) return new String[0];
-        Number n = number.getSingle(e);
-        if (n == null) return new String[0];
-        double num = n.doubleValue();
+        double num = number.doubleValue();
         return new String[]{NumberFormat.getInstance().format(num)};
     }
 
@@ -56,6 +55,6 @@ public class ExprFormatNumber extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "the formatted number " + number.toString(e, debug);
+        return "the formatted number " + numberExpr.toString(e, debug);
     }
 }

@@ -28,7 +28,7 @@ public class PlayerJoin implements Listener {
                             .italic(true)
                             .create()));
             github.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,
-                    "https://www.github.com/Ankoki-Dev/SkJade/releases/latest"));
+                    "https://www.github.com/Ankoki/SkJade/releases/latest"));
             player.spigot().sendMessage(github);
         }
     }

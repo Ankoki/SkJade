@@ -29,21 +29,20 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
                 "[the] time at [(player|the player)] %player%");
     }
 
-    private Expression<Player> player;
+    private Expression<Player> playerExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        player = (Expression<Player>) exprs[0];
+        playerExpr = (Expression<Player>) exprs[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected Time[] get(Event e) {
+    protected Time[] get(Event event) {
+        Player player = playerExpr.getSingle(event);
         if (player == null) return new Time[0];
-        Player p = player.getSingle(e);
-        if (p == null) return new Time[0];
-        return new Time[]{new Time((int) p.getPlayerTime())};
+        return new Time[]{new Time((int) player.getPlayerTime())};
     }
 
     @Override
@@ -58,7 +57,7 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "the time at " + player.toString(event, b);
+        return "the time at " + playerExpr.toString(event, b);
     }
 
     @Nullable
@@ -72,8 +71,8 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
 
     @Override
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
-        if (player == null) return;
-        Player p = player.getSingle(e);
+        if (playerExpr == null) return;
+        Player p = playerExpr.getSingle(e);
         if (p != null) {
             final int time = delta[0] instanceof Time ? ((Time) delta[0]).getTicks() : ((Timeperiod) delta[0]).start;
             p.setPlayerTime(time, false);

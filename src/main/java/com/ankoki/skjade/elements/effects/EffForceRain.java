@@ -47,7 +47,7 @@ public class EffForceRain extends Effect {
 
     @Override
     protected void execute(Event e) {
-        if (playerExpr == null || Utils.getServerMajorVersion() < 16) return;
+        if (playerExpr == null || Utils.getMinecraftMinor() < 16) return;
         Player[] players = playerExpr.getArray(e);
         if (c == null || b == null) {
             try {

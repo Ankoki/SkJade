@@ -34,9 +34,8 @@ public class ExprUnary extends SimpleExpression<Number> {
 
     @Nullable
     @Override
-    protected Number[] get(Event e) {
-        if (numberExpr == null) return new Number[0];
-        Number number = numberExpr.getSingle(e);
+    protected Number[] get(Event event) {
+        Number number = numberExpr.getSingle(event);
         if (number == null) return new Number[0];
         return new Number[]{number.doubleValue() * -1};
     }

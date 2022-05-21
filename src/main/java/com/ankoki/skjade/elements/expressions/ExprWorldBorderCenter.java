@@ -30,21 +30,20 @@ public class ExprWorldBorderCenter extends SimpleExpression<Location> {
                 "[skjade] [the] cent(re|er) of %world%'s [world[ ]]border");
     }
 
-    private Expression<World> world;
+    private Expression<World> worldExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        world = (Expression<World>) exprs[0];
+        worldExpr = (Expression<World>) exprs[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected Location[] get(Event e) {
+    protected Location[] get(Event event) {
+        World world = worldExpr.getSingle(event);
         if (world == null) return new Location[0];
-        World w = world.getSingle(e);
-        if (w == null) return new Location[0];
-        return new Location[]{w.getWorldBorder().getCenter()};
+        return new Location[]{world.getWorldBorder().getCenter()};
     }
 
     @Override
@@ -59,7 +58,7 @@ public class ExprWorldBorderCenter extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "the center of " + world.toString(e, debug) + "'s world border";
+        return "the center of " + worldExpr.toString(e, debug) + "'s world border";
     }
 
     @Nullable
@@ -71,7 +70,7 @@ public class ExprWorldBorderCenter extends SimpleExpression<Location> {
     @Override
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         if (delta.length < 1 || !(delta[0] instanceof Location) || mode != ChangeMode.SET) return;
-        World w = world.getSingle(e);
+        World w = worldExpr.getSingle(e);
         if (w == null) return;
         w.getWorldBorder().setCenter((Location) delta[0]);
     }

@@ -33,24 +33,22 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
                 "%entity%'s exact target[ed] block including (1¦[only ]source|[any] [type of]) fluid[s]");
     }
 
-    private Expression<Entity> entity;
+    private Expression<Entity> entityExpr;
     private FluidCollisionMode mode = FluidCollisionMode.NEVER;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean isDelayed, ParseResult parseResult) {
         if (i == 1 && parseResult.mark == 1) mode = FluidCollisionMode.SOURCE_ONLY;
         else if (i == 1) mode = FluidCollisionMode.ALWAYS;
-        entity = (Expression<Entity>) exprs[0];
+        entityExpr = (Expression<Entity>) exprs[0];
         return true;
     }
 
     @Nullable
     @Override
-    protected Block[] get(Event e) {
-        if (entity == null) return new Block[0];
-        Entity ent = entity.getSingle(e);
-        if (ent == null || !(ent instanceof LivingEntity)) return new Block[0];
-        return new Block[]{((LivingEntity) ent).getTargetBlockExact(SkriptConfig.maxTargetBlockDistance.value(), mode)};
+    protected Block[] get(Event event) {
+        Entity entity = entityExpr.getSingle(event);
+        return entity instanceof LivingEntity living ? new Block[]{(living).getTargetBlockExact(SkriptConfig.maxTargetBlockDistance.value(), mode)} : new Block[0];
     }
 
     @Override
@@ -65,7 +63,7 @@ public class ExprExactTargetBlock extends SimpleExpression<Block> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return entity.toString(e, debug) + "'s exact target block";
+        return entityExpr.toString(e, debug) + "'s exact target block";
     }
 
     @Nullable

@@ -30,7 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprNearestStructure extends SimpleExpression<Location> {
 
     static {
-        if (Utils.getServerMajorVersion() > 12) {
+        if (Utils.getMinecraftMinor() > 12) {
             Skript.registerExpression(ExprNearestStructure.class, Location.class, ExpressionType.SIMPLE,
                     "[the] (nearest|closest) (1¦(not |un)(explored|discovered)|) [structure [of]] %skjstructuretype% (in|within) [a] radius [of] %number% (around|at|from|of) %location%");
         }
@@ -40,27 +40,26 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
     //private boolean unexplored;
     private Expression<StructureType> structureTypeExpr;
     private Expression<Number> radiusExpr;
-    private Expression<Location> centerExpr;
+    private Expression<Location> centreExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         //unexplored = parseResult.mark == 1;
         structureTypeExpr = (Expression<StructureType>) exprs[0];
         radiusExpr = (Expression<Number>) exprs[1];
-        centerExpr = (Expression<Location>) exprs[2];
+        centreExpr = (Expression<Location>) exprs[2];
         return true;
     }
 
     @Nullable
     @Override
-    protected Location[] get(Event e) {
-        if (structureTypeExpr == null || radiusExpr == null || centerExpr == null) return new Location[0];
-        StructureType structureType = structureTypeExpr.getSingle(e);
-        Number number = radiusExpr.getSingle(e);
-        Location center = centerExpr.getSingle(e);
-        if (structureType == null || number == null || center == null) return new Location[0];
+    protected Location[] get(Event event) {
+        StructureType structureType = structureTypeExpr.getSingle(event);
+        Number number = radiusExpr.getSingle(event);
+        Location centre = centreExpr.getSingle(event);
+        if (structureType == null || number == null || centre == null) return new Location[0];
         int radius = number.intValue();
-        return new Location[]{center.getWorld().locateNearestStructure(center, structureType, radius, /*unexplored*/true)};
+        return new Location[]{centre.getWorld().locateNearestStructure(centre, structureType, radius, /*unexplored*/true)};
     }
 
     @Override
@@ -76,6 +75,6 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "closest structure of " + structureTypeExpr.toString(e, debug) + " in radius " +
-                radiusExpr.toString(e, debug) + " from " + centerExpr.toString(e, debug);
+                radiusExpr.toString(e, debug) + " from " + centreExpr.toString(e, debug);
     }
 }

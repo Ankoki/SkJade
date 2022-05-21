@@ -26,40 +26,37 @@ public class ExprTorus extends SimpleExpression<Location> {
                 "[a] (torus|[giant ]donut) (at|around) %location% with [a] major radius [of] %number% and [a] minor radius [of] %number% [with [a] density [of] %-number%]");
     }
 
-    private Expression<Location> center;
-    private Expression<Number> majorRadius;
-    private Expression<Number> minorRadius;
-    private Expression<Number> density;
+    private Expression<Location> centreExpr;
+    private Expression<Number> majorRadiusExpr;
+    private Expression<Number> minorRadiusExpr;
+    private Expression<Number> densityExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        center = (Expression<Location>) exprs[0];
-        majorRadius = (Expression<Number>) exprs[1];
-        minorRadius = (Expression<Number>) exprs[2];
-        density = exprs.length == 4 ? (Expression<Number>) exprs[3] : null;
+        centreExpr = (Expression<Location>) exprs[0];
+        majorRadiusExpr = (Expression<Number>) exprs[1];
+        minorRadiusExpr = (Expression<Number>) exprs[2];
+        densityExpr = (Expression<Number>) exprs[3];
         return true;
     }
 
     @Nullable
     @Override
-    protected Location[] get(Event e) {
-        if (center == null || majorRadius == null || minorRadius == null) return new Location[0];
-        Location loc = center.getSingle(e);
-        Number num1 = majorRadius.getSingle(e);
-        Number num2 = minorRadius.getSingle(e);
-        if (num1 == null || num2 == null) return new Location[0];
-        double major = num1.doubleValue();
-        double minor = num2.doubleValue();
-        double d;
-        if (density == null) {
-            d = 1;
-        } else {
-            Number num3 = density.getSingle(e);
-            if (num3 == null) return new Location[0];
-            d = num3.doubleValue();
+    protected Location[] get(Event event) {
+        Location centre = centreExpr.getSingle(event);
+        Number majorRadiusNumber = majorRadiusExpr.getSingle(event);
+        Number minorRadiusNumber = minorRadiusExpr.getSingle(event);
+        if (centre == null || majorRadiusNumber == null || minorRadiusNumber == null) return new Location[0];
+        double major = majorRadiusNumber.doubleValue();
+        double minor = minorRadiusNumber.doubleValue();
+        double density;
+        if (densityExpr == null) density = 1;
+        else {
+            Number densityNumber = densityExpr.getSingle(event);
+            if (densityNumber == null) return new Location[0];
+            density = densityNumber.doubleValue();
         }
-        if (loc == null) return new Location[0];
-        return Shapes.getTorus(loc, major, minor, d).toArray(new Location[0]);
+        return Shapes.getTorus(centre, major, minor, density).toArray(new Location[0]);
     }
 
     @Override
@@ -74,7 +71,7 @@ public class ExprTorus extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "torus around " + center.toString(e, debug) + " with a major radius of " + majorRadius.toString(e, debug) +
-                " and a minor radius of " + minorRadius.toString(e, debug);
+        return "torus around " + centreExpr.toString(e, debug) + " with a major radius of " + majorRadiusExpr.toString(e, debug) +
+                " and a minor radius of " + minorRadiusExpr.toString(e, debug);
     }
 }

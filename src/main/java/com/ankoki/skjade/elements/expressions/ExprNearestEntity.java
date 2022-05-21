@@ -39,44 +39,43 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
         if (matchedPattern == 1) {
             entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
             locationExpr = entityType ? (Expression<Location>) exprs[1] : (Expression<Location>) exprs[0];
-            return true;
-        }
-        entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
-        entityExpr = entityType ? (Expression<Entity>) exprs[1] : (Expression<Entity>) exprs[0];
-        return true;
+        } else {
+            entityTypeExpr = entityType ? (Expression<EntityType>) exprs[0] : null;
+            entityExpr = entityType ? (Expression<Entity>) exprs[1] : (Expression<Entity>) exprs[0];
+        } return true;
     }
 
     @Nullable
     @Override
-    protected Entity[] get(Event e) {
-        Location loc;
-        Entity ent = null;
+    protected Entity[] get(Event event) {
+        Location location;
+        Entity entity = null;
         EntityType type = null;
         if (entityTypeExpr != null) {
-            type = entityTypeExpr.getSingle(e);
+            type = entityTypeExpr.getSingle(event);
         }
 
         if (locationExpr == null) {
-            ent = entityExpr.getSingle(e);
-            if (ent == null) return new Entity[0];
-            if (!(ent instanceof LivingEntity)) return new Entity[0];
-            loc = ent.getLocation();
-        } else loc = locationExpr.getSingle(e);
-        if (loc == null) return new Entity[0];
+            entity = entityExpr.getSingle(event);
+            if (entity == null) return new Entity[0];
+            if (!(entity instanceof LivingEntity)) return new Entity[0];
+            location = entity.getLocation();
+        } else location = locationExpr.getSingle(event);
+        if (location == null) return new Entity[0];
 
         Entity result = null;
         double lastDistance = Double.MAX_VALUE;
-        for (Entity allEnts : loc.getWorld().getEntities()) {
-            if (ent != null && allEnts == ent) continue;
-            double dist = loc.distanceSquared(allEnts.getLocation());
+        for (Entity entities : location.getWorld().getEntities()) {
+            if (entity != null && entities == entity) continue;
+            double dist = location.distanceSquared(entities.getLocation());
             if (dist < lastDistance) {
                 if (type != null) {
-                    if (type.isInstance(allEnts)) {
-                        result = allEnts;
+                    if (type.isInstance(entities)) {
+                        result = entities;
                         lastDistance = dist;
                     }
                 } else {
-                    result = allEnts;
+                    result = entities;
                     lastDistance = dist;
                 }
             }
