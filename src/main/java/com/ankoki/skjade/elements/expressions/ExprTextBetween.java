@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.roku.misc.StringUtils;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -43,8 +44,8 @@ public class ExprTextBetween extends SimpleExpression<String> {
         String second = secondExpr.getSingle(event);
         String string = stringExpr.getSingle(event);
         if (first == null || second == null || string == null) return new String[0];
-        first = escape(first);
-        second = escape(second);
+        first = StringUtils.escape(first);
+        second = StringUtils.escape(second);
         String[] split1 = string.split(first);
         if (split1.length < 2) return new String[0];
         String[] split2 = split1[split1.length - 1].split(String.valueOf(second));
@@ -64,20 +65,5 @@ public class ExprTextBetween extends SimpleExpression<String> {
     @Override
     public String toString(@Nullable Event e, boolean debug) {
         return "text between " + firstExpr.toString(e, debug) + " and " + secondExpr.toString(e, debug) + " from " + stringExpr.toString(e, debug);
-    }
-
-    private String escape(String s) {
-        return switch (s) {
-            case "[" -> "\\[";
-            case "(" -> "\\(";
-            case "{" -> "\\{";
-            case "|" -> "\\|";
-            case "." -> "\\.";
-            case "^" -> "\\^";
-            case "$" -> "\\$";
-            case "*" -> "\\*";
-            case "+" -> "\\+";
-            case "\\" -> "\\\\";
-        };
     }
 }
