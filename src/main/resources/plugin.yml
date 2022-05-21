@@ -7,6 +7,8 @@ api-version: 1.16
 main: com.ankoki.skjade.SkJade
 commands:
   skjade:
+    aliases:
+      - skj
     description: Shows the version of SkJade that is currently being run.
 depend:
   - Skript

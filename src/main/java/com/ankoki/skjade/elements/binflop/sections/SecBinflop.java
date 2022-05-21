@@ -9,11 +9,15 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
+import com.ankoki.roku.web.JSONWrapper;
 import com.ankoki.roku.web.WebRequest;
+import com.ankoki.roku.web.exceptions.MalformedJsonException;
+import com.ankoki.skjade.SkJade;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -32,7 +36,7 @@ public class SecBinflop extends Section {
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult, SectionNode sectionNode, List<TriggerItem> list) {
         if (getParser().isCurrentSection(SecBinflop.class)) {
-            Skript.error("You can't upload a paste in an upload paste section.");
+            Skript.error("You can't upload another paste in an upload paste section.");
             return false;
         }
         TriggerItem item = first;
@@ -40,12 +44,11 @@ public class SecBinflop extends Section {
             if (item instanceof Delay) {
                 Skript.error("You cannot wait after uploading a paste.");
                 return false;
-            }
-            item = item.getNext();
+            } item = item.getNext();
         }
         textExpr = (Expression<String>) exprs[0];
         hide = parseResult.hasTag("x");
-        trigger = loadCode(sectionNode, "binflop execute");
+        trigger = loadCode(sectionNode, "binflop execute", getParser().getCurrentEvents());
         return true;
     }
 
@@ -60,12 +63,12 @@ public class SecBinflop extends Section {
             CompletableFuture.supplyAsync(() -> {
                 try {
                     Optional<String> optional = request.execute();
-                    if (!optional.isPresent()) return 0;
-                    String result = optional.get();
-                    ExprBinflopLink.LAST_LINK = "https://bin.birdflop.com/" + result;
+                    if (optional.isEmpty()) return 0;
+                    JSONWrapper json = new JSONWrapper(optional.get());
+                    ExprBinflopLink.LAST_LINK = "https://bin.birdflop.com/" + json.get("key");
                     trigger.execute(event);
                     return 1;
-                } catch (IOException ex) {
+                } catch (IOException | MalformedJsonException ex) {
                     ex.printStackTrace();
                 } return -1;
             });

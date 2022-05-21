@@ -58,8 +58,10 @@ public abstract class Laser {
     private List<Runnable> executeEnd = new ArrayList<>(1);
 
     protected Laser(Location start, Location end, int duration, int distance) {
-        if (!Packets.enabled) throw new IllegalStateException("The Laser Beam API is disabled. An error has occured during initialization.");
-        if (start.getWorld() != end.getWorld()) throw new IllegalArgumentException("Locations do not belong to the same worlds.");
+        if (!Packets.enabled)
+            throw new IllegalStateException("The Laser Beam API is disabled. An error has occured during initialization.");
+        if (start.getWorld() != end.getWorld())
+            throw new IllegalArgumentException("Locations do not belong to the same worlds.");
         this.start = start;
         this.end = end;
         this.duration = duration;
@@ -68,6 +70,7 @@ public abstract class Laser {
 
     /**
      * Adds a runnable to execute when the laser reaches its final duration
+     *
      * @param runnable action to execute
      * @return this {@link Laser} instance
      */
@@ -78,6 +81,7 @@ public abstract class Laser {
 
     /**
      * Makes the duration provided in the constructor passed as ticks and not seconds
+     *
      * @return this {@link Laser} instance
      */
     public Laser durationInTicks() {
@@ -95,6 +99,7 @@ public abstract class Laser {
      * It will make the laser visible for nearby players and start the countdown to the final duration.
      * <p>
      * Once finished, it will destroy the laser and execute all runnables passed with {@link Laser#executeEnd}.
+     *
      * @param plugin plugin used to start the task
      */
     public void start(Plugin plugin, Player[] players) {
@@ -117,13 +122,13 @@ public abstract class Laser {
                                 if (show.add(p)) {
                                     sendStartPackets(p, !seen.add(p));
                                 }
-                            }else if (show.remove(p)) {
+                            } else if (show.remove(p)) {
                                 sendDestroyPackets(p);
                             }
                         }
                     }
                     time++;
-                }catch (ReflectiveOperationException e) {
+                } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                 }
             }
@@ -138,7 +143,7 @@ public abstract class Laser {
                     }
                     show.clear();
                     executeEnd.forEach(Runnable::run);
-                }catch (ReflectiveOperationException e) {
+                } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                 }
             }
@@ -158,8 +163,9 @@ public abstract class Laser {
 
     /**
      * Gets laser status.
-     * @return	<code>true</code> if the laser is currently running
-     * 			(i.e. {@link #start} has been called and the duration is not over)
+     *
+     * @return    <code>true</code> if the laser is currently running
+     * (i.e. {@link #start} has been called and the duration is not over)
      */
     public boolean isStarted() {
         return main != null;
@@ -167,12 +173,14 @@ public abstract class Laser {
 
     /**
      * Gets laser type.
+     *
      * @return LaserType enum constant of this laser
      */
     public abstract LaserType getLaserType();
 
     /**
      * Instantly moves the start of the laser to the location provided.
+     *
      * @param location New start location
      * @throws ReflectiveOperationException if a reflection exception occurred during laser moving
      */
@@ -180,6 +188,7 @@ public abstract class Laser {
 
     /**
      * Instantly moves the end of the laser to the location provided.
+     *
      * @param location New end location
      * @throws ReflectiveOperationException if a reflection exception occurred during laser moving
      */
@@ -187,6 +196,7 @@ public abstract class Laser {
 
     /**
      * Gets the start location of the laser.
+     *
      * @return where exactly is the start position of the laser located
      */
     public Location getStart() {
@@ -195,6 +205,7 @@ public abstract class Laser {
 
     /**
      * Gets the end location of the laser.
+     *
      * @return where exactly is the end position of the laser located
      */
     public Location getEnd() {
@@ -203,8 +214,9 @@ public abstract class Laser {
 
     /**
      * Moves the start of the laser smoothly to the new location, within a given time.
+     *
      * @param location New start location to go to
-     * @param ticks Duration (in ticks) to make the move
+     * @param ticks    Duration (in ticks) to make the move
      * @param callback {@link Runnable} to execute at the end of the move (nullable)
      */
     public void moveStart(Location location, int ticks, Runnable callback) {
@@ -213,8 +225,9 @@ public abstract class Laser {
 
     /**
      * Moves the end of the laser smoothly to the new location, within a given time.
+     *
      * @param location New end location to go to
-     * @param ticks Duration (in ticks) to make the move
+     * @param ticks    Duration (in ticks) to make the move
      * @param callback {@link Runnable} to execute at the end of the move (nullable)
      */
     public void moveEnd(Location location, int ticks, Runnable callback) {
@@ -235,7 +248,7 @@ public abstract class Laser {
             public void run() {
                 try {
                     moveConsumer.accept(locationSupplier.get().add(xPerTick, yPerTick, zPerTick));
-                }catch (ReflectiveOperationException e) {
+                } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                     cancel();
                     return;
@@ -256,7 +269,7 @@ public abstract class Laser {
         Object packet;
         if (fakeEntity == null) {
             packet = Packets.createPacketMoveEntity(location, entityId);
-        }else {
+        } else {
             packet = Packets.createPacketMoveEntity(fakeEntity);
         }
         for (Player p : show) {
@@ -271,7 +284,7 @@ public abstract class Laser {
     protected boolean isCloseEnough(Player player) {
         if (distanceSquared == -1) return true;
         Location location = player.getLocation();
-        return	getStart().distanceSquared(location) <= distanceSquared ||
+        return getStart().distanceSquared(location) <= distanceSquared ||
                 getEnd().distanceSquared(location) <= distanceSquared;
     }
 
@@ -300,8 +313,9 @@ public abstract class Laser {
 
         /**
          * Creates a new Guardian Laser instance
-         * @param start Location where laser will starts
-         * @param end Location where laser will ends
+         *
+         * @param start    Location where laser will starts
+         * @param end      Location where laser will ends
          * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
          * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
@@ -323,10 +337,11 @@ public abstract class Laser {
 
         /**
          * Creates a new Guardian Laser instance
-         * @param start Location where laser will starts
+         *
+         * @param start     Location where laser will starts
          * @param endEntity Entity who the laser will follow
-         * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
-         * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
+         * @param duration  Duration of laser in seconds (<i>-1 if infinite</i>)
+         * @param distance  Distance where laser will be visible (<i>-1 if infinite</i>)
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
          * @see #durationInTicks() to make the duration in ticks
          * @see #executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
@@ -365,7 +380,7 @@ public abstract class Laser {
             if (createGuardianPacket == null) {
                 if (Packets.version < 17) {
                     createGuardianPacket = Packets.createPacketEntitySpawnLiving(start, Packets.mappings.getGuardianID(), guardianUUID, guardianID);
-                }else {
+                } else {
                     createGuardianPacket = Packets.createPacketEntitySpawnLiving(guardian);
                 }
             }
@@ -376,7 +391,7 @@ public abstract class Laser {
             if (createSquidPacket == null) {
                 if (Packets.version < 17) {
                     createSquidPacket = Packets.createPacketEntitySpawnLiving(end, Packets.mappings.getSquidID(), squidUUID, squidID);
-                }else {
+                } else {
                     createSquidPacket = Packets.createPacketEntitySpawnLiving(squid);
                 }
             }
@@ -390,7 +405,7 @@ public abstract class Laser {
 
         /**
          * Makes the laser follow an entity (moving end location).
-         *
+         * <p>
          * This is done client-side by making the fake guardian follow the existing entity.
          * Hence, there is no consuming of server resources.
          *
@@ -398,7 +413,8 @@ public abstract class Laser {
          * @throws ReflectiveOperationException if a reflection operation fails
          */
         public void attachEndEntity(LivingEntity entity) throws ReflectiveOperationException {
-            if (entity.getWorld() != start.getWorld()) throw new IllegalArgumentException("Attached entity is not in the same world as the laser.");
+            if (entity.getWorld() != start.getWorld())
+                throw new IllegalArgumentException("Attached entity is not in the same world as the laser.");
             this.endEntity = entity;
             setTargetEntity(entity.getUniqueId(), entity.getEntityId());
         }
@@ -457,7 +473,7 @@ public abstract class Laser {
                 for (Player p : show) {
                     Packets.sendPackets(p, createSquidPacket, metadataPacketSquid);
                 }
-            }else {
+            } else {
                 moveFakeEntity(end, squidID, squid);
             }
             if (targetUUID != squidUUID) {
@@ -468,6 +484,7 @@ public abstract class Laser {
 
         /**
          * Asks viewers' clients to change the color of this laser
+         *
          * @throws ReflectiveOperationException
          */
         public void callColourChange() throws ReflectiveOperationException {
@@ -490,8 +507,9 @@ public abstract class Laser {
 
         /**
          * Creates a new Ender Crystal Laser instance
-         * @param start Location where laser will starts. The Crystal laser do not handle decimal number, it will be rounded to blocks.
-         * @param end Location where laser will ends. The Crystal laser do not handle decimal number, it will be rounded to blocks.
+         *
+         * @param start    Location where laser will starts. The Crystal laser do not handle decimal number, it will be rounded to blocks.
+         * @param end      Location where laser will ends. The Crystal laser do not handle decimal number, it will be rounded to blocks.
          * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
          * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
@@ -506,7 +524,7 @@ public abstract class Laser {
             Packets.setCrystalWatcher(fakeCrystalDataWatcher, end);
             if (Packets.version < 17) {
                 crystal = null;
-            }else {
+            } else {
                 crystal = Packets.createCrystal(start, UUID.randomUUID(), crystalID);
             }
             metadataPacketCrystal = Packets.createPacketMetadata(crystalID, fakeCrystalDataWatcher);
@@ -518,7 +536,7 @@ public abstract class Laser {
             if (createCrystalPacket == null) {
                 if (Packets.version < 17) {
                     createCrystalPacket = Packets.createPacketEntitySpawnNormal(start, Packets.crystalID, Packets.crystalType, crystalID);
-                }else {
+                } else {
                     createCrystalPacket = Packets.createPacketEntitySpawnNormal(crystal);
                 }
             }
@@ -580,8 +598,9 @@ public abstract class Laser {
 
         /**
          * Creates a new Laser instance, {@link GuardianLaser} or {@link CrystalLaser} depending on this enum value.
-         * @param start Location where laser will starts
-         * @param end Location where laser will ends
+         *
+         * @param start    Location where laser will starts
+         * @param end      Location where laser will ends
          * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
          * @param distance Distance where laser will be visible
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
@@ -758,11 +777,7 @@ public abstract class Laser {
                     enabled = true;
                 } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
-                    String errorMsg = "Laser Beam reflection failed to initialize. The util is disabled. Please ensure your version (" + Bukkit.getServer().getClass().getPackage().getName() + ") is supported.";
-                    if (logger == null)
-                        System.err.println(errorMsg);
-                    else
-                        logger.severe(errorMsg);
+                    SkJade.getInstance().getLogger().severe("Laser Beam reflection failed to initialize. The util is disabled. Please ensure your version (" + Bukkit.getServer().getClass().getPackage().getName() + ") is supported.");
                 }
             }
         }
@@ -859,8 +874,8 @@ public abstract class Laser {
                 for (int i = 0; i < entitiesId.length; i++) {
                     packets[i] = packetRemove.newInstance(entitiesId[i]);
                 }
-            }else {
-                packets = new Object[] { packetRemove.newInstance(entitiesId) };
+            } else {
+                packets = new Object[]{packetRemove.newInstance(entitiesId)};
             }
             return packets;
         }
@@ -899,7 +914,7 @@ public abstract class Laser {
                 setField(packet, "f", "never");
                 Collection<String> players = (Collection<String>) getField(packetTeam, "h", packet);
                 for (UUID entity : entities) players.add(entity.toString());
-            }else {
+            } else {
                 Object team = createTeam.newInstance(createScoreboard.newInstance(), teamName);
                 setTeamPush.invoke(team, pushNever);
                 Collection<String> players = (Collection<String>) getTeamPlayers.invoke(team);
@@ -916,7 +931,7 @@ public abstract class Laser {
         private static void tryWatcherSet(Object watcher, Object watcherObject, Object watcherData) throws ReflectiveOperationException {
             try {
                 watcherSet.invoke(watcher, watcherObject, watcherData);
-            }catch (InvocationTargetException ex) {
+            } catch (InvocationTargetException ex) {
                 watcherRegister.invoke(watcher, watcherObject, watcherData);
                 if (version >= 15) watcherDirty.invoke(watcher, watcherObject);
             }
