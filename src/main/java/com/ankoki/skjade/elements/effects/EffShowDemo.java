@@ -53,9 +53,7 @@ public class EffShowDemo extends Effect {
                 try {
                     Object instance = packet.getConstructor(int.class, float.class)
                             .newInstance(5, 0F);
-                    for (Player p : players) {
-                        ReflectionUtils.sendPacket(p, instance);
-                    }
+                    for (Player p : players) ReflectionUtils.sendPacket(p, instance);
                 } catch (ReflectiveOperationException ex) {
                     ex.printStackTrace();
                 }
@@ -72,9 +70,7 @@ public class EffShowDemo extends Effect {
         try {
             Object instance = packet.getConstructor(innerClass, float.class)
                     .newInstance(f, 0F);
-            for (Player p : players) {
-                ReflectionUtils.sendPacket(p, instance);
-            }
+            for (Player p : players) ReflectionUtils.sendPacket(p, instance);
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();
         }

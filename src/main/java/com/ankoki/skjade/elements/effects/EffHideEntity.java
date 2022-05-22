@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffHideEntity extends Effect {
 
     private static Class<?> packet;
-    private Expression<Entity> entity;
+    private Expression<Entity> entityExpr;
     private Expression<Player> playerExpr;
 
     static {
@@ -39,29 +39,22 @@ public class EffHideEntity extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        entity = (Expression<Entity>) exprs[0];
-        playerExpr = parseResult.mark == 1 ? (Expression<Player>) exprs[1] : null;
+        entityExpr = (Expression<Entity>) exprs[0];
+        playerExpr = (Expression<Player>) exprs[1];
         return true;
     }
 
     @Override
-    protected void execute(Event e) {
-        if (entity == null) return;
-        Entity[] entities = entity.getArray(e);
-        Player[] players;
-        if (playerExpr == null) {
-            players = Bukkit.getOnlinePlayers().toArray(new Player[0]);
-        } else {
-            players = playerExpr.getArray(e);
-        }
+    protected void execute(Event event) {
+        if (entityExpr == null) return;
+        Entity[] entities = entityExpr.getArray(event);
+        Player[] players = playerExpr == null ? Bukkit.getOnlinePlayers().toArray(new Player[0]) : playerExpr.getArray(event);
         for (Entity entity : entities) {
             try {
                 Object instance = Version.v1_16_R4.isOlder() ? packet.getConstructor(int[].class).newInstance(new int[]{entity.getEntityId()}) :
                     packet.newInstance();
                 if (Version.v1_17_R1.isNewer()) ReflectionUtils.setField(instance, "a", new int[]{entity.getEntityId()});
-                for (Player p : players) {
-                    ReflectionUtils.sendPacket(p, instance);
-                }
+                for (Player player : players) ReflectionUtils.sendPacket(player, instance);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
             }
@@ -70,6 +63,6 @@ public class EffHideEntity extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "destroy " + entity.toString(e, debug) + (playerExpr == null ? "" : " from " + playerExpr.toString(e, debug));
+        return "destroy " + entityExpr.toString(e, debug) + (playerExpr == null ? "" : " from " + playerExpr.toString(e, debug));
     }
 }

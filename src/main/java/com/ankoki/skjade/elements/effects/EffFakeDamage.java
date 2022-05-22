@@ -43,11 +43,11 @@ public class EffFakeDamage extends Effect {
     }
 
     @Override
-    protected void execute(Event e) {
+    protected void execute(Event event) {
         Player[] viewers;
-        if (viewerExpr != null) viewers = viewerExpr.getArray(e);
+        if (viewerExpr != null) viewers = viewerExpr.getArray(event);
         else viewers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
-        Player[] damaged = damagedExpr.getArray(e);
+        Player[] damaged = damagedExpr.getArray(event);
         for (Player p : damaged) {
             try {
                 Object instance = packet.getConstructor()

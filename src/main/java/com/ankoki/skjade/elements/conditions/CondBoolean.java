@@ -23,24 +23,23 @@ public class CondBoolean extends Condition {
                 "%booleans%");
     }
 
-    private Expression<Boolean> bool;
+    private Expression<Boolean> boolExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        bool = (Expression<Boolean>) exprs[0];
+        boolExpr = (Expression<Boolean>) exprs[0];
         return true;
     }
 
     @Override
     public boolean check(Event e) {
+        Boolean bool = boolExpr.getSingle(e);
         if (bool == null) return false;
-        Boolean b = bool.getSingle(e);
-        if (b == null) return false;
-        return b;
+        return bool;
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return bool.toString(event, b);
+        return boolExpr.toString(event, b);
     }
 }

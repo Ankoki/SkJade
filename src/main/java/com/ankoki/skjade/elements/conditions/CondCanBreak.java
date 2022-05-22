@@ -22,28 +22,28 @@ public class CondCanBreak extends Condition {
                 "%itemtype% can(1¦(not|[']t)|) break %block%");
     }
 
-    private Expression<ItemType> item1;
-    private Expression<Block> block;
+    private Expression<ItemType> itemExpr;
+    private Expression<Block> blockExpr;
     private boolean negate;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        item1 = (Expression<ItemType>) exprs[0];
-        block = (Expression<Block>) exprs[1];
+        itemExpr = (Expression<ItemType>) exprs[0];
+        blockExpr = (Expression<Block>) exprs[1];
         negate = parseResult.mark == 1;
         return true;
     }
 
     @Override
     public boolean check(Event event) {
-        ItemType i1 = item1.getSingle(event);
-        Block b = block.getSingle(event);
-        if (i1 == null || b == null) return false;
-        return negate == b.getDrops(i1.getRandom()).isEmpty();
+        ItemType item = itemExpr.getSingle(event);
+        Block block = blockExpr.getSingle(event);
+        if (item == null || block == null) return false;
+        return negate == block.getDrops(item.getRandom()).isEmpty();
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return item1.toString(event, b) + " can break " + block.toString(event, b);
+        return itemExpr.toString(event, b) + " can break " + blockExpr.toString(event, b);
     }
 }

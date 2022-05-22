@@ -26,31 +26,28 @@ public class CondCanSee extends Condition {
                 "%entity% can([']t|not) see %entity%");
     }
 
-    Expression<Entity> entity1, entity2;
+    Expression<Entity> firstExpr, secondExpr;
     boolean can;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         can = i == 0;
-        entity1 = (Expression<Entity>) exprs[0];
-        entity2 = (Expression<Entity>) exprs[1];
+        firstExpr = (Expression<Entity>) exprs[0];
+        secondExpr = (Expression<Entity>) exprs[1];
         return true;
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return entity1.toString(event, b) + " can see " + entity2.toString(event, b);
+    public boolean check(Event event) {
+        Entity first = firstExpr.getSingle(event);
+        Entity second = secondExpr.getSingle(event);
+        if (first == null || second == null) return false;
+        if (first instanceof LivingEntity living) return can == living.hasLineOfSight(second);
+        else return false;
     }
 
     @Override
-    public boolean check(Event event) {
-        Entity eye = entity1.getSingle(event);
-        Entity ent = entity2.getSingle(event);
-        if (eye == null || ent == null) return false;
-        if (!(eye instanceof LivingEntity) || !(ent instanceof LivingEntity)) return false;
-        if (can) {
-            return ((LivingEntity) eye).hasLineOfSight(ent);
-        }
-        return !((LivingEntity) eye).hasLineOfSight(ent);
+    public String toString(@Nullable Event event, boolean b) {
+        return firstExpr.toString(event, b) + " can see " + secondExpr.toString(event, b);
     }
 }

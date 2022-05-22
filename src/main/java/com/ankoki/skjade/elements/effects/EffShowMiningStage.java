@@ -25,8 +25,8 @@ public class EffShowMiningStage extends Effect {
 
     private static Class<?> packet;
     private static Class<?> blockPosition;
-    private Expression<Number> stageExpr, entityId;
-    private Expression<Location> location;
+    private Expression<Number> stageExpr, idExpr;
+    private Expression<Location> locationExpr;
     private Expression<Player> playerExpr;
     private boolean remove = false;
 
@@ -46,45 +46,39 @@ public class EffShowMiningStage extends Effect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         if (matchedPattern == 0) {
             stageExpr = (Expression<Number>) exprs[0];
-            location = (Expression<Location>) exprs[1];
-            if (exprs.length == 3 && parseResult.mark == 1) {
-                entityId = (Expression<Number>) exprs[2];
-            } else if (exprs.length == 3) {
+            locationExpr = (Expression<Location>) exprs[1];
+            if (exprs.length == 3 && parseResult.mark == 1) idExpr = (Expression<Number>) exprs[2];
+            else if (exprs.length == 3) playerExpr = (Expression<Player>) exprs[2];
+            else if (exprs.length == 4) {
                 playerExpr = (Expression<Player>) exprs[2];
-            } else if (exprs.length == 4) {
-                playerExpr = (Expression<Player>) exprs[2];
-                entityId = (Expression<Number>) exprs[3];
+                idExpr = (Expression<Number>) exprs[3];
             }
         } else {
             remove = true;
-            location = (Expression<Location>) exprs[0];
-            if (exprs.length > 1) {
-                playerExpr = (Expression<Player>) exprs[1];
-            } else {
-                if (parseResult.mark == 1) entityId = (Expression<Number>) exprs[1];
-            }
-            if (exprs.length == 3) entityId = (Expression<Number>) exprs[2];
+            locationExpr = (Expression<Location>) exprs[0];
+            if (exprs.length > 1) playerExpr = (Expression<Player>) exprs[1];
+            else if (parseResult.mark == 1) idExpr = (Expression<Number>) exprs[1];
+            if (exprs.length == 3) idExpr = (Expression<Number>) exprs[2];
         }
         return true;
     }
 
     @Override
-    protected void execute(Event e) {
-        if (location == null) return;
+    protected void execute(Event event) {
         int i = 100;
         if (stageExpr != null) {
-            Number num = stageExpr.getSingle(e);
+            Number num = stageExpr.getSingle(event);
             if (num == null) return;
             i = num.intValue();
         }
         int ent = 0;
-        if (entityId != null) {
-            Number num = entityId.getSingle(e);
+        if (idExpr != null) {
+            Number num = idExpr.getSingle(event);
             if (num == null) return;
             ent = num.intValue();
         }
-        Location[] locs = location.getArray(e);
-        Player[] players = playerExpr != null ? playerExpr.getArray(e) : Bukkit.getOnlinePlayers().toArray(new Player[0]);
+        Location[] locs = locationExpr.getArray(event);
+        Player[] players = playerExpr != null ? playerExpr.getArray(event) : Bukkit.getOnlinePlayers().toArray(new Player[0]);
         if (locs.length < 1) return;
         int stage = Math.min(i, 9);
         stage = Math.max(stage, 0);
@@ -95,9 +89,7 @@ public class EffShowMiningStage extends Effect {
                         .newInstance(location.getX(), location.getY(), location.getZ());
                 Object instance = packet.getConstructor(int.class, blockPosition, int.class)
                         .newInstance(ent, position, stage);
-                for (Player p : players) {
-                    ReflectionUtils.sendPacket(p, instance);
-                }
+                for (Player p : players) ReflectionUtils.sendPacket(p, instance);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
             }
@@ -106,7 +98,7 @@ public class EffShowMiningStage extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return remove ? "remove the mining stage at " + location.toString(e, debug) + (playerExpr != null ? " for " + playerExpr.toString(e, debug) : "") :
-                "show mining stage " + stageExpr.toString(e, debug) + " at " + location.toString(e, debug) + (playerExpr != null ? " to " + playerExpr.toString(e, debug) : "");
+        return remove ? "remove the mining stage at " + locationExpr.toString(e, debug) + (playerExpr != null ? " for " + playerExpr.toString(e, debug) : "") :
+                "show mining stage " + stageExpr.toString(e, debug) + " at " + locationExpr.toString(e, debug) + (playerExpr != null ? " to " + playerExpr.toString(e, debug) : "");
     }
 }

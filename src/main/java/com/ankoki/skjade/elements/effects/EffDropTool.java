@@ -24,7 +24,7 @@ public class EffDropTool extends Effect {
                 "make %players% drop (1¦[their] [current] item|2¦all [the] items in [their] hand|their [(whole|entire)] inv[entory])");
     }
 
-    private Expression<Player> player;
+    private Expression<Player> playerExpr;
     private boolean dropInv;
     private boolean dropStack;
 
@@ -32,26 +32,26 @@ public class EffDropTool extends Effect {
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         dropInv = parseResult.mark == 0;
         dropStack = parseResult.mark == 1;
-        player = (Expression<Player>) exprs[0];
+        playerExpr = (Expression<Player>) exprs[0];
         return true;
     }
 
     @Override
     protected void execute(Event event) {
-        Player p = player.getSingle(event);
-        if (p == null) return;
+        Player player = playerExpr.getSingle(event);
+        if (player == null) return;
         if (!dropInv) {
-            p.dropItem(dropStack);
+            player.dropItem(dropStack);
             return;
         }
-        p.getInventory().forEach(item -> {
-            if (item != null) p.getWorld().dropItemNaturally(p.getLocation(), item);
+        player.getInventory().forEach(item -> {
+            if (item != null) player.getWorld().dropItemNaturally(player.getLocation(), item);
         });
-        p.getInventory().clear();
+        player.getInventory().clear();
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "make " + player.toString(event, b)+ " drop " + (dropInv ? (dropStack ? " all items " : "") + " in their hand" : " their current inventory");
+        return "make " + playerExpr.toString(event, b)+ " drop " + (dropInv ? (dropStack ? " all items " : "") + " in their hand" : " their current inventory");
     }
 }

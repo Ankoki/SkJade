@@ -26,19 +26,19 @@ public class EffEvaluate extends Effect {
                 "(eval[uate]|execute) %strings%");
     }
 
-    private Expression<String> evaluate;
+    private Expression<String> effectExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        evaluate = (Expression<String>) exprs[0];
+        effectExpr = (Expression<String>) exprs[0];
         return true;
     }
 
     @Override
     protected void execute(Event event) {
-        if (evaluate == null) return;
-        Arrays.stream(evaluate.getArray(event)).forEach(eval -> {
-            TriggerItem eff = Effect.parse(eval, null);
+        if (effectExpr == null) return;
+        Arrays.stream(effectExpr.getArray(event)).forEach(effect -> {
+            TriggerItem eff = Effect.parse(effect, null);
             if (eff == null) return;
             TriggerItem.walk(eff, event);
         });
@@ -46,6 +46,6 @@ public class EffEvaluate extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "evaluate " + evaluate.toString(event, b);
+        return "evaluate " + effectExpr.toString(event, b);
     }
 }

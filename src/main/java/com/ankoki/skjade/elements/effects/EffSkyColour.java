@@ -24,11 +24,11 @@ public class EffSkyColour extends Effect {
     private static Object h;
     private static Class<?> packet;
     private static Class<?> innerClass;
-    private Expression<Number> numbers;
+    private Expression<Number> numberExpr;
     private Expression<Player> playerExpr;
 
     static {
-        if (SkJade.getInstance().isNmsEnabled()) {
+        if (SkJade.getInstance().isNmsEnabled() && Utils.getMinecraftMinor() >= 16) {
             Skript.registerEffect(EffSkyColour.class,
                     "change [the] sky colo[u]r to %number% for %players%");
             packet = ReflectionUtils.getNMSClass("network.protocol.game",
@@ -39,15 +39,14 @@ public class EffSkyColour extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        numbers = (Expression<Number>) exprs[0];
+        numberExpr = (Expression<Number>) exprs[0];
         playerExpr = (Expression<Player>) exprs[1];
         return true;
     }
 
     @Override
     protected void execute(Event e) {
-        if (numbers == null || playerExpr == null || Utils.getMinecraftMinor() < 16) return;
-        Number num = numbers.getSingle(e);
+        Number num = numberExpr.getSingle(e);
         if (num == null) return;
         float i = num.intValue();
         Player[] players = playerExpr.getArray(e);
@@ -65,9 +64,7 @@ public class EffSkyColour extends Effect {
         try {
             Object instance = packet.getConstructor(innerClass, float.class)
                     .newInstance(h, i);
-            for (Player p : players) {
-                ReflectionUtils.sendPacket(p, instance);
-            }
+            for (Player p : players) ReflectionUtils.sendPacket(p, instance);
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();
         }
@@ -75,6 +72,6 @@ public class EffSkyColour extends Effect {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "change the sky colour to " + numbers.toString(e, debug) + " for " + playerExpr.toString(e, debug);
+        return "change the sky colour to " + numberExpr.toString(e, debug) + " for " + playerExpr.toString(e, debug);
     }
 }

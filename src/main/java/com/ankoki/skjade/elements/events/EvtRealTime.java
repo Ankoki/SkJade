@@ -29,29 +29,25 @@ public class EvtRealTime extends SkriptEvent {
                 "(at|when it([']s| is)) %times% (((in|of) [the] real world|irl)|GMT)");
     }
 
-    private Expression<Time> times;
+    private Expression<Time> timeExpr;
 
     @Override
     public boolean init(Literal<?>[] args, int matchedPattern, ParseResult parseResult) {
-        times = (Expression<Time>) args[0];
+        timeExpr = (Expression<Time>) args[0];
         return true;
     }
 
     @Override
-    public boolean check(Event e) {
-        if (times == null) return false;
-        if (e instanceof RealTimeEvent) {
-            for (Time time : times.getArray(e)) {
-                if (time.toString().equalsIgnoreCase(format.format(((RealTimeEvent) e).getDate()))) {
-                    return true;
-                }
+    public boolean check(Event event) {
+        if (event instanceof RealTimeEvent) {
+            for (Time time : timeExpr.getArray(event)) {
+                if (time.toString().equalsIgnoreCase(format.format(((RealTimeEvent) event).getDate()))) return true;
             }
-        }
-        return false;
+        } return false;
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "at " + times.toString(e, debug) + " in the real world";
+        return "at " + timeExpr.toString(e, debug) + " in the real world";
     }
 }

@@ -24,40 +24,40 @@ public class CondLocIsWithin extends Condition {
                 "within [[the] location] %location% and [[the] location] %location%", "locations");
     }
 
-    private Expression<Location> location, locationOne, locationTwo;
+    private Expression<Location> firstExpr, secondExpr, thirdExpr;
 
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        location = (Expression<Location>) exprs[0];
-        locationOne = (Expression<Location>) exprs[1];
-        locationTwo = (Expression<Location>) exprs[2];
+        firstExpr = (Expression<Location>) exprs[0];
+        secondExpr = (Expression<Location>) exprs[1];
+        thirdExpr = (Expression<Location>) exprs[2];
         return true;
     }
 
     @Override
     public boolean check(Event event) {
-        Location loc = location.getSingle(event);
-        Location loc1 = locationOne.getSingle(event);
-        Location loc2 = locationTwo.getSingle(event);
-        if (loc == null || loc1 == null || loc2 == null) return false;
-        return contains(loc, loc1, loc2);
+        Location first = firstExpr.getSingle(event);
+        Location second = secondExpr.getSingle(event);
+        Location third = thirdExpr.getSingle(event);
+        if (first == null || second == null || third == null) return false;
+        return contains(first, second, third);
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return location.toString(event, b) + " is within " + locationOne.toString(event, b) + " and " + locationTwo.toString(event, b);
+        return firstExpr.toString(event, b) + " is within " + secondExpr.toString(event, b) + " and " + thirdExpr.toString(event, b);
     }
 
-    private boolean contains(Location loc, Location loc1, Location loc2) {
-        double x1 = Math.min(loc1.getX(), loc2.getX());
-        double y1 = Math.min(loc1.getY(), loc2.getY());
-        double z1 = Math.min(loc1.getZ(), loc2.getZ());
-        double x2 = Math.max(loc1.getX(), loc2.getX());
-        double y2 = Math.max(loc1.getY(), loc2.getY());
-        double z2 = Math.max(loc1.getZ(), loc2.getZ());
-        Location l1 = new Location(loc1.getWorld(), x1, y1, z1);
-        Location l2 = new Location(loc1.getWorld(), x2, y2, z2);
-        return loc.getBlockX() >= l1.getBlockX() && loc.getBlockX() <= l2.getBlockX()
-                && loc.getBlockY() >= l1.getBlockY() && loc.getBlockY() <= l2.getBlockY()
-                && loc.getBlockZ() >= l1.getBlockZ() && loc.getBlockZ() <= l2.getBlockZ();
+    private boolean contains(Location first, Location second, Location third) {
+        double x1 = Math.min(second.getX(), third.getX());
+        double y1 = Math.min(second.getY(), third.getY());
+        double z1 = Math.min(second.getZ(), third.getZ());
+        double x2 = Math.max(second.getX(), third.getX());
+        double y2 = Math.max(second.getY(), third.getY());
+        double z2 = Math.max(second.getZ(), third.getZ());
+        Location l1 = new Location(second.getWorld(), x1, y1, z1);
+        Location l2 = new Location(second.getWorld(), x2, y2, z2);
+        return first.getBlockX() >= l1.getBlockX() && first.getBlockX() <= l2.getBlockX()
+                && first.getBlockY() >= l1.getBlockY() && first.getBlockY() <= l2.getBlockY()
+                && first.getBlockZ() >= l1.getBlockZ() && first.getBlockZ() <= l2.getBlockZ();
     }
 }

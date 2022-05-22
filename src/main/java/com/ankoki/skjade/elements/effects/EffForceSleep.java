@@ -27,28 +27,28 @@ public class EffForceSleep extends Effect {
                 "(force|make) %players% [to] sleep at %location%");
     }
 
-    private Expression<Player> players;
-    private Expression<Location> location;
+    private Expression<Player> playerExpr;
+    private Expression<Location> locationExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        players = (Expression<Player>) exprs[0];
-        location = (Expression<Location>) exprs[1];
+        playerExpr = (Expression<Player>) exprs[0];
+        locationExpr = (Expression<Location>) exprs[1];
         return true;
     }
 
     @Override
     protected void execute(Event event) {
-        Location loc = location.getSingle(event);
-        if (loc == null || players == null) return;
-        Arrays.stream(players.getArray(event)).forEach(p -> {
+        Location location = locationExpr.getSingle(event);
+        if (location == null || playerExpr == null) return;
+        Arrays.stream(playerExpr.getArray(event)).forEach(p -> {
             if (p == null) return;
-            p.sleep(loc, true);
+            p.sleep(location, true);
         });
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "force " + players.toString(event, b) + " to sleep";
+        return "force " + playerExpr.toString(event, b) + " to sleep at " + locationExpr.toString(event, b);
     }
 }

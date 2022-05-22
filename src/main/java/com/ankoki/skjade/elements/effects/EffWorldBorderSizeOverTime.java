@@ -39,10 +39,10 @@ public class EffWorldBorderSizeOverTime extends Effect {
     }
 
     @Override
-    protected void execute(Event e) {
-        World world = worldExpr.getSingle(e);
-        Number number = sizeExpr.getSingle(e);
-        Timespan time = timeExpr.getSingle(e);
+    protected void execute(Event event) {
+        World world = worldExpr.getSingle(event);
+        Number number = sizeExpr.getSingle(event);
+        Timespan time = timeExpr.getSingle(event);
         if (world == null || number == null || time == null) return;
         world.getWorldBorder().setSize(number.doubleValue(), time.getTicks_i() / 20L);
     }

@@ -33,12 +33,9 @@ public class EffWorldBorderReset extends Effect {
     }
 
     @Override
-    protected void execute(Event e) {
-        if (worldExpr == null) return;
-        World[] worlds = worldExpr.getArray(e);
-        for (World world : worlds) {
-            world.getWorldBorder().reset();
-        }
+    protected void execute(Event event) {
+        World[] worlds = worldExpr.getArray(event);
+        for (World world : worlds) world.getWorldBorder().reset();
     }
 
     @Override

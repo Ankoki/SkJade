@@ -27,7 +27,6 @@ public class EffBreakBlock extends Effect {
 
     private static Method breakBlock;
 
-    // IntelliJ hates me and won't let me use the method for no reason.
     static {
         if (Skript.methodExists(Player.class, "breakBlock", Block.class)) {
             try {
@@ -54,9 +53,8 @@ public class EffBreakBlock extends Effect {
         Object object = objectExpr.getSingle(event);
         if (player == null || object == null) return;
         Block block;
-        if (object instanceof Block) {
-            block = (Block) object;
-        } else {
+        if (object instanceof Block) block = (Block) object;
+        else {
             Location location = (Location) object;
             block = location.getBlock();
         }

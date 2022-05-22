@@ -46,9 +46,9 @@ public class EffForceRain extends Effect {
     }
 
     @Override
-    protected void execute(Event e) {
+    protected void execute(Event event) {
         if (playerExpr == null || Utils.getMinecraftMinor() < 16) return;
-        Player[] players = playerExpr.getArray(e);
+        Player[] players = playerExpr.getArray(event);
         if (c == null || b == null) {
             try {
                 c = innerClass.getConstructor(int.class)
