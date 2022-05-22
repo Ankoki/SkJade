@@ -9,7 +9,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 public class ExprBinflopLink extends SimpleExpression<String> {
-    protected static String LAST_LINK = "<none>";
+    protected static String LAST_LINK = "NOT EXECUTED";
 
     static {
         Skript.registerExpression(ExprBinflopLink.class, String.class, ExpressionType.SIMPLE, "binflop(-| )link");

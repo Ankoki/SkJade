@@ -16,6 +16,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -51,7 +52,7 @@ public class SecBinflopRead extends Section {
     protected @Nullable TriggerItem walk(Event event) {
         TriggerItem item = walk(event, false);
         String key = keyExpr.getSingle(event);
-        if (key == null) key = "ankoki.com/api";
+        if (key == null) key = "NO KEY GIVEN";
         if (!key.startsWith("https://bin.birdflop.com/documents/")) key = "https://bin.birdflop.com/documents/" + key;
         String finalKey = key;
         CompletableFuture.supplyAsync(() -> {
@@ -60,10 +61,13 @@ public class SecBinflopRead extends Section {
                 Optional<String> optional = request.execute();
                 if (optional.isPresent()) {
                     JSONWrapper json = new JSONWrapper(optional.get());
-                    ExprBinflopContent.LAST_DATA = json.containsKey("data") ? (String) json.get("data") : "No such paste.";
-                }
+                    ExprBinflopContent.LAST_DATA = json.containsKey("data") ? (String) json.get("data") : "No paste with id ID '" + finalKey + "'.";
+                } else ExprBinflopContent.LAST_DATA = "No response.";
             } catch (IOException | MalformedJsonException ex) {
-                ex.printStackTrace();
+                if (ex instanceof MalformedURLException) ExprBinflopContent.LAST_DATA = "No Key Given.";
+                else ex.printStackTrace();
+            } finally {
+                trigger.execute(event);
             }
             return -1;
         });

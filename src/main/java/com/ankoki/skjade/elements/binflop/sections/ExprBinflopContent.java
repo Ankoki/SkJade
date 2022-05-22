@@ -8,7 +8,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 public class ExprBinflopContent  extends SimpleExpression<String> {
-    protected static String LAST_DATA = "<none>";
+    protected static String LAST_DATA = "NOT EXECUTED";
 
     static {
         Skript.registerExpression(ExprBinflopContent.class, String.class, ExpressionType.SIMPLE, "binflop(-| )(response|data|content)");
