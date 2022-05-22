@@ -5,7 +5,6 @@ import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -19,8 +18,8 @@ public class ExprBinflopLink extends SimpleExpression<String> {
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, ParseResult parseResult) {
         SkriptEvent event = getParser().getCurrentSkriptEvent();
-        if (event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecBinflop.class)) return true;
-        Skript.error("You can only use a binflop-link after uploading. Cache if needbe.");
+        if (event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecBinflopCreate.class)) return true;
+        Skript.error("You can only use a binflop-link after uploading. Cache if need-be.");
         return false;
     }
 

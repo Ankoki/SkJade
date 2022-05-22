@@ -12,20 +12,18 @@ import ch.njol.util.Kleenean;
 import com.ankoki.roku.web.JSONWrapper;
 import com.ankoki.roku.web.WebRequest;
 import com.ankoki.roku.web.exceptions.MalformedJsonException;
-import com.ankoki.skjade.SkJade;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-public class SecBinflop extends Section {
+public class SecBinflopCreate extends Section {
 
     static {
-        Skript.registerSection(SecBinflop.class,
+        Skript.registerSection(SecBinflopCreate.class,
                 "upload new binflop (x:with hidden ips and|with) text %strings%");
     }
 
@@ -35,8 +33,8 @@ public class SecBinflop extends Section {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult, SectionNode sectionNode, List<TriggerItem> list) {
-        if (getParser().isCurrentSection(SecBinflop.class)) {
-            Skript.error("You can't upload another paste in an upload paste section.");
+        if (getParser().isCurrentSection(SecBinflopCreate.class) || getParser().isCurrentSection(SecBinflopRead.class)) {
+            Skript.error("You can't upload another paste in an upload or read paste section.");
             return false;
         }
         TriggerItem item = first;
