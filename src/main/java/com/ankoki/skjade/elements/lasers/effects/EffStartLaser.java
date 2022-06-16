@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffStartLaser extends Effect {
 
     static {
-        if (SkJade.getInstance().isNmsEnabled())
+        if (Laser.isEnabled())
             Skript.registerEffect(EffStartLaser.class,
                 "start %laser% [for %-players%]");
     }
@@ -38,16 +38,10 @@ public class EffStartLaser extends Effect {
     }
 
     @Override
-    protected void execute(Event e) {
-        if (laserExpr == null) return;
-        Laser laser = laserExpr.getSingle(e);
+    protected void execute(Event event) {
+        Laser laser = laserExpr.getSingle(event);
         if (laser == null || laser.isStarted()) return;
-        Player[] players;
-        if (playerExpr == null) {
-            players = laser.getStart().getWorld().getPlayers().toArray(new Player[0]);
-        } else {
-            players = playerExpr.getArray(e);
-        }
+        Player[] players = playerExpr == null ? laser.getStart().getWorld().getPlayers().toArray(new Player[0]) : playerExpr.getArray(event);
         laser.start(SkJade.getInstance(), players);
     }
 

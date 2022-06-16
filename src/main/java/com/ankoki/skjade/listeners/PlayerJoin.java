@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoin implements Listener {
 
     @EventHandler
-    private void onJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
+    private void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
         if (Config.VERSION_ALERTS && (player.hasPermission("skjade.notify") || player.isOp()) && !SkJade.getInstance().isLatest()) {
             player.sendMessage("§fSk§aJade §f| §7§oYou are running an outdated version of §f§oSk§a§oJade§7§o!");
             TextComponent github =

@@ -37,7 +37,7 @@ public class SkJade extends JavaPlugin {
         long start = System.currentTimeMillis();
         instance = this;
         version = this.getDescription().getVersion();
-        if (!this.isPluginEnabled("Skript") && Skript.isAcceptRegistrations()) {
+        if (!Utils.isPluginEnabled("Skript") && Skript.isAcceptRegistrations()) {
             this.getLogger().severe("Skript wasn't found. Are you sure it's installed and up to date?");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
@@ -54,7 +54,7 @@ public class SkJade extends JavaPlugin {
         this.loadClassInfo();
         this.loadElements();
 
-        if (isPluginEnabled("HolographicDisplays") && Config.HOLOGRAPHIC_DISPLAYS_ENABLED) {
+        if (Utils.isPluginEnabled("HolographicDisplays") && Config.HOLOGRAPHIC_DISPLAYS_ENABLED) {
             this.getLogger().info("HolographicDisplays was found! Enabling support");
             this.loadHologramElements();
         }
@@ -63,28 +63,26 @@ public class SkJade extends JavaPlugin {
         new Metrics(this, 10131);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
 
-        try {
-            WebRequest request = new WebRequest("https://api.github.com/repos/Ankoki/SkJade/releases/latest", WebRequest.RequestType.GET);
-            CompletableFuture.supplyAsync(() -> {
-                try {
-                    Optional<String> optional = request.execute();
-                    if (optional.isPresent()) {
-                        try {
-                            JSONWrapper json = new JSONWrapper(optional.get());
-                            String latest = (String) json.get("tag_name");
-                            this.latest = latest.equalsIgnoreCase(this.getVersion());
-                        } catch (MalformedJsonException ex) {
-                            ex.printStackTrace();
-                        }
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            String version = "INVALID";
+            try {
+                WebRequest request = new WebRequest("https://api.github.com/repos/Ankoki/SkJade/releases/latest", WebRequest.RequestType.GET);
+                Optional<String> optional = request.execute();
+                if (optional.isPresent()) {
+                    try {
+                        JSONWrapper json = new JSONWrapper(optional.get());
+                        version = (String) json.get("tag_name");
+                    } catch (MalformedJsonException ex) {
+                        ex.printStackTrace();
                     }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
                 }
-                return 0;
-            });
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return version;
+        });
+
+        future.thenApply(version -> this.latest = version.equalsIgnoreCase(this.getVersion()));
 
         if (Version.currentIsLegacy()) {
             this.getLogger().warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
@@ -104,11 +102,6 @@ public class SkJade extends JavaPlugin {
             this.getLogger().warning("There is also a chance you are using a version I haven't implemented support for yet.");
             this.getLogger().warning("SkJade will remain enabled, however anything using NMS will not be enabled!");
         } else nmsEnabled = true;
-    }
-
-    private boolean isPluginEnabled(String name) {
-        Plugin plugin = this.getServer().getPluginManager().getPlugin(name);
-        return plugin != null && plugin.isEnabled();
     }
 
     private void loadElements() {

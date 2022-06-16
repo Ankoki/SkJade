@@ -1,6 +1,10 @@
-package com.ankoki.skjade.elements.binflop.sections;
+package com.ankoki.skjade.elements.binflop.elements;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
@@ -8,6 +12,14 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Binflop Link")
+@Description({"Only usable in a Upload Binflop section.",
+        "Contains the link of the last uploaded binflop."})
+@Examples("""
+        upload new binflop with text "1. PROFIT", "2. LOSS" and "3. DATA":
+            send "Binflop created:" and " - %binflop-link%" to console
+        """)
+@Since("2.0")
 public class ExprBinflopLink extends SimpleExpression<String> {
     protected static String LAST_LINK = "NOT EXECUTED";
 

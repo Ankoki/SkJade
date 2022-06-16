@@ -24,44 +24,41 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffShowLaser extends Effect {
 
     static {
-        if (SkJade.getInstance().isNmsEnabled())
+        if (Laser.isEnabled())
             Skript.registerEffect(EffShowLaser.class,
                 "show [a] [new] (la(s|z)er [beam]|guardian beam) from %location% to %location% for %timespan% [for %-players%]");
     }
 
-    private Expression<Location> locationOneExpr, locationTwoExpr;
+    private Expression<Location> firstExpr, secondExpr;
     private Expression<Timespan> timeExpr;
     private Expression<Player> playerExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        locationOneExpr = (Expression<Location>) exprs[0];
-        locationTwoExpr = (Expression<Location>) exprs[1];
+        firstExpr = (Expression<Location>) exprs[0];
+        secondExpr = (Expression<Location>) exprs[1];
         timeExpr = (Expression<Timespan>) exprs[2];
-        if (exprs.length > 3) playerExpr = (Expression<Player>) exprs[3];
+        playerExpr = (Expression<Player>) exprs[3];
         return true;
     }
 
     @Override
-    protected void execute(Event e) {
-        if (locationOneExpr == null || locationTwoExpr == null || timeExpr == null) return;
-        Location loc1 = locationOneExpr.getSingle(e);
-        Location loc2 = locationTwoExpr.getSingle(e);
-        Timespan sec = timeExpr.getSingle(e);
-        if (loc1 == null || loc2 == null || sec == null) return;
-        Player[] players;
-        if (playerExpr != null) players = playerExpr.getArray(e);
-        else players = loc1.getWorld().getPlayers().toArray(new Player[0]);
+    protected void execute(Event event) {
+        Location first = firstExpr.getSingle(event);
+        Location second = secondExpr.getSingle(event);
+        Timespan sec = timeExpr.getSingle(event);
+        if (first == null || second == null || sec == null) return;
+        Player[] players = playerExpr == null ? first.getWorld().getPlayers().toArray(new Player[0]) : playerExpr.getArray(event);
         int seconds = (int) Math.ceil(sec.getTicks_i() / 20D);
         try {
-            Laser laser = new Laser.GuardianLaser(loc1, loc2, seconds, 100);
+            Laser laser = new Laser.GuardianLaser(first, second, seconds, 100);
             laser.start(SkJade.getInstance(), players);
         } catch (ReflectiveOperationException ignore) {}
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "show a laser from " + locationOneExpr.toString(e, debug) + " to " + locationTwoExpr.toString(e, debug) + " for " +
+        return "show a laser from " + firstExpr.toString(e, debug) + " to " + secondExpr.toString(e, debug) + " for " +
                 timeExpr.toString(e, debug) + (playerExpr == null ? "" : " for " + playerExpr.toString(e ,debug));
     }
 }

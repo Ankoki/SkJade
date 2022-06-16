@@ -9,7 +9,6 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.elements.lasers.Laser;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
@@ -22,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffAttachEndEntity extends Effect {
 
     static {
-        if (SkJade.getInstance().isNmsEnabled())
+        if (Laser.isEnabled())
             Skript.registerEffect(EffAttachEndEntity.class,
                 "attach %livingentity% to [the] end of %lasers%");
     }

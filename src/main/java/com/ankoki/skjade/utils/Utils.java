@@ -1,6 +1,7 @@
 package com.ankoki.skjade.utils;
 
 import com.ankoki.skjade.SkJade;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
@@ -122,5 +123,10 @@ public final class Utils {
             ex.printStackTrace();
         }
         return ver;
+    }
+
+    public static boolean isPluginEnabled(String name) {
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin(name);
+        return plugin != null && plugin.isEnabled();
     }
 }

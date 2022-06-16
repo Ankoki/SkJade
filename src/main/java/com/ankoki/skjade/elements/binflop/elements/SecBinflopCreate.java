@@ -1,7 +1,11 @@
-package com.ankoki.skjade.elements.binflop.sections;
+package com.ankoki.skjade.elements.binflop.elements;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.effects.Delay;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Section;
@@ -20,11 +24,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+@Name("Upload Binflop")
+@Description({"Creates a new binflop post with the given text.",
+                "If multiple texts are given, they will be split by \"\\n\".",
+                "In this section you can use the binflop-link expression to get the link which contains your text."})
+@Examples("""
+        upload new binflop with text "1. PROFIT", "2. LOSS" and "3. DATA":
+            send "Binflop created:" and " - %binflop-link%" to console
+        """)
+@Since("2.0")
 public class SecBinflopCreate extends Section {
 
     static {
         Skript.registerSection(SecBinflopCreate.class,
-                "upload new binflop (x:with hidden ips and|with) text %strings%");
+                "(upload|create) new binflop (x:with hidden ips and|with) text %strings%");
     }
 
     private Trigger trigger;

@@ -1,7 +1,11 @@
-package com.ankoki.skjade.elements.binflop.sections;
+package com.ankoki.skjade.elements.binflop.elements;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.effects.Delay;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Section;
@@ -21,6 +25,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+
+@Name("Read Binflop")
+@Description({"Retrieves the text from a binflop with the given key.",
+        "In this section you can use the binflop-content expression to get the link which contains the text."})
+@Examples("""
+        read binflop with key "r9j2mf":
+            send "Binflop content:" and " - %binflop-content%" to console
+        """)
+@Since("2.0")
 public class SecBinflopRead extends Section {
 
     static {

@@ -5,17 +5,15 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class Config {
 
-    public static boolean PROTOCOL_LIB_ENABLED, HOLOGRAPHIC_DISPLAYS_ENABLED, VERSION_ALERTS;
+    public static boolean HOLOGRAPHIC_DISPLAYS_ENABLED, VERSION_ALERTS = true;
 
     private final SkJade plugin;
 
     private FileConfiguration config;
-    private File cfile;
+    private File file;
 
     public Config(SkJade plugin) {
         this.plugin = plugin;
@@ -23,13 +21,13 @@ public class Config {
     }
 
     public void reloadConfig() {
-        if (cfile == null) {
-            cfile = new File(plugin.getDataFolder(), "config.yml");
+        if (file == null) {
+            file = new File(plugin.getDataFolder(), "config.yml");
         }
-        if (!cfile.exists()) {
+        if (!file.exists()) {
             plugin.saveResource("config.yml", false);
         }
-        config = YamlConfiguration.loadConfiguration(cfile);
+        config = YamlConfiguration.loadConfiguration(file);
         loadFile();
     }
 
