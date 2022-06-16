@@ -13,7 +13,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import com.ankoki.roku.web.JSONWrapper;
+import com.ankoki.roku.web.JSON;
 import com.ankoki.roku.web.WebRequest;
 import com.ankoki.roku.web.exceptions.MalformedJsonException;
 import org.bukkit.event.Event;
@@ -75,7 +75,7 @@ public class SecBinflopCreate extends Section {
                 try {
                     Optional<String> optional = request.execute();
                     if (optional.isEmpty()) return 0;
-                    JSONWrapper json = new JSONWrapper(optional.get());
+                    JSON json = new JSON(optional.get());
                     ExprBinflopLink.LAST_LINK = "https://bin.birdflop.com/" + json.get("key");
                     trigger.execute(event);
                     return 1;

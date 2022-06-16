@@ -4,7 +4,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.registrations.Classes;
-import com.ankoki.roku.web.JSONWrapper;
+import com.ankoki.roku.web.JSON;
 import com.ankoki.roku.web.WebRequest;
 import com.ankoki.roku.web.exceptions.MalformedJsonException;
 import com.ankoki.skjade.commands.SkJadeCmd;
@@ -70,7 +70,7 @@ public class SkJade extends JavaPlugin {
                 Optional<String> optional = request.execute();
                 if (optional.isPresent()) {
                     try {
-                        JSONWrapper json = new JSONWrapper(optional.get());
+                        JSON json = new JSON(optional.get());
                         version = (String) json.get("tag_name");
                     } catch (MalformedJsonException ex) {
                         ex.printStackTrace();

@@ -102,14 +102,8 @@
         <dependency>
             <groupId>com.github.Ankoki</groupId>
             <artifactId>Roku</artifactId>
-            <version>master-180266741e-1</version>
+            <version>master-12d30e571b-1</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.filoghost.HolographicDisplays</groupId>
-            <artifactId>api</artifactId>
-            <version>master-d35648b4e4-1</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -121,6 +115,12 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+            <artifactId>holographicdisplays-api</artifactId>
+            <version>2.4.9</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

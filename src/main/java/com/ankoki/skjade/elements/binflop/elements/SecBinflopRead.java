@@ -13,7 +13,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import com.ankoki.roku.web.JSONWrapper;
+import com.ankoki.roku.web.JSON;
 import com.ankoki.roku.web.WebRequest;
 import com.ankoki.roku.web.exceptions.MalformedJsonException;
 import org.bukkit.event.Event;
@@ -73,7 +73,7 @@ public class SecBinflopRead extends Section {
                 WebRequest request = new WebRequest(finalKey, WebRequest.RequestType.GET);
                 Optional<String> optional = request.execute();
                 if (optional.isPresent()) {
-                    JSONWrapper json = new JSONWrapper(optional.get());
+                    JSON json = new JSON(optional.get());
                     ExprBinflopContent.LAST_DATA = json.containsKey("data") ? (String) json.get("data") : "No paste with id ID '" + finalKey + "'.";
                 } else ExprBinflopContent.LAST_DATA = "No response.";
             } catch (IOException | MalformedJsonException ex) {
