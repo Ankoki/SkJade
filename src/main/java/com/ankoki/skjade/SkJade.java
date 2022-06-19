@@ -4,6 +4,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.registrations.Classes;
+import com.ankoki.roku.bukkit.BukkitImpl;
 import com.ankoki.roku.web.JSON;
 import com.ankoki.roku.web.WebRequest;
 import com.ankoki.roku.web.exceptions.MalformedJsonException;
@@ -13,7 +14,6 @@ import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.*;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class SkJade extends JavaPlugin {
             this.getLogger().severe("Skript is running a version lower than 2.6, which is unsupported.");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
-        }
+        } else if (!Utils.isPluginEnabled("Roku")) BukkitImpl.setupRoku(this);
 
         config = new Config(this);
 

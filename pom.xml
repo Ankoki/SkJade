@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.github.Ankoki</groupId>
             <artifactId>Roku</artifactId>
-            <version>master-12d30e571b-1</version>
+            <version>417501f9fa</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
