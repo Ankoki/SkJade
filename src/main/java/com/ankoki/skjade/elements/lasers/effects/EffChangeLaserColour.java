@@ -39,7 +39,7 @@ public class EffChangeLaserColour extends Effect {
         for (Laser laser : lasers) {
             if (laser.isStarted()) {
                 try {
-                    ((Laser.GuardianLaser) laser).callColorChange();
+                    ((Laser.GuardianLaser) laser).callColourChange();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

@@ -309,7 +309,7 @@ public abstract class Laser {
          * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
          * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-         * @see Laser#start(Plugin) to start the laser
+         * @see Laser#start(Plugin, Player...)  to start the laser for the given players.
          * @see #durationInTicks() to make the duration in ticks
          * @see #executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
          * @see #GuardianLaser(Location, LivingEntity, int, int) to create a laser which follows an entity
@@ -332,7 +332,7 @@ public abstract class Laser {
          * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
          * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-         * @see Laser#start(Plugin) to start the laser
+         * @see Laser#start(Plugin, Player...) to start the laser for given players.
          * @see #durationInTicks() to make the duration in ticks
          * @see #executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
          * @see #GuardianLaser(Location, Location, int, int) to create a laser with a specific end location
@@ -515,7 +515,7 @@ public abstract class Laser {
          * Asks viewers' clients to change the color of this laser
          * @throws ReflectiveOperationException
          */
-        public void callColorChange() throws ReflectiveOperationException {
+        public void callColourChange() throws ReflectiveOperationException {
             for (Player p : show) {
                 Packets.sendPackets(p, metadataPacketGuardian);
             }
@@ -540,7 +540,7 @@ public abstract class Laser {
          * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
          * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-         * @see #start(Plugin) to start the laser
+         * @see Laser#start(Plugin, Player...)  to start the laser for the given players.
          * @see #durationInTicks() to make the duration in ticks
          * @see #executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
          */
@@ -630,7 +630,7 @@ public abstract class Laser {
          * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
          * @param distance Distance where laser will be visible
          * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-         * @see Laser#start(Plugin) to start the laser
+         * @see Laser#start(Plugin, Player...)  to start the laser for the given players.
          * @see Laser#durationInTicks() to make the duration in ticks
          * @see Laser#executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
          */
