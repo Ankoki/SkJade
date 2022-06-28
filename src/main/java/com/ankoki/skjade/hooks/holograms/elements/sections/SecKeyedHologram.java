@@ -9,6 +9,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -23,10 +24,11 @@ import java.util.List;
 public class SecKeyedHologram extends Section {
 
     static {
-        Skript.registerSection(SecKeyedHologram.class, "create new holo[gram] (key|nam)ed [as] %string%");
+        Skript.registerSection(SecKeyedHologram.class, "create [new] holo[gram] (key|nam)ed [as] %string% at %location%");
     }
 
     private Expression<String> keyExpr;
+    private Expression<Location> locactionExpr;
     private Trigger trigger;
 
     @Override

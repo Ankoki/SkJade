@@ -6,6 +6,7 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -69,6 +70,21 @@ public class DHHolo implements SKJHolo {
     }
 
     @Override
+    public void showTo(Player[] players) {
+        for (Player player : players) current.show(player, 0);
+    }
+
+    @Override
+    public void hideFrom(Player[] players) {
+        for (Player player : players) current.hide(player);
+    }
+
+    @Override
+    public void destroy() {
+        current.destroy();
+    }
+
+    @Override
     public boolean isPersistent() {
         return current.isSaveToFile();
     }
@@ -86,10 +102,5 @@ public class DHHolo implements SKJHolo {
     @Override
     public void setStatic(boolean stat) {
         current.setAlwaysFacePlayer(!stat);
-    }
-
-    @Override
-    public void destroy() {
-        current.destroy();
     }
 }

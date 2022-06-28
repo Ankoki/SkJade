@@ -32,6 +32,12 @@ public interface HoloProvider {
     boolean supportsStatic();
 
     /**
+     * Checks if the provider supports holograms being shown to individual players.
+     * @return if provider supports per player holograms.
+     */
+    boolean supportsPerPlayer();
+
+    /**
      * Creates a new hologram using the provider.
      * @param name the name/key to give the hologram.
      * @param location the location to spawn it at.

@@ -2,6 +2,7 @@ package com.ankoki.skjade.hooks.holograms.api;
 
 import com.ankoki.skjade.hooks.holograms.HoloManager;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -42,6 +43,23 @@ public interface SKJHolo {
     void setLines(List<SKJHoloLine> lines);
 
     /**
+     * Shows the hologram to the given players.
+     * @param players players to show the hologram to.
+     */
+    void showTo(Player[] players);
+
+    /**
+     * Hides the hologram from the given players.
+     * @param players players to hide the hologram from.
+     */
+    void hideFrom(Player[] players);
+
+    /**
+     * Destroys and removes the hologram.
+     */
+    void destroy();
+
+    /**
      * Returns whether to save this hologram over restart.
      * Please note not all providers support this.
      * @return whether the hologram should be saved over restart.
@@ -67,9 +85,4 @@ public interface SKJHolo {
      * @param stat false if the holograms should face the player.
      */
     void setStatic(boolean stat);
-
-    /**
-     * Destroys and removes the hologram.
-     */
-    void destroy();
 }

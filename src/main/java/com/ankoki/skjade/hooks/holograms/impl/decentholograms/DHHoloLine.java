@@ -4,6 +4,7 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.utils.entity.DecentEntityType;
 import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,8 @@ public class DHHoloLine implements SKJHoloLine {
             this.material = line instanceof Material material ? material : null;
             this.item = item;
             this.entity = null;
-        } else if (line instanceof EntityType type) {
+        } else if (line instanceof EntityType || line instanceof Entity) {
+            EntityType type = line instanceof Entity entity ? entity.getType() : (EntityType) line;
             this.content = "#ENTITY:" + (DecentEntityType.isAllowed(type) ? type.name() : "PIG");
             this.text = content;
             this.material = null;

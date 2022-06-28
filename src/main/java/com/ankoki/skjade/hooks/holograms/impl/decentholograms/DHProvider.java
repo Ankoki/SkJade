@@ -31,6 +31,11 @@ public class DHProvider implements HoloProvider {
     }
 
     @Override
+    public boolean supportsPerPlayer() {
+        return true;
+    }
+
+    @Override
     public @NotNull SKJHolo createHolo(String name, Location location, List<SKJHoloLine> lines) {
         return new DHHolo(name, location, lines);
     }
