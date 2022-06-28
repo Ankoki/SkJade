@@ -10,6 +10,8 @@ import com.ankoki.roku.web.WebRequest;
 import com.ankoki.roku.web.exceptions.MalformedJsonException;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.elements.lasers.Laser;
+import com.ankoki.skjade.hooks.holograms.HoloManager;
+import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
 import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.*;
 import org.bstats.bukkit.Metrics;
@@ -36,7 +38,9 @@ public class SkJade extends JavaPlugin {
     public void onEnable() {
         long start = System.currentTimeMillis();
         instance = this;
+        new Metrics(this, 10131);
         version = this.getDescription().getVersion();
+
         if (!Utils.isPluginEnabled("Skript") && Skript.isAcceptRegistrations()) {
             this.getLogger().severe("Skript wasn't found. Are you sure it's installed and up to date?");
             this.getServer().getPluginManager().disablePlugin(this);
@@ -48,19 +52,21 @@ public class SkJade extends JavaPlugin {
         } else if (!Utils.isPluginEnabled("Roku")) BukkitImpl.setupRoku(this);
 
         config = new Config(this);
-
         addon = Skript.registerAddon(this);
         this.loadNMS();
         this.loadClassInfo();
         this.loadElements();
 
-        if (Utils.isPluginEnabled("HolographicDisplays") && Config.HOLOGRAPHIC_DISPLAYS_ENABLED) {
-            this.getLogger().info("HolographicDisplays was found! Enabling support");
-            this.loadHologramElements();
-        }
+        if (Config.HOLOGRAMS_ENABLED) {
+            HoloManager.get().addProvider(new DHProvider());
+            if (Utils.isPluginEnabled(Config.HOLOGRAM_PLUGIN) && HoloManager.get().hasProvider(Config.HOLOGRAM_PLUGIN)) {
+                this.getLogger().info(Config.HOLOGRAM_PLUGIN + " was found! Enabling support.");
+                HoloManager.get().setCurrentProvider(HoloManager.get().getProvider(Config.HOLOGRAM_PLUGIN));
+                this.loadHologramElements();
+            } else this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
+        } else this.getLogger().warning("Holograms not enabled in the config. Ignoring setup.");
 
         this.registerListeners(new PlayerJoin());
-        new Metrics(this, 10131);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
 
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {

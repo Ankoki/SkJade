@@ -1,20 +1,29 @@
-package com.ankoki.skjade.hooks.holograms.sections;
+package com.ankoki.skjade.hooks.holograms.elements.sections;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.hooks.holograms.internal.HologramController;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.List;
 
+@Name("Hologram")
+@Description({"Creates a new hologram with a key.",
+            "Please note the given example is using DecentHolograms."})
+@Examples({"create new holo keyed \"stacyGURLS!\":",
+            "\tlines: \"it's going\", \"DOWWWWWN\", ender dragon"})
+@Since("2.0")
 public class SecKeyedHologram extends Section {
 
     static {
-        Skript.registerSection(SecKeyedHologram.class, "create new holo[gram] keyed as %string%");
+        Skript.registerSection(SecKeyedHologram.class, "create new holo[gram] (key|nam)ed [as] %string%");
     }
 
     private Expression<String> keyExpr;
@@ -29,6 +38,7 @@ public class SecKeyedHologram extends Section {
         }
         keyExpr = (Expression<String>) exprs[0];
         trigger = loadCode(sectionNode, "hologram creation", getParser().getCurrentEvents());
+
         return true;
     }
 
@@ -36,13 +46,9 @@ public class SecKeyedHologram extends Section {
     protected @Nullable TriggerItem walk(Event event) {
         TriggerItem item = walk(event, false);
         String key = keyExpr.getSingle(event);
-        if (key == null) return item;
+        if (key == null) return getNext();
         trigger.execute(event);
-        HologramController.Builder.getInstance().setKey(key);
-        if (HologramController.Builder.getInstance().isComplete()) {
-            HologramController.Builder.getInstance().buildCurrent();
-            HologramController.Builder.getInstance().reset();
-        } return item;
+        return item;
     }
 
     @Override

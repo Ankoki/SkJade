@@ -1,2 +1,7 @@
+# Whether holograms should be enabled or not.
 holograms-enabled: true
+# The hologram plugin that SkJade should use.
+# Must be supported, only the following are currently:
+# - DecentHolograms
+hologram-plugin: DecentHolograms
 new-version-alerts: true
