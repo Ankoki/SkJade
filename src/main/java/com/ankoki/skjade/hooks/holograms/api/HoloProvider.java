@@ -4,8 +4,16 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HoloProvider {
+
+    /**
+     * Parses an object into a SKJHoloLine.
+     * @param line the unparsed line.
+     * @return the parsed line.
+     */
+    SKJHoloLine parseLine(Object line);
 
     /**
      * Gets the id of the provider.
@@ -41,8 +49,8 @@ public interface HoloProvider {
      * Creates a new hologram using the provider.
      * @param name the name/key to give the hologram.
      * @param location the location to spawn it at.
-     * @param lines the lines to give the hologram.
+     * @param pages the pages of lines to give the hologram. If the provider doesn't support pages, only use page index 0.
      * @return the created hologram.
      */
-    @NotNull SKJHolo createHolo(String name, Location location, List<SKJHoloLine> lines);
+    @NotNull SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages);
 }

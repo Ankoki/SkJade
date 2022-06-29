@@ -7,8 +7,14 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 public class DHProvider implements HoloProvider {
+
+    @Override
+    public SKJHoloLine parseLine(Object line) {
+        return new DHHoloLine(line);
+    }
 
     @Override
     public @NotNull String getId() {
@@ -36,7 +42,7 @@ public class DHProvider implements HoloProvider {
     }
 
     @Override
-    public @NotNull SKJHolo createHolo(String name, Location location, List<SKJHoloLine> lines) {
-        return new DHHolo(name, location, lines);
+    public @NotNull SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages) {
+        return new DHHolo(name, location, pages);
     }
 }

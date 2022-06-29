@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SKJHolo {
 
@@ -27,26 +28,33 @@ public interface SKJHolo {
      * Appends a line to the hologram.
      * @param line the line to add.
      */
-    void appendLine(SKJHoloLine line);
+    void appendLine(int page, SKJHoloLine line);
 
     /**
      * Sets a line to the text.
      * @param index the index to set.
      * @param line the text to set it to.
      */
-    void setLine(int index, SKJHoloLine line);
+    void setLine(int page, int index, SKJHoloLine line);
 
     /**
      * Sets the lines of the hologram.
      * @param lines the lines to set.
      */
-    void setLines(List<SKJHoloLine> lines);
+    void setLines(int page, List<SKJHoloLine> lines);
+
+    /**
+     * Sets all the pages of the hologram if the provider supports this.
+     * @param pages the pages to set.
+     */
+    void setPages(Map<Integer, List<SKJHoloLine>> pages);
 
     /**
      * Shows the hologram to the given players.
+     * @param page the page to show.
      * @param players players to show the hologram to.
      */
-    void showTo(Player[] players);
+    void showTo(int page, Player[] players);
 
     /**
      * Hides the hologram from the given players.

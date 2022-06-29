@@ -9,6 +9,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -16,10 +17,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.List;
 
 @Name("Hologram")
-@Description({"Creates a new hologram with a key.",
+@Description({"Creates a new hologram with a key and location. If the key or location are unset, the hologram will not be created.",
             "Please note the given example is using DecentHolograms."})
 @Examples({"create new holo keyed \"stacyGURLS!\":",
-            "\tlines: \"it's going\", \"DOWWWWWN\", ender dragon"})
+            "\tpage 0: \"it's going\", \"DOWWWWWN\", glowing diamond sword and an ender dragon",
+            "\tpersistent: false",
+            "\tstatic: true"})
 @Since("2.0")
 public class SecKeyedHologram extends Section {
 
@@ -27,8 +30,10 @@ public class SecKeyedHologram extends Section {
         Skript.registerSection(SecKeyedHologram.class, "create [new] holo[gram] (key|nam)ed [as] %string% at %location%");
     }
 
+    private SKJHoloBuilder currentBuilder;
+
     private Expression<String> keyExpr;
-    private Expression<Location> locactionExpr;
+    private Expression<Location> locationExpr;
     private Trigger trigger;
 
     @Override
@@ -39,22 +44,42 @@ public class SecKeyedHologram extends Section {
             return false;
         }
         keyExpr = (Expression<String>) exprs[0];
+        locationExpr = (Expression<Location>) exprs[1];
         trigger = loadCode(sectionNode, "hologram creation", getParser().getCurrentEvents());
-
         return true;
     }
 
     @Override
     protected @Nullable TriggerItem walk(Event event) {
-        TriggerItem item = walk(event, false);
         String key = keyExpr.getSingle(event);
-        if (key == null) return getNext();
-        trigger.execute(event);
-        return item;
+        Location location = locationExpr.getSingle(event);
+        if (key != null && location != null) {
+            this.currentBuilder = new SKJHoloBuilder(key, location);
+            trigger.execute(event);
+            this.currentBuilder.build();
+            this.currentBuilder = null;
+        }
+        return this.getNext();
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
         return "create new holo keyed as " + keyExpr.toString(event, b);
+    }
+
+    /**
+     * Gets the current builder.
+     * @return the current builder.
+     */
+    public SKJHoloBuilder getCurrentBuilder() {
+        return currentBuilder;
+    }
+
+    /**
+     * Sets the current builder.
+     * @param currentBuilder the new builder.
+     */
+    public void setCurrentBuilder(SKJHoloBuilder currentBuilder) {
+        this.currentBuilder = currentBuilder;
     }
 }

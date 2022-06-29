@@ -15,10 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import com.ankoki.skjade.SkJade;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -652,7 +651,7 @@ public abstract class Laser {
             return lastIssuedEID.getAndIncrement();
         }
 
-        private static Logger logger;
+        private static final Logger logger = SkJade.getInstance().getLogger();
         private static int version;
         private static int versionMinor;
         private static String npack = "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
@@ -712,16 +711,6 @@ public abstract class Laser {
 
         static {
             try {
-                logger = new Logger("GuardianBeam", null) {
-                    @Override
-                    public void log(LogRecord logRecord) {
-                        logRecord.setMessage("[GuardianBeam] " + logRecord.getMessage());
-                        super.log(logRecord);
-                    }
-                };
-                logger.setParent(Bukkit.getServer().getLogger());
-                logger.setLevel(Level.ALL);
-
                 // e.g. Bukkit.getServer().getClass().getPackage().getName() -> org.bukkit.craftbukkit.v1_17_R1
                 String[] versions = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1).split("_");
                 version = Integer.parseInt(versions[1]); // 1.X

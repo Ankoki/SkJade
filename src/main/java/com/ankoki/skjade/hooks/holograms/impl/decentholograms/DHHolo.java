@@ -9,14 +9,15 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 public class DHHolo implements SKJHolo {
 
     private final Hologram current;
 
-    public DHHolo(String key, Location location, List<SKJHoloLine> lines) {
+    public DHHolo(String key, Location location, Map<Integer, List<SKJHoloLine>> pages) {
         this.current = DHAPI.createHologram(key, location);
-        this.setLines(lines);
+        this.setPages(pages);
         if (!this.register(key)) Skript.error("The given key already exists.");
     }
 
@@ -26,42 +27,21 @@ public class DHHolo implements SKJHolo {
     }
 
     @Override
-    public void appendLine(SKJHoloLine line) {
-        SKJHoloLine.Type type = SKJHoloLine.Type.getType(line);
-        switch (type) {
-            case TEXT -> DHAPI.addHologramLine(current, line.getText());
-            case MATERIAL -> DHAPI.addHologramLine(current, line.getMaterial());
-            case ITEM -> DHAPI.addHologramLine(current, line.getItem());
-            case ENTITY -> DHAPI.addHologramLine(current, line.getContent());
-            case EMPTY -> DHAPI.addHologramLine(current, "§f");
-        }
+    public void appendLine(int page, SKJHoloLine line) {
+        DHAPI.addHologramLine(current, page, line.getContent());
     }
 
     @Override
-    public void setLine(int index, SKJHoloLine line) {
-        SKJHoloLine.Type type = SKJHoloLine.Type.getType(line);
-        switch (type) {
-            case TEXT -> DHAPI.setHologramLine(current, index, line.getText());
-            case MATERIAL -> DHAPI.setHologramLine(current, index, line.getMaterial());
-            case ITEM -> DHAPI.setHologramLine(current, index, line.getItem());
-            case ENTITY -> DHAPI.addHologramLine(current, index, line.getContent());
-            case EMPTY -> DHAPI.setHologramLine(current, index, "§f");
-        }
+    public void setLine(int page, int index, SKJHoloLine line) {
+        DHAPI.setHologramLine(current, page, index, line.getContent());
     }
 
     @Override
-    public void setLines(List<SKJHoloLine> lines) {
+    public void setLines(int page, List<SKJHoloLine> lines) {
         int index = 0;
         for (SKJHoloLine line : lines) {
             try {
-                SKJHoloLine.Type type = SKJHoloLine.Type.getType(line);
-                switch (type) {
-                    case TEXT -> DHAPI.setHologramLine(current, index, line.getText());
-                    case MATERIAL -> DHAPI.setHologramLine(current, index, line.getMaterial());
-                    case ITEM -> DHAPI.setHologramLine(current, index, line.getItem());
-                    case ENTITY -> DHAPI.setHologramLine(current, index, line.getContent());
-                    case EMPTY -> DHAPI.setHologramLine(current, index, "§f");
-                }
+                DHAPI.setHologramLine(current, page, index, line.getContent());
                 index++;
             } catch (IllegalArgumentException ex) {
                 break;
@@ -70,8 +50,15 @@ public class DHHolo implements SKJHolo {
     }
 
     @Override
-    public void showTo(Player[] players) {
-        for (Player player : players) current.show(player, 0);
+    public void setPages(Map<Integer, List<SKJHoloLine>> pages) {
+        for (Map.Entry<Integer, List<SKJHoloLine>> entry : pages.entrySet()) {
+            this.setLines(entry.getKey(), entry.getValue());
+        }
+    }
+
+    @Override
+    public void showTo(int page, Player[] players) {
+        for (Player player : players) current.show(player, page);
     }
 
     @Override
