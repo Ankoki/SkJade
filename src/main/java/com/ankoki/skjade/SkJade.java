@@ -41,7 +41,7 @@ public class SkJade extends JavaPlugin {
         new Metrics(this, 10131);
         version = this.getDescription().getVersion();
 
-        if (!Utils.isPluginEnabled("Skript") && Skript.isAcceptRegistrations()) {
+        if (!Utils.isPluginEnabled("Skript") || !Skript.isAcceptRegistrations()) {
             this.getLogger().severe("Skript wasn't found. Are you sure it's installed and up to date?");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
@@ -54,8 +54,20 @@ public class SkJade extends JavaPlugin {
         config = new Config(this);
         addon = Skript.registerAddon(this);
         this.loadNMS();
-        this.loadClassInfo();
-        this.loadElements();
+
+        if (!Config.MISC_ENABLED && !Config.BINFLOP_ENABLED && !Config.LASERS_ENABLED && !Config.HOLOGRAMS_ENABLED) {
+            this.getLogger().severe("There are no SkJade elements enabled in the config. Disabling plugin.");
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
+
+        if (Config.MISC_ENABLED) this.loadMiscElements();
+        else this.getLogger().warning("Misc elements not enabled in the config. Skipping...");
+
+        if (Config.BINFLOP_ENABLED) this.loadBinflopElements();
+        else this.getLogger().warning("Binflop elements not enabled in the config. Skipping...");
+
+        if (Config.LASERS_ENABLED) this.loadLaserElements();
+        else this.getLogger().warning("Laser elements not enabled in the config. Skipping...");
 
         if (Config.HOLOGRAMS_ENABLED) {
             HoloManager.get().addProvider(new DHProvider());
@@ -64,7 +76,7 @@ public class SkJade extends JavaPlugin {
                 HoloManager.get().setCurrentProvider(HoloManager.get().getProvider(Config.HOLOGRAM_PLUGIN));
                 this.loadHologramElements();
             } else this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
-        } else this.getLogger().warning("Holograms not enabled in the config. Ignoring setup.");
+        } else this.getLogger().warning("Holographic elements not enabled in the config. Skipping...");
 
         this.registerListeners(new PlayerJoin());
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
@@ -88,13 +100,12 @@ public class SkJade extends JavaPlugin {
             return version;
         });
 
-        future.thenApply(version -> this.latest = version.equalsIgnoreCase(this.getVersion()));
-
-        if (Version.currentIsLegacy()) {
-            this.getLogger().warning("Please note SkJade does not support legacy versions. The supported versions are 1.13+.");
-            this.getLogger().warning("You have no reason to not use the latest server version. SkJade will still be enabled, " +
-                    "however you may encounter some issues which may not get fixed due to not supporting fossil versions.");
-        }
+        future.thenApply(version -> {
+            this.latest = version.equalsIgnoreCase(this.getVersion());
+            if (!latest) this.getLogger().warning("You are due an update for SkJade. The latest version is v" + version + "! " +
+                    "Find it at https://www.github.com/Ankoki/SkJade/releases/latest/");
+            return false;
+        });
 
         long fin = System.currentTimeMillis() - start;
         this.getLogger().info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
@@ -110,17 +121,39 @@ public class SkJade extends JavaPlugin {
         } else nmsEnabled = true;
     }
 
-    private void loadElements() {
+    private void loadMiscElements() {
+        if (Utils.getMinecraftMinor() > 12) NonLegacyClassInfo.register();
         try {
             addon.loadClasses("com.ankoki.skjade.elements",
                     "expressions",
                     "effects",
                     "events",
-                    "conditions",
-                    "binflop",
-                    "lasers");
+                    "conditions");
         } catch (IOException ex) {
-            this.getLogger().severe("Something went horribly wrong!");
+            this.getLogger().severe("Something went horribly wrong loading misc elements.");
+            ex.printStackTrace();
+        }
+    }
+
+    private void loadBinflopElements() {
+        try {
+            addon.loadClasses("com.ankoki.skjade.elements", "binflop");
+        } catch (IOException ex) {
+            this.getLogger().severe("Something went horribly wrong loading binflop elements.");
+            ex.printStackTrace();
+        }
+    }
+
+    private void loadLaserElements() {
+        Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
+                .user("laser?s?")
+                .name("Laser")
+                .description("A guardian beam.")
+                .since("1.3.1"));
+        try {
+            addon.loadClasses("com.ankoki.skjade.elements", "lasers");
+        } catch (IOException ex) {
+            this.getLogger().severe("Something went horribly wrong loading laser elements.");
             ex.printStackTrace();
         }
     }
@@ -129,7 +162,7 @@ public class SkJade extends JavaPlugin {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {
-            this.getLogger().severe("Something went horribly wrong!");
+            this.getLogger().severe("Something went horribly wrong loading holographic elements.");
             ex.printStackTrace();
         }
     }
@@ -137,16 +170,6 @@ public class SkJade extends JavaPlugin {
     private void registerListeners(Listener... listeners) {
         for (Listener listener : listeners)
             this.getServer().getPluginManager().registerEvents(listener, this);
-    }
-
-    private void loadClassInfo() {
-        //Laser ClassInfo
-        Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
-                .user("laser?s?")
-                .name("Laser")
-                .description("A guardian beam.")
-                .since("1.3.1"));
-        if (Utils.getMinecraftMinor() > 12) NonLegacyClassInfo.register();
     }
 
     public boolean isBeta() {
