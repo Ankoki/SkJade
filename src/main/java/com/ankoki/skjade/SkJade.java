@@ -28,7 +28,7 @@ public class SkJade extends JavaPlugin {
     private static SkJade instance;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
-    private String version;
+    private com.ankoki.roku.misc.Version version;
     private SkriptAddon addon;
     private boolean nmsEnabled = false;
     private boolean latest = true;
@@ -39,7 +39,7 @@ public class SkJade extends JavaPlugin {
         long start = System.currentTimeMillis();
         instance = this;
         new Metrics(this, 10131);
-        version = this.getDescription().getVersion();
+        version = com.ankoki.roku.misc.Version.of(this.getDescription().getVersion());
 
         if (!Utils.isPluginEnabled("Skript") || !Skript.isAcceptRegistrations()) {
             this.getLogger().severe("Skript wasn't found. Are you sure it's installed and up to date?");
@@ -101,8 +101,9 @@ public class SkJade extends JavaPlugin {
         });
 
         future.thenApply(version -> {
-            this.latest = version.equalsIgnoreCase(this.getVersion());
-            if (!latest) this.getLogger().warning("You are due an update for SkJade. The latest version is v" + version + "! " +
+            com.ankoki.roku.misc.Version latest = com.ankoki.roku.misc.Version.of(version);
+            this.latest = latest.isNewerThan(this.version);
+            if (!this.latest) this.getLogger().warning("You are due an update for SkJade. The latest version is v" + version + "! " +
                     "Find it at https://www.github.com/Ankoki/SkJade/releases/latest/");
             return false;
         });
@@ -173,10 +174,10 @@ public class SkJade extends JavaPlugin {
     }
 
     public boolean isBeta() {
-        return version.endsWith("-beta");
+        return version.hasSuffix() && version.getSuffix().equalsIgnoreCase("beta");
     }
 
-    public String getVersion() {
+    public com.ankoki.roku.misc.Version getVersion() {
         return version;
     }
 
