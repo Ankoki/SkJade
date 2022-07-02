@@ -1,7 +1,9 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
 import ch.njol.skript.Skript;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
+import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
@@ -13,12 +15,16 @@ import java.util.Map;
 
 public class DHHolo implements SKJHolo {
 
-    private final Hologram current;
+    private Hologram current;
 
     public DHHolo(String key, Location location, Map<Integer, List<SKJHoloLine>> pages) {
+        if (!this.register(key)) {
+            Skript.error("The given key already exists. Hologram will not be created.");
+            return;
+        }
         this.current = DHAPI.createHologram(key, location);
         this.setPages(pages);
-        if (!this.register(key)) Skript.error("The given key already exists.");
+
     }
 
     @Override
@@ -42,9 +48,10 @@ public class DHHolo implements SKJHolo {
         for (SKJHoloLine line : lines) {
             try {
                 DHAPI.setHologramLine(current, page, index, line.getContent());
-                index++;
             } catch (IllegalArgumentException ex) {
-                break;
+                DHAPI.addHologramLine(current, page, line.getContent());
+            } finally {
+                index++;
             }
         }
     }

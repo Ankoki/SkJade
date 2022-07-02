@@ -1,5 +1,6 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.utils.entity.DecentEntityType;
 import eu.decentsoftware.holograms.api.utils.items.HologramItem;
@@ -45,8 +46,10 @@ public class DHHoloLine implements SKJHoloLine {
             this.material = line instanceof Material material ? material : null;
             this.item = item;
             this.entity = null;
-        } else if (line instanceof EntityType || line instanceof Entity) {
-            EntityType type = line instanceof Entity entity ? entity.getType() : (EntityType) line;
+        } else if (line instanceof EntityType || line instanceof Entity || line instanceof ch.njol.skript.entity.EntityType) {
+            EntityType type;
+            if (line instanceof ch.njol.skript.entity.EntityType) type = EntityType.valueOf(((ch.njol.skript.entity.EntityType) line).data.toString(0).toUpperCase().replace(" ", "_"));
+            else type = line instanceof Entity entity ? entity.getType() : (EntityType) line;
             this.content = "#ENTITY:" + (DecentEntityType.isAllowed(type) ? type.name() : "PIG");
             this.text = content;
             this.material = null;

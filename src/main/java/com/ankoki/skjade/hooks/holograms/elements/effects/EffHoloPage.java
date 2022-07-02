@@ -7,11 +7,14 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.SectionSkriptEvent;
+import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.HoloManager;
 import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
+import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -28,19 +31,22 @@ public class EffHoloPage extends Effect {
 
     static {
         Skript.registerEffect(EffHoloPage.class,
-                "(page %-number%|[default ]lines): %strings/entitytypes/entities/items");
+                "(page %-number%|[default ]lines)\\: %strings/entitytypes/entities/itemtypes%");
         HoloProvider provider = HoloManager.get().getCurrentProvider();
         if (!provider.supportsPages()) SkJade.getInstance().getLogger().warning("Please note your current hologram provider (" + provider.getId() + ") " +
                     "does not support the use of pages, so please make sure you do not try and create pages above index 0, otherwise " +
                     "the lines of your hologram will be replaced!");
     }
 
+    private SecKeyedHologram section;
     private Expression<Number> pageExpr;
     private Expression<Object> linesExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        if (this.getParser().isCurrentSection(SecKeyedHologram.class)) {
+        SkriptEvent event = getParser().getCurrentSkriptEvent();
+        if (event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecKeyedHologram.class)) {
+            section = (SecKeyedHologram) skriptEvent.getSection();
             pageExpr = (Expression<Number>) exprs[0];
             linesExpr = (Expression<Object>) exprs[1];
             return true;
@@ -58,7 +64,9 @@ public class EffHoloPage extends Effect {
             page = HoloManager.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
         }
         Object[] lines = linesExpr.getAll(event);
-        ((SecKeyedHologram) this.getParent()).getCurrentBuilder().addPage(page, lines);
+        SKJHoloBuilder builder = section.getCurrentBuilder();
+        builder.addPage(page, lines);
+        section.setCurrentBuilder(builder);
     }
 
     @Override

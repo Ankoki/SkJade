@@ -38,7 +38,7 @@ public class SecKeyedHologram extends Section {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult, SectionNode sectionNode, List<TriggerItem> list) {
-        SkriptEvent event = getParser().getCurrentSkriptEvent();
+        SkriptEvent event = this.getParser().getCurrentSkriptEvent();
         if (event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecKeyedHologram.class)) {
             Skript.error("You can't create another hologram in a hologram creation section.");
             return false;
