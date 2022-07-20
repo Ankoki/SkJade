@@ -43,6 +43,7 @@ public class HoloManager {
         return true;
     }
 
+    //<editor-fold desc="Providers" defaultstate="collapsed">
     /**
      * Checks if SkJade has a hologram provider registered under the given id.
      * @param id the id.
@@ -90,4 +91,5 @@ public class HoloManager {
     public HoloProvider getCurrentProvider() {
         return provider;
     }
+    //</editor-fold>
 }

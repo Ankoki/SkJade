@@ -2,10 +2,9 @@ package com.ankoki.skjade.hooks.holograms.api;
 
 import com.ankoki.skjade.hooks.holograms.HoloManager;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SKJHoloBuilder {
@@ -13,6 +12,8 @@ public class SKJHoloBuilder {
     private final String key;
     private final Location location;
     private final Map<Integer, List<SKJHoloLine>> pages = new ConcurrentHashMap<>();
+    private final List<Player> hide = new ArrayList<>();
+    private final Map<Integer, List<Player>> show = new ConcurrentHashMap<>();
 
     private boolean still, persistent;
 
@@ -60,6 +61,26 @@ public class SKJHoloBuilder {
     }
 
     /**
+     * Adds players to show the hologram to if the provider supports it.
+     * @param players the players to show the hologram to.
+     * @return the current builder for chaining.
+     */
+    public SKJHoloBuilder showTo(int page, Player... players) {
+        show.put(page, Arrays.asList(players));
+        return this;
+    }
+
+    /**
+     * Adds players to hide the hologram from if the provider supports it.
+     * @param players the players to hide the hologram from.
+     * @return the current builder for chaining.
+     */
+    public SKJHoloBuilder hideFrom(Player... players) {
+        hide.addAll(Arrays.asList(players));
+        return this;
+    }
+
+    /**
      * Builds the current builder into an SKJHolo object.
      * @return the built hologram.
      */
@@ -67,6 +88,8 @@ public class SKJHoloBuilder {
         SKJHolo hologram = HoloManager.get().getCurrentProvider().createHolo(key, location, pages);
         hologram.setStatic(still);
         hologram.setPersistent(persistent);
+        for (Map.Entry<Integer, List<Player>> entry : show.entrySet()) hologram.showTo(entry.getKey(), entry.getValue().toArray(new Player[0]));
+        hologram.hideFrom(hide.toArray(hide.toArray(new Player[0])));
         return hologram;
     }
 }
