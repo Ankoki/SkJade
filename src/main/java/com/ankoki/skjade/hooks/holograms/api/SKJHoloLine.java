@@ -6,7 +6,30 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface SKJHoloLine {
+
+    /**
+     * Transforms a list of lines into an object array.
+     * @param lines the lines to transform.
+     * @return the new array.
+     */
+    static Object[] transform(List<SKJHoloLine> lines) {
+        Object[] changed = new Object[lines.size()];
+        for (int i = 0; i < lines.size(); i++) {
+            SKJHoloLine line = lines.get(i);
+            Type type = Type.getType(line);
+            switch (type) {
+                case TEXT -> changed[i] = line.getText();
+                case ITEM -> changed[i] = line.getItem();
+                case MATERIAL -> changed[i] = line.getMaterial();
+                case ENTITY -> changed[i] = line.getEntity();
+                case EMPTY -> changed[i] = null;
+            }
+        }
+        return changed;
+    }
 
     /**
      * Gets the content of the line.

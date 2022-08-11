@@ -1,15 +1,15 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
 import ch.njol.skript.Skript;
-import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
-import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
+import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,5 +96,21 @@ public class DHHolo implements SKJHolo {
     @Override
     public void setStatic(boolean stat) {
         current.setAlwaysFacePlayer(!stat);
+    }
+
+    @Override
+    public Map<Integer, List<SKJHoloLine>> getPages() {
+        Map<Integer, List<SKJHoloLine>> map = new HashMap<>();
+        int i = 0;
+        for (HologramPage page : current.getPages()) {
+            map.put(i, DHHoloLine.parseDHLines(page.getLines()));
+            i++;
+        }
+        return map;
+    }
+
+    @Override
+    public List<SKJHoloLine> getPage(int page) {
+        return null;
     }
 }

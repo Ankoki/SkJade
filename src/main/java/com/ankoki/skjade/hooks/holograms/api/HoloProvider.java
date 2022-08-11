@@ -16,6 +16,13 @@ public interface HoloProvider {
     SKJHoloLine parseLine(Object line);
 
     /**
+     * Parses a list of objects into a list of SKJHoloLines.
+     * @param lines the unparsed lines.
+     * @return the parsed lines.
+     */
+    List<SKJHoloLine> parseLines(List<Object> lines);
+
+    /**
      * Gets the id of the provider.
      * @return the id of the provider.
      */

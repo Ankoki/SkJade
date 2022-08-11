@@ -6,6 +6,7 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,13 @@ public class DHProvider implements HoloProvider {
     @Override
     public SKJHoloLine parseLine(Object line) {
         return new DHHoloLine(line);
+    }
+
+    @Override
+    public List<SKJHoloLine> parseLines(List<Object> lines) {
+        List<SKJHoloLine> parsed = new ArrayList<>();
+        for (Object object : lines) parsed.add(new DHHoloLine(object));
+        return parsed;
     }
 
     @Override

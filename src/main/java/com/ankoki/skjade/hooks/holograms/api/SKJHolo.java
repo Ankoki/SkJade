@@ -93,4 +93,17 @@ public interface SKJHolo {
      * @param stat false if the holograms should face the player.
      */
     void setStatic(boolean stat);
+
+    /**
+     * Gets all the pages of a hologram.
+     * @return the pages.
+     */
+    Map<Integer, List<SKJHoloLine>> getPages();
+
+    /**
+     * Gets the lines of a page.
+     * @param page the page index.
+     * @return the lines of a page.
+     */
+    List<SKJHoloLine> getPage(int page);
 }

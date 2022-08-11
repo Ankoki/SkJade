@@ -1,8 +1,9 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
-import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
+import eu.decentsoftware.holograms.api.holograms.HologramLine;
 import eu.decentsoftware.holograms.api.utils.entity.DecentEntityType;
+import eu.decentsoftware.holograms.api.utils.entity.HologramEntity;
 import eu.decentsoftware.holograms.api.utils.items.HologramItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -28,6 +29,26 @@ public class DHHoloLine implements SKJHoloLine {
         return parsed;
     }
 
+    /**
+     * Parses DH hologram lines into SkJade hologram lines.
+     *
+     * @param lines the DH hologram lines to parse.
+     * @return the parsed lines.
+     */
+    public static List<SKJHoloLine> parseDHLines(List<HologramLine> lines) {
+        List<SKJHoloLine> parsed = new ArrayList<>();
+        for (HologramLine line : lines) {
+            switch (line.getType()) {
+                case ENTITY -> parsed.add(new DHHoloLine(line.getEntity()));
+                case TEXT -> parsed.add(new DHHoloLine(line.getText()));
+                case HEAD, SMALLHEAD, ICON -> parsed.add(new DHHoloLine(line.getItem()));
+                case UNKNOWN -> parsed.add(new DHHoloLine(line.getContent()));
+            }
+            parsed.add(new DHHoloLine(line.getType()));
+        }
+        return parsed;
+    }
+
     private final String content;
     private final String text;
     private final Material material;
@@ -46,6 +67,19 @@ public class DHHoloLine implements SKJHoloLine {
             this.material = line instanceof Material material ? material : null;
             this.item = item;
             this.entity = null;
+        } else if (line instanceof HologramItem item) {
+            this.content = item.getContent();
+            this.text = content;
+            this.material = item.getMaterial();
+            this.item = item.parse();
+            this.entity = null;
+        } else if (line instanceof HologramEntity entity) {
+            EntityType type = entity.getType();
+            this.content = "#ENTITY:" + (DecentEntityType.isAllowed(type) ? type.name() : "PIG");
+            this.text = content;
+            this.material = null;
+            this.item = null;
+            this.entity = type;
         } else if (line instanceof EntityType || line instanceof Entity || line instanceof ch.njol.skript.entity.EntityType) {
             EntityType type;
             if (line instanceof ch.njol.skript.entity.EntityType) type = EntityType.valueOf(((ch.njol.skript.entity.EntityType) line).data.toString(0).toUpperCase().replace(" ", "_"));
