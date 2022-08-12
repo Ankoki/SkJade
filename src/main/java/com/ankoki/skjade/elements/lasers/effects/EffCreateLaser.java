@@ -18,7 +18,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Create Laser/Guardian Beam")
-@Description("Creates a laser/guardian beam. Does NOT show it. For an infinite beam, use -1 seconds.")
+@Description("Creates a laser/guardian beam. Does NOT show it.")
 @Examples("create a new laser from player to player's target block for 10 seconds with the id \"kachow\"")
 @Since("1.3.1")
 public class EffCreateLaser extends Effect {
@@ -26,15 +26,17 @@ public class EffCreateLaser extends Effect {
     static {
         if (SkJade.getInstance().isNmsEnabled())
             Skript.registerEffect(EffCreateLaser.class,
-                "create [a] [new] (la(s|z)er [beam]|guardian beam) from %location% to %location% for %timespan% with [the] id %string%");
+                "create [a] [new] (la(s|z)er [beam]|guardian beam) from %location% to %location% for( %-timespan%|perm:[ ]ever) with [the] id %string%");
     }
 
     private Expression<Location> locationOneExpr, locationTwoExpr;
     private Expression<Timespan> timeExpr;
     private Expression<String> keyExpr;
+    private boolean perm;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
+        perm = parseResult.hasTag("perm");
         locationOneExpr = (Expression<Location>) exprs[0];
         locationTwoExpr = (Expression<Location>) exprs[1];
         timeExpr = (Expression<Timespan>) exprs[2];
@@ -44,13 +46,15 @@ public class EffCreateLaser extends Effect {
 
     @Override
     protected void execute(Event e) {
-        if (locationOneExpr == null || locationTwoExpr == null || timeExpr == null || keyExpr == null) return;
+        if (locationOneExpr == null || locationTwoExpr == null || keyExpr == null) return;
+        if (timeExpr == null && !perm) return;
         Location loc1 = locationOneExpr.getSingle(e);
         Location loc2 = locationTwoExpr.getSingle(e);
-        Timespan sec = timeExpr.getSingle(e);
+        Timespan sec = null;
+        if (!perm) sec = timeExpr.getSingle(e);
         String id = keyExpr.getSingle(e);
-        if (loc1 == null || loc2 == null || sec == null || id == null || id.isEmpty()) return;
-        int seconds = (int) Math.ceil(sec.getTicks_i() / 20D);
+        if (loc1 == null || loc2 == null || (sec == null && !perm) || id == null || id.isEmpty()) return;
+        int seconds = perm ? -1 : (int) Math.ceil(sec.getTicks_i() / 20D);
         try {
             Laser laser = new Laser.GuardianLaser(loc1, loc2, seconds, 100);
             LaserManager.createLaser(id, laser);
