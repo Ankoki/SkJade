@@ -61,6 +61,12 @@ public interface SKJHoloLine {
      */
     @Nullable EntityType getEntity();
 
+    /**
+     * Gets the current line contents as an object.
+     * @return the current line contents.
+     */
+    @Nullable Object get();
+
     enum Type {
         TEXT, ITEM, MATERIAL, ENTITY, EMPTY;
 

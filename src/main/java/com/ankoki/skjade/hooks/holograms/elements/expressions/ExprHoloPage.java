@@ -14,6 +14,7 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,31 +22,29 @@ public class ExprHoloPage extends SimpleExpression<Object> {
 
     static {
         Skript.registerExpression(ExprHoloPage.class, Object.class, ExpressionType.SIMPLE,
-                "(page %-number%|[default ]lines) of holo[gram] (key|nam)ed [as] %string%");
+                "(page %-number%|[default ]lines) of %skjholo%");
     }
 
     private Expression<Number> indexExpr;
-    private Expression<String> keyExpr;
+    private Expression<SKJHolo> holoExpr;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
         indexExpr = (Expression<Number>) exprs[0];
-        keyExpr = (Expression<String>) exprs[1];
+        holoExpr = (Expression<SKJHolo>) exprs[1];
         return true;
     }
 
     @Override
     protected @Nullable Object[] get(Event event) {
-        String key = keyExpr.getSingle(event);
-        if (key == null) return new Object[0];
+        SKJHolo holo = holoExpr.getSingle(event);
+        if (holo == null) return new Object[0];
         int index = 0;
         if (indexExpr != null) {
             Number number = indexExpr.getSingle(event);
             if (number == null) return new Object[0];
             index = HoloManager.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
         }
-        SKJHolo holo = HoloManager.get().getHolo(key);
-        if (holo == null) return new Object[0];
         List<SKJHoloLine> page = holo.getPage(index);
         return SKJHoloLine.transform(page);
     }
@@ -57,21 +56,29 @@ public class ExprHoloPage extends SimpleExpression<Object> {
 
     @Override
     public void change(Event event, @Nullable Object[] delta, ChangeMode mode) {
-        if (delta.length == 0) return;
-        String key = keyExpr.getSingle(event);
-        if (key == null) return;
+        if (delta.length == 0 && (mode != ChangeMode.RESET && mode != ChangeMode.REMOVE_ALL)) return;
+        SKJHolo holo = holoExpr.getSingle(event);
+        if (holo == null) return;
         int index = 0;
         if (indexExpr != null) {
             Number number = indexExpr.getSingle(event);
             if (number == null) return;
             index = HoloManager.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
         }
-        SKJHolo holo = HoloManager.get().getHolo(key);
-        if (holo == null) return;
+
         switch (mode) {
             case ADD -> holo.appendLine(index, HoloManager.get().getCurrentProvider().parseLine(delta[0]));
             case SET -> holo.setLines(index, HoloManager.get().getCurrentProvider().parseLines(Arrays.asList(delta)));
-            case REMOVE 
+            case REMOVE -> {
+                List<SKJHoloLine> current = holo.getPage(index);
+                List<SKJHoloLine> updated = new ArrayList<>();
+                Object object = delta[0];
+                for (SKJHoloLine line : current) {
+                    if (line.get() != object) updated.add(line);
+                }
+                holo.setLines(index, updated);
+            }
+            default -> holo.setLines(index, List.of());
         }
     }
 

@@ -122,4 +122,16 @@ public class DHHoloLine implements SKJHoloLine {
     public @Nullable EntityType getEntity() {
         return entity;
     }
+
+    @Override
+    public @Nullable Object get() {
+        Type type = Type.getType(this);
+        return switch (type) {
+            case TEXT -> this.getText();
+            case ITEM -> this.getItem();
+            case MATERIAL -> this.getMaterial();
+            case ENTITY -> this.getEntity();
+            default -> null;
+        };
+    }
 }

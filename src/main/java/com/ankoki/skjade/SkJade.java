@@ -11,6 +11,7 @@ import com.ankoki.roku.web.exceptions.MalformedJsonException;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.elements.lasers.Laser;
 import com.ankoki.skjade.hooks.holograms.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
 import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.*;
@@ -160,6 +161,11 @@ public class SkJade extends JavaPlugin {
     }
 
     private void loadHologramElements() {
+        Classes.registerClass(new ClassInfo<>(SKJHolo.class, "skjholo")
+                .user("skjholo%s%")
+                .name("Hologram")
+                .description("An SkJade hologram.")
+                .since("2.0"));
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {
