@@ -3,6 +3,8 @@ package com.ankoki.skjade;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
 import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.classes.Parser;
+import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import com.ankoki.roku.bukkit.BukkitImpl;
 import com.ankoki.roku.web.JSON;
@@ -18,6 +20,7 @@ import com.ankoki.skjade.utils.*;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -165,7 +168,23 @@ public class SkJade extends JavaPlugin {
                 .user("skjholo%s%")
                 .name("Hologram")
                 .description("An SkJade hologram.")
-                .since("2.0"));
+                .since("2.0")
+                .parser(new Parser<>() {
+                    @Override
+                    public String toString(SKJHolo skjHolo, int i) {
+                        return "SkJadeHologram-" + skjHolo.getKey();
+                    }
+
+                    @Override
+                    public String toVariableNameString(SKJHolo skjHolo) {
+                        return "SkJadeHologram-" + skjHolo.getKey();
+                    }
+
+                    @Override
+                    public @Nullable SKJHolo parse(String s, ParseContext context) {
+                        return HoloManager.get().getHolo(s);
+                    }
+                }));
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {

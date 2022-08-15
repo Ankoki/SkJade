@@ -3,6 +3,7 @@ package com.ankoki.skjade.hooks.holograms.api;
 import com.ankoki.skjade.hooks.holograms.HoloManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,12 @@ public interface SKJHolo {
     default boolean register(String key) {
          return HoloManager.get().registerHolo(key, this);
     }
+
+    /**
+     * Gets the current holograms key, for storage purposes.
+     * @return the holograms key.
+     */
+    @NotNull String getKey();
 
     /**
      * Moves the hologram to given location.

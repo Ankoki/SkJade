@@ -38,7 +38,7 @@ public class HoloManager {
      * @return if registering was successful.
      */
     public boolean registerHolo(String key, SKJHolo holo) {
-        if (storage.containsKey(key)) return false;
+        if (key == null || storage.containsKey(key)) return false;
         storage.put(key, holo);
         return true;
     }

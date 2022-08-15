@@ -8,6 +8,7 @@ import eu.decentsoftware.holograms.api.holograms.Hologram;
 import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,15 +17,22 @@ import java.util.Map;
 public class DHHolo implements SKJHolo {
 
     private Hologram current;
+    private String key;
 
     public DHHolo(String key, Location location, Map<Integer, List<SKJHoloLine>> pages) {
         if (!this.register(key)) {
             Skript.error("The given key already exists. Hologram will not be created.");
             return;
         }
+        this.key = key;
         this.current = DHAPI.createHologram(key, location);
         this.setPages(pages);
 
+    }
+
+    @Override
+    public @NotNull String getKey() {
+        return key;
     }
 
     @Override
