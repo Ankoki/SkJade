@@ -40,7 +40,7 @@ public class SkJade extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         instance = this;
         new Metrics(this, 10131);
         version = com.ankoki.roku.misc.Version.of(this.getDescription().getVersion());
@@ -85,14 +85,14 @@ public class SkJade extends JavaPlugin {
         this.registerListeners(new PlayerJoin());
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
 
-        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+        final CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
             String version = "INVALID";
             try {
-                WebRequest request = new WebRequest("https://api.github.com/repos/Ankoki/SkJade/releases/latest", WebRequest.RequestType.GET);
-                Optional<String> optional = request.execute();
+                final WebRequest request = new WebRequest("https://api.github.com/repos/Ankoki/SkJade/releases/latest", WebRequest.RequestType.GET);
+                final Optional<String> optional = request.execute();
                 if (optional.isPresent()) {
                     try {
-                        JSON json = new JSON(optional.get());
+                        final JSON json = new JSON(optional.get());
                         version = (String) json.get("tag_name");
                     } catch (MalformedJsonException ex) {
                         ex.printStackTrace();
@@ -105,14 +105,14 @@ public class SkJade extends JavaPlugin {
         });
 
         future.thenApply(version -> {
-            com.ankoki.roku.misc.Version latest = com.ankoki.roku.misc.Version.of(version);
+            final com.ankoki.roku.misc.Version latest = com.ankoki.roku.misc.Version.of(version);
             this.latest = latest.isNewerThan(this.version);
             if (!this.latest) this.getLogger().warning("You are due an update for SkJade. The latest version is v" + version + "! " +
                     "Find it at https://www.github.com/Ankoki/SkJade/releases/latest/");
             return false;
         });
 
-        long fin = System.currentTimeMillis() - start;
+        final long fin = System.currentTimeMillis() - start;
         this.getLogger().info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
                 fin + "ms)");
     }
@@ -135,7 +135,7 @@ public class SkJade extends JavaPlugin {
                     "events",
                     "conditions");
         } catch (IOException ex) {
-            this.getLogger().severe("Something went horribly wrong loading misc elements.");
+            this.getLogger().severe("Something went wrong loading the misc elements.");
             ex.printStackTrace();
         }
     }
@@ -144,7 +144,7 @@ public class SkJade extends JavaPlugin {
         try {
             addon.loadClasses("com.ankoki.skjade.elements", "binflop");
         } catch (IOException ex) {
-            this.getLogger().severe("Something went horribly wrong loading binflop elements.");
+            this.getLogger().severe("Something went wrong loading the binflop elements.");
             ex.printStackTrace();
         }
     }
@@ -158,7 +158,7 @@ public class SkJade extends JavaPlugin {
         try {
             addon.loadClasses("com.ankoki.skjade.elements", "lasers");
         } catch (IOException ex) {
-            this.getLogger().severe("Something went horribly wrong loading laser elements.");
+            this.getLogger().severe("Something went wrong loading the laser elements.");
             ex.printStackTrace();
         }
     }
@@ -188,7 +188,7 @@ public class SkJade extends JavaPlugin {
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {
-            this.getLogger().severe("Something went horribly wrong loading holographic elements.");
+            this.getLogger().severe("Something went wrong loading the holographic elements.");
             ex.printStackTrace();
         }
     }
