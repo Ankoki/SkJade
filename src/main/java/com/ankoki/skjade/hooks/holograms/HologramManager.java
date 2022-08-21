@@ -60,6 +60,7 @@ public class HologramManager {
         if (lines == null) {
             lines = new ArrayList<>();
         }
+        if (item.getAmount() > 64 || item.getAmount() < 1) return;
         lines.add(hologram.appendItemLine(item));
         ALL_LINES.remove(hologram);
         ALL_LINES.put(hologram, lines);
