@@ -1,10 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.elements.effects;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SectionSkriptEvent;
@@ -27,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
         "\tpersistent: false",
         "\tstatic: true"})
 @Since("2.0")
+@RequiredPlugins("DecentHolograms")A
 public class EffHoloPage extends Effect {
 
     static {

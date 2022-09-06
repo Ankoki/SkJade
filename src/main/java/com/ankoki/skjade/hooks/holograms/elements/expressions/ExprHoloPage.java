@@ -2,6 +2,7 @@ package com.ankoki.skjade.hooks.holograms.elements.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer.ChangeMode;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -18,6 +19,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Name("Hologram Page")
+@Description("Gets/sets the pages of a hologram.")
+@Examples("set page 1 of holo keyed as \"aespa\" to \"hey!\", glowing iron sword, \"This is a sword lol\"")
+@Since("2.0")
+@RequiredPlugins("DecentHolograms")
 public class ExprHoloPage extends SimpleExpression<Object> {
 
     static {

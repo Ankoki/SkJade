@@ -2,10 +2,7 @@ package com.ankoki.skjade.hooks.holograms.elements.sections;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
@@ -24,6 +21,7 @@ import java.util.List;
             "\tpersistent: false",
             "\tstatic: true"})
 @Since("2.0")
+@RequiredPlugins("DecentHolograms")
 public class SecKeyedHologram extends Section {
 
     static {

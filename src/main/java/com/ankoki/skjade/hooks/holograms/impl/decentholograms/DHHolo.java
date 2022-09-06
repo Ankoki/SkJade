@@ -82,6 +82,11 @@ public class DHHolo implements SKJHolo {
     }
 
     @Override
+    public boolean canSee(Player player) {
+        return current.isVisible(player);
+    }
+
+    @Override
     public void destroy() {
         current.destroy();
     }
@@ -120,5 +125,10 @@ public class DHHolo implements SKJHolo {
     @Override
     public List<SKJHoloLine> getPage(int page) {
         return null;
+    }
+
+    @Override
+    public Location getLocation() {
+        return current.getLocation();
     }
 }

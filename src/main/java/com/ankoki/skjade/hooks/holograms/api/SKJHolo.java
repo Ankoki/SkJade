@@ -70,6 +70,13 @@ public interface SKJHolo {
     void hideFrom(Player[] players);
 
     /**
+     * Returns whether the given player can see the hologram.
+     * @param player the player to check.
+     * @return true if the player can see.
+     */
+    boolean canSee(Player player);
+
+    /**
      * Destroys and removes the hologram.
      */
     void destroy();
@@ -113,4 +120,10 @@ public interface SKJHolo {
      * @return the lines of a page.
      */
     List<SKJHoloLine> getPage(int page);
+
+    /**
+     * Gets the location of the hologram.
+     * @return the location.
+     */
+    Location getLocation();
 }
