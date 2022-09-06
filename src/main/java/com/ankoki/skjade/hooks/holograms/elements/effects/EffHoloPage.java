@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
         "\tpersistent: false",
         "\tstatic: true"})
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")A
+@RequiredPlugins("DecentHolograms")
 public class EffHoloPage extends Effect {
 
     static {
