@@ -23,6 +23,13 @@ public interface HoloProvider {
     List<SKJHoloLine> parseLines(List<Object> lines);
 
     /**
+     * Parses a foreign click type into an SKJade ClickType.
+     * @param click the foreign clicktype.
+     * @return the translated.
+     */
+    ClickType parseClickType(Object click);
+
+    /**
      * Gets the id of the provider.
      * @return the id of the provider.
      */
@@ -33,6 +40,19 @@ public interface HoloProvider {
      * @return if the provider supports pages.
      */
     boolean supportsPages();
+
+    /**
+     * Checks if the provider supports click events.
+     * @param singleLine will be true if we want to check if it supports single line clicks.
+     * @return true if supported, else false.
+     */
+    boolean supportsOnClick(boolean singleLine);
+
+    /**
+     * Checks if the provider supports touch events.
+     * @return true if supported, else false.
+     */
+    boolean supportsOnTouch();
 
     /**
      * Checks if the provider supports persistent holograms.
@@ -60,4 +80,9 @@ public interface HoloProvider {
      * @return the created hologram.
      */
     @NotNull SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages);
+
+    /**
+     * Call this if you need to setup anything on initiation.
+     */
+    default void setup() {}
 }

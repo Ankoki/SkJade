@@ -78,6 +78,7 @@ public class SkJade extends JavaPlugin {
             if (Utils.isPluginEnabled(Config.HOLOGRAM_PLUGIN) && HoloManager.get().hasProvider(Config.HOLOGRAM_PLUGIN)) {
                 this.getLogger().info(Config.HOLOGRAM_PLUGIN + " was found! Enabling support.");
                 HoloManager.get().setCurrentProvider(HoloManager.get().getProvider(Config.HOLOGRAM_PLUGIN));
+                HoloManager.get().getCurrentProvider().setup();
                 this.loadHologramElements();
             } else this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
         } else this.getLogger().warning("Holographic elements not enabled in the config. Skipping...");

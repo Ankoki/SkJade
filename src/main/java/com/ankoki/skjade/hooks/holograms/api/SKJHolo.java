@@ -1,5 +1,6 @@
 package com.ankoki.skjade.hooks.holograms.api;
 
+import ch.njol.skript.lang.Trigger;
 import com.ankoki.skjade.hooks.holograms.HoloManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -126,4 +127,20 @@ public interface SKJHolo {
      * @return the location.
      */
     Location getLocation();
+
+    /**
+     * Sets the trigger to run on click of a certain line if supported.
+     * @param page the page to run the trigger for if supported.
+     * @param line the line to run the trigger for if per line is supported.
+     * @param trigger the trigger to run.
+     */
+    void onClick(int page, int line, ClickType type, Trigger trigger);
+
+    /**
+     * Sets the trigger to run on touch of a line if supported.
+     * @param page the page to run the trigger for if supported.
+     * @param line the line to run the trigger for if per line is supported.
+     * @param trigger the trigger to run.
+     */
+    void onTouch(int page, int line, ClickType type, Trigger trigger);
 }

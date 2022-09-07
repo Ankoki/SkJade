@@ -1,6 +1,8 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.lang.Trigger;
+import com.ankoki.skjade.hooks.holograms.api.ClickType;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.DHAPI;
@@ -130,5 +132,15 @@ public class DHHolo implements SKJHolo {
     @Override
     public Location getLocation() {
         return current.getLocation();
+    }
+
+    @Override
+    public void onClick(int page, int line, ClickType type, Trigger trigger) {
+
+    }
+
+    @Override
+    public void onTouch(int page, int line, ClickType type, Trigger trigger) {
+
     }
 }
