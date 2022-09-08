@@ -19,13 +19,15 @@ import java.util.List;
 @Examples({"create new holo keyed \"stacyGURLS!\":",
             "\tpage 0: \"it's going\", \"DOWWWWWN\", glowing diamond sword and an ender dragon",
             "\tpersistent: false",
-            "\tstatic: true"})
+            "\tstatic: true",
+            "\ton right shift click of page 2:",
+            "\t\tsend \"Hey! You clicked %event-hologram's id%!\""})
 @Since("2.0")
 @RequiredPlugins("DecentHolograms")
 public class SecKeyedHologram extends Section {
 
     static {
-        Skript.registerSection(SecKeyedHologram.class, "create [new] holo[gram] (key|nam)ed [as] %string% at %location%");
+        Skript.registerSection(SecKeyedHologram.class, "create [new] holo[gram] (with key|(key|nam)ed [as]) %string% at %location%");
     }
 
     private SKJHoloBuilder currentBuilder;

@@ -9,7 +9,7 @@ import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.hooks.holograms.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloManager;
 import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;

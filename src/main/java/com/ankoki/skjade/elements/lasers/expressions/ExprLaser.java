@@ -41,7 +41,7 @@ public class ExprLaser extends SimpleExpression<Laser> {
         if (stringExpr == null) return new Laser[0];
         String id = stringExpr.getSingle(e);
         if (id == null || id.isEmpty()) return new Laser[0];
-        return new Laser[]{LaserManager.getLaser(id)};
+        return new Laser[]{LaserManager.get().getLaser(id)};
     }
 
     @Override

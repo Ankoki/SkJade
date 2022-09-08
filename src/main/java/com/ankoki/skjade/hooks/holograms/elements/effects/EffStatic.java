@@ -7,8 +7,7 @@ import ch.njol.skript.lang.SectionSkriptEvent;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.hooks.holograms.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloManager;
 import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
@@ -19,11 +18,10 @@ public class EffStatic extends Effect {
 
     static {
         HoloProvider provider = HoloManager.get().getCurrentProvider();
-        if (provider.supportsStatic()) Skript.registerEffect(EffVisibility.class,
-                "static\\: %boolean%");
-        else
-            SkJade.getInstance().getLogger().warning("Please note your current hologram provider (" + provider.getId() + ") " +
-                    "does not support the use of static holograms! You cannot use the static effect.");
+        if (provider.supportsStatic()) {
+            Skript.registerEffect(EffStatic.class,
+                    "static\\: %boolean%");
+        }
     }
 
     private SecKeyedHologram section;

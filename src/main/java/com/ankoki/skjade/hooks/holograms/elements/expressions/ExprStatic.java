@@ -10,7 +10,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.hooks.holograms.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloManager;
 import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import org.bukkit.event.Event;

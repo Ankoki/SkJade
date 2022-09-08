@@ -1,7 +1,6 @@
 package com.ankoki.skjade.hooks.holograms.api;
 
 import ch.njol.skript.lang.Trigger;
-import com.ankoki.skjade.hooks.holograms.HoloManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

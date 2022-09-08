@@ -2,6 +2,7 @@ package com.ankoki.skjade.hooks.holograms.api;
 
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -73,13 +74,13 @@ public interface HoloProvider {
     boolean supportsPerPlayer();
 
     /**
-     * Creates a new hologram using the provider.
+     * Creates a new hologram using the provider. Will be null if creation failed.
      * @param name the name/key to give the hologram.
      * @param location the location to spawn it at.
      * @param pages the pages of lines to give the hologram. If the provider doesn't support pages, only use page index 0.
      * @return the created hologram.
      */
-    @NotNull SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages);
+    @Nullable SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages);
 
     /**
      * Call this if you need to setup anything on initiation.

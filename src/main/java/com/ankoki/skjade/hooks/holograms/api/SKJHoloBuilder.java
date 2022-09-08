@@ -1,6 +1,5 @@
 package com.ankoki.skjade.hooks.holograms.api;
 
-import com.ankoki.skjade.hooks.holograms.HoloManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -86,6 +85,7 @@ public class SKJHoloBuilder {
      */
     public SKJHolo build() {
         SKJHolo hologram = HoloManager.get().getCurrentProvider().createHolo(key, location, pages);
+        if (hologram == null) return null;
         hologram.setStatic(still);
         hologram.setPersistent(persistent);
         for (Map.Entry<Integer, List<Player>> entry : show.entrySet()) hologram.showTo(entry.getKey(), entry.getValue().toArray(new Player[0]));

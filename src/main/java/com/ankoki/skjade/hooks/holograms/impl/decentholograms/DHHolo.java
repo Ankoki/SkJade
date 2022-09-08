@@ -2,6 +2,7 @@ package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Trigger;
+import com.ankoki.skjade.hooks.holograms.api.HoloManager;
 import com.ankoki.skjade.hooks.holograms.api.ClickType;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
@@ -18,18 +19,22 @@ import java.util.Map;
 
 public class DHHolo implements SKJHolo {
 
-    private Hologram current;
-    private String key;
+    private final Hologram current;
+    private final String key;
 
-    public DHHolo(String key, Location location, Map<Integer, List<SKJHoloLine>> pages) {
-        if (!this.register(key)) {
+    public static DHHolo create(String key, Location location, Map<Integer, List<SKJHoloLine>> pages) {
+        if (HoloManager.get().getHolo(key) != null) {
             Skript.error("The given key already exists. Hologram will not be created.");
-            return;
+            return null;
         }
+        return new DHHolo(key, location, pages);
+    }
+
+    private DHHolo(String key, Location location, Map<Integer, List<SKJHoloLine>> pages) {
         this.key = key;
         this.current = DHAPI.createHologram(key, location);
         this.setPages(pages);
-
+        this.register(key);
     }
 
     @Override

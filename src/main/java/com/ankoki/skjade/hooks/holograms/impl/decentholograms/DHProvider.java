@@ -8,6 +8,7 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,8 @@ public class DHProvider implements HoloProvider {
     }
 
     @Override
-    public @NotNull SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages) {
-        return new DHHolo(name, location, pages);
+    public @Nullable SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages) {
+        return DHHolo.create(name, location, pages);
     }
 
     @Override

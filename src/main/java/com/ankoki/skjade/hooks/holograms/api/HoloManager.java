@@ -1,7 +1,5 @@
-package com.ankoki.skjade.hooks.holograms;
+package com.ankoki.skjade.hooks.holograms.api;
 
-import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
-import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -41,6 +39,15 @@ public class HoloManager {
         if (key == null || storage.containsKey(key)) return false;
         storage.put(key, holo);
         return true;
+    }
+
+    /**
+     * Returns whether a key is already in use.
+     * @param key the key to check.
+     * @return true if it is in use, else false.
+     */
+    public boolean keyInUse(String key) {
+        return key == null || storage.containsKey(key);
     }
 
     //<editor-fold desc="Providers" defaultstate="collapsed">

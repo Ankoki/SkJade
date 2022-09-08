@@ -8,9 +8,7 @@ import ch.njol.skript.lang.SectionSkriptEvent;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.hooks.holograms.HoloManager;
-import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
+import com.ankoki.skjade.hooks.holograms.api.HoloManager;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
@@ -25,14 +23,12 @@ import org.eclipse.jdt.annotation.Nullable;
 @RequiredPlugins("DecentHolograms")
 public class EffVisibility extends Effect {
 
+
     static {
-        HoloProvider provider = HoloManager.get().getCurrentProvider();
-        if (provider.supportsPerPlayer()) Skript.registerEffect(EffVisibility.class,
+        if (HoloManager.get().getCurrentProvider().supportsPerPlayer())
+            Skript.registerEffect(EffVisibility.class,
                 "(show:show[ page %-number%] to|hide:hide for)\\: %players%",
                 "(show:show[ page %-number%] to|hide:hide ) %skjholo% for %players%");
-        else
-            SkJade.getInstance().getLogger().warning("Please note your current hologram provider (" + provider.getId() + ") " +
-                    "does not support the use of per player holograms! You cannot use the visibility effect.");
     }
 
     private boolean show;
