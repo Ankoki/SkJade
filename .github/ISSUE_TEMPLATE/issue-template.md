@@ -4,7 +4,6 @@ about: If you find an issue, tell us here!
 title: "[ISSUE] <hi besty>"
 labels: bug
 assignees: ''
-
 ---
 
 **Describe the issue**

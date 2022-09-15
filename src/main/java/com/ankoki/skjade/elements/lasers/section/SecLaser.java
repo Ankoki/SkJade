@@ -1,9 +1,7 @@
 package com.ankoki.skjade.elements.lasers.section;
 
-import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
-import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -14,6 +12,7 @@ import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.elements.lasers.Laser;
 import com.ankoki.skjade.elements.lasers.LaserManager;
+import com.ankoki.skjade.utils.SectionValidatorPlus;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
@@ -33,14 +32,14 @@ import java.util.List;
 		"You cannot have an ending entity and ending location, this will error. You will need to choose one.",
 		"Some things cannot be caught at parse time, however there are still things to bear in mind.",
 		" • Raw input should be treated as they are in command entries, you do not need to wrap them in quotes.",
-		" • The duration can be forever, or a timespan.",
+		" • The duration can be a timespan, use -1 seconds for an infinite laser.",
 		" • Distance will default at 100.",
 		" • Type will default to guardian.",
 		" • Expressions will be parsed.",
 		" • The only laser types are \"crystal [beam]\" and \"guardian\"",
 		" • You cannot use an ending entity for a crystal laser."})
 @Examples({"create laser keyed as \"aespa solos ur favs\":",
-		"\tduration: forever",
+		"\tduration: -1 seconds",
 		"\ttype: crystal",
 		"\tstart location: {-teams::blue::leader}",
 		"\tend location: {-teams::blue::leader}'s target block",
@@ -60,13 +59,13 @@ public class SecLaser extends Section {
 		return new SkriptParser(raw, SkriptParser.ALL_FLAGS, ParseContext.DEFAULT).parseExpression(type);
 	}
 
-	private static final SectionValidator SECTION_VALIDATOR = new SectionValidator()
-			.addEntry("duration", false)
-			.addEntry("start location", false)
-			.addEntry("type", true)
-			.addEntry("end location", true)
-			.addEntry("end entity", true)
-			.addEntry("distance", true);
+	private static final SectionValidatorPlus SECTION_VALIDATOR = new SectionValidatorPlus()
+			.addEntry("duration", Timespan.class, false)
+			.addEntry("start location", Location.class, false)
+			.addEntry("type", String.class, true)
+			.addEntry("end location", Location.class, true)
+			.addEntry("end entity", LivingEntity.class, true)
+			.addEntry("distance", Number.class, true);
 
 	private Expression<String> keyExpr, typeExpr;
 	private Expression<Timespan> durationExpr;
@@ -74,52 +73,25 @@ public class SecLaser extends Section {
 	private Expression<LivingEntity> endEntityExpr;
 	private Expression<Number> distanceExpr;
 
-	private String rawDuration;
-	boolean isEndingEntity;
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult, SectionNode sectionNode, List<TriggerItem> list) {
 		keyExpr = (Expression<String>) exprs[0];
 		sectionNode.convertToEntries(0);
 		if (SECTION_VALIDATOR.validate(sectionNode)) {
-			// Get raw values
-			final String rawStartLocation = ScriptLoader.replaceOptions(sectionNode.getValue("start location"));
-			final String rawEndLocation = sectionNode.getValue("end location");
-			final String rawEndEntity = sectionNode.getValue("end entity");
-			if (rawEndLocation != null && rawEndEntity != null) {
+			endLocationExpr = (Expression<Location>) SECTION_VALIDATOR.getEntry("end location");
+			endEntityExpr = (Expression<LivingEntity>) SECTION_VALIDATOR.getEntry("end entity");
+			if (endLocationExpr != null && endEntityExpr != null) {
 				Skript.error("You cannot have an ending location and an ending entity, you need to decide between the two.");
 				return false;
-			} else if (rawEndLocation == null && rawEndEntity == null) {
+			} else if (endLocationExpr == null && endEntityExpr == null) {
 				Skript.error("You must have an ending location or ending entity.");
 				return false;
 			}
-			isEndingEntity = rawEndEntity != null;
-			final String rawType = sectionNode.getValue("type");
-			final String rawDistance = sectionNode.getValue("distance");
-			rawDuration = ScriptLoader.replaceOptions(sectionNode.getValue("duration"));
-
-			// Expressions
-			durationExpr = (Expression<Timespan>) SecLaser.parseExpr(rawDuration, Timespan.class);
-			if (durationExpr == null) {
-				Skript.error("No matching timespan for entry 'duration': " + rawDuration);
-				return false;
-			}
-			startLocationExpr = (Expression<Location>) SecLaser.parseExpr(rawStartLocation, Location.class);
-			if (startLocationExpr == null) {
-				Skript.error("No matching location for entry 'start location': " + rawStartLocation);
-				return false;
-			}
-			if (rawType != null)
-				typeExpr = (Expression<String>) SecLaser.parseExpr(ScriptLoader.replaceOptions(rawType), String.class);
-
-			if (rawDistance != null)
-				distanceExpr = (Expression<Number>) SecLaser.parseExpr(ScriptLoader.replaceOptions(rawDistance), Number.class);
-
-			if (rawEndEntity != null)
-				endEntityExpr = (Expression<LivingEntity>) SecLaser.parseExpr(ScriptLoader.replaceOptions(rawEndEntity), LivingEntity.class);
-
-			if (rawEndLocation != null)
-				endLocationExpr = (Expression<Location>) SecLaser.parseExpr(ScriptLoader.replaceOptions(rawEndLocation), Location.class);
+			durationExpr = (Expression<Timespan>) SECTION_VALIDATOR.getEntry("duration");
+			startLocationExpr = (Expression<Location>) SECTION_VALIDATOR.getEntry("start location");
+			typeExpr = (Expression<String>) SECTION_VALIDATOR.getEntry("type");
+			distanceExpr = (Expression<Number>) SECTION_VALIDATOR.getEntry("distance");
 			return true;
 		}
 		return false;
@@ -134,13 +106,9 @@ public class SecLaser extends Section {
 
 		// Duration
 		int duration;
-		if (rawDuration.equalsIgnoreCase("forever")) {
-			duration = -1;
-		} else {
-			final Timespan timespan = durationExpr.getSingle(event);
-			if (timespan == null) return walk(event, false);
-			duration = LaserManager.get().secondsFromTimespan(timespan);
-		}
+		final Timespan timespan = durationExpr.getSingle(event);
+		if (timespan == null) return walk(event, false);
+		duration = LaserManager.get().secondsFromTimespan(timespan);
 
 		// Start Location
 		final Location startLocation = startLocationExpr.getSingle(event);
@@ -154,7 +122,7 @@ public class SecLaser extends Section {
 			if (type == null || type.equalsIgnoreCase("guardian")) isGuardian = true;
 			else if (!type.equalsIgnoreCase("crystal") && !type.equalsIgnoreCase("crystal beam"))
 				return walk(event, false);
-			else if (isEndingEntity) return walk(event, false);
+			else if (endEntityExpr != null) return walk(event, false);
 		}
 
 		// Distance
@@ -166,9 +134,8 @@ public class SecLaser extends Section {
 			else distance = distanceNum.intValue();
 		}
 
-		if (isEndingEntity) {
+		if (endEntityExpr != null) {
 			// End Entity
-			if (endEntityExpr == null) return walk(event, false);
 			final LivingEntity endEntity = endEntityExpr.getSingle(event);
 			if (endEntity == null) return walk(event, false);
 
@@ -180,7 +147,6 @@ public class SecLaser extends Section {
 				ex.printStackTrace();
 			}
 		} else {
-			if (endLocationExpr == null) return walk(event, false);
 			final Location endLocation = endLocationExpr.getSingle(event);
 			if (endLocation == null) return walk(event, false);
 

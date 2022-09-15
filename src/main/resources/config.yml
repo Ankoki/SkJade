@@ -1,6 +1,8 @@
 # The hologram plugin that SkJade should use, if holographic elements are enabled.
 # Must be supported, only the following are currently:
 # - DecentHolograms
+# If you are interested in adding your own holographic provider, you can find more information in the wiki.
+# https://www.github.com/Ankoi/SkJade/wiki/ADD_LINK
 hologram-plugin: DecentHolograms
 # Whether players with the permission 'skjade.notify' or operator
 # status should be notified on join if an SkJade update is due.
