@@ -18,3 +18,7 @@ laser-elements-enabled: true
 holographic-elements-enabled: true
 # All other elements.
 misc-elements-enabled: true
+
+# DO NOT REMOVE OR MODIFY THIS
+# This is used to determine the SkJade version running and could result in your config.yml being changed.
+skjade-version: 2.0
