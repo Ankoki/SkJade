@@ -13,6 +13,7 @@ public class SKJHoloBuilder {
     private final Map<Integer, List<SKJHoloLine>> pages = new ConcurrentHashMap<>();
     private final List<Player> hide = new ArrayList<>();
     private final Map<Integer, List<Player>> show = new ConcurrentHashMap<>();
+    private final List<HologramTrigger> triggers = new ArrayList<>();
 
     private boolean still, persistent;
 
@@ -34,7 +35,7 @@ public class SKJHoloBuilder {
      */
     public SKJHoloBuilder addPage(int page, Object[] lines) {
         List<SKJHoloLine> current = this.pages.getOrDefault(page, new ArrayList<>());
-        for (Object unparsed : lines) current.add(HoloManager.get().getCurrentProvider().parseLine(unparsed));
+        for (Object unparsed : lines) current.add(HoloHandler.get().getCurrentProvider().parseLine(unparsed));
         this.pages.put(page, current);
         return this;
     }
@@ -80,15 +81,26 @@ public class SKJHoloBuilder {
     }
 
     /**
+     * Adds an interaction for the hologram.
+     * @param trigger the trigger to execute.
+     * @return the current builder for chaining.
+     */
+    public SKJHoloBuilder addInteraction(HologramTrigger trigger) {
+        this.triggers.add(trigger);
+        return this;
+    }
+
+    /**
      * Builds the current builder into an SKJHolo object.
      * @return the built hologram.
      */
     public SKJHolo build() {
-        SKJHolo hologram = HoloManager.get().getCurrentProvider().createHolo(key, location, pages);
+        SKJHolo hologram = HoloHandler.get().getCurrentProvider().createHolo(key, location, pages);
         if (hologram == null) return null;
         hologram.setStatic(still);
         hologram.setPersistent(persistent);
         for (Map.Entry<Integer, List<Player>> entry : show.entrySet()) hologram.showTo(entry.getKey(), entry.getValue().toArray(new Player[0]));
+        for (HologramTrigger trigger : triggers) HoloHandler.get().registerInteraction(hologram, trigger);
         hologram.hideFrom(hide.toArray(hide.toArray(new Player[0])));
         return hologram;
     }

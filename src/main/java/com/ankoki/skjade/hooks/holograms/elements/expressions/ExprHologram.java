@@ -9,7 +9,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
-import com.ankoki.skjade.hooks.holograms.api.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -38,7 +38,7 @@ public class ExprHologram extends SimpleExpression<SKJHolo> {
     protected @Nullable SKJHolo[] get(Event event) {
         String key = keyExpr.getSingle(event);
         if (key == null) return new SKJHolo[0];
-        return new SKJHolo[]{HoloManager.get().getHolo(key)};
+        return new SKJHolo[]{HoloHandler.get().getHolo(key)};
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ExprHologram extends SimpleExpression<SKJHolo> {
         if (mode != ChangeMode.DELETE) return;
         String key = keyExpr.getSingle(e);
         if (key == null) return;
-        SKJHolo holo = HoloManager.get().getHolo(key);
+        SKJHolo holo = HoloHandler.get().getHolo(key);
         if (holo == null) return;
         holo.destroy();
     }

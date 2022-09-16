@@ -1,9 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.lang.Trigger;
-import com.ankoki.skjade.hooks.holograms.api.HoloManager;
-import com.ankoki.skjade.hooks.holograms.api.ClickType;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.DHAPI;
@@ -23,7 +21,7 @@ public class DHHolo implements SKJHolo {
     private final String key;
 
     public static DHHolo create(String key, Location location, Map<Integer, List<SKJHoloLine>> pages) {
-        if (HoloManager.get().getHolo(key) != null) {
+        if (HoloHandler.get().getHolo(key) != null) {
             Skript.error("The given key already exists. Hologram will not be created.");
             return null;
         }
@@ -140,12 +138,7 @@ public class DHHolo implements SKJHolo {
     }
 
     @Override
-    public void onClick(int page, int line, ClickType type, Trigger trigger) {
-
-    }
-
-    @Override
-    public void onTouch(int page, int line, ClickType type, Trigger trigger) {
-
+    public Object getHologram() {
+        return current;
     }
 }

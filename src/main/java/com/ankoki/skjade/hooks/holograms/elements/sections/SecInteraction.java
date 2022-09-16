@@ -3,13 +3,11 @@ package com.ankoki.skjade.hooks.holograms.elements.sections;
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.doc.*;
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.Section;
+import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.hooks.holograms.api.HoloManager;
-import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
+import com.ankoki.skjade.hooks.holograms.api.*;
+import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -37,34 +35,74 @@ public class SecInteraction extends Section {
 	private static boolean supportsLineClick, supportsPageClick;
 
 	static {
-		HoloProvider provider = HoloManager.get().getCurrentProvider();
+		HoloProvider provider = HoloHandler.get().getCurrentProvider();
 		SecInteraction.supportsLineClick = provider.supportsOnClick(true);
 		SecInteraction.supportsPageClick = provider.supportsOnClick(false);
 		if (supportsLineClick) {
 			Skript.registerSection(SecInteraction.class,
-					"on (:left|:right|) [:shift] click[ing] (of|on|) [line: line %number%] [page: (of|on|) page %number%]");
+					"on [:shift] [:left|:right] click[ing] [[of|on] line %-numbers%] [[of|on] page %-numbers%]");
 		} else if (supportsPageClick) {
 			Skript.registerSection(SecInteraction.class,
-					"on (:left|:right|) [:shift] click[ing] [page: [on] page %number%]");
+					"on [:shift] (:left|:right|) click[ing] [page: [on] page %number%]");
 		}
 	}
 
-	private Kleenean clickType;
-	private boolean shift, line, page;
+	private ClickType clickType;
 	private Expression<Number> lineExpr, pageExpr;
+	private Trigger trigger;
+	private SecKeyedHologram section;
 
 	@Override
-	public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, ParseResult parseResult, SectionNode sectionNode, List<TriggerItem> list) {
+	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult, SectionNode sectionNode, List<TriggerItem> list) {
+		SkriptEvent event = this.getParser().getCurrentSkriptEvent();
+		if (!(event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecKeyedHologram.class))) {
+			Skript.error("You must be creating a hologram to specify interactions.");
+			return false;
+		}
+		section = (SecKeyedHologram) skriptEvent.getSection();
+		final boolean left = parseResult.hasTag("left");
+		final boolean right = parseResult.hasTag("right");
+		final boolean shift = parseResult.hasTag("shift");
+		if (left && shift) clickType = ClickType.SHIFT_LEFT;
+		else if (left) clickType = ClickType.LEFT;
+		else if (right && shift) clickType = ClickType.SHIFT_RIGHT;
+		else if (right) clickType = ClickType.RIGHT;
+		else clickType = ClickType.ANY;
+		if (supportsLineClick) lineExpr = (Expression<Number>) exprs[0];
+		pageExpr = (Expression<Number>) exprs[supportsLineClick ? 1 : 0];
+		this.trigger = loadCode(sectionNode, "hologram interaction", HologramInteractEvent.class);
 		return true;
 	}
 
 	@Override
 	protected @Nullable TriggerItem walk(Event event) {
-		return null;
+		Number[] lineNumbers = lineExpr == null ? new Number[0] : lineExpr.getAll(event);
+		Number[] pageNumbers = pageExpr == null ? new Number[0] : pageExpr.getAll(event);
+		int[] lines = new int[lineNumbers.length];
+		int i = 0;
+		for (Number number : lineNumbers) {
+			if (number != null) {
+				lines[i] = number.intValue();
+				i++;
+			}
+		}
+		int[] pages = new int[pageNumbers.length];
+		i = 0;
+		for (Number number : pageNumbers) {
+			if (number != null) {
+				pages[i] = number.intValue();
+				i++;
+			}
+		}
+		SKJHoloBuilder builder = section.getCurrentBuilder();
+		builder.addInteraction(new HologramTrigger(lines, pages, clickType, trigger));
+		section.setCurrentBuilder(builder);
+		return this.getNext();
 	}
 
 	@Override
 	public String toString(@Nullable Event event, boolean b) {
-		return null;
+		return "on " + clickType.toString() + "click" + (lineExpr == null ? "" : " on line " + lineExpr.toString(event, b)) +
+				(pageExpr == null ? "" : " of page " + pageExpr.toString(event, b));
 	}
 }

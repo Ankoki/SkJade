@@ -1,21 +1,30 @@
 package com.ankoki.skjade.hooks.holograms.api;
 
+import com.ankoki.skjade.SkJade;
+import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class HoloManager {
+public class HoloHandler implements Listener {
 
-    private static final HoloManager HANDLER = new HoloManager();
+    private static final HoloHandler HANDLER = new HoloHandler();
 
-    public static HoloManager get() {
+    static {
+        Bukkit.getPluginManager().registerEvents(HANDLER, SkJade.getInstance());
+    }
+
+    public static HoloHandler get() {
         return HANDLER;
     }
 
     private final Map<String, SKJHolo> storage = new ConcurrentHashMap<>();
+    private final Map<SKJHolo, List<HologramTrigger>> triggers = new ConcurrentHashMap<>();
     private final List<HoloProvider> providers = new ArrayList<>();
 
     private HoloProvider provider;
@@ -48,6 +57,47 @@ public class HoloManager {
      */
     public boolean keyInUse(String key) {
         return key == null || storage.containsKey(key);
+    }
+
+    /**
+     * Adds an interaction to the given SKJHolo.
+     * @param holo the hologram to register an interaction for.
+     * @param trigger the trigger to execute.
+     */
+    public void registerInteraction(SKJHolo holo, HologramTrigger trigger) {
+        final List<HologramTrigger> cache = triggers.getOrDefault(holo, new ArrayList<>());
+        cache.add(trigger);
+        this.triggers.put(holo, cache);
+    }
+
+    /**
+     * Attempts to execute an interaction for a hologram with certain criteria.
+     * @param holo the hologram that has been clicked.
+     * @param page the page that has been clicked.
+     * @param line the line that has been clicked.
+     * @param type the click type.
+     * @param event the event to run.
+     */
+    public void executeInteraction(SKJHolo holo, int page, int line, ClickType type, Event event) {
+        final List<HologramTrigger> cache = this.triggers.getOrDefault(holo, new ArrayList<>());
+        System.out.println("INTERACTION DONEZO");
+        for (final HologramTrigger trigger : cache) {
+            trigger.execute(page, line, type, event);
+            System.out.println("EXECUTED INTERACTION");
+        }
+    }
+
+    /**
+     * Check if a hologram has any interactions linked.
+     * @param holo the hologram to check.
+     * @return true if the hologram has interactions to run.
+     */
+    public boolean hasInteractions(SKJHolo holo) {
+        return this.triggers.containsKey(holo);
+    }
+
+    public Collection<SKJHolo> getHolograms() {
+        return this.storage.values();
     }
 
     //<editor-fold desc="Providers" defaultstate="collapsed">
@@ -99,4 +149,13 @@ public class HoloManager {
         return provider;
     }
     //</editor-fold>
+
+    @EventHandler
+    private void onHoloInteract(HologramInteractEvent event) {
+        System.out.println("HOLO INTERACT EVENT");
+        if (this.hasInteractions(event.getHologram())) {
+            System.out.println("has inTERACTIONS");
+            this.executeInteraction(event.getHologram(), event.getPage(), event.getLine(), event.getType(), event);
+        }
+    }
 }

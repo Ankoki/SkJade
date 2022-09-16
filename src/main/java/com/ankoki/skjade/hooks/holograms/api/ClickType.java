@@ -4,5 +4,11 @@ public enum ClickType {
 	LEFT,
 	RIGHT,
 	SHIFT_LEFT,
-	SHIFT_RIGHT;
+	SHIFT_RIGHT,
+	ANY;
+
+	@Override
+	public String toString() {
+		return name().toLowerCase().replaceAll("_", " ");
+	}
 }

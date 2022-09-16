@@ -9,7 +9,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
-import com.ankoki.skjade.hooks.holograms.api.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import org.bukkit.event.Event;
@@ -49,7 +49,7 @@ public class ExprHoloPage extends SimpleExpression<Object> {
         if (indexExpr != null) {
             Number number = indexExpr.getSingle(event);
             if (number == null) return new Object[0];
-            index = HoloManager.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
+            index = HoloHandler.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
         }
         List<SKJHoloLine> page = holo.getPage(index);
         return SKJHoloLine.transform(page);
@@ -69,12 +69,12 @@ public class ExprHoloPage extends SimpleExpression<Object> {
         if (indexExpr != null) {
             Number number = indexExpr.getSingle(event);
             if (number == null) return;
-            index = HoloManager.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
+            index = HoloHandler.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
         }
 
         switch (mode) {
-            case ADD -> holo.appendLine(index, HoloManager.get().getCurrentProvider().parseLine(delta[0]));
-            case SET -> holo.setLines(index, HoloManager.get().getCurrentProvider().parseLines(Arrays.asList(delta)));
+            case ADD -> holo.appendLine(index, HoloHandler.get().getCurrentProvider().parseLine(delta[0]));
+            case SET -> holo.setLines(index, HoloHandler.get().getCurrentProvider().parseLines(Arrays.asList(delta)));
             case REMOVE -> {
                 List<SKJHoloLine> current = holo.getPage(index);
                 List<SKJHoloLine> updated = new ArrayList<>();
@@ -84,6 +84,7 @@ public class ExprHoloPage extends SimpleExpression<Object> {
                 }
                 holo.setLines(index, updated);
             }
+            case DELETE -> holo.destroy();
             default -> holo.setLines(index, List.of());
         }
     }

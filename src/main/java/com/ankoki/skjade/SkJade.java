@@ -7,12 +7,13 @@ import ch.njol.skript.classes.Parser;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import com.ankoki.roku.bukkit.BukkitImpl;
+import com.ankoki.roku.misc.Version;
 import com.ankoki.roku.web.JSON;
 import com.ankoki.roku.web.WebRequest;
 import com.ankoki.roku.web.exceptions.MalformedJsonException;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.elements.lasers.Laser;
-import com.ankoki.skjade.hooks.holograms.api.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
 import com.ankoki.skjade.listeners.PlayerJoin;
@@ -32,7 +33,7 @@ public class SkJade extends JavaPlugin {
     private static SkJade instance;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
-    private com.ankoki.roku.misc.Version version;
+    private Version version;
     private SkriptAddon addon;
     private boolean nmsEnabled = false;
     private boolean latest = true;
@@ -43,14 +44,14 @@ public class SkJade extends JavaPlugin {
         final long start = System.currentTimeMillis();
         instance = this;
         new Metrics(this, 10131);
-        version = com.ankoki.roku.misc.Version.of(this.getDescription().getVersion());
+        version = Version.of(this.getDescription().getVersion());
 
         if (!Utils.isPluginEnabled("Skript") || !Skript.isAcceptRegistrations()) {
-            this.getLogger().severe("Skript wasn't found. Are you sure it's installed and up to date?");
+            this.getLogger().severe("Skript wasn't found, or isn't accepting registrations. Are you sure it's installed and up to date?");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         } else if (Skript.getVersion().isSmallerThan(new ch.njol.skript.util.Version("2.6"))) {
-            this.getLogger().severe("Skript is running a version lower than 2.6, which is unsupported.");
+            this.getLogger().severe("Skript is running a version lower than 2.6, which is unsupported. Please update to 2.6 or above.");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         } else if (!Utils.isPluginEnabled("Roku")) BukkitImpl.setupRoku(this);
@@ -74,11 +75,11 @@ public class SkJade extends JavaPlugin {
         else this.getLogger().warning("Laser elements not enabled in the config. Skipping...");
 
         if (Config.HOLOGRAMS_ENABLED) {
-            HoloManager.get().addProvider(new DHProvider());
-            if (Utils.isPluginEnabled(Config.HOLOGRAM_PLUGIN) && HoloManager.get().hasProvider(Config.HOLOGRAM_PLUGIN)) {
+            HoloHandler.get().addProvider(DHProvider.get());
+            if (Utils.isPluginEnabled(Config.HOLOGRAM_PLUGIN) && HoloHandler.get().hasProvider(Config.HOLOGRAM_PLUGIN)) {
                 this.getLogger().info(Config.HOLOGRAM_PLUGIN + " was found! Enabling support.");
-                HoloManager.get().setCurrentProvider(HoloManager.get().getProvider(Config.HOLOGRAM_PLUGIN));
-                HoloManager.get().getCurrentProvider().setup();
+                HoloHandler.get().setCurrentProvider(HoloHandler.get().getProvider(Config.HOLOGRAM_PLUGIN));
+                HoloHandler.get().getCurrentProvider().setup();
                 this.loadHologramElements();
             } else this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
         } else this.getLogger().warning("Holographic elements not enabled in the config. Skipping...");
@@ -106,7 +107,7 @@ public class SkJade extends JavaPlugin {
         });
 
         future.thenApply(version -> {
-            final com.ankoki.roku.misc.Version latest = com.ankoki.roku.misc.Version.of(version);
+            final Version latest = Version.of(version);
             this.latest = latest.isNewerThan(this.version);
             if (!this.latest) this.getLogger().warning("You are due an update for SkJade. The latest version is v" + version + "! " +
                     "Find it at https://www.github.com/Ankoki/SkJade/releases/latest/");
@@ -119,7 +120,7 @@ public class SkJade extends JavaPlugin {
     }
 
     private void loadNMS() {
-        if (Version.CURRENT_VERSION == Version.UNKNOWN || Version.currentIsLegacy()) {
+        if (MinecraftVersion.CURRENT_VERSION == MinecraftVersion.UNKNOWN || MinecraftVersion.currentIsLegacy()) {
             this.getLogger().warning("Could not find any NMS support for " + version + "! Please note SkJade only supports " +
                     "the latest sub-version of each version above 1.13.");
             this.getLogger().warning("There is also a chance you are using a version I haven't implemented support for yet.");
@@ -183,7 +184,7 @@ public class SkJade extends JavaPlugin {
 
                     @Override
                     public @Nullable SKJHolo parse(String s, ParseContext context) {
-                        return HoloManager.get().getHolo(s);
+                        return HoloHandler.get().getHolo(s);
                     }
                 }));
         try {
@@ -203,7 +204,7 @@ public class SkJade extends JavaPlugin {
         return version.hasSuffix() && version.getSuffix().equalsIgnoreCase("beta");
     }
 
-    public com.ankoki.roku.misc.Version getVersion() {
+    public Version getVersion() {
         return version;
     }
 

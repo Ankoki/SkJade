@@ -25,6 +25,9 @@ public class Config {
         if (file == null) file = new File(plugin.getDataFolder(), "config.yml");
         if (!file.exists()) plugin.saveResource("config.yml", false);
         config = YamlConfiguration.loadConfiguration(file);
+        if (this.checkLegacyConfig())
+            SkJade.getInstance().getLogger().info("We have found a legacy configuration file! It has been updated. Make sure to check the values are to your liking.");
+
         loadFile();
     }
 
@@ -41,5 +44,20 @@ public class Config {
         else SkJade.getInstance().getLogger().severe("Required key 'holographic-elements-enabled' was not found.");
         if (config.contains("misc-elements-enabled")) MISC_ENABLED = config.getBoolean("misc-elements-enabled");
         else SkJade.getInstance().getLogger().severe("Required key 'misc-elements-enabled' was not found.");
+    }
+
+    private boolean checkLegacyConfig() {
+        if (config.contains("config-version")) return false;
+        else {
+            boolean hologram = true, newVersion = true;
+            if (config.contains("holographic-displays-enabled"))
+                hologram = config.getBoolean("holographic-displays-enabled");
+            else if (config.contains("new-version-alerts"))
+                newVersion = config.getBoolean("new-version-alerts");
+            plugin.saveResource("config.yml", true);
+            config.set("holographic-elements-enabled", hologram);
+            config.set("new-version-alerts", newVersion);
+            return true;
+        }
     }
 }

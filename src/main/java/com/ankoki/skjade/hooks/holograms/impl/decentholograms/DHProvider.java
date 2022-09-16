@@ -1,12 +1,15 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
 import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.hooks.holograms.api.ClickType;
-import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
-import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
-import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
+import com.ankoki.skjade.hooks.holograms.api.*;
+import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
+import eu.decentsoftware.holograms.event.HologramClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DHProvider implements HoloProvider {
+public class DHProvider implements HoloProvider, Listener {
+
+    private static final DHProvider INSTANCE = new DHProvider();
+
+    public static DHProvider get() {
+        return INSTANCE;
+    }
 
     @Override
     public SKJHoloLine parseLine(Object line) {
@@ -75,6 +84,23 @@ public class DHProvider implements HoloProvider {
 
     @Override
     public void setup() {
-        Bukkit.getPluginManager().registerEvents(DHHoloListener.getInstance(), SkJade.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, SkJade.getInstance());
+    }
+
+    @Override
+    public SKJHolo getHologramFrom(Object object) {
+        if (object instanceof Hologram hologram) {
+            for (SKJHolo holo : HoloHandler.get().getHolograms()) {
+                if (holo.getHologram() == hologram) return holo;
+            }
+        } return null;
+    }
+
+    @EventHandler
+    private void onHologramClick(HologramClickEvent event) {
+        final SKJHolo holo = this.getHologramFrom(event.getHologram());
+        if (holo == null) return;
+        Event call = new HologramInteractEvent(event.getPlayer(), holo, event.getPage().getIndex(), -1, this.parseClickType(event.getClick()));
+        Bukkit.getPluginManager().callEvent(call);
     }
 }

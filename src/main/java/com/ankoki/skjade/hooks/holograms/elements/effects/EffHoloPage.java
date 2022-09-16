@@ -9,7 +9,7 @@ import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
-import com.ankoki.skjade.hooks.holograms.api.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.HoloProvider;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
@@ -22,7 +22,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"create new holo keyed \"stacyGURLS!\":",
         "\tpage 0: \"it's going\", \"DOWWWWWN\", glowing diamond sword and an ender dragon",
         "\tpersistent: false",
-        "\tstatic: true"})
+        "\tstatic: true",
+        "\thide from: event-player"})
 @Since("2.0")
 @RequiredPlugins("DecentHolograms")
 public class EffHoloPage extends Effect {
@@ -30,7 +31,7 @@ public class EffHoloPage extends Effect {
     static {
         Skript.registerEffect(EffHoloPage.class,
                 "(page %-number%|[default ]lines)\\: %strings/entitytypes/entities/itemtypes%");
-        HoloProvider provider = HoloManager.get().getCurrentProvider();
+        HoloProvider provider = HoloHandler.get().getCurrentProvider();
         if (!provider.supportsPages()) SkJade.getInstance().getLogger().warning("Please note your current hologram provider (" + provider.getId() + ") " +
                     "does not support the use of pages, so please make sure you do not try and create pages above index 0, otherwise " +
                     "the lines of your hologram will be replaced!");
@@ -49,7 +50,7 @@ public class EffHoloPage extends Effect {
             linesExpr = (Expression<Object>) exprs[1];
             return true;
         }
-        Skript.error("You cannot add lines or pages to a hologram outside of a section using this pattern.");
+        Skript.error("You cannot edit a hologram outside of a section using this pattern.");
         return false;
     }
 
@@ -59,7 +60,7 @@ public class EffHoloPage extends Effect {
         if (pageExpr != null) {
             Number number = pageExpr.getSingle(event);
             if (number == null) return;
-            page = HoloManager.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
+            page = HoloHandler.get().getCurrentProvider().supportsPages() ? number.intValue() : 0;
         }
         Object[] lines = linesExpr.getAll(event);
         SKJHoloBuilder builder = section.getCurrentBuilder();

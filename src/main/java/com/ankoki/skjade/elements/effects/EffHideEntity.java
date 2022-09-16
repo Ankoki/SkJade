@@ -10,8 +10,8 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
+import com.ankoki.skjade.utils.MinecraftVersion;
 import com.ankoki.skjade.utils.ReflectionUtils;
-import com.ankoki.skjade.utils.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -51,9 +51,9 @@ public class EffHideEntity extends Effect {
         Player[] players = playerExpr == null ? Bukkit.getOnlinePlayers().toArray(new Player[0]) : playerExpr.getArray(event);
         for (Entity entity : entities) {
             try {
-                Object instance = Version.v1_16_R4.isOlder() ? packet.getConstructor(int[].class).newInstance(new int[]{entity.getEntityId()}) :
+                Object instance = MinecraftVersion.v1_16_R4.isOlder() ? packet.getConstructor(int[].class).newInstance(new int[]{entity.getEntityId()}) :
                     packet.newInstance();
-                if (Version.v1_17_R1.isNewer()) ReflectionUtils.setField(instance, "a", new int[]{entity.getEntityId()});
+                if (MinecraftVersion.v1_17_R1.isNewer()) ReflectionUtils.setField(instance, "a", new int[]{entity.getEntityId()});
                 for (Player player : players) ReflectionUtils.sendPacket(player, instance);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();

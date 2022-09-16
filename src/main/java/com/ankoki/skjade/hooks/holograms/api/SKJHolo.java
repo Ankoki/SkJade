@@ -1,6 +1,5 @@
 package com.ankoki.skjade.hooks.holograms.api;
 
-import ch.njol.skript.lang.Trigger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +15,7 @@ public interface SKJHolo {
      * @return true if successful.
      */
     default boolean register(String key) {
-         return HoloManager.get().registerHolo(key, this);
+         return HoloHandler.get().registerHolo(key, this);
     }
 
     /**
@@ -128,18 +127,8 @@ public interface SKJHolo {
     Location getLocation();
 
     /**
-     * Sets the trigger to run on click of a certain line if supported.
-     * @param page the page to run the trigger for if supported.
-     * @param line the line to run the trigger for if per line is supported.
-     * @param trigger the trigger to run.
+     * Gets the internal hologram of the current SKJHolo.
+     * @return the internal hologram.
      */
-    void onClick(int page, int line, ClickType type, Trigger trigger);
-
-    /**
-     * Sets the trigger to run on touch of a line if supported.
-     * @param page the page to run the trigger for if supported.
-     * @param line the line to run the trigger for if per line is supported.
-     * @param trigger the trigger to run.
-     */
-    void onTouch(int page, int line, ClickType type, Trigger trigger);
+    Object getHologram();
 }

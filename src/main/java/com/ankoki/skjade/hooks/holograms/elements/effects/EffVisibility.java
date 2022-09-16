@@ -8,7 +8,7 @@ import ch.njol.skript.lang.SectionSkriptEvent;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import com.ankoki.skjade.hooks.holograms.api.HoloManager;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
@@ -17,18 +17,23 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Hologram Visibility")
-@Description("Sets whether players can see or hide ")
-@Examples("show page 2 of holo keyed as \"oreo fudge\" for all players")
+@Description("Hides or shows the hologram to certain players." +
+        "The first pattern must be used within a hologram creation section.")
+@Examples({"create new holo keyed \"stacyGURLS!\":",
+        "\tpage 0: \"it's going\", \"DOWWWWWN\", glowing diamond sword and an ender dragon",
+        "\tpersistent: false",
+        "\tstatic: true",
+        "\thide from: event-player"})
 @Since("2.0")
 @RequiredPlugins("DecentHolograms")
 public class EffVisibility extends Effect {
 
 
     static {
-        if (HoloManager.get().getCurrentProvider().supportsPerPlayer())
+        if (HoloHandler.get().getCurrentProvider().supportsPerPlayer())
             Skript.registerEffect(EffVisibility.class,
-                "(show:show[ page %-number%] to|hide:hide for)\\: %players%",
-                "(show:show[ page %-number%] to|hide:hide ) %skjholo% for %players%");
+                "(show:show[ page %-number%] to|hide (for|from))\\: %players%",
+                "(show:show[ page %-number%] to|hide ) %skjholo% (to|for|from) %players%");
     }
 
     private boolean show;
@@ -52,7 +57,7 @@ public class EffVisibility extends Effect {
                 playerExpr = (Expression<Player>) exprs[1];
                 return true;
             }
-            Skript.error("You cannot add lines or pages to a hologram outside of a section using this pattern.");
+            Skript.error("You cannot edit a hologram outside of a section using this pattern.");
             return false;
         } else {
             pageExpr = (Expression<Integer>) exprs[0];

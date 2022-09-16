@@ -83,7 +83,13 @@ public interface HoloProvider {
     @Nullable SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages);
 
     /**
-     * Call this if you need to setup anything on initiation.
+     * Gets an SKJHolo from the providers class.
+     * @return the hologram class.
+     */
+    SKJHolo getHologramFrom(Object object);
+
+    /**
+     * Call this if you need to set up anything on initiation.
      */
     default void setup() {}
 }

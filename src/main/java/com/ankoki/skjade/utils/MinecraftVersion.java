@@ -2,7 +2,7 @@ package com.ankoki.skjade.utils;
 
 import com.ankoki.skjade.SkJade;
 
-public enum Version {
+public enum MinecraftVersion {
 
     v1_7_R1,
     v1_7_R2,
@@ -29,13 +29,13 @@ public enum Version {
 
 
     // Can't be final.
-    public static Version CURRENT_VERSION;
+    public static MinecraftVersion CURRENT_VERSION;
 
     static {
         String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
         try {
-            CURRENT_VERSION = Version.valueOf(version);
+            CURRENT_VERSION = MinecraftVersion.valueOf(version);
         } catch (IllegalArgumentException ex) {
             CURRENT_VERSION = UNKNOWN;
             System.err.println("You are using an unknown version (" + version + "). You could be using a version before 1.7, or a newer version I haven't supported.");
@@ -60,7 +60,7 @@ public enum Version {
         return this.ordinal() < CURRENT_VERSION.ordinal();
     }
 
-    public boolean equals(Version version) {
+    public boolean equals(MinecraftVersion version) {
         return this.ordinal() == version.ordinal();
     }
 }
