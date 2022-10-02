@@ -3,10 +3,13 @@ package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.*;
 import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
+import eu.decentsoftware.holograms.api.actions.ActionType;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
+import eu.decentsoftware.holograms.api.utils.BungeeUtils;
 import eu.decentsoftware.holograms.event.HologramClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -85,6 +88,14 @@ public class DHProvider implements HoloProvider, Listener {
     @Override
     public void setup() {
         Bukkit.getPluginManager().registerEvents(this, SkJade.getInstance());
+        new ActionType("SKJADE") {
+            public boolean execute(Player player, String... args) {
+                // args = "holoname:pageindex:clicktype"
+                Event call = new HologramInteractEvent(player, HoloHandler.get().getHolo(args[0]), Integer.getInteger(args[1]), -1, parseClickType(args[2]));
+                Bukkit.getPluginManager().callEvent(call);
+                return true;
+            }
+        };
     }
 
     @Override
@@ -96,7 +107,7 @@ public class DHProvider implements HoloProvider, Listener {
         } return null;
     }
 
-    @EventHandler
+    // @EventHandler
     private void onHologramClick(HologramClickEvent event) {
         final SKJHolo holo = this.getHologramFrom(event.getHologram());
         if (holo == null) return;

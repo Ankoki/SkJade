@@ -31,7 +31,7 @@ public class EffHideEntity extends Effect {
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
             Skript.registerEffect(EffHideEntity.class,
-                    "[skjade] (hide|destroy|send [a] destroy packet for) [[the] entity] %entities% (1¦(from|for) %-players%|)");
+                    "[skjade] (destroy|send [a] destroy packet for) [[the] entity] %entities% (1¦(from|for) %-players%|)");
             packet = ReflectionUtils.getNMSClass("network.protocol.game",
                     "PacketPlayOutEntityDestroy");
         }

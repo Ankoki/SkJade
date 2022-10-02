@@ -10,8 +10,9 @@ import java.util.Date;
 
 public class RealTimeEvent extends Event {
 
-    public static void init() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(SkJade.getInstance(), () -> Bukkit.getPluginManager().callEvent(new RealTimeEvent(new Date())), 0L, 20 * 60L);
+    public static void register() {
+        Bukkit.getScheduler()
+                .scheduleSyncRepeatingTask(SkJade.getInstance(), () -> Bukkit.getPluginManager().callEvent(new RealTimeEvent(new Date())), 0L, 20 * 60L);
     }
 
     private static final HandlerList handlerList = new HandlerList();

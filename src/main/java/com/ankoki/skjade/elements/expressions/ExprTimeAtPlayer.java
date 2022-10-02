@@ -26,7 +26,7 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
 
     static {
         Skript.registerExpression(ExprTimeAtPlayer.class, Time.class, ExpressionType.COMBINED,
-                "[the] time at [(player|the player)] %player%");
+                "[the] time (at|for) [the[ player]] %player%");
     }
 
     private Expression<Player> playerExpr;

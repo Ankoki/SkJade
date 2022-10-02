@@ -33,11 +33,9 @@ public final class Utils {
     }
 
     public static String toRoman(int number) {
-        int l = ROMAN_NUMERALS.floorKey(number);
-        if (number == l) {
-            return ROMAN_NUMERALS.get(number);
-        }
-        return ROMAN_NUMERALS.get(l) + toRoman(number - l);
+        int floor = ROMAN_NUMERALS.floorKey(number);
+        if (number == floor) return ROMAN_NUMERALS.get(number);
+        return ROMAN_NUMERALS.get(floor) + toRoman(number - floor);
     }
 
     public static String rainbow(String message, double freq1, double freq2, double freq3,
@@ -114,15 +112,14 @@ public final class Utils {
     }
 
     public static int getMinecraftMinor() {
-        int ver = 0;
         try {
             String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
             String version = packageName.substring(packageName.lastIndexOf('.') + 1);
-            ver = Integer.parseInt(version.split("_")[1]);
+            return Integer.parseInt(version.split("_")[1]);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ver;
+        return -1;
     }
 
     public static boolean isPluginEnabled(String name) {

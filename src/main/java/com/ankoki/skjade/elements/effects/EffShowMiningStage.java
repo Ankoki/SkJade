@@ -25,10 +25,6 @@ public class EffShowMiningStage extends Effect {
 
     private static Class<?> packet;
     private static Class<?> blockPosition;
-    private Expression<Number> stageExpr, idExpr;
-    private Expression<Location> locationExpr;
-    private Expression<Player> playerExpr;
-    private boolean remove = false;
 
     static {
         if (SkJade.getInstance().isNmsEnabled()) {
@@ -41,6 +37,11 @@ public class EffShowMiningStage extends Effect {
                     "PacketPlayOutBlockBreakAnimation");
         }
     }
+
+    private Expression<Number> stageExpr, idExpr;
+    private Expression<Location> locationExpr;
+    private Expression<Player> playerExpr;
+    private boolean remove = false;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {

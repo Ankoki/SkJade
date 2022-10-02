@@ -16,10 +16,18 @@ import com.ankoki.skjade.elements.lasers.Laser;
 import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
-import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.*;
+import com.ankoki.skjade.utils.events.RealTimeEvent;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -28,7 +36,7 @@ import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-public class SkJade extends JavaPlugin {
+public class SkJade extends JavaPlugin implements Listener {
 
     private static SkJade instance;
     private static final DecimalFormat df = new DecimalFormat("0.00");
@@ -84,7 +92,7 @@ public class SkJade extends JavaPlugin {
             } else this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
         } else this.getLogger().warning("Holographic elements not enabled in the config. Skipping...");
 
-        this.registerListeners(new PlayerJoin());
+        this.registerListeners(this);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
 
         final CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
@@ -136,6 +144,7 @@ public class SkJade extends JavaPlugin {
                     "effects",
                     "events",
                     "conditions");
+            RealTimeEvent.register();
         } catch (IOException ex) {
             this.getLogger().severe("Something went wrong loading the misc elements.");
             ex.printStackTrace();
@@ -222,5 +231,23 @@ public class SkJade extends JavaPlugin {
 
     public Config getOwnConfig() {
         return config;
+    }
+
+    @EventHandler
+    private void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        if (Config.VERSION_ALERTS && (player.hasPermission("skjade.notify") || player.isOp()) && !SkJade.getInstance().isLatest()) {
+            player.sendMessage("§fSk§aJade §f| §7§oYou are running an outdated version of §f§oSk§a§oJade§7§o!");
+            TextComponent github =
+                    new TextComponent(Utils.coloured("§fSk§aJade §f| §7§oClick me to download the latest version!"));
+            github.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder("Click me to go to the latest release!")
+                            .color(ChatColor.GRAY)
+                            .italic(true)
+                            .create()));
+            github.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,
+                    "https://www.github.com/Ankoki/SkJade/releases/latest"));
+            player.spigot().sendMessage(github);
+        }
     }
 }

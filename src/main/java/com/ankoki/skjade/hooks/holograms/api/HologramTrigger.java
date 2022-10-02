@@ -22,7 +22,6 @@ public class HologramTrigger {
 	}
 
 	public void execute(int page, int line, ClickType type, Event event) {
-		System.out.println("PAGE " + page + " LINE " + line + " TYPE " + type.toString());
 		if (pages.length == 0 || NumberUtils.arrayContains(pages, page)) {
 			if (lines.length == 0 || NumberUtils.arrayContains(lines, line)) {
 				if (this.type == type) trigger.execute(event);
