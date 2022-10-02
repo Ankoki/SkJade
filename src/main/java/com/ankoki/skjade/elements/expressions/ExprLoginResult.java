@@ -26,7 +26,7 @@ public class ExprLoginResult extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprLoginResult.class, String.class, ExpressionType.SIMPLE,
-                "event( |-)login[( |-)]result");
+                "[event( |-)]login[( |-)]result");
     }
 
     @Override
