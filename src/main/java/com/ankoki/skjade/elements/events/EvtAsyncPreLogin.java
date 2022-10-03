@@ -30,6 +30,13 @@ public class EvtAsyncPreLogin extends SimpleEvent {
                 return e.getUniqueId();
             }
         }, 0);
+        EventValues.registerEventValue(AsyncPlayerPreLoginEvent.class, String.class, new Getter<String, AsyncPlayerPreLoginEvent>() {
+            @Nullable
+            @Override
+            public String get(AsyncPlayerPreLoginEvent e) {
+                return e.getName();
+            }
+        }, 0);
     }
 
     @Override
