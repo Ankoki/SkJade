@@ -32,6 +32,12 @@ public interface SKJHoloLine {
     }
 
     /**
+     * Gets the index of the line, or -1 if transformed from objects.
+     * @return the index of a line.
+     */
+    int getIndex();
+
+    /**
      * Gets the content of the line.
      * @return the contents.
      */

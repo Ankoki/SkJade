@@ -36,7 +36,8 @@ public class DHProvider implements HoloProvider, Listener {
     @Override
     public List<SKJHoloLine> parseLines(List<Object> lines) {
         List<SKJHoloLine> parsed = new ArrayList<>();
-        for (Object object : lines) parsed.add(new DHHoloLine(object));
+        for (Object object : lines)
+            parsed.add(new DHHoloLine(object));
         return parsed;
     }
 

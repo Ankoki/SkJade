@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Shapes {
-    private static final double _2PI = Math.PI + Math.PI;
-    private static final double _3PI = Math.PI + Math.PI + Math.PI;
+    private static final double _2PI = Math.PI * 2;
+    private static final double _3PI = Math.PI * 3;
 
     /**
      * A method to get all the points to make up a giant donut looking thing.

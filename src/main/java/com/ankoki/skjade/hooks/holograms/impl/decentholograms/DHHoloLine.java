@@ -39,14 +39,15 @@ public class DHHoloLine implements SKJHoloLine {
      */
     public static List<SKJHoloLine> parseDHLines(List<HologramLine> lines) {
         List<SKJHoloLine> parsed = new ArrayList<>();
-        for (HologramLine line : lines) {
+        for (int i = 0; i < lines.size(); i++) {
+            HologramLine line = lines.get(i);
             switch (line.getType()) {
                 case ENTITY -> parsed.add(new DHHoloLine(line.getEntity()));
                 case TEXT -> parsed.add(new DHHoloLine(line.getText()));
                 case HEAD, SMALLHEAD, ICON -> parsed.add(new DHHoloLine(line.getItem()));
                 case UNKNOWN -> parsed.add(new DHHoloLine(line.getContent()));
             }
-            parsed.add(new DHHoloLine(line.getType()));
+            parsed.add(new DHHoloLine(line.getType(), i));
         }
         return parsed;
     }
@@ -56,12 +57,22 @@ public class DHHoloLine implements SKJHoloLine {
     private final Material material;
     private final ItemStack item;
     private final EntityType entity;
+    private final int index;
 
     /**
      * Parses an object into a hologram line.
      * @param line the line to parse.
      */
     public DHHoloLine(Object line) {
+        this(line, -1);
+    }
+
+    /**
+     * Parses an object into a hologram line.
+     * @param line the line to parse.
+     * @param index the index, -1 if not applicable.
+     */
+    public DHHoloLine(Object line, int index) {
         if (line instanceof Material || line instanceof ItemStack) {
             ItemStack item = line instanceof Material ? new ItemStack((Material) line) : (ItemStack) line;
             this.content = "#ICON:" + HologramItem.fromItemStack(item).getContent();
@@ -104,6 +115,12 @@ public class DHHoloLine implements SKJHoloLine {
             this.item = null;
             this.entity = null;
         }
+        this.index = index;
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
     }
 
     @Override

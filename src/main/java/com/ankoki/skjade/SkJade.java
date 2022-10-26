@@ -15,6 +15,7 @@ import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.elements.lasers.Laser;
 import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
+import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
 import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
@@ -196,6 +197,11 @@ public class SkJade extends JavaPlugin implements Listener {
                         return HoloHandler.get().getHolo(s);
                     }
                 }));
+        Classes.registerClass(new ClassInfo<>(SKJHoloLine.class, "skjhololine")
+                .user("skjhololine%s%")
+                .name("Hologram Line")
+                .description("An SkJade hologram line.")
+                .since("2.0"));
         try {
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {
