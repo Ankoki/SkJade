@@ -5,6 +5,9 @@ import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.actions.Action;
+import eu.decentsoftware.holograms.api.actions.ActionType;
+import eu.decentsoftware.holograms.api.actions.ClickType;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import eu.decentsoftware.holograms.api.holograms.HologramPage;
 import org.bukkit.Location;
@@ -32,6 +35,12 @@ public class DHHolo implements SKJHolo {
         this.key = key;
         this.current = DHAPI.createHologram(key, location);
         this.setPages(pages);
+        for (HologramPage page : current.getPages()) {
+            page.addAction(ClickType.LEFT, new Action("SKJADE." + key + "." + page.getIndex() + ".LEFT"));
+            page.addAction(ClickType.RIGHT, new Action("SKJADE." + key + "." + page.getIndex() + ".RIGHT"));
+            page.addAction(ClickType.SHIFT_LEFT, new Action("SKJADE." + key + "." + page.getIndex() + ".SHIFT_LEFT"));
+            page.addAction(ClickType.SHIFT_RIGHT, new Action("SKJADE." + key + "." + page.getIndex() + ".SHIFT_RIGHT"));
+        }
         this.register(key);
     }
 

@@ -90,7 +90,10 @@ public class DHProvider implements HoloProvider, Listener {
         Bukkit.getPluginManager().registerEvents(this, SkJade.getInstance());
         new ActionType("SKJADE") {
             public boolean execute(Player player, String... args) {
-                // args = "holoname:pageindex:clicktype"
+                if (args.length != 1)
+                    return false;
+                // args = "holoname.pageindex.clicktype"
+                args = args[0].split("\\.");
                 Event call = new HologramInteractEvent(player, HoloHandler.get().getHolo(args[0]), Integer.getInteger(args[1]), -1, parseClickType(args[2]));
                 Bukkit.getPluginManager().callEvent(call);
                 return true;
