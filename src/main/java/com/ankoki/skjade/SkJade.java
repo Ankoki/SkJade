@@ -63,7 +63,8 @@ public class SkJade extends JavaPlugin implements Listener {
             this.getLogger().severe("Skript is running a version lower than 2.6, which is unsupported. Please update to 2.6 or above.");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
-        } else if (!Utils.isPluginEnabled("Roku")) BukkitImpl.setupRoku(this);
+        } else if (!Utils.isPluginEnabled("Roku"))
+            BukkitImpl.setupRoku(this);
 
         config = new Config(this);
         addon = Skript.registerAddon(this);
@@ -74,14 +75,20 @@ public class SkJade extends JavaPlugin implements Listener {
             this.getServer().getPluginManager().disablePlugin(this);
         }
 
-        if (Config.MISC_ENABLED) this.loadMiscElements();
-        else this.getLogger().warning("Misc elements not enabled in the config. Skipping...");
+        if (Config.MISC_ENABLED)
+            this.loadMiscElements();
+        else
+            this.getLogger().warning("Misc elements not enabled in the config. Skipping...");
 
-        if (Config.BINFLOP_ENABLED) this.loadBinflopElements();
-        else this.getLogger().warning("Binflop elements not enabled in the config. Skipping...");
+        if (Config.BINFLOP_ENABLED)
+            this.loadBinflopElements();
+        else
+            this.getLogger().warning("Binflop elements not enabled in the config. Skipping...");
 
-        if (Config.LASERS_ENABLED) this.loadLaserElements();
-        else this.getLogger().warning("Laser elements not enabled in the config. Skipping...");
+        if (Config.LASERS_ENABLED)
+            this.loadLaserElements();
+        else
+            this.getLogger().warning("Laser elements not enabled in the config. Skipping...");
 
         if (Config.HOLOGRAMS_ENABLED) {
             HoloHandler.get().addProvider(DHProvider.get());
@@ -90,8 +97,10 @@ public class SkJade extends JavaPlugin implements Listener {
                 HoloHandler.get().setCurrentProvider(HoloHandler.get().getProvider(Config.HOLOGRAM_PLUGIN));
                 HoloHandler.get().getCurrentProvider().setup();
                 this.loadHologramElements();
-            } else this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
-        } else this.getLogger().warning("Holographic elements not enabled in the config. Skipping...");
+            } else
+                this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
+        } else
+            this.getLogger().warning("Holographic elements not enabled in the config. Skipping...");
 
         this.registerListeners(this);
         this.getServer().getPluginCommand("skjade").setExecutor(new SkJadeCmd());
@@ -118,7 +127,8 @@ public class SkJade extends JavaPlugin implements Listener {
         future.thenApply(version -> {
             final Version latest = Version.of(version);
             this.latest = latest.isNewerThan(this.version);
-            if (!this.latest) this.getLogger().warning("You are due an update for SkJade. The latest version is v" + version + "! " +
+            if (!this.latest)
+                this.getLogger().warning("You are due an update for SkJade. The latest version is v" + version + "! " +
                     "Find it at https://www.github.com/Ankoki/SkJade/releases/latest/");
             return false;
         });
@@ -134,11 +144,13 @@ public class SkJade extends JavaPlugin implements Listener {
                     "the latest sub-version of each version above 1.13.");
             this.getLogger().warning("There is also a chance you are using a version I haven't implemented support for yet.");
             this.getLogger().warning("SkJade will remain enabled, however anything using NMS will not be enabled!");
-        } else nmsEnabled = true;
+        } else
+            nmsEnabled = true;
     }
 
     private void loadMiscElements() {
-        if (Utils.getMinecraftMinor() > 12) NonLegacyClassInfo.register();
+        if (Utils.getMinecraftMinor() > 12)
+            NonLegacyClassInfo.register();
         try {
             addon.loadClasses("com.ankoki.skjade.elements",
                     "expressions",
@@ -183,18 +195,18 @@ public class SkJade extends JavaPlugin implements Listener {
                 .since("2.0")
                 .parser(new Parser<>() {
                     @Override
-                    public String toString(SKJHolo skjHolo, int i) {
-                        return "SkJadeHologram-" + skjHolo.getKey();
+                    public String toString(SKJHolo holo, int i) {
+                        return "SkJadeHologram-" + holo.getKey();
                     }
 
                     @Override
-                    public String toVariableNameString(SKJHolo skjHolo) {
-                        return "SkJadeHologram-" + skjHolo.getKey();
+                    public String toVariableNameString(SKJHolo holo) {
+                        return "SkJadeHologram-" + holo.getKey();
                     }
 
                     @Override
-                    public @Nullable SKJHolo parse(String s, ParseContext context) {
-                        return HoloHandler.get().getHolo(s);
+                    public @Nullable SKJHolo parse(String unparsed, ParseContext context) {
+                        return HoloHandler.get().getHolo(unparsed);
                     }
                 }));
         Classes.registerClass(new ClassInfo<>(SKJHoloLine.class, "skjhololine")

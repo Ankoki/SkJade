@@ -12,8 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 // Validator which automatically retrieves expressions based on the entry types.
-// Everything validate is called, it wipes the stored section node.
-// Be sure to cache everything you need in your init.
+// Everytime validate is called, it wipes the stored section node.
+// Be sure to cache everything you need in your init if you are reusing the same validator throughout.
 public class SectionValidatorPlus extends SectionValidator {
 
 	private final Map<String, Class<?>> definedEntries = new LinkedHashMap<>();

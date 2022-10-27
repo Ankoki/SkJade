@@ -39,7 +39,8 @@ public class ExprVisibility extends SimpleExpression<Boolean> {
 	protected @Nullable Boolean[] get(Event event) {
 		Player player = playerExpr.getSingle(event);
 		SKJHolo holo = holoExpr.getSingle(event);
-		if (player == null || holo == null) return new Boolean[0];
+		if (player == null || holo == null)
+			return new Boolean[0];
 		return new Boolean[]{holo.canSee(player)};
 	}
 

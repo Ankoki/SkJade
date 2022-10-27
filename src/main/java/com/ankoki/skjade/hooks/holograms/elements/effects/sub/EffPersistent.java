@@ -1,4 +1,4 @@
-package com.ankoki.skjade.hooks.holograms.elements.effects;
+package com.ankoki.skjade.hooks.holograms.elements.effects.sub;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
