@@ -36,10 +36,10 @@ public class DHHolo implements SKJHolo {
         this.current = DHAPI.createHologram(key, location);
         this.setPages(pages);
         for (HologramPage page : current.getPages()) {
-            page.addAction(ClickType.LEFT, new Action("SKJADE." + key + "." + page.getIndex() + ".LEFT"));
-            page.addAction(ClickType.RIGHT, new Action("SKJADE." + key + "." + page.getIndex() + ".RIGHT"));
-            page.addAction(ClickType.SHIFT_LEFT, new Action("SKJADE." + key + "." + page.getIndex() + ".SHIFT_LEFT"));
-            page.addAction(ClickType.SHIFT_RIGHT, new Action("SKJADE." + key + "." + page.getIndex() + ".SHIFT_RIGHT"));
+            page.addAction(ClickType.LEFT, new Action("SKJADE:" + key + "." + page.getIndex() + ".LEFT"));
+            page.addAction(ClickType.RIGHT, new Action("SKJADE:" + key + "." + page.getIndex() + ".RIGHT"));
+            page.addAction(ClickType.SHIFT_LEFT, new Action("SKJADE:" + key + "." + page.getIndex() + ".SHIFT_LEFT"));
+            page.addAction(ClickType.SHIFT_RIGHT, new Action("SKJADE:" + key + "." + page.getIndex() + ".SHIFT_RIGHT"));
         }
         this.register(key);
     }
@@ -61,20 +61,22 @@ public class DHHolo implements SKJHolo {
 
     @Override
     public void setLine(int page, int index, SKJHoloLine line) {
-        DHAPI.setHologramLine(current, page, index, line.getContent());
+        int difference = current.getPages().size() - (page + 1);
+        for (int i = 0; i < difference; i++)
+            this.current.addPage();
+        try {
+            DHAPI.setHologramLine(current, page, index, line.getContent());
+        } catch (IllegalArgumentException ex) {
+            DHAPI.addHologramLine(current, page, line.getContent());
+        }
     }
 
     @Override
     public void setLines(int page, List<SKJHoloLine> lines) {
         int index = 0;
         for (SKJHoloLine line : lines) {
-            try {
-                DHAPI.setHologramLine(current, page, index, line.getContent());
-            } catch (IllegalArgumentException ex) {
-                DHAPI.addHologramLine(current, page, line.getContent());
-            } finally {
-                index++;
-            }
+            this.setLine(page, index, line);
+            index++;
         }
     }
 
@@ -103,6 +105,7 @@ public class DHHolo implements SKJHolo {
     @Override
     public void destroy() {
         current.destroy();
+        HoloHandler.get().deleteHolo(key);
     }
 
     @Override

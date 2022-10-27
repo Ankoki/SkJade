@@ -43,7 +43,7 @@ public class SecInteraction extends Section {
 					"on [:shift] [:left|:right] click[ing] [[of|on] line %-numbers%] [[of|on] page %-numbers%]");
 		} else if (supportsPageClick) {
 			Skript.registerSection(SecInteraction.class,
-					"on [:shift] (:left|:right|) click[ing] [page: [on] page %number%]");
+					"on [:shift] (:left|:right|) click[[ing] [page: [on|of] page %-number%]]");
 		}
 	}
 

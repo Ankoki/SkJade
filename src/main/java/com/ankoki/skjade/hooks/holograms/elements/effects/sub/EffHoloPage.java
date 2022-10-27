@@ -29,12 +29,17 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffHoloPage extends Effect {
 
     static {
-        Skript.registerEffect(EffHoloPage.class,
-                "(page %-number%|[default ]lines)\\: %strings/entitytypes/entities/itemtypes%");
         HoloProvider provider = HoloHandler.get().getCurrentProvider();
-        if (!provider.supportsPages()) SkJade.getInstance().getLogger().warning("Please note your current hologram provider (" + provider.getId() + ") " +
+        Skript.registerEffect(EffHoloPage.class,
+                "(page %-number%|[default ]lines)\\: %strings/itemtypes" +
+                        (provider.supportsEntityLines() ? "/entitytypes/entities%" : "%"));
+        if (!provider.supportsPages())
+            SkJade.getInstance().getLogger().warning("Please note your current hologram provider (" + provider.getId() + ") " +
                     "does not support the use of pages, so please make sure you do not try and create pages above index 0, otherwise " +
                     "the lines of your hologram will be replaced!");
+        if (!provider.supportsEntityLines())
+            SkJade.getInstance().getLogger().warning("Please note your current hologram provider (" + provider.getId() + ") " +
+                    "does not support entity lines, so you will not be able to add entities or entity types to your holograms.");
     }
 
     private SecKeyedHologram section;

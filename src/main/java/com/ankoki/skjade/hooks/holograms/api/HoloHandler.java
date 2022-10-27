@@ -60,6 +60,14 @@ public class HoloHandler implements Listener {
     }
 
     /**
+     * Removes a hologram from the temporary cache.
+     * @param key the key to delete.
+     */
+    public void deleteHolo(String key) {
+        storage.remove(key);
+    }
+
+    /**
      * Adds an interaction to the given SKJHolo.
      * @param holo the hologram to register an interaction for.
      * @param trigger the trigger to execute.

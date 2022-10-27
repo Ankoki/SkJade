@@ -1,11 +1,11 @@
 package com.ankoki.skjade.hooks.holograms.impl.holographicdisplays;
 
 import com.ankoki.skjade.hooks.holograms.api.*;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +13,15 @@ public class HDProvider implements HoloProvider {
 
 	@Override
 	public SKJHoloLine parseLine(Object line) {
-		return null;
+		return new HDHoloLine(line);
 	}
 
 	@Override
 	public List<SKJHoloLine> parseLines(List<Object> lines) {
-		return null;
+		List<SKJHoloLine> parsed = new ArrayList<>();
+		for (Object line : lines)
+			parsed.add(this.parseLine(line));
+		return parsed;
 	}
 
 	@Override
@@ -28,7 +31,7 @@ public class HDProvider implements HoloProvider {
 
 	@Override
 	public @NotNull String getId() {
-		return "Holographic Displays";
+		return "HolographicDisplays";
 	}
 
 	@Override

@@ -99,6 +99,7 @@ public class HDHolo implements SKJHolo {
 	@Override
 	public void destroy() {
 		this.current.delete();
+		HoloHandler.get().deleteHolo(key);
 	}
 
 	@Override

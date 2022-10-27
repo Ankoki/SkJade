@@ -43,7 +43,12 @@ public class DHProvider implements HoloProvider, Listener {
 
 	@Override
 	public ClickType parseClickType(Object click) {
-		return ClickType.valueOf(((Enum<?>) click).name());
+		if (click instanceof String string)
+			return ClickType.valueOf(string);
+		else if (click instanceof Enum<?> en)
+			return ClickType.valueOf(en.name());
+		else
+			return null;
 	}
 
 	@Override
@@ -100,8 +105,10 @@ public class DHProvider implements HoloProvider, Listener {
 					return false;
 				// args = "holoname.pageindex.clicktype"
 				args = args[0].split("\\.");
-				Event call = new HologramInteractEvent(player, HoloHandler.get().getHolo(args[0]), Integer.getInteger(args[1]), -1, parseClickType(args[2]));
-				Bukkit.getPluginManager().callEvent(call);
+				Event call = new HologramInteractEvent(player, HoloHandler.get().getHolo(args[0]), Integer.parseInt(args[1]), -1, parseClickType(args[2]));
+				Bukkit.getScheduler().runTask(SkJade.getInstance(), () -> {
+					Bukkit.getPluginManager().callEvent(call);
+				});
 				return true;
 			}
 		};

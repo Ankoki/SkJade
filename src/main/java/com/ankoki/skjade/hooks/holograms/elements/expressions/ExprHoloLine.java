@@ -12,6 +12,8 @@ import ch.njol.util.coll.CollectionUtils;
 import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -89,6 +91,8 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 	@Override
 	public void change(Event event, @Nullable Object[] delta, ChangeMode mode) {
 		if (delta.length == 0 && (mode == ChangeMode.RESET))
+			return;
+		if ((delta[0] instanceof EntityType || delta[0] instanceof Entity) && !HoloHandler.get().getCurrentProvider().supportsEntityLines())
 			return;
 		SKJHolo holo = holoExpr.getSingle(event);
 		if (holo == null)

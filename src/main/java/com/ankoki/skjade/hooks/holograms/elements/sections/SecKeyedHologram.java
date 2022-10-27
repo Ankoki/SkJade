@@ -16,11 +16,11 @@ import java.util.List;
 @Name("Hologram")
 @Description({"Creates a new hologram with a key and location. If the key or location are unset, the hologram will not be created.",
             "Please note the given example is using DecentHolograms."})
-@Examples({"create new holo keyed \"stacyGURLS!\":",
+@Examples({"create new holo keyed \"stacyGURLS!\" at 2 blocks above player:",
             "\tpage 0: \"it's going\", \"DOWWWWWN\", glowing diamond sword and an ender dragon",
             "\tpersistent: false",
             "\tstatic: true",
-            "\ton right shift click of page 2:",
+            "\ton right shift click on page 2:",
             "\t\tsend \"Hey! You clicked %event-hologram's id%!\""})
 @Since("2.0")
 @RequiredPlugins("DecentHolograms")

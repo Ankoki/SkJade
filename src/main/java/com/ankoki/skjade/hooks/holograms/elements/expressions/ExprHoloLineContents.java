@@ -7,6 +7,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -41,6 +42,10 @@ public class ExprHoloLineContents extends SimpleExpression<Object> {
 				tag = CONTENT_TYPES[i];
 				returnType = CLASS_TYPES[i];
 			}
+		}
+		if (returnType == EntityType.class && !HoloHandler.get().getCurrentProvider().supportsEntityLines()) {
+			Skript.error("You have tried to get an entity line, when your hologram provider does not support such.");
+			return false;
 		}
 		lineExpr = (Expression<SKJHoloLine>) exprs[0];
 		return true;
