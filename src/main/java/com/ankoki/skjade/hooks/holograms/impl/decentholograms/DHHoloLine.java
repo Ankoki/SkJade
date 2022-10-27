@@ -27,7 +27,8 @@ public class DHHoloLine implements SKJHoloLine {
      */
     public static List<SKJHoloLine> parseLines(List<Object> lines) {
         List<SKJHoloLine> parsed = new ArrayList<>();
-        for (Object object : lines) parsed.add(new DHHoloLine(object));
+        for (Object object : lines)
+            parsed.add(new DHHoloLine(object));
         return parsed;
     }
 

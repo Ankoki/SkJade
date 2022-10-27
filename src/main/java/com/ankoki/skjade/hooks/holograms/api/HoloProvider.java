@@ -74,6 +74,12 @@ public interface HoloProvider {
     boolean supportsPerPlayer();
 
     /**
+     * Checks if the provider supports entity lines.
+     * @return if provider supports entity lines.
+     */
+    boolean supportsEntityLines();
+
+    /**
      * Creates a new hologram using the provider. Will be null if creation failed.
      * @param name the name/key to give the hologram.
      * @param location the location to spawn it at.
