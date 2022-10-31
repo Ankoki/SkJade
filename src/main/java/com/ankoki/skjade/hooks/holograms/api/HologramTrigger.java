@@ -25,8 +25,12 @@ public class HologramTrigger {
 	public void execute(int page, int line, ClickType type, HologramInteractEvent event) {
 		if (event.isCancelled())
 			return;
-		if (pages.length == 0 || NumberUtils.arrayContains(pages, page)) {
-			if (lines.length == 0 || NumberUtils.arrayContains(lines, line)) {
+		if (pages.length == 0 ||
+				!HoloHandler.get().getCurrentProvider().supportsPages() ||
+				NumberUtils.arrayContains(pages, page)) {
+			if (lines.length == 0 ||
+					!HoloHandler.get().getCurrentProvider().supportsOnClick(true) ||
+					NumberUtils.arrayContains(lines, line)) {
 				if (this.type == type)
 					trigger.execute(event);
 			}
