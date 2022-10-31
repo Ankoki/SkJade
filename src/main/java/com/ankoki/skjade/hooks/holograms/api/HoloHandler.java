@@ -86,7 +86,7 @@ public class HoloHandler implements Listener {
      * @param type the click type.
      * @param event the event to run.
      */
-    public void executeInteraction(SKJHolo holo, int page, int line, ClickType type, Event event) {
+    public void executeInteraction(SKJHolo holo, int page, int line, ClickType type, HologramInteractEvent event) {
         final List<HologramTrigger> cache = this.triggers.getOrDefault(holo, new ArrayList<>());
         for (final HologramTrigger trigger : cache) {
             trigger.execute(page, line, type, event);

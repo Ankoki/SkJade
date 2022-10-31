@@ -3,11 +3,12 @@ package com.ankoki.skjade.hooks.holograms.api.events;
 import com.ankoki.skjade.hooks.holograms.api.ClickType;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class HologramInteractEvent extends PlayerEvent {
+public class HologramInteractEvent extends PlayerEvent implements Cancellable {
 
 	private static final HandlerList HANDLER_LIST = new HandlerList();
 
@@ -15,6 +16,7 @@ public class HologramInteractEvent extends PlayerEvent {
 	private final int page;
 	private final int line;
 	private final ClickType type;
+	private boolean cancelled;
 
 	public HologramInteractEvent(Player player,
 								 SKJHolo holo,
@@ -51,5 +53,15 @@ public class HologramInteractEvent extends PlayerEvent {
 
 	public static @NotNull HandlerList getHandlerList() {
 		return HANDLER_LIST;
+	}
+
+	@Override
+	public boolean isCancelled() {
+		return cancelled;
+	}
+
+	@Override
+	public void setCancelled(boolean b) {
+		cancelled = b;
 	}
 }
