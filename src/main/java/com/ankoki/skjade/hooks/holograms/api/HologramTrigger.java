@@ -31,7 +31,7 @@ public class HologramTrigger {
 			if (lines.length == 0 ||
 					!HoloHandler.get().getCurrentProvider().supportsOnClick(true) ||
 					NumberUtils.arrayContains(lines, line)) {
-				if (this.type == type)
+				if (type == ClickType.ANY || this.type == type)
 					trigger.execute(event);
 			}
 		}

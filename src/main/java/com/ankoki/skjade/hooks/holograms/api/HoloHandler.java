@@ -88,9 +88,8 @@ public class HoloHandler implements Listener {
      */
     public void executeInteraction(SKJHolo holo, int page, int line, ClickType type, HologramInteractEvent event) {
         final List<HologramTrigger> cache = this.triggers.getOrDefault(holo, new ArrayList<>());
-        for (final HologramTrigger trigger : cache) {
+        for (final HologramTrigger trigger : cache)
             trigger.execute(page, line, type, event);
-        }
     }
 
     /**
@@ -158,8 +157,7 @@ public class HoloHandler implements Listener {
 
     @EventHandler
     private void onHoloInteract(HologramInteractEvent event) {
-        if (this.hasInteractions(event.getHologram())) {
+        if (this.hasInteractions(event.getHologram()))
             this.executeInteraction(event.getHologram(), event.getPage(), event.getLine(), event.getType(), event);
-        }
     }
 }

@@ -24,8 +24,8 @@ public interface HoloProvider {
     List<SKJHoloLine> parseLines(List<Object> lines);
 
     /**
-     * Parses a foreign click type into an SKJade ClickType.
-     * @param click the foreign clicktype.
+     * Parses a foreign click type into an SkJade ClickType.
+     * @param click the foreign click-type, or a String representation of such.
      * @return the translated.
      */
     ClickType parseClickType(Object click);

@@ -38,13 +38,12 @@ public class SecInteraction extends Section {
 		HoloProvider provider = HoloHandler.get().getCurrentProvider();
 		SecInteraction.supportsLineClick = provider.supportsOnClick(true);
 		SecInteraction.supportsPageClick = provider.supportsOnClick(false);
-		if (supportsLineClick) {
+		if (supportsLineClick)
 			Skript.registerSection(SecInteraction.class,
 					"on [:shift] [:left|:right] click[ing] [[of|on] line %-numbers%] [[of|on] page %-numbers%]");
-		} else if (supportsPageClick) {
+		else if (supportsPageClick)
 			Skript.registerSection(SecInteraction.class,
 					"on [:shift] (:left|:right|) click[[ing] [page: [on|of] page %-number%]]");
-		}
 	}
 
 	private ClickType clickType;
@@ -81,7 +80,7 @@ public class SecInteraction extends Section {
 		int[] lines = new int[lineNumbers.length];
 		int i = 0;
 		for (Number number : lineNumbers) {
-			if (number != null) {
+			if (number != null && number.intValue() != -1) {
 				lines[i] = number.intValue();
 				i++;
 			}
@@ -89,7 +88,7 @@ public class SecInteraction extends Section {
 		int[] pages = new int[pageNumbers.length];
 		i = 0;
 		for (Number number : pageNumbers) {
-			if (number != null) {
+			if (number != null && number.intValue() != -1) {
 				pages[i] = number.intValue();
 				i++;
 			}

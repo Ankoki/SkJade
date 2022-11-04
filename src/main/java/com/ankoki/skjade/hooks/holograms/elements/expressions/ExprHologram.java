@@ -58,11 +58,14 @@ public class ExprHologram extends SimpleExpression<SKJHolo> {
 
     @Override
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
-        if (mode != ChangeMode.DELETE) return;
+        if (mode != ChangeMode.DELETE)
+            return;
         String key = keyExpr.getSingle(e);
-        if (key == null) return;
+        if (key == null)
+            return;
         SKJHolo holo = HoloHandler.get().getHolo(key);
-        if (holo == null) return;
+        if (holo == null)
+            return;
         holo.destroy();
     }
 
