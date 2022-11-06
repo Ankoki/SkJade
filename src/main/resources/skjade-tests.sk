@@ -1,0 +1,80 @@
+# This is the SkJade test skript that is used to verify the version is working correctly.
+# Every version this will be updated with the new things to verify the main features are working as they should.
+# Some expressions will not be tested as there is no point and to be frank, too many elements to test.
+# VERSION: 2.0
+
+options:
+	prefix: §eSKJADE §7ℑ §e
+
+# <text> - Used to verify a certain element.
+# [<text>] - Used in some elements to specify details.
+command /skjade-test <text> [<text>]:
+	permission: skjade.test
+	trigger:
+
+		# BINFLOP - This is a substitute to pastebin found at https://bin.birdflop.com/.
+		if arg-1 = "binflop":
+			upload new binflop with text "LINE 1 | Hey! This is a binflop!" and "LINE 2 | Welcome to the next line.":
+				send binflop link
+			send "{@prefix}Binflop Request Sent. Response should follow:"
+
+		# HOLOGRAMS - We test with DecentHolograms, but HolographicDisplays is also supported.
+		else if arg-1 = "hologram":
+			create new holo keyed as (arg-2 ? "SKJADE-TEST") at player's location:
+				default lines: "§aHello there!", "", "§7[§cCLICK HERE§7]", "" and "§eThis hologram does stuff!"
+				page 1: "Hey! This is the second page", zombie, player's head
+				static: true # As of the current DecentHolograms version, this is not supported and is useless.
+				on left click:
+					send "§eLeft Click §7| §fYou have left clicked %event-hologram's id%."
+				on right click:
+					send "§eRight Click §7| §fYou have right clicked %event-hologram's id%."
+				on shift left click:
+					send "§eShift Left Click §7| §fYou have shift left clicked %event-hologram's id%."
+				on shift right click:
+					send "§eShift Right Click §7| §fYou have shift right clicked %event-hologram's id%."
+				on click:
+					send "§eClick §7| §fYou have clicked %event-hologram's id%."
+			send "{@prefix}Created holo with the id %arg-2% ? ""SKJADE-TEST"""
+
+		# RAINBOW - The text modification elements of SkJade. Also acts as a test for the server minor expression.
+		else if arg-1 = "rainbow":
+			if server version >= 16:
+				send rainbow "RAINBOW | This text is a regular rainbow."
+				send pastel rainbow "PASTEL RAINBOW | This text is a pastel rainbow."
+				send monochrome "MONOCHROME | This text is monochrome."
+			else:
+				send "{@prefix}This server version doesn't support hexcodes."
+
+		# LASERS - Guardian and Crystal lasers are supported on all versions.
+		else if arg-1 = "laser":
+			create laser keyed as (arg-2 ? "SKJADE-TEST"):
+				duration: 5 seconds
+				type: crystal
+				start location: player
+				end location: player's target block
+				distance: 240
+			start laser with id (arg-2 ? "SKJADE-TEST") for all players
+			send "{@prefix}Started crystal laser for 5 seconds."
+			wait 5 seconds
+			# Here we can use the same key as the crystal laser, as the laser ID gets deleted from the cache on finish.
+			create laser keyed as (arg-2 ? "SKJADE-TEST"):
+				duration: 5 seconds
+				type: guardian
+				start location: player
+				end location: player's target block
+				distance: 240
+			start laser with id (arg-2 ? "SKJADE-TEST") for all players
+			send "{@prefix}Started guardian laser for 5 seconds."
+
+		# DESTROY PACKET - This essentially hides and entity from the player. Is supported in Skript from 2.6.4 (?) onwards, so may be removed soon.
+		else if arg-1 = "destroy":
+			spawn sheep at player
+			set {_sheep} to last spawned sheep
+			send "{@prefix}Spawned a sheep to be destroyed in 1 second."
+			wait 1 second
+			destroy {_sheep}
+			send "{@prefix}Destroyed the spawned sheep for all players."
+
+		# TEST DOES NOT EXIST
+		else:
+			send "{@prefix}No test matching %arg-1%. Did you spell it correctly?"

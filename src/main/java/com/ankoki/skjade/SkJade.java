@@ -32,7 +32,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -247,6 +253,25 @@ public class SkJade extends JavaPlugin implements Listener {
         return latest;
     }
 
+    public boolean copyTests() {
+        File file = new File(Skript.getInstance().getDataFolder() + File.separator + "scripts", "skjade-tests.sk");
+        if (!file.exists()) {
+            try {
+                InputStream in = this.getClassLoader().getResourceAsStream("/skjade-tests.sk");
+                if (in == null)
+                    throw new IllegalAccessException("Required resource 'skjade-tests.sk' does not exist! Please report this.");
+                Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                return true;
+            } catch (IllegalAccessException | IOException ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        } else {
+            this.getLogger().severe("Command '/skjade copy-tests' failed as 'skjade-tests.sk' already exists in your scripts folder!");
+            return false;
+        }
+    }
+
     public Config getOwnConfig() {
         return config;
     }
@@ -254,10 +279,9 @@ public class SkJade extends JavaPlugin implements Listener {
     @EventHandler
     private void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (Config.VERSION_ALERTS && (player.hasPermission("skjade.notify") || player.isOp()) && !SkJade.getInstance().isLatest()) {
+        if (Config.VERSION_ALERTS && player.hasPermission("skjade.notify") && !SkJade.getInstance().isLatest()) {
             player.sendMessage("§fSk§aJade §f| §7§oYou are running an outdated version of §f§oSk§a§oJade§7§o!");
-            TextComponent github =
-                    new TextComponent(Utils.coloured("§fSk§aJade §f| §7§oClick me to download the latest version!"));
+            TextComponent github = new TextComponent("§fSk§aJade §f| §7§oClick me to download the latest version!");
             github.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                     new ComponentBuilder("Click me to go to the latest release!")
                             .color(ChatColor.GRAY)
