@@ -257,7 +257,7 @@ public class SkJade extends JavaPlugin implements Listener {
         File file = new File(Skript.getInstance().getDataFolder() + File.separator + "scripts", "skjade-tests.sk");
         if (!file.exists()) {
             try {
-                InputStream in = this.getClassLoader().getResourceAsStream("/skjade-tests.sk");
+                InputStream in = this.getClassLoader().getResourceAsStream("skjade-tests.sk");
                 if (in == null)
                     throw new IllegalAccessException("Required resource 'skjade-tests.sk' does not exist! Please report this.");
                 Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
