@@ -29,7 +29,7 @@ public class SkJadeCmd implements CommandExecutor {
                 }
                 case "COPY-TESTS" -> {
                     if (SkJade.getInstance().copyTests())
-                        sender.sendMessage(PREFIX + "§7§oYou have copied the SkJade tests to your skript folders, " +
+                        sender.sendMessage(PREFIX + "§7§oYou have copied the SkJade tests to your scripts folder, " +
                                 "named 'skjade-tests.sk'. Please reload your scripts to access the command.");
                     else
                         sender.sendMessage(PREFIX + "§c§oThere was an error copying the SkJade tests over. " +
