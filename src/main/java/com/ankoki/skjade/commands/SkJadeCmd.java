@@ -35,6 +35,7 @@ public class SkJadeCmd implements CommandExecutor {
                         sender.sendMessage(PREFIX + "§c§oThere was an error copying the SkJade tests over. " +
                                 "Please check the console for the provided error and report this on the SkJade GitHub if needed.");
                 }
+                default -> sender.sendMessage(PREFIX + "§c§oThere is no command that matches the argument '" + args[0] + "'");
             }
         }
         return true;
