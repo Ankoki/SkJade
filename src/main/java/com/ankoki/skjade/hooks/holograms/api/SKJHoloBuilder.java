@@ -99,8 +99,10 @@ public class SKJHoloBuilder {
         if (hologram == null) return null;
         hologram.setStatic(still);
         hologram.setPersistent(persistent);
-        for (Map.Entry<Integer, List<Player>> entry : show.entrySet()) hologram.showTo(entry.getKey(), entry.getValue().toArray(new Player[0]));
-        for (HologramTrigger trigger : triggers) HoloHandler.get().registerInteraction(hologram, trigger);
+        for (Map.Entry<Integer, List<Player>> entry : show.entrySet())
+            hologram.showTo(entry.getKey(), entry.getValue().toArray(new Player[0]));
+        for (HologramTrigger trigger : triggers)
+            HoloHandler.get().registerInteraction(hologram, trigger);
         hologram.hideFrom(hide.toArray(hide.toArray(new Player[0])));
         return hologram;
     }

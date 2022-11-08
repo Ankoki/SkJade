@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets/sets a holograms static state.")
 @Examples("set {_static} to static state of hologram keyed as \"blackpink in your area\"")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprStatic extends SimplePropertyExpression<SKJHolo, Boolean> {
 
 	static {

@@ -10,7 +10,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets a holograms key/id.")
 @Examples("if {_holo}'s key = \"born pink\"")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprHoloID extends SimplePropertyExpression<SKJHolo, String> {
 
 	static {

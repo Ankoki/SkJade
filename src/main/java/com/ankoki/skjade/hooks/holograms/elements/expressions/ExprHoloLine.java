@@ -25,7 +25,7 @@ import java.util.List;
 @Description("Gets the line of a hologram from its index or page.")
 @Examples("set {_line} to line 5 of holo keyed as \"shut down by blackpink\"")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 
 	private static final boolean SUPPORTS_PAGES = HoloHandler.get().getCurrentProvider().supportsPages();
@@ -47,7 +47,7 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-		allLines = i == 0;
+		allLines = i == 0 || i == 2;
 		holoExpr = (Expression<SKJHolo>) exprs[allLines ? 0 : (SUPPORTS_PAGES ? 2 : 1)];
 		lineExpr = allLines ? null : (Expression<Number>) exprs[0];
 		pageExpr = allLines ? null : (SUPPORTS_PAGES ? (Expression<Number>) exprs[1] : null);
@@ -64,14 +64,16 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 			Number line = lineExpr.getSingle(event);
 			if (line == null)
 				return new SKJHoloLine[0];
-			else lineNumber = line.intValue();
+			else 
+				lineNumber = line.intValue();
 		}
 		int pageIndex = 0;
 		if (pageExpr != null) {
 			Number page = pageExpr.getSingle(event);
 			if (page == null)
 				return new SKJHoloLine[0];
-			else pageIndex = page.intValue();
+			else 
+				pageIndex = page.intValue();
 		}
 		final List<SKJHoloLine> page = holo.getPage(pageIndex);
 		if (allLines)
@@ -92,7 +94,8 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 	public void change(Event event, @Nullable Object[] delta, ChangeMode mode) {
 		if (delta.length == 0 && (mode == ChangeMode.RESET))
 			return;
-		if ((delta[0] instanceof EntityType || delta[0] instanceof Entity) && !HoloHandler.get().getCurrentProvider().supportsEntityLines())
+		if ((delta[0] instanceof EntityType || delta[0] instanceof Entity) && 
+				!HoloHandler.get().getCurrentProvider().supportsEntityLines())
 			return;
 		SKJHolo holo = holoExpr.getSingle(event);
 		if (holo == null)
@@ -111,9 +114,9 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 				List<SKJHoloLine> current = holo.getPage(page);
 				List<SKJHoloLine> updated = new ArrayList<>();
 				Object object = delta[0];
-				for (SKJHoloLine line : current) {
-					if (line.get() != object) updated.add(line);
-				}
+				for (SKJHoloLine line : current)
+					if (line.get() != object)
+						updated.add(line);
 				holo.setLines(page, updated);
 			}
 			case DELETE -> holo.destroy();

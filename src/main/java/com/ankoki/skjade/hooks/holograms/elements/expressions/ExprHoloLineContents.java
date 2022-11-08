@@ -19,7 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets the content, text, material, item or entity of a hologram line.")
 @Examples("broadcast \"%material of line 5 of {_holo}%\"")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprHoloLineContents extends SimpleExpression<Object> {
 
 	private static final String[] CONTENT_TYPES = new String[]{"content", "text", "material", "item", "entity"};

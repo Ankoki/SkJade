@@ -21,20 +21,30 @@ command /skjade-test <text> [<text>]:
 		# HOLOGRAMS - We test with DecentHolograms, but HolographicDisplays is also supported.
 		else if arg-1 = "hologram":
 			create new holo keyed as (arg-2 ? "SKJADE-TEST") at player's location:
-				default lines: "§aHello there!", "", "§7[§cCLICK HERE§7]", "" and "§eThis hologram does stuff!"
-				page 1: "Hey! This is the second page", zombie, player's head
+				default lines: "§aHello there!", "", "§7[§cCLICK ME§7]", "" and "§eThis hologram does stuff!"
+				page 1: "Hey! This is the second page", a zombie, player's head
 				static: true # As of the current DecentHolograms version, this is not supported and is useless.
-				on left click:
+				on left click of page 1:
+					send "§ePage One §7| §fYou have clicked on page 1 of %event-hologram's id%"
+				on left click of page 0:
 					send "§eLeft Click §7| §fYou have left clicked %event-hologram's id%."
-				on right click:
+				on right click of page 0:
 					send "§eRight Click §7| §fYou have right clicked %event-hologram's id%."
-				on shift left click:
+				on shift left click of page 0:
 					send "§eShift Left Click §7| §fYou have shift left clicked %event-hologram's id%."
 				on shift right click:
-					send "§eShift Right Click §7| §fYou have shift right clicked %event-hologram's id%."
-				on click:
-					send "§eClick §7| §fYou have clicked %event-hologram's id%."
-			send "{@prefix}Created holo with the id %arg-2% ? ""SKJADE-TEST"""
+					set {_i} to 1 if event-index = 0
+					show page {_i} ? 0 of event-hologram to player
+					send "§eShift Right Click §7| §fYou are now viewing the alternate page."
+				on any left click:
+					send "§eAny Left Click §7| §fYou have used any left click on %event-hologram's id%."
+				on any right click:
+					send "§eAny Right Click §7| §fYou have used any right click on %event-hologram's id%."
+				on any shift click:
+					send "§eAny Shift Click §7| §fYou have used any shift click on %event-hologram%'s id."
+				on any click:
+					send "§eAny Click §7| §fYou have clicked %event-hologram's id%."
+			send "{@prefix}Created holo with the id %arg-2 ? "SKJADE-TEST"%."
 
 		# RAINBOW - The text modification elements of SkJade. Also acts as a test for the server minor expression.
 		else if arg-1 = "rainbow":

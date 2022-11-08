@@ -29,7 +29,7 @@ import java.util.List;
 		"\t\tsend \"Bye bye!\"",
 		"\t\tdelete event-hologram"})
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class SecInteraction extends Section {
 
 	private static boolean supportsLineClick, supportsPageClick;
@@ -40,10 +40,10 @@ public class SecInteraction extends Section {
 		SecInteraction.supportsPageClick = provider.supportsOnClick(false);
 		if (supportsLineClick)
 			Skript.registerSection(SecInteraction.class,
-					"on [:shift] [:left|:right] click[ing] [[of|on] line %-numbers%] [[of|on] page %-numbers%]");
+					"on [:shift] (:left|:right|:any) click[ing] [[of|on] line %-numbers%] [[of|on] page %-numbers%]");
 		else if (supportsPageClick)
 			Skript.registerSection(SecInteraction.class,
-					"on [:shift] (:left|:right|) click[[ing] [page: [on|of] page %-number%]]");
+					"on [:any] [:shift] [:left|:right] click[[ing] [page: [on|of] page %-number%]]");
 	}
 
 	private ClickType clickType;
@@ -62,12 +62,25 @@ public class SecInteraction extends Section {
 		final boolean left = parseResult.hasTag("left");
 		final boolean right = parseResult.hasTag("right");
 		final boolean shift = parseResult.hasTag("shift");
-		if (left && shift) clickType = ClickType.SHIFT_LEFT;
-		else if (left) clickType = ClickType.LEFT;
-		else if (right && shift) clickType = ClickType.SHIFT_RIGHT;
-		else if (right) clickType = ClickType.RIGHT;
-		else clickType = ClickType.ANY;
-		if (supportsLineClick) lineExpr = (Expression<Number>) exprs[0];
+		final boolean any = parseResult.hasTag("any");
+		if (left && shift)
+			clickType = ClickType.SHIFT_LEFT;
+		else if (left && any)
+			clickType = ClickType.ANY_LEFT;
+		else if (left)
+			clickType = ClickType.LEFT;
+		else if (right && shift)
+			clickType = ClickType.SHIFT_RIGHT;
+		else if (right && any)
+			clickType = ClickType.ANY_RIGHT;
+		else if (right)
+			clickType = ClickType.RIGHT;
+		else if (any && shift)
+			clickType = ClickType.ANY_SHIFT;
+		else if (any)
+			clickType = ClickType.ANY;
+		if (supportsLineClick)
+			lineExpr = (Expression<Number>) exprs[0];
 		pageExpr = (Expression<Number>) exprs[supportsLineClick ? 1 : 0];
 		this.trigger = loadCode(sectionNode, "hologram interaction", HologramInteractEvent.class);
 		return true;
@@ -80,7 +93,7 @@ public class SecInteraction extends Section {
 		int[] lines = new int[lineNumbers.length];
 		int i = 0;
 		for (Number number : lineNumbers) {
-			if (number != null && number.intValue() != -1) {
+			if (number != null && number.intValue() > -1) {
 				lines[i] = number.intValue();
 				i++;
 			}
@@ -88,20 +101,20 @@ public class SecInteraction extends Section {
 		int[] pages = new int[pageNumbers.length];
 		i = 0;
 		for (Number number : pageNumbers) {
-			if (number != null && number.intValue() != -1) {
+			if (number != null && number.intValue() > -1) {
 				pages[i] = number.intValue();
 				i++;
 			}
 		}
 		SKJHoloBuilder builder = section.getCurrentBuilder();
-		builder.addInteraction(new HologramTrigger(lines, pages, clickType, trigger));
+		builder.addInteraction(new HologramTrigger(pages, lines, clickType, trigger));
 		section.setCurrentBuilder(builder);
 		return this.getNext();
 	}
 
 	@Override
 	public String toString(@Nullable Event event, boolean b) {
-		return "on " + clickType.toString() + "click" + (lineExpr == null ? "" : " on line " + lineExpr.toString(event, b)) +
+		return "on " + clickType.toString() + " click" + (lineExpr == null ? "" : " on line " + lineExpr.toString(event, b)) +
 				(pageExpr == null ? "" : " of page " + pageExpr.toString(event, b));
 	}
 }

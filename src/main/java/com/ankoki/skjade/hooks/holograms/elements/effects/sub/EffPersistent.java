@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 		"\tstatic: true",
 		"\thide from: event-player"})
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class EffPersistent extends Effect {
 
 	static {

@@ -9,7 +9,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets a hologram line's index.")
 @Examples("if {_line}'s index > 4:")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprHoloLineIndex extends SimplePropertyExpression<SKJHoloLine, Number> {
 
 	static {

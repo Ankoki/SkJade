@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.Nullable;
 		"so make sure to be wary of any clashes.")
 @Examples("broadcast {_holo}'s persistent state")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprPersistent extends SimplePropertyExpression<SKJHolo, Boolean> {
 
 	static {

@@ -12,7 +12,8 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprHologram extends EventValueExpression<SKJHolo> {
 
 	static {
-		Skript.registerExpression(ExprHologram.class, SKJHolo.class, ExpressionType.SIMPLE, "[event(-| )]hologram");
+		Skript.registerExpression(ExprHologram.class, SKJHolo.class, ExpressionType.SIMPLE,
+				"[event(-| )]holo[gram]");
 	}
 
 	public ExprHologram() {

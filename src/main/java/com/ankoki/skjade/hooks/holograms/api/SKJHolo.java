@@ -122,6 +122,13 @@ public interface SKJHolo {
     List<SKJHoloLine> getPage(int page);
 
     /**
+     * Gets the index of a viewed page for a player.
+     * @param player the player to check.
+     * @return the index.
+     */
+    int getPage(Player player);
+
+    /**
      * Gets the location of the hologram.
      * @return the location.
      */

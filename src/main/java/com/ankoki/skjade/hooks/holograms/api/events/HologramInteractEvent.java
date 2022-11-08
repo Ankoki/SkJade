@@ -3,24 +3,15 @@ package com.ankoki.skjade.hooks.holograms.api.events;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
 import com.ankoki.skjade.hooks.holograms.api.ClickType;
+import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
-import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 public class HologramInteractEvent extends PlayerEvent implements Cancellable {
-
-	static {
-		EventValues.registerEventValue(HologramInteractEvent.class, SKJHolo.class, new Getter<SKJHolo, HologramInteractEvent>() {
-			@Override
-			public @Nullable SKJHolo get(HologramInteractEvent event) {
-				return event.getHologram();
-			}
-		}, EventValues.TIME_NOW);
-	}
 
 	private static final HandlerList HANDLER_LIST = new HandlerList();
 

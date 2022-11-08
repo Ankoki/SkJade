@@ -18,12 +18,12 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets/deletes a hologram via its key.")
 @Examples("set {_holo} to holo keyed as \"so bad by stayc\"")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprHologram extends SimpleExpression<SKJHolo> {
 
     static {
         Skript.registerExpression(ExprHologram.class, SKJHolo.class, ExpressionType.SIMPLE,
-                "[the] [skjade] holo[gram] (key|nam)ed [as] %string%");
+                "[the] [skjade] holo[gram] [(key|nam)ed [as]] %string%");
     }
 
     private Expression<String> keyExpr;
@@ -37,7 +37,8 @@ public class ExprHologram extends SimpleExpression<SKJHolo> {
     @Override
     protected @Nullable SKJHolo[] get(Event event) {
         String key = keyExpr.getSingle(event);
-        if (key == null) return new SKJHolo[0];
+        if (key == null)
+            return new SKJHolo[0];
         return new SKJHolo[]{HoloHandler.get().getHolo(key)};
     }
 

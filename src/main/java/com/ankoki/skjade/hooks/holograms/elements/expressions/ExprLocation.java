@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets/sets a hologram's location.")
 @Examples("set {_location} to holo keyed as \"we dem girls\"'s location")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprLocation extends SimpleExpression<Location> {
 
     static {

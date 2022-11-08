@@ -61,7 +61,7 @@ public class DHHolo implements SKJHolo {
 
     @Override
     public void setLine(int page, int index, SKJHoloLine line) {
-        int difference = current.getPages().size() - (page + 1);
+        int difference = current.getPages().size() - page;
         for (int i = 0; i < difference; i++)
             this.current.addPage();
         try {
@@ -142,6 +142,11 @@ public class DHHolo implements SKJHolo {
     @Override
     public List<SKJHoloLine> getPage(int page) {
         return null;
+    }
+
+    @Override
+    public int getPage(Player player) {
+        return current.getPage(player).getIndex();
     }
 
     @Override

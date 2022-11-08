@@ -23,7 +23,7 @@ import java.util.List;
             "\ton right shift click on page 2:",
             "\t\tsend \"Hey! You clicked %event-hologram's id%!\""})
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class SecKeyedHologram extends Section {
 
     static {

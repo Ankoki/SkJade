@@ -25,15 +25,21 @@ import org.eclipse.jdt.annotation.Nullable;
         "\tstatic: true",
         "\thide from: event-player"})
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class EffVisibility extends Effect {
 
 
     static {
-        if (HoloHandler.get().getCurrentProvider().supportsPerPlayer())
-            Skript.registerEffect(EffVisibility.class,
-                "(show:show[ page %-number%] to|hide (for|from))\\: %players%",
-                "(show:show[ page %-number%] to|hide ) %skjholo% (to|for|from) %players%");
+        if (HoloHandler.get().getCurrentProvider().supportsPerPlayer()) {
+            if (HoloHandler.get().getCurrentProvider().supportsPages())
+                Skript.registerEffect(EffVisibility.class,
+                        "(show:show[ page %-number%] to|hide (for|from))\\: %players%",
+                        "(show:show[ page %-number%] [of]|hide ) %skjholo% (to|for|from) %players%");
+            else
+                Skript.registerEffect(EffVisibility.class,
+                        "(show:show to|hide (for|from))\\: %players%",
+                        "(show:show|hide) %skjholo% (to|for|from) %players%");
+        }
     }
 
     private boolean show;
@@ -70,23 +76,30 @@ public class EffVisibility extends Effect {
     @Override
     protected void execute(Event event) {
         Player[] players = playerExpr.getAll(event);
-        if (players.length == 0) return;
-        int page;
+        if (players.length == 0)
+            return;
+        int page = 0;
         if (pageExpr != null) {
-            Integer p = pageExpr.getSingle(event);
-            if (p == null) return;
-            page = p;
-        } else page = 0;
+            Number number = pageExpr.getSingle(event);
+            if (number == null)
+                return;
+            page = number.intValue();
+        }
         if (isSec) {
             SKJHoloBuilder builder = section.getCurrentBuilder();
-            if (show) builder.showTo(page, players);
-            else builder.hideFrom(players);
+            if (show)
+                builder.showTo(page, players);
+            else
+                builder.hideFrom(players);
             section.setCurrentBuilder(builder);
         } else {
             SKJHolo holo = holoExpr.getSingle(event);
-            if (holo == null) return;
-            if (show) holo.showTo(page, players);
-            else holo.hideFrom(players);
+            if (holo == null)
+                return;
+            if (show)
+                holo.showTo(page, players);
+            else
+                holo.hideFrom(players);
         }
     }
 

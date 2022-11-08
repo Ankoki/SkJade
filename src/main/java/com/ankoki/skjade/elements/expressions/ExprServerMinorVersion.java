@@ -31,7 +31,7 @@ public class ExprServerMinorVersion extends SimpleExpression<Number> {
 	}
 
 	@Override
-	protected @Nullable Number[] get(Event event) {
+	protected Number[] get(Event event) {
 		return new Number[]{Utils.getMinecraftMinor()};
 	}
 

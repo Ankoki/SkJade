@@ -5,7 +5,10 @@ public enum ClickType {
 	RIGHT,
 	SHIFT_LEFT,
 	SHIFT_RIGHT,
-	ANY;
+	ANY,
+	ANY_LEFT,
+	ANY_RIGHT,
+	ANY_SHIFT;
 
 	@Override
 	public String toString() {

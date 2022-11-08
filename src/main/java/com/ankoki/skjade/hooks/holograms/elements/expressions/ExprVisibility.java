@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets a hologram's visibility for certain players.")
 @Examples("set {_x} to visibility of {_holo} for {-admin::%arg-1%}")
 @Since("2.0")
-@RequiredPlugins("DecentHolograms")
+@RequiredPlugins("DecentHolograms/Holographic Displays")
 public class ExprVisibility extends SimpleExpression<Boolean> {
 
 	static {

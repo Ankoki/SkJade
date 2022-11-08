@@ -139,6 +139,11 @@ public class HDHolo implements SKJHolo {
 	}
 
 	@Override
+	public int getPage(Player player) {
+		return -1;
+	}
+
+	@Override
 	public Location getLocation() {
 		return current.getLocation();
 	}

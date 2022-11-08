@@ -6,6 +6,8 @@ import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.registrations.EventValues;
+import ch.njol.skript.util.Getter;
 import com.ankoki.roku.bukkit.BukkitImpl;
 import com.ankoki.roku.misc.Version;
 import com.ankoki.roku.web.JSON;
@@ -16,6 +18,7 @@ import com.ankoki.skjade.elements.lasers.Laser;
 import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
 import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
+import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
 import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
 import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
@@ -102,6 +105,26 @@ public class SkJade extends JavaPlugin implements Listener {
                 this.getLogger().info(Config.HOLOGRAM_PLUGIN + " was found! Enabling support.");
                 HoloHandler.get().setCurrentProvider(HoloHandler.get().getProvider(Config.HOLOGRAM_PLUGIN));
                 HoloHandler.get().getCurrentProvider().setup();
+                EventValues.registerEventValue(HologramInteractEvent.class, SKJHolo.class, new Getter<>() {
+                    @Override
+                    public SKJHolo get(HologramInteractEvent event) {
+                        return event.getHologram();
+                    }
+                }, EventValues.TIME_NOW);
+                if (HoloHandler.get().getCurrentProvider().supportsPages())
+                    EventValues.registerEventValue(HologramInteractEvent.class, Number.class, new Getter<>() {
+                        @Override
+                        public Number get(HologramInteractEvent event) {
+                            return event.getPage();
+                        }
+                    }, EventValues.TIME_NOW);
+                if (HoloHandler.get().getCurrentProvider().supportsOnClick(true))
+                    EventValues.registerEventValue(HologramInteractEvent.class, Number.class, new Getter<>() {
+                        @Override
+                        public Number get(HologramInteractEvent event) {
+                            return event.getLine();
+                        }
+                    }, EventValues.TIME_NOW);
                 this.loadHologramElements();
             } else
                 this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");

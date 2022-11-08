@@ -29,10 +29,9 @@ public class EffStatic extends Effect {
 
     static {
         HoloProvider provider = HoloHandler.get().getCurrentProvider();
-        if (provider.supportsStatic()) {
+        if (provider.supportsStatic())
             Skript.registerEffect(EffStatic.class,
                     "static\\: %boolean%");
-        }
     }
 
     private SecKeyedHologram section;

@@ -3,7 +3,6 @@ package com.ankoki.skjade.hooks.holograms.api;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +34,7 @@ public class HoloHandler implements Listener {
      * @return the hologram under the given key, null if not found.
      */
     public @Nullable SKJHolo getHolo(String key) {
-        return storage.getOrDefault(key, null);
+        return storage.get(key);
     }
 
     /**
@@ -45,7 +44,8 @@ public class HoloHandler implements Listener {
      * @return if registering was successful.
      */
     public boolean registerHolo(String key, SKJHolo holo) {
-        if (key == null || storage.containsKey(key)) return false;
+        if (key == null || storage.containsKey(key))
+            return false;
         storage.put(key, holo);
         return true;
     }
@@ -98,9 +98,14 @@ public class HoloHandler implements Listener {
      * @return true if the hologram has interactions to run.
      */
     public boolean hasInteractions(SKJHolo holo) {
-        return this.triggers.containsKey(holo);
+        final List<HologramTrigger> cache = this.triggers.getOrDefault(holo, new ArrayList<>());
+        return !triggers.isEmpty();
     }
 
+    /**
+     * Returns all holograms in the cache.
+     * @return the registered holograms.
+     */
     public Collection<SKJHolo> getHolograms() {
         return this.storage.values();
     }
