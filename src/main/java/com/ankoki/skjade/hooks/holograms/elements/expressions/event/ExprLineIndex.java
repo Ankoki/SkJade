@@ -7,19 +7,19 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 // Redundant as there is no way to differentiate between two event expressions with the same type.
-public class ExprPageIndex extends EventValueExpression<Number> {
+public class ExprLineIndex extends EventValueExpression<Number> {
 
 	/*static {
-		Skript.registerExpression(ExprPageIndex.class, Number.class, ExpressionType.SIMPLE,
-				"[event(-| )][page(-| )]index");
+		Skript.registerExpression(ExprLineIndex.class, Number.class, ExpressionType.SIMPLE,
+				"[event(-| )]line[(-| )index]");
 	}*/
 
-	public ExprPageIndex() {
+	public ExprLineIndex() {
 		super(Number.class);
 	}
 
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "event-page-index";
+		return "event-line-index";
 	}
 }

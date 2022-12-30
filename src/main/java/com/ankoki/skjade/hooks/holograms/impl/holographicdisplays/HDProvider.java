@@ -1,9 +1,17 @@
 package com.ankoki.skjade.hooks.holograms.impl.holographicdisplays;
 
+import ch.njol.skript.lang.Trigger;
+import ch.njol.skript.lang.TriggerSection;
+import ch.njol.skript.lang.util.ContextlessEvent;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.*;
+import com.ankoki.skjade.hooks.holograms.elements.effects.EffPlaceholderReturn;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.Location;
+import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.lang.structure.Structure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +75,19 @@ public class HDProvider implements HoloProvider {
 	@Override
 	public boolean supportsEntityLines() {
 		return false;
+	}
+
+	@Override
+	public boolean supportsCustomPLaceholders() {
+		return true;
+	}
+
+	@Override
+	public void registerPlaceholder(String name, int refreshRate, Trigger trigger, Structure structure) {
+		HologramsAPI.registerPlaceholder(SkJade.getInstance(), name, refreshRate, () -> {
+			trigger.execute(ContextlessEvent.get());
+			return EffPlaceholderReturn.getValue(structure);
+		});
 	}
 
 	@Override

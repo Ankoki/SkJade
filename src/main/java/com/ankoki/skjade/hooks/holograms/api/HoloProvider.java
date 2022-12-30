@@ -1,8 +1,13 @@
 package com.ankoki.skjade.hooks.holograms.api;
 
+import ch.njol.skript.lang.Trigger;
+import ch.njol.skript.lang.TriggerSection;
+import com.ankoki.skjade.hooks.holograms.elements.effects.EffPlaceholderReturn;
 import org.bukkit.Location;
+import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.lang.structure.Structure;
 
 import java.util.List;
 import java.util.Map;
@@ -78,6 +83,21 @@ public interface HoloProvider {
      * @return if provider supports entity lines.
      */
     boolean supportsEntityLines();
+
+    /**
+     * Checks if the provider supports registering custom placeholders.
+     * @return if provider supports custom placeholders.
+     */
+    boolean supportsCustomPLaceholders();
+
+    /**
+     * Registers a placeholder if the provider supports it.
+     * @param name the name of the placeholder.
+     * @param refreshRate the refresh rate of the placeholder in seconds.
+     * @param trigger the trigger to execute. Must be used before trying to get the value from the return.
+     * @param structure the structure which is used.
+     */
+    void registerPlaceholder(String name, int refreshRate, Trigger trigger, Structure structure);
 
     /**
      * Creates a new hologram using the provider. Will be null if creation failed.

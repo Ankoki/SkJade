@@ -6,6 +6,7 @@ import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.*;
 import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
 import org.bukkit.event.Event;

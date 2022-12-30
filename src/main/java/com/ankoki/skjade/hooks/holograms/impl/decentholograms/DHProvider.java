@@ -1,23 +1,25 @@
 package com.ankoki.skjade.hooks.holograms.impl.decentholograms;
 
+import ch.njol.skript.lang.Trigger;
+import ch.njol.skript.lang.TriggerSection;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.*;
 import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
+import com.ankoki.skjade.hooks.holograms.elements.effects.EffPlaceholderReturn;
 import eu.decentsoftware.holograms.api.actions.ActionType;
-import eu.decentsoftware.holograms.event.HologramClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.lang.structure.Structure;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DHProvider implements HoloProvider, Listener {
+public class DHProvider implements HoloProvider {
 
 	private static final DHProvider INSTANCE = new DHProvider();
 
@@ -89,13 +91,20 @@ public class DHProvider implements HoloProvider, Listener {
 	}
 
 	@Override
+	public boolean supportsCustomPLaceholders() {
+		return false;
+	}
+
+	@Override
+	public void registerPlaceholder(String name, Event event, int refreshRate, Trigger trigger, Structure structure) {}
+
+	@Override
 	public @Nullable SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages) {
 		return DHHolo.create(name, location, pages);
 	}
 
 	@Override
 	public void setup() {
-		Bukkit.getPluginManager().registerEvents(this, SkJade.getInstance());
 		new ActionType("SKJADE") {
 			public boolean execute(Player player, String... args) {
 				if (args.length != 1)
@@ -119,11 +128,4 @@ public class DHProvider implements HoloProvider, Listener {
 		} return null;
 	}
 
-	// @EventHandler
-	private void onHologramClick(HologramClickEvent event) {
-		final SKJHolo holo = this.getHologramFrom(event.getHologram());
-		if (holo == null) return;
-		Event call = new HologramInteractEvent(event.getPlayer(), holo, event.getPage().getIndex(), -1, this.parseClickType(event.getClick()));
-		Bukkit.getPluginManager().callEvent(call);
-	}
 }

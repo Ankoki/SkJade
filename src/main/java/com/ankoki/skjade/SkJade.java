@@ -111,20 +111,6 @@ public class SkJade extends JavaPlugin implements Listener {
                         return event.getHologram();
                     }
                 }, EventValues.TIME_NOW);
-                if (HoloHandler.get().getCurrentProvider().supportsPages())
-                    EventValues.registerEventValue(HologramInteractEvent.class, Number.class, new Getter<>() {
-                        @Override
-                        public Number get(HologramInteractEvent event) {
-                            return event.getPage();
-                        }
-                    }, EventValues.TIME_NOW);
-                if (HoloHandler.get().getCurrentProvider().supportsOnClick(true))
-                    EventValues.registerEventValue(HologramInteractEvent.class, Number.class, new Getter<>() {
-                        @Override
-                        public Number get(HologramInteractEvent event) {
-                            return event.getLine();
-                        }
-                    }, EventValues.TIME_NOW);
                 this.loadHologramElements();
             } else
                 this.getLogger().severe("'" + Config.HOLOGRAM_PLUGIN + "' was either not found, or there is no SkJade provider for it. Hologram elements will not be enabled.");
