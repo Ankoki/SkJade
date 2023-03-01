@@ -96,7 +96,7 @@ public class DHProvider implements HoloProvider {
 	}
 
 	@Override
-	public void registerPlaceholder(String name, Event event, int refreshRate, Trigger trigger, Structure structure) {}
+	public void registerPlaceholder(String name, int refreshRate, Trigger trigger, Structure structure) {}
 
 	@Override
 	public @Nullable SKJHolo createHolo(String name, Location location, Map<Integer, List<SKJHoloLine>> pages) {
@@ -112,9 +112,7 @@ public class DHProvider implements HoloProvider {
 				// args = "holoname.pageindex.clicktype"
 				args = args[0].split("\\.");
 				Event call = new HologramInteractEvent(player, HoloHandler.get().getHolo(args[0]), Integer.parseInt(args[1]), -1, parseClickType(args[2]));
-				Bukkit.getScheduler().runTask(SkJade.getInstance(), () -> {
-					Bukkit.getPluginManager().callEvent(call);
-				});
+				Bukkit.getScheduler().runTask(SkJade.getInstance(), () -> Bukkit.getPluginManager().callEvent(call));
 				return true;
 			}
 		};

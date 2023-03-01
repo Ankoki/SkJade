@@ -97,7 +97,7 @@ public class HDHolo implements SKJHolo {
 	}
 
 	@Override
-	public void destroy() {
+	public void delete() {
 		this.current.delete();
 		HoloHandler.get().deleteHolo(key);
 	}

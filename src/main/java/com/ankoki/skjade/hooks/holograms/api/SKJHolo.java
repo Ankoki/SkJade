@@ -79,7 +79,7 @@ public interface SKJHolo {
      * Destroys and removes the hologram.
      * Please ensure in all implementations you remove the key from the cache.
      */
-    void destroy();
+    void delete();
 
     /**
      * Returns whether to save this hologram over restart.

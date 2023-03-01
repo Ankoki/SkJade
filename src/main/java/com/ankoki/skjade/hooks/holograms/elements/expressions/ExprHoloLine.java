@@ -119,7 +119,7 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 						updated.add(line);
 				holo.setLines(page, updated);
 			}
-			case DELETE -> holo.destroy();
+			case DELETE -> holo.delete();
 			default -> holo.setLines(page, List.of());
 		}
 	}
@@ -132,7 +132,7 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 
 	@Override
 	public Class<? extends SKJHoloLine> getReturnType() {
-		return null;
+		return SKJHoloLine.class;
 	}
 
 	@Override

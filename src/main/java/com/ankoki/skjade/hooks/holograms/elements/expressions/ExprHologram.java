@@ -53,11 +53,6 @@ public class ExprHologram extends SimpleExpression<SKJHolo> {
     }
 
     @Override
-    public @Nullable Class<?>[] acceptChange(ChangeMode mode) {
-        return mode == ChangeMode.DELETE ? CollectionUtils.array() : null;
-    }
-
-    @Override
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
         if (mode != ChangeMode.DELETE)
             return;
@@ -67,7 +62,7 @@ public class ExprHologram extends SimpleExpression<SKJHolo> {
         SKJHolo holo = HoloHandler.get().getHolo(key);
         if (holo == null)
             return;
-        holo.destroy();
+        holo.delete();
     }
 
     @Override

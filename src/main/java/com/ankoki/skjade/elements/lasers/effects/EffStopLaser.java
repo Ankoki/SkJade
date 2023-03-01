@@ -37,7 +37,7 @@ public class EffStopLaser extends Effect {
     protected void execute(Event event) {
         Laser[] lasers = laserExpr.getArray(event);
         for (Laser laser : lasers) {
-            if (laser.isStarted()) laser.stop(true);
+            if (laser.isStarted()) laser.stop();
         }
     }
 

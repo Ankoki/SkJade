@@ -55,10 +55,6 @@ public class SecLaser extends Section {
 		}
 	}
 
-	private static Expression<?> parseExpr(String raw, Class<?> type) {
-		return new SkriptParser(raw, SkriptParser.ALL_FLAGS, ParseContext.DEFAULT).parseExpression(type);
-	}
-
 	private static final SectionValidatorPlus SECTION_VALIDATOR = new SectionValidatorPlus()
 			.addEntry("duration", Timespan.class, false)
 			.addEntry("start location", Location.class, false)

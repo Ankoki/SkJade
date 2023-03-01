@@ -32,11 +32,12 @@ public class ExprHologram extends EventValueExpression<SKJHolo> {
 		SKJHolo holo = this.getSingle(event);
 		if (holo == null)
 			return;
-		holo.destroy();
+		holo.delete();
 	}
 
 	@Override
 	public String toString(Event e, boolean debug) {
 		return "event-hologram";
 	}
+
 }

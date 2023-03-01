@@ -2,12 +2,14 @@ package com.ankoki.skjade;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAddon;
+import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
+import ch.njol.util.coll.CollectionUtils;
 import com.ankoki.roku.bukkit.BukkitImpl;
 import com.ankoki.roku.misc.Version;
 import com.ankoki.roku.web.JSON;
@@ -222,6 +224,19 @@ public class SkJade extends JavaPlugin implements Listener {
                     @Override
                     public @Nullable SKJHolo parse(String unparsed, ParseContext context) {
                         return HoloHandler.get().getHolo(unparsed);
+                    }
+                })
+                .changer(new Changer<>() {
+                    @Override
+                    public @Nullable Class<?>[] acceptChange(ChangeMode mode) {
+                        return mode == ChangeMode.DELETE ? CollectionUtils.array() : null;
+                    }
+
+                    @Override
+                    public void change(SKJHolo[] holos, @Nullable Object[] objects, ChangeMode mode) {
+                        assert mode == ChangeMode.DELETE : "Skript flopped.";
+                        for (SKJHolo holo : holos)
+                            holo.delete();
                     }
                 }));
         Classes.registerClass(new ClassInfo<>(SKJHoloLine.class, "skjhololine")

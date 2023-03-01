@@ -103,7 +103,7 @@ public class DHHolo implements SKJHolo {
     }
 
     @Override
-    public void destroy() {
+    public void delete() {
         current.destroy();
         HoloHandler.get().deleteHolo(key);
     }
