@@ -55,7 +55,7 @@ public class EffSkyColour extends Effect {
         if (h == null) {
             try {
                 h = innerClass.getConstructor(int.class)
-                                .newInstance(7);
+                                .newInstance(8);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
                 return;
