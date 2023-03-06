@@ -28,6 +28,15 @@ public class ReflectionUtils {
         }
     }
 
+    public static Object getHandle(Player player) {
+        try {
+            return getHandle.invoke(player);
+        } catch (ReflectiveOperationException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public static void sendPacket(Player player, Object... packets) {
         try {
             Object connection = playerConnection.get(getHandle.invoke(player));

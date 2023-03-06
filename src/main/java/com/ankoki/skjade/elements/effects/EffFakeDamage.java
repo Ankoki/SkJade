@@ -11,6 +11,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.utils.ReflectionUtils;
+import com.ankoki.skjade.utils.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -44,18 +45,22 @@ public class EffFakeDamage extends Effect {
 
     @Override
     protected void execute(Event e) {
-        Player[] viewers;
+        Player[] viewers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
         if (viewerExpr != null) viewers = viewerExpr.getArray(e);
-        else viewers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
         Player[] damaged = damagedExpr.getArray(e);
-        for (Player p : damaged) {
+        for (Player player : damaged) {
             try {
-                Object instance = packet.getConstructor()
-                        .newInstance();
-                ReflectionUtils.setField(instance, "a", p.getEntityId());
-                ReflectionUtils.setField(instance, "b", 1);
-                for (Player v : viewers) {
-                    ReflectionUtils.sendPacket(v, instance);
+                Object instance;
+                if (Version.v1_18_R2.isOlder()) {
+                    Object handle = ReflectionUtils.getHandle(player);
+                    instance = packet.getConstructor(handle.getClass().getSuperclass().getSuperclass().getSuperclass(), int.class).newInstance(handle, 1);
+                } else {
+                    instance = packet.getConstructor().newInstance();
+                    ReflectionUtils.setField(instance, "a", player.getEntityId());
+                    ReflectionUtils.setField(instance, "b", 1);
+                }
+                for (Player viewer : viewers) {
+                    ReflectionUtils.sendPacket(viewer, instance);
                 }
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
