@@ -56,7 +56,7 @@ public class EffFakeDamage extends Effect {
                 continue;
             try {
                 Object instance;
-                if (MinecraftVersion.v1_18_R2.isOlder()) {
+                if (MinecraftVersion.v1_18_R2.isOlder()) { // TODO Determine when this changed.
                     Object handle = ReflectionUtils.getHandle(player);
                     instance = packet.getConstructor(handle.getClass().getSuperclass().getSuperclass().getSuperclass(), int.class).newInstance(handle, 1);
                 } else {
