@@ -28,4 +28,5 @@ public class CondIsInWorldBorder extends PropertyCondition<Location> {
     protected String getPropertyName() {
         return "inside the world border";
     }
+
 }

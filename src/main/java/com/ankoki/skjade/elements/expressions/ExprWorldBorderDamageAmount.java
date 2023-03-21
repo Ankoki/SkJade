@@ -87,4 +87,5 @@ public class ExprWorldBorderDamageAmount extends SimpleExpression<Number> {
         }
         world.getWorldBorder().setDamageAmount(0);
     }
+
 }

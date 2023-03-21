@@ -42,4 +42,5 @@ public class EffWorldBorderReset extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "reset the world border of " + worldExpr.toString(e, debug);
     }
+
 }

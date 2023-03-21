@@ -75,4 +75,5 @@ public class EffSkyColour extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "change the sky colour to " + numberExpr.toString(e, debug) + " for " + playerExpr.toString(e, debug);
     }
+
 }

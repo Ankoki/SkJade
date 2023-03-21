@@ -65,4 +65,5 @@ public enum MinecraftVersion {
     public boolean equals(MinecraftVersion version) {
         return this.ordinal() == version.ordinal();
     }
+
 }

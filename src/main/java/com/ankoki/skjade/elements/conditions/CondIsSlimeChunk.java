@@ -26,4 +26,5 @@ public class CondIsSlimeChunk extends PropertyCondition<Chunk> {
     protected String getPropertyName() {
         return "slime chunk";
     }
+
 }

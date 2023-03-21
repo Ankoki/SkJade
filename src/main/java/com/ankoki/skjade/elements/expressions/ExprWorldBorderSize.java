@@ -87,4 +87,5 @@ public class ExprWorldBorderSize extends SimpleExpression<Number> {
         }
         world.getWorldBorder().setSize(0);
     }
+
 }

@@ -74,11 +74,11 @@ public class EffShowDemo extends Effect {
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();
         }
-
     }
 
     @Override
     public String toString(@Nullable Event event, boolean debug) {
         return "show the demo screen to " + playersExpr.toString(event, debug);
     }
+
 }

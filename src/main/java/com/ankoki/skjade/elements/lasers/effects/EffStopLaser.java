@@ -45,4 +45,5 @@ public class EffStopLaser extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "stop " + laserExpr.toString(e, debug);
     }
+
 }

@@ -72,19 +72,18 @@ public class ExprWorldBorderDamageBuffer extends SimpleExpression<Number> {
         World world = worldExpr.getSingle(e);
         if (world == null) return;
         if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.REMOVE) {
-            if (delta.length < 1 || !(delta[0] instanceof Number)) return;
-            Number number = (Number) delta[0];
+            if (delta.length < 1 || !(delta[0] instanceof Number number)) return;
             double i = number.doubleValue();
             double currentBuffer = world.getWorldBorder().getDamageBuffer();
-            if (mode == ChangeMode.ADD) {
+            if (mode == ChangeMode.ADD)
                 world.getWorldBorder().setDamageBuffer(Math.max(0, currentBuffer + i));
-            } else if (mode == ChangeMode.REMOVE) {
+            else if (mode == ChangeMode.REMOVE)
                 world.getWorldBorder().setDamageBuffer(Math.max(0, currentBuffer - i));
-            }  else {
+            else
                 world.getWorldBorder().setDamageBuffer(Math.max(0, i));
-            }
             return;
         }
         world.getWorldBorder().setDamageBuffer(0);
     }
+
 }

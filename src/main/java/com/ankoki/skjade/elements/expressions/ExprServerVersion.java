@@ -15,24 +15,27 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Server Minor Version")
-@Description("Gets the server minor version (x.>X<.x) of the server.")
-@Examples("if the server version > 16:")
+@Description("Gets the version  of the server. You can get the minor (x.>X<.x) or the patch (x.x.>X<) version.")
+@Examples("if the server minor version > 16:")
 @Since("2.0")
-public class ExprServerMinorVersion extends SimpleExpression<Number> {
+public class ExprServerVersion extends SimpleExpression<Number> {
 
 	static {
-		Skript.registerExpression(ExprServerMinorVersion.class, Number.class, ExpressionType.SIMPLE,
-				"[the] [current] server [minor] version");
+		Skript.registerExpression(ExprServerVersion.class, Number.class, ExpressionType.SIMPLE,
+				"[the] [current] server :[minor|patch] version");
 	}
+
+	private boolean minor;
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+		minor = parseResult.hasTag("minor");
 		return true;
 	}
 
 	@Override
 	protected Number[] get(Event event) {
-		return new Number[]{Utils.getMinecraftMinor()};
+		return new Number[]{minor ? Utils.getMinecraftMinor() : Utils.getMinecraftPatch()};
 	}
 
 	@Override

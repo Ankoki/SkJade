@@ -62,4 +62,5 @@ public class EffPersistent extends Effect {
 	public String toString(@Nullable Event event, boolean debug) {
 		return "static: " + staticExpr.toString(event, debug);
 	}
+
 }

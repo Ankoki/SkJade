@@ -65,4 +65,5 @@ public class HologramTrigger {
 	public Trigger getTrigger() {
 		return trigger;
 	}
+
 }

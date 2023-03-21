@@ -73,4 +73,5 @@ public class ExprCircle extends SimpleExpression<Location> {
         return "circle with center " + centreExpr.toString(event, debug) + " with radius " + radiusExpr.toString(event, debug) +
                 (pointsExpr == null ? "" : " and " + pointsExpr.toString(event, debug) + "total points");
     }
+
 }

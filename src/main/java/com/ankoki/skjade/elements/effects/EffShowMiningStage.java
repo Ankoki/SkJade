@@ -102,4 +102,5 @@ public class EffShowMiningStage extends Effect {
         return remove ? "remove the mining stage at " + locationExpr.toString(e, debug) + (playerExpr != null ? " for " + playerExpr.toString(e, debug) : "") :
                 "show mining stage " + stageExpr.toString(e, debug) + " at " + locationExpr.toString(e, debug) + (playerExpr != null ? " to " + playerExpr.toString(e, debug) : "");
     }
+
 }

@@ -14,4 +14,5 @@ public enum ClickType {
 	public String toString() {
 		return name().toLowerCase().replaceAll("_", " ");
 	}
+
 }

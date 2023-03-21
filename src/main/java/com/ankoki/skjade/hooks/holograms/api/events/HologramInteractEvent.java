@@ -67,4 +67,5 @@ public class HologramInteractEvent extends PlayerEvent implements Cancellable {
 	public void setCancelled(boolean b) {
 		cancelled = b;
 	}
+
 }

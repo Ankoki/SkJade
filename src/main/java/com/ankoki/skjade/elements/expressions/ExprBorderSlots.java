@@ -112,4 +112,5 @@ public class ExprBorderSlots extends SimpleExpression<Integer> {
         for (int i = (inv.getSize() - 1); i >= (inv.getSize() - slotsPerRow); i--) slotsList.add(i);
         return slotsList.toArray(new Integer[0]);
     }
+
 }

@@ -66,4 +66,5 @@ public class ExprTextBetween extends SimpleExpression<String> {
     public String toString(@Nullable Event e, boolean debug) {
         return "text between " + firstExpr.toString(e, debug) + " and " + secondExpr.toString(e, debug) + " from " + stringExpr.toString(e, debug);
     }
+
 }

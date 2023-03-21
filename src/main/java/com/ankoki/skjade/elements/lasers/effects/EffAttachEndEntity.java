@@ -53,4 +53,5 @@ public class EffAttachEndEntity extends Effect {
     public String toString(@Nullable Event event, boolean debug) {
         return "attach " + entityExpr.toString(event, debug) + " to end of " + laserExpr.toString(event, debug);
     }
+
 }

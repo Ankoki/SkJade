@@ -67,4 +67,5 @@ public class ExprCone extends SimpleExpression<Location> {
         return "cone around " + centreExpr.toString(e, debug) + ", a radius of " + radiusExpr.toString(e, debug) + ", height of " +
                 heightExpr.toString(e, debug) + " and density of " + densityExpr.toString(e, debug);
     }
+
 }

@@ -42,4 +42,5 @@ public class CondBoolean extends Condition {
     public String toString(@Nullable Event event, boolean debug) {
         return boolExpr.toString(event, debug);
     }
+    
 }

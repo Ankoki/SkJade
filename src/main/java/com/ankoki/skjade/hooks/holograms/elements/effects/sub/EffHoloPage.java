@@ -72,4 +72,5 @@ public class EffHoloPage extends Effect {
     public String toString(@Nullable Event event, boolean debug) {
         return "page " + pageExpr.toString(event, debug) + ": " + linesExpr.toString(event, debug);
     }
+
 }

@@ -51,4 +51,5 @@ public class ExprMidnight extends SimpleExpression<Date> {
     public String toString(@Nullable Event e, boolean debug) {
         return "midnight";
     }
+
 }

@@ -165,4 +165,5 @@ public class HoloHandler implements Listener {
         if (this.hasInteractions(event.getHologram()))
             this.executeInteraction(event.getHologram(), event.getPage(), event.getLine(), event.getType(), event);
     }
+
 }

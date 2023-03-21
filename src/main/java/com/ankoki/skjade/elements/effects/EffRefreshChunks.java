@@ -46,4 +46,5 @@ public class EffRefreshChunks extends AsyncEffect {
     public String toString(@Nullable Event event, boolean debug) {
         return "refresh chunks " + chunkExpr.toString(event, debug);
     }
+
 }

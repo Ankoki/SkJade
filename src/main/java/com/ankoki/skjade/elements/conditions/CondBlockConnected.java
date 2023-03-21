@@ -59,4 +59,5 @@ public class CondBlockConnected extends Condition {
     public String toString(@Nullable Event e, boolean debug) {
         return blockExpr.toString(e, debug) + " is touching " + materialExpr.toString(e, debug);
     }
+
 }

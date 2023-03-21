@@ -74,4 +74,5 @@ public class ExprTorus extends SimpleExpression<Location> {
         return "torus around " + centreExpr.toString(e, debug) + " with a major radius of " + majorRadiusExpr.toString(e, debug) +
                 " and a minor radius of " + minorRadiusExpr.toString(e, debug);
     }
+
 }

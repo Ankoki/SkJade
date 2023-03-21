@@ -99,4 +99,5 @@ public class ExprItemCooldown extends SimpleExpression<Timespan> {
                 }
         }
     }
+
 }

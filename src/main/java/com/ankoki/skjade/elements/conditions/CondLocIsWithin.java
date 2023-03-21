@@ -60,4 +60,5 @@ public class CondLocIsWithin extends Condition {
                 && first.getBlockY() >= l1.getBlockY() && first.getBlockY() <= l2.getBlockY()
                 && first.getBlockZ() >= l1.getBlockZ() && first.getBlockZ() <= l2.getBlockZ();
     }
+
 }

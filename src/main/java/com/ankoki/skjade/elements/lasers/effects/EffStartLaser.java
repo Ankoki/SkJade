@@ -49,4 +49,5 @@ public class EffStartLaser extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "start " + laserExpr.toString(e, debug) + (playerExpr == null ? "" : " for " + playerExpr.toString(e, debug));
     }
+
 }

@@ -49,4 +49,5 @@ public class CondMultiple extends Condition {
     public String toString(@Nullable Event event, boolean debug) {
         return first.toString() + (isAnd ? " && " : " || ") + second.toString();
     }
+
 }

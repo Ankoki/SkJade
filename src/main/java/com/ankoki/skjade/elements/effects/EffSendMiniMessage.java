@@ -71,4 +71,5 @@ public class EffSendMiniMessage extends Effect {
 		if (messageExpr instanceof ExpressionList && !messageExpr.getAnd()) return new Expression[]{CollectionUtils.getRandom(messages)};
 		return messages;
 	}
+
 }

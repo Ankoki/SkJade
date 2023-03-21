@@ -87,4 +87,5 @@ public class ExprWorldBorderWarningDistance extends SimpleExpression<Number> {
         }
         world.getWorldBorder().setWarningDistance(0);
     }
+
 }

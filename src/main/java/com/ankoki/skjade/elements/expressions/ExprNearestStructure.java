@@ -77,4 +77,5 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
         return "closest structure of " + structureTypeExpr.toString(e, debug) + " in radius " +
                 radiusExpr.toString(e, debug) + " from " + centreExpr.toString(e, debug);
     }
+
 }

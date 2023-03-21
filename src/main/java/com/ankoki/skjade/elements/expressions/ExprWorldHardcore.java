@@ -70,10 +70,11 @@ public class ExprWorldHardcore extends SimpleExpression<Boolean> {
 
     @Override
     public void change(Event e, @Nullable Object[] delta, ChangeMode mode) {
-        if (delta[0] == null || !(delta[0] instanceof Boolean)) return;
+        if (delta[0] == null || !(delta[0] instanceof Boolean bool)) return;
         if (worldExpr == null) return;
         World world = worldExpr.getSingle(e);
         if (world == null) return;
-        world.setHardcore((Boolean) delta[0]);
+        world.setHardcore(bool);
     }
+
 }

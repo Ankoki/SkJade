@@ -36,4 +36,5 @@ public class ExprEnglishPlural extends SimplePropertyExpression<String, String> 
     public Class<? extends String> getReturnType() {
         return String.class;
     }
+
 }

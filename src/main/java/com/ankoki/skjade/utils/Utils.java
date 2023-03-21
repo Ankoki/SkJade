@@ -122,8 +122,19 @@ public final class Utils {
         return -1;
     }
 
+    public static int getMinecraftPatch() {
+        try {
+            String version = Bukkit.getMinecraftVersion().split("-R")[0];
+            return Integer.parseInt(version.split("\\.")[2]);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
+
     public static boolean isPluginEnabled(String name) {
         Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin(name);
         return plugin != null && plugin.isEnabled();
     }
+
 }

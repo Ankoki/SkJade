@@ -57,6 +57,10 @@ public abstract class Laser {
 
 	private List<Runnable> executeEnd = new ArrayList<>(1);
 
+	public static boolean isEnabled() {
+		return Packets.enabled;
+	}
+
 	protected Laser(Location start, Location end, int duration, int distance) {
 		if (!Packets.enabled) throw new IllegalStateException("The Laser Beam API is disabled. An error has occured during initialization.");
 		if (start.getWorld() != end.getWorld()) throw new IllegalArgumentException("Locations do not belong to the same worlds.");

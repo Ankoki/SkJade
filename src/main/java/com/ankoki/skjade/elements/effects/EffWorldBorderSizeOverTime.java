@@ -51,4 +51,5 @@ public class EffWorldBorderSizeOverTime extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "set world border size of " + worldExpr.toString(e, debug) + " to " + sizeExpr.toString(e, debug) + " over " + timeExpr.toString(e, debug);
     }
+
 }

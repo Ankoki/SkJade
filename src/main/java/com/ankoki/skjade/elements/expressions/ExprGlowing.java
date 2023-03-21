@@ -22,7 +22,7 @@ public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> 
 
     static {
         Skript.registerExpression(ExprGlowing.class, ItemStack.class, ExpressionType.PROPERTY,
-                "glowing %itemstack%");
+                "(shiny|glowing|glinting|glistening) %itemstack%");
     }
 
     @Override
@@ -39,4 +39,5 @@ public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> 
     public Class getReturnType() {
         return ItemStack.class;
     }
+
 }

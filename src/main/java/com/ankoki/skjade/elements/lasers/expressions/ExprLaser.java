@@ -58,4 +58,5 @@ public class ExprLaser extends SimpleExpression<Laser> {
     public String toString(@Nullable Event e, boolean debug) {
         return "the laser with the id " + stringExpr.toString(e, debug);
     }
+
 }

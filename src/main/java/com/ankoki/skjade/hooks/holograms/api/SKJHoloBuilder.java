@@ -106,4 +106,5 @@ public class SKJHoloBuilder {
         hologram.hideFrom(hide.toArray(hide.toArray(new Player[0])));
         return hologram;
     }
+
 }

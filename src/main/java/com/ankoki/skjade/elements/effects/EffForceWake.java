@@ -48,4 +48,5 @@ public class EffForceWake extends Effect {
     public String toString(@Nullable Event event, boolean debug) {
         return "force " + playerExpr.toString(event, debug) + " to wake";
     }
+
 }

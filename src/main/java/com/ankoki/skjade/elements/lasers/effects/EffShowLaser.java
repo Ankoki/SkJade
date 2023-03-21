@@ -61,4 +61,5 @@ public class EffShowLaser extends Effect {
         return "show a laser from " + firstExpr.toString(e, debug) + " to " + secondExpr.toString(e, debug) + " for " +
                 timeExpr.toString(e, debug) + (playerExpr == null ? "" : " for " + playerExpr.toString(e ,debug));
     }
+
 }

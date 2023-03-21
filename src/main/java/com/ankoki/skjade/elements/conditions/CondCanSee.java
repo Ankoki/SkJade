@@ -50,4 +50,5 @@ public class CondCanSee extends Condition {
     public String toString(@Nullable Event event, boolean debug) {
         return firstExpr.toString(event, debug) + " can see " + secondExpr.toString(event, debug);
     }
+
 }

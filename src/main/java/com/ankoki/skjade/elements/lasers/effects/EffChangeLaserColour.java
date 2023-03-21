@@ -51,4 +51,5 @@ public class EffChangeLaserColour extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "force " + laserExpr.toString(e, debug) + " to change colours";
     }
+
 }

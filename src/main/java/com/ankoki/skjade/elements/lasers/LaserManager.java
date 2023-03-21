@@ -34,4 +34,5 @@ public class LaserManager {
     public int secondsFromTimespan(Timespan timespan) {
         return timespan == null ? -1 : (int) Math.ceil(timespan.getTicks_i() / 20D);
     }
+
 }

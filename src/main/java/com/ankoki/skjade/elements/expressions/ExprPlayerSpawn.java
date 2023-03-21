@@ -83,4 +83,5 @@ public class ExprPlayerSpawn extends SimpleExpression<Location> {
             player.setBedSpawnLocation((Location) obj, true);
         }
     }
+
 }

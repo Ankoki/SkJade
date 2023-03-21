@@ -57,4 +57,5 @@ public class ExprFormatNumber extends SimpleExpression<String> {
     public String toString(@Nullable Event e, boolean debug) {
         return "the formatted number " + numberExpr.toString(e, debug);
     }
+
 }

@@ -54,4 +54,5 @@ public class ExprUnary extends SimpleExpression<Number> {
     public String toString(@Nullable Event e, boolean debug) {
         return "unary value of " + numberExpr.toString(e, debug);
     }
+
 }

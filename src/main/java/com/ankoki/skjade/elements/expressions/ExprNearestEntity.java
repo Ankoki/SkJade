@@ -97,4 +97,5 @@ public class ExprNearestEntity extends SimpleExpression<Entity> {
     public String toString(@Nullable Event e, boolean debug) {
         return "closest entity to " + (locationExpr == null ? entityExpr.toString(e, debug) : locationExpr.toString(e, debug));
     }
+
 }

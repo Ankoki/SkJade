@@ -65,4 +65,5 @@ public class EffHideEntity extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "destroy " + entityExpr.toString(e, debug) + (playerExpr == null ? "" : " from " + playerExpr.toString(e, debug));
     }
+
 }

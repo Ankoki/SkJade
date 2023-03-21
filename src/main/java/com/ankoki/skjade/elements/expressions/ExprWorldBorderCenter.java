@@ -74,4 +74,5 @@ public class ExprWorldBorderCenter extends SimpleExpression<Location> {
         if (w == null) return;
         w.getWorldBorder().setCenter((Location) delta[0]);
     }
+
 }

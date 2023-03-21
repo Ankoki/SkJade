@@ -80,13 +80,13 @@ public class ExprLaserPoints extends SimpleExpression<Location> {
         Laser laser = laserExpr.getSingle(e);
         if (laser == null) return;
         try {
-            if (start) {
+            if (start)
                 laser.moveStart(location);
-            } else {
+            else
                 laser.moveEnd(location);
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
 }

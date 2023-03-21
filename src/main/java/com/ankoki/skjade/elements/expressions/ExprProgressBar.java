@@ -75,4 +75,5 @@ public class ExprProgressBar extends SimpleExpression<String> {
     public Class<? extends String> getReturnType() {
         return String.class;
     }
+
 }

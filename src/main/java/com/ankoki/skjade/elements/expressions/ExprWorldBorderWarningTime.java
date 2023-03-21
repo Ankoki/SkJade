@@ -75,8 +75,7 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
         World world = worldExpr.getSingle(e);
         if (world == null) return;
         if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.REMOVE) {
-            if (delta.length < 1 || !(delta[0] instanceof Timespan)) return;
-            Timespan timespan = (Timespan) delta[0];
+            if (delta.length < 1 || !(delta[0] instanceof Timespan timespan)) return;
             int i = (int) timespan.getTicks_i() / 20;
             int currentTime = world.getWorldBorder().getWarningTime();
             if (mode == ChangeMode.ADD) {
@@ -90,4 +89,5 @@ public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
         }
         world.getWorldBorder().setWarningTime(0);
     }
+
 }

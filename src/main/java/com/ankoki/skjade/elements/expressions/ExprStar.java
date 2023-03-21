@@ -70,4 +70,5 @@ public class ExprStar extends SimpleExpression<Location> {
         return "star with center " + centreExpr.toString(event, debug) + " with radius " + radiusExpr.toString(event, debug) +
                 " with density " + densityExpr.toString(event, debug);
     }
+    
 }

@@ -81,4 +81,5 @@ public class SectionValidatorPlus extends SectionValidator {
 		return new SkriptParser(ScriptLoader.replaceOptions(unparsed), 3, ParseContext.DEFAULT)
 				.parseExpression(clazz);
 	}
+
 }

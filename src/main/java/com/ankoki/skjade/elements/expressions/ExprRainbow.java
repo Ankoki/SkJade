@@ -60,4 +60,5 @@ public class ExprRainbow extends SimpleExpression<String> {
         return monochrome ? "monochrome" + stringExpr.toString(e, debug) :
                 (pastel ? "" : "pastel ") + "rainbow " + stringExpr.toString(e, debug);
     }
+
 }

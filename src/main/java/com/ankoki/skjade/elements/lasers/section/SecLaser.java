@@ -166,4 +166,5 @@ public class SecLaser extends Section {
 	public String toString(@Nullable Event event, boolean debug) {
 		return "create new laser keyed as " + keyExpr.toString(event, debug);
 	}
+
 }

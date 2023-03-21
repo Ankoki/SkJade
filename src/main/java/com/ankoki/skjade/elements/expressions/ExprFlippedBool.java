@@ -53,4 +53,5 @@ public class ExprFlippedBool extends SimpleExpression<Boolean> {
     public String toString(@Nullable Event event, boolean debug) {
         return "flipped " + booleanExpr.toString(event, debug);
     }
+
 }

@@ -51,4 +51,5 @@ public class ExprCoreWorld extends SimpleExpression<World> {
     public String toString(@Nullable Event e, boolean debug) {
         return "core world";
     }
+
 }

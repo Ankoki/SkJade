@@ -139,4 +139,5 @@ public interface SKJHolo {
      * @return the internal hologram.
      */
     Object getHologram();
+
 }

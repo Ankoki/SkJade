@@ -57,4 +57,5 @@ public class ExprTimespanTicks extends SimpleExpression<Number> {
     public String toString(@Nullable Event e, boolean debug) {
         return timespanExpr.toString(e, debug) + " in ticks";
     }
+
 }

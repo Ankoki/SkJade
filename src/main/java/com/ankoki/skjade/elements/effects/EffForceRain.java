@@ -75,4 +75,5 @@ public class EffForceRain extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "make it " + (rain ? "rain" : "stop raining") + " for " + playerExpr.toString(e, debug);
     }
+
 }
