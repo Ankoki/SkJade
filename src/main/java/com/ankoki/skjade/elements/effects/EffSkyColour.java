@@ -15,7 +15,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 //thank you pesekjan c:
 @Name("Change the Sky Colour")
-@Description("Changes the sky colour for players. The maximum number is 200 to make sure clients aren't crashed.")
+@Description("Changes the sky colour for players. The maximum number is 200 to make sure clients aren't crashed." +
+        "\nAS OF 1.19 (or perhaps before) it seems this packet really doesn't have any effect on a client. This syntax will be removed in the future.")
 @Examples("change the sky colour to 5 for all players")
 @Since("1.1.0")
 @RequiredPlugins("1.16+")
@@ -55,7 +56,7 @@ public class EffSkyColour extends Effect {
         if (h == null) {
             try {
                 h = innerClass.getConstructor(int.class)
-                                .newInstance(8);
+                                .newInstance(7);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
                 return;

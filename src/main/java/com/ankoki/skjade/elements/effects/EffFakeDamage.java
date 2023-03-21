@@ -76,4 +76,5 @@ public class EffFakeDamage extends Effect {
     public String toString(@Nullable Event e, boolean debug) {
         return "make " + damagedExpr.toString(e, debug) + " take fake damage for " + (viewerExpr == null ? "all players" : viewerExpr.toString(e, debug));
     }
+
 }
