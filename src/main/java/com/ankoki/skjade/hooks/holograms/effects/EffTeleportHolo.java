@@ -1,6 +1,10 @@
 package com.ankoki.skjade.hooks.holograms.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -12,6 +16,10 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
 
+@Name("Teleport Hologram")
+@Description("Teleports a hologram to the given location.")
+@Examples("teleport holo {_holo} to {_location}")
+@Since("1.4.3")
 public class EffTeleportHolo extends Effect {
 
 	static {
