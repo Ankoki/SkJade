@@ -11,6 +11,7 @@ import com.ankoki.pastebinapi.api.PasteBuilder;
 import com.ankoki.skjade.commands.SkJadeCmd;
 import com.ankoki.skjade.elements.lasers.Laser;
 import com.ankoki.skjade.elements.pastebinapi.PasteManager;
+import com.ankoki.skjade.hooks.holograms.HoloClassInfo;
 import com.ankoki.skjade.listeners.PlayerJoin;
 import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
@@ -156,6 +157,7 @@ public class SkJade extends JavaPlugin {
 
     private void loadHDElements() {
         try {
+            new HoloClassInfo();
             addon.loadClasses("com.ankoki.skjade.hooks.holograms");
         } catch (IOException ex) {
             Console.info("Something went horribly wrong!");

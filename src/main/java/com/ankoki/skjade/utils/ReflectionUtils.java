@@ -1,6 +1,5 @@
 package com.ankoki.skjade.utils;
 
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -68,7 +67,6 @@ public class ReflectionUtils {
     }
 
     public static void setField(Object instance, String name, Object value) {
-        Validate.notNull(instance);
         try {
             Field field = instance.getClass().getDeclaredField(name);
             field.setAccessible(true);
