@@ -55,7 +55,8 @@ public class ExprVisibility extends SimpleExpression<Boolean> {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
-		return holoExpr.toString(event, b) + "'s visibility for " + playerExpr.toString(event, b);
+	public String toString(@Nullable Event event, boolean debug) {
+		return holoExpr.toString(event, debug) + "'s visibility for " + playerExpr.toString(event, debug);
 	}
+
 }

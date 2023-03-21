@@ -1,10 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.api;
 
 import ch.njol.skript.lang.Trigger;
-import ch.njol.skript.lang.TriggerSection;
-import com.ankoki.skjade.hooks.holograms.elements.effects.EffPlaceholderReturn;
 import org.bukkit.Location;
-import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.skriptlang.skript.lang.structure.Structure;
@@ -88,7 +85,7 @@ public interface HoloProvider {
      * Checks if the provider supports registering custom placeholders.
      * @return if provider supports custom placeholders.
      */
-    boolean supportsCustomPLaceholders();
+    boolean supportsCustomPlaceholders();
 
     /**
      * Registers a placeholder if the provider supports it.

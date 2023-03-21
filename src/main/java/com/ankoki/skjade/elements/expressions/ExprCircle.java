@@ -69,8 +69,8 @@ public class ExprCircle extends SimpleExpression<Location> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "circle with center " + centreExpr.toString(event, b) + " with radius " + radiusExpr.toString(event, b) +
-                (pointsExpr == null ? "" : " and " + pointsExpr.toString(event, b) + "total points");
+    public String toString(@Nullable Event event, boolean debug) {
+        return "circle with center " + centreExpr.toString(event, debug) + " with radius " + radiusExpr.toString(event, debug) +
+                (pointsExpr == null ? "" : " and " + pointsExpr.toString(event, debug) + "total points");
     }
 }

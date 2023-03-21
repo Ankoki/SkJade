@@ -43,7 +43,7 @@ public class CondCanBreak extends Condition {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return itemExpr.toString(event, b) + " can break " + blockExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return itemExpr.toString(event, debug) + " can break " + blockExpr.toString(event, debug);
     }
 }

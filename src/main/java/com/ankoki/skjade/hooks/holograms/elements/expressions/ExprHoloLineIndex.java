@@ -30,4 +30,5 @@ public class ExprHoloLineIndex extends SimplePropertyExpression<SKJHoloLine, Num
 	public Class<? extends Number> getReturnType() {
 		return Number.class;
 	}
+
 }

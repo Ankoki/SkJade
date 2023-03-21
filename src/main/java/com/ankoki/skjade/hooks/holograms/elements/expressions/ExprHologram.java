@@ -66,7 +66,8 @@ public class ExprHologram extends SimpleExpression<SKJHolo> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return null;
+    public String toString(@Nullable Event event, boolean debug) {
+        return "hologram keyed as " + keyExpr.toString(event, debug);
     }
+
 }

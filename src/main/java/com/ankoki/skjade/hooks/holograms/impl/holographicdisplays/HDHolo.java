@@ -152,4 +152,5 @@ public class HDHolo implements SKJHolo {
 	public Object getHologram() {
 		return current;
 	}
+
 }

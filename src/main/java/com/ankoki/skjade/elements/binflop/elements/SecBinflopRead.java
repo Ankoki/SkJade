@@ -88,7 +88,7 @@ public class SecBinflopRead extends Section {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "read binflop with key " + keyExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "read binflop with key " + keyExpr.toString(event, debug);
     }
 }

@@ -18,7 +18,7 @@ import org.skriptlang.skript.lang.structure.Structure;
 public class StructPlaceholder extends Structure {
 
 	static {
-		if (HoloHandler.get().getCurrentProvider().supportsCustomPLaceholders())
+		if (HoloHandler.get().getCurrentProvider().supportsCustomPlaceholders())
 			Skript.registerStructure(StructPlaceholder.class,
 					EntryValidator.builder()
 							.addEntryData(new ExpressionEntryData<>("name", null, false, String.class, ContextlessEvent.class))
@@ -46,7 +46,7 @@ public class StructPlaceholder extends Structure {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
+	public String toString(@Nullable Event event, boolean debug) {
 		return "register custom hologram placeholder";
 	}
 

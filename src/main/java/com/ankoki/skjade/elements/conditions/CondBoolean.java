@@ -39,7 +39,7 @@ public class CondBoolean extends Condition {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return boolExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return boolExpr.toString(event, debug);
     }
 }

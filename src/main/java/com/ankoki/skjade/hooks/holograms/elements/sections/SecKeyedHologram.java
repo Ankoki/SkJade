@@ -63,8 +63,8 @@ public class SecKeyedHologram extends Section {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "create new holo keyed as " + keyExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "create new holo keyed as " + keyExpr.toString(event, debug);
     }
 
     /**
@@ -82,4 +82,5 @@ public class SecKeyedHologram extends Section {
     public void setCurrentBuilder(SKJHoloBuilder currentBuilder) {
         this.currentBuilder = currentBuilder;
     }
+
 }

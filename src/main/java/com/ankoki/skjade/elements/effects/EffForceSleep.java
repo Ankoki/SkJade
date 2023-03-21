@@ -48,7 +48,7 @@ public class EffForceSleep extends Effect {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "force " + playerExpr.toString(event, b) + " to sleep at " + locationExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "force " + playerExpr.toString(event, debug) + " to sleep at " + locationExpr.toString(event, debug);
     }
 }

@@ -51,7 +51,7 @@ public class EffDropTool extends Effect {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "make " + playerExpr.toString(event, b)+ " drop " + (dropInv ? (dropStack ? " all items " : "") + " in their hand" : " their current inventory");
+    public String toString(@Nullable Event event, boolean debug) {
+        return "make " + playerExpr.toString(event, debug)+ " drop " + (dropInv ? (dropStack ? " all items " : "") + " in their hand" : " their current inventory");
     }
 }

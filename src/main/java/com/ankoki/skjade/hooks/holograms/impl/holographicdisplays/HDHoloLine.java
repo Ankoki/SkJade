@@ -104,4 +104,5 @@ public class HDHoloLine implements SKJHoloLine {
 			default -> null;
 		};
 	}
+
 }

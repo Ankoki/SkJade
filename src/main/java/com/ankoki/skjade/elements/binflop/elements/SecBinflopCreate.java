@@ -90,7 +90,7 @@ public class SecBinflopCreate extends Section {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "upload new binflop " + (hide ? "with hidden ips and" : "with") + " text " + textExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "upload new binflop " + (hide ? "with hidden ips and" : "with") + " text " + textExpr.toString(event, debug);
     }
 }

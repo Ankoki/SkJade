@@ -68,7 +68,8 @@ public class ExprLocation extends SimpleExpression<Location> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return holoExpr.toString(event, b) + "'s location";
+    public String toString(@Nullable Event event, boolean debug) {
+        return holoExpr.toString(event, debug) + "'s location";
     }
+
 }

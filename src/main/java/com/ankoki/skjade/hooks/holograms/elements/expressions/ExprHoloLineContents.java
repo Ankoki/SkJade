@@ -77,7 +77,8 @@ public class ExprHoloLineContents extends SimpleExpression<Object> {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
-		return lineExpr.toString(event, b) + "'s " + tag;
+	public String toString(@Nullable Event event, boolean debug) {
+		return lineExpr.toString(event, debug) + "'s " + tag;
 	}
+
 }

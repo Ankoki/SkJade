@@ -66,8 +66,8 @@ public class ExprStar extends SimpleExpression<Location> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "star with center " + centreExpr.toString(event, b) + " with radius " + radiusExpr.toString(event, b) +
-                " with density " + densityExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "star with center " + centreExpr.toString(event, debug) + " with radius " + radiusExpr.toString(event, debug) +
+                " with density " + densityExpr.toString(event, debug);
     }
 }

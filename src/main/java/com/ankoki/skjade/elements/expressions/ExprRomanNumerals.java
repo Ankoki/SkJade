@@ -53,7 +53,7 @@ public class ExprRomanNumerals extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "roman numeral value of " + numberExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "roman numeral value of " + numberExpr.toString(event, debug);
     }
 }

@@ -114,8 +114,9 @@ public class SecInteraction extends Section {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
-		return "on " + clickType.toString() + " click" + (lineExpr == null ? "" : " on line " + lineExpr.toString(event, b)) +
-				(pageExpr == null ? "" : " of page " + pageExpr.toString(event, b));
+	public String toString(@Nullable Event event, boolean debug) {
+		return "on " + clickType.toString() + " click" + (lineExpr == null ? "" : " on line " + lineExpr.toString(event, debug)) +
+				(pageExpr == null ? "" : " of page " + pageExpr.toString(event, debug));
 	}
+
 }

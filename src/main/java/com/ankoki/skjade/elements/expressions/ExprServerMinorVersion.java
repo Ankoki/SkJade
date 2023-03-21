@@ -46,7 +46,7 @@ public class ExprServerMinorVersion extends SimpleExpression<Number> {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
+	public String toString(@Nullable Event event, boolean debug) {
 		return "the server version";
 	}
 

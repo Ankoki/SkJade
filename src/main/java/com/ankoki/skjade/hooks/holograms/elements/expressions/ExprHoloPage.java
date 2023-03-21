@@ -56,8 +56,8 @@ public class ExprHoloPage extends SimpleExpression<Number> {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
-		return "page index of " + holoExpr.toString(event, b) + " for " + playerExpr.toString(event, b);
+	public String toString(@Nullable Event event, boolean debug) {
+		return "page index of " + holoExpr.toString(event, debug) + " for " + playerExpr.toString(event, debug);
 	}
 
 }

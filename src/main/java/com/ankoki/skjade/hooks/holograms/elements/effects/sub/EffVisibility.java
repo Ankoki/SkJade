@@ -104,7 +104,8 @@ public class EffVisibility extends Effect {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return (show ? "show " + (pageExpr == null ? "" : "page " + pageExpr.toString(event, b) + " ") + "to: " : "hide from: ") + playerExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return (show ? "show " + (pageExpr == null ? "" : "page " + pageExpr.toString(event, debug) + " ") + "to: " : "hide from: ") + playerExpr.toString(event, debug);
     }
+
 }

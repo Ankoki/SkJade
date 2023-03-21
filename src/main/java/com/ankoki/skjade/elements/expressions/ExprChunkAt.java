@@ -61,7 +61,7 @@ public class ExprChunkAt extends SimpleExpression<Chunk> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "chunk at " + chunkXExpr.toString(event, b) + ", " + chunkZExpr.toString(event, b) + " in the world " + worldExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "chunk at " + chunkXExpr.toString(event, debug) + ", " + chunkZExpr.toString(event, debug) + " in the world " + worldExpr.toString(event, debug);
     }
 }

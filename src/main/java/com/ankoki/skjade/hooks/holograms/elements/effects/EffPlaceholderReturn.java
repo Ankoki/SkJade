@@ -11,6 +11,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.skriptlang.skript.lang.structure.Structure;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,7 +38,7 @@ public class EffPlaceholderReturn extends Effect {
 	}
 
 	static {
-		if (HoloHandler.get().getCurrentProvider().supportsCustomPLaceholders())
+		if (HoloHandler.get().getCurrentProvider().supportsCustomPlaceholders())
 			Skript.registerEffect(EffPlaceholderReturn.class,
 					"return %string% as [the] placeholder [value]");
 	}
@@ -60,13 +61,13 @@ public class EffPlaceholderReturn extends Effect {
 	}
 
 	@Override
-	public Class<? extends Structure>[] getUsableStructures() {
-		return new Class[]{StructPlaceholder.class};
+	public List<Class<? extends Structure>> getUsableStructures() {
+		return List.of(StructPlaceholder.class);
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
-		return "return " + returnExpr.toString(event, b) + " as the placeholder value";
+	public String toString(@Nullable Event event, boolean debug) {
+		return "return " + returnExpr.toString(event, debug) + " as the placeholder value";
 	}
 
 }

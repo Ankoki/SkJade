@@ -22,4 +22,5 @@ public class ExprLineIndex extends EventValueExpression<Number> {
 	public String toString(@Nullable Event e, boolean debug) {
 		return "event-line-index";
 	}
+
 }

@@ -91,7 +91,7 @@ public class DHProvider implements HoloProvider {
 	}
 
 	@Override
-	public boolean supportsCustomPLaceholders() {
+	public boolean supportsCustomPlaceholders() {
 		return false;
 	}
 

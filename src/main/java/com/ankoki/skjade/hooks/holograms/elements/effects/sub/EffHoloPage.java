@@ -48,15 +48,10 @@ public class EffHoloPage extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        SkriptEvent event = getParser().getCurrentSkriptEvent();
-        if (event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecKeyedHologram.class)) {
-            section = (SecKeyedHologram) skriptEvent.getSection();
-            pageExpr = (Expression<Number>) exprs[0];
-            linesExpr = (Expression<Object>) exprs[1];
-            return true;
-        }
-        Skript.error("You cannot edit a hologram outside of a section using this pattern.");
-        return false;
+        section = this.getParser().getCurrentSection(SecKeyedHologram.class);
+        pageExpr = (Expression<Number>) exprs[0];
+        linesExpr = (Expression<Object>) exprs[1];
+        return true;
     }
 
     @Override
@@ -74,7 +69,7 @@ public class EffHoloPage extends Effect {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "page " + pageExpr.toString(event, b) + ": " + linesExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "page " + pageExpr.toString(event, debug) + ": " + linesExpr.toString(event, debug);
     }
 }

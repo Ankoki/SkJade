@@ -54,7 +54,7 @@ public class ExprBinflopContent extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
+    public String toString(@Nullable Event event, boolean debug) {
         return "binflop content";
     }
 }

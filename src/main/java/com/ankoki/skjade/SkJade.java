@@ -22,6 +22,7 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHolo;
 import com.ankoki.skjade.hooks.holograms.api.SKJHoloLine;
 import com.ankoki.skjade.hooks.holograms.api.events.HologramInteractEvent;
 import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
+import com.ankoki.skjade.hooks.holograms.impl.holographicdisplays.HDProvider;
 import com.ankoki.skjade.utils.*;
 import com.ankoki.skjade.utils.events.RealTimeEvent;
 import net.md_5.bungee.api.ChatColor;
@@ -35,13 +36,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
@@ -103,6 +102,7 @@ public class SkJade extends JavaPlugin implements Listener {
 
         if (Config.HOLOGRAMS_ENABLED) {
             HoloHandler.get().addProvider(DHProvider.get());
+            HoloHandler.get().addProvider(HDProvider.get());
             if (Utils.isPluginEnabled(Config.HOLOGRAM_PLUGIN) && HoloHandler.get().hasProvider(Config.HOLOGRAM_PLUGIN)) {
                 this.getLogger().info(Config.HOLOGRAM_PLUGIN + " was found! Enabling support.");
                 HoloHandler.get().setCurrentProvider(HoloHandler.get().getProvider(Config.HOLOGRAM_PLUGIN));
@@ -206,7 +206,7 @@ public class SkJade extends JavaPlugin implements Listener {
 
     private void loadHologramElements() {
         Classes.registerClass(new ClassInfo<>(SKJHolo.class, "skjholo")
-                .user("skjholo%s%")
+                .user("skjholos%")
                 .name("Hologram")
                 .description("An SkJade hologram.")
                 .since("2.0")
@@ -228,7 +228,8 @@ public class SkJade extends JavaPlugin implements Listener {
                 })
                 .changer(new Changer<>() {
                     @Override
-                    public @Nullable Class<?>[] acceptChange(ChangeMode mode) {
+                    @Nullable
+                    public Class<?>[] acceptChange(ChangeMode mode) {
                         return mode == ChangeMode.DELETE ? CollectionUtils.array() : null;
                     }
 
@@ -240,7 +241,7 @@ public class SkJade extends JavaPlugin implements Listener {
                     }
                 }));
         Classes.registerClass(new ClassInfo<>(SKJHoloLine.class, "skjhololine")
-                .user("skjhololine%s%")
+                .user("skjhololines%")
                 .name("Hologram Line")
                 .description("An SkJade hologram line.")
                 .since("2.0"));
@@ -316,4 +317,5 @@ public class SkJade extends JavaPlugin implements Listener {
             player.spigot().sendMessage(github);
         }
     }
+
 }

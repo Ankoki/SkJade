@@ -43,7 +43,7 @@ public class EffRefreshChunks extends AsyncEffect {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "refresh chunks " + chunkExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "refresh chunks " + chunkExpr.toString(event, debug);
     }
 }

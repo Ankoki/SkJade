@@ -78,7 +78,7 @@ public class EffShowDemo extends Effect {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "show the demo screen to " + playersExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "show the demo screen to " + playersExpr.toString(event, debug);
     }
 }

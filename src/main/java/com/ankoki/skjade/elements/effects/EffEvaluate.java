@@ -45,7 +45,7 @@ public class EffEvaluate extends Effect {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "evaluate " + effectExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "evaluate " + effectExpr.toString(event, debug);
     }
 }

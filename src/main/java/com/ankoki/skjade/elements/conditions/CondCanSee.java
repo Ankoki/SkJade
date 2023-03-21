@@ -47,7 +47,7 @@ public class CondCanSee extends Condition {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return firstExpr.toString(event, b) + " can see " + secondExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return firstExpr.toString(event, debug) + " can see " + secondExpr.toString(event, debug);
     }
 }

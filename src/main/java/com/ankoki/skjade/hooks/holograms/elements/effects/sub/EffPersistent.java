@@ -2,10 +2,7 @@ package com.ankoki.skjade.hooks.holograms.elements.effects.sub;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
-import ch.njol.skript.lang.Effect;
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.SectionSkriptEvent;
-import ch.njol.skript.lang.SkriptEvent;
+import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
@@ -14,6 +11,8 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
+
+import java.util.List;
 
 @Name("Hologram Persistence")
 @Description("Makes the hologram persistent over restarting the server if the provider allows. Will be registered with the holograms key." +
@@ -40,14 +39,9 @@ public class EffPersistent extends Effect {
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-		SkriptEvent event = getParser().getCurrentSkriptEvent();
-		if (event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecKeyedHologram.class)) {
-			section = (SecKeyedHologram) skriptEvent.getSection();
-			staticExpr = (Expression<Boolean>) exprs[0];
-			return true;
-		}
-		Skript.error("You cannot edit a hologram outside of a section using this pattern.");
-		return false;
+		section = this.getParser().getCurrentSection(SecKeyedHologram.class);
+		staticExpr = (Expression<Boolean>) exprs[0];
+		return true;
 	}
 
 	@Override
@@ -60,7 +54,12 @@ public class EffPersistent extends Effect {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
-		return "static: " + staticExpr.toString(event, b);
+	public List<Class<? extends Section>> getUsableSections() {
+		return List.of(SecKeyedHologram.class);
+	}
+
+	@Override
+	public String toString(@Nullable Event event, boolean debug) {
+		return "static: " + staticExpr.toString(event, debug);
 	}
 }

@@ -60,4 +60,5 @@ public class ExprStatic extends SimplePropertyExpression<SKJHolo, Boolean> {
 	public Class<? extends Boolean> getReturnType() {
 		return Boolean.class;
 	}
+
 }

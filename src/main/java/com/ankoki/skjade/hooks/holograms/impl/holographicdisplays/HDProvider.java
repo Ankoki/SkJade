@@ -6,6 +6,7 @@ import ch.njol.skript.lang.util.ContextlessEvent;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.hooks.holograms.api.*;
 import com.ankoki.skjade.hooks.holograms.elements.effects.EffPlaceholderReturn;
+import com.ankoki.skjade.hooks.holograms.impl.decentholograms.DHProvider;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -18,6 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 public class HDProvider implements HoloProvider {
+
+	private static final HDProvider INSTANCE = new HDProvider();
+
+	public static HDProvider get() {
+		return INSTANCE;
+	}
 
 	@Override
 	public SKJHoloLine parseLine(Object line) {
@@ -78,7 +85,7 @@ public class HDProvider implements HoloProvider {
 	}
 
 	@Override
-	public boolean supportsCustomPLaceholders() {
+	public boolean supportsCustomPlaceholders() {
 		return true;
 	}
 

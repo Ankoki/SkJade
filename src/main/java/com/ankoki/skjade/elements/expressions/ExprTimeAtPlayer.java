@@ -56,8 +56,8 @@ public class ExprTimeAtPlayer extends SimpleExpression<Time> {
     }
 
     @Override
-    public String toString(@Nullable Event event, boolean b) {
-        return "the time at " + playerExpr.toString(event, b);
+    public String toString(@Nullable Event event, boolean debug) {
+        return "the time at " + playerExpr.toString(event, debug);
     }
 
     @Nullable

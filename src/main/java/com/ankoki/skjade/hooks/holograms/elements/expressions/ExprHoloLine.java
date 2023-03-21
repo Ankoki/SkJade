@@ -32,11 +32,11 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 
 	static {
 		String[] patterns = new String[SUPPORTS_PAGES ? 4 : 2];
-		patterns[0] = "[all ]lines of %skjholo%";
-		patterns[1] = "line %number% of %skjholo%";
+		patterns[0] = "[all ]lines (in|for|of) %skjholo%";
+		patterns[1] = "line %number% (in|for|of) %skjholo%";
 		if (SUPPORTS_PAGES) {
-			patterns[2] = "[all lines of ]page %number% in %skjholo%";
-			patterns[3] = "line %number% of page %number% in %skjholo%";
+			patterns[2] = "[all lines of ]page %number% (in|for|of) %skjholo%";
+			patterns[3] = "line %number% of page %number% (in|for|of) %skjholo%";
 		}
 		Skript.registerExpression(ExprHoloLine.class, SKJHoloLine.class, ExpressionType.SIMPLE, patterns);
 	}
@@ -124,7 +124,6 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 		}
 	}
 
-
 	@Override
 	public boolean isSingle() {
 		return !allLines;
@@ -136,7 +135,12 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 	}
 
 	@Override
-	public String toString(@Nullable Event event, boolean b) {
-		return null;
+	public String toString(@Nullable Event event, boolean debug) {
+		return allLines ?
+				(pageExpr == null ? "all lines of " + holoExpr.toString(event, debug) :
+						"all lines of page " + pageExpr.toString(event, debug) + " in " + holoExpr.toString(event, debug)) :
+				(pageExpr == null ? "line " + lineExpr.toString(event, debug) + " of " + holoExpr.toString(event, debug) :
+						"line " + lineExpr.toString(event, debug) + " of " + pageExpr.toString(event, debug) + " in " + holoExpr.toString(event,debug));
 	}
+
 }
