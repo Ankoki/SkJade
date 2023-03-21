@@ -99,7 +99,7 @@ public class HoloHandler implements Listener {
      */
     public boolean hasInteractions(SKJHolo holo) {
         final List<HologramTrigger> cache = this.triggers.getOrDefault(holo, new ArrayList<>());
-        return !triggers.isEmpty();
+        return !cache.isEmpty();
     }
 
     /**

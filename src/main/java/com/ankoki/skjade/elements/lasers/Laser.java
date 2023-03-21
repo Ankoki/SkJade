@@ -32,10 +32,10 @@ import org.bukkit.util.Vector;
  * A whole class to create Guardian Lasers and Ender Crystal Beams using packets and reflection.<br>
  * Inspired by the API
  * <a href="https://www.spigotmc.org/resources/guardianbeamapi.18329">GuardianBeamAPI</a><br>
- * <b>1.9 -> 1.19.3</b>
+ * <b>1.9 -> 1.19.4</b>
  *
  * @see <a href="https://github.com/SkytAsul/GuardianBeam">GitHub repository</a>
- * @version 2.3.1
+ * @version 2.3.2
  * @author SkytAsul
  */
 public abstract class Laser {
@@ -56,10 +56,6 @@ public abstract class Laser {
 	private Set<Player> seen = new HashSet<>();
 
 	private List<Runnable> executeEnd = new ArrayList<>(1);
-
-	public static boolean isEnabled() {
-		return Packets.enabled;
-	}
 
 	protected Laser(Location start, Location end, int duration, int distance) {
 		if (!Packets.enabled) throw new IllegalStateException("The Laser Beam API is disabled. An error has occured during initialization.");
@@ -132,7 +128,7 @@ public abstract class Laser {
 				super.cancel();
 				main = null;
 				try {
-					for (Player p : players) {
+					for (Player p : show) {
 						sendDestroyPackets(p);
 					}
 					show.clear();
@@ -268,7 +264,8 @@ public abstract class Laser {
 	protected abstract void sendDestroyPackets(Player p) throws ReflectiveOperationException;
 
 	protected boolean isCloseEnough(Player player) {
-		if (player.getWorld() == getStart().getWorld()) return false;
+		if (player.getWorld() != this.getStart().getWorld())
+			return false;
 		if (distanceSquared == -1) return true;
 		Location location = player.getLocation();
 		return	getStart().distanceSquared(location) <= distanceSquared ||
@@ -308,7 +305,7 @@ public abstract class Laser {
 		 * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
 		 * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
 		 * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-		 * @see Laser#start(Plugin) to start the laser
+		 * @see Laser#start(Plugin, Player...) to start the laser
 		 * @see #durationInTicks() to make the duration in ticks
 		 * @see #executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
 		 * @see #GuardianLaser(Location, LivingEntity, int, int) to create a laser which follows an entity
@@ -331,7 +328,7 @@ public abstract class Laser {
 		 * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
 		 * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
 		 * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-		 * @see Laser#start(Plugin) to start the laser
+		 * @see Laser#start(Plugin, Player...) to start the laser
 		 * @see #durationInTicks() to make the duration in ticks
 		 * @see #executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
 		 * @see #GuardianLaser(Location, Location, int, int) to create a laser with a specific end location
@@ -543,7 +540,7 @@ public abstract class Laser {
 		 * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
 		 * @param distance Distance where laser will be visible (<i>-1 if infinite</i>)
 		 * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-		 * @see #start(Plugin) to start the laser
+		 * @see #start(Plugin, Player...) to start the laser
 		 * @see #durationInTicks() to make the duration in ticks
 		 * @see #executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
 		 */
@@ -633,7 +630,7 @@ public abstract class Laser {
 		 * @param duration Duration of laser in seconds (<i>-1 if infinite</i>)
 		 * @param distance Distance where laser will be visible
 		 * @throws ReflectiveOperationException if a reflection exception occurred during Laser creation
-		 * @see Laser#start(Plugin) to start the laser
+		 * @see Laser#start(Plugin, Player...) to start the laser
 		 * @see Laser#durationInTicks() to make the duration in ticks
 		 * @see Laser#executeEnd(Runnable) to add Runnable-s to execute when the laser will stop
 		 */
@@ -784,7 +781,8 @@ public abstract class Laser {
 				packetTeleport = getNMSClass("network.protocol.game", "PacketPlayOutEntityTeleport").getDeclaredConstructor(version < 17 ? new Class<?>[0] : new Class<?>[] { entityClass });
 				packetTeam = getNMSClass("network.protocol.game", "PacketPlayOutScoreboardTeam");
 
-				blockPositionConstructor = getNMSClass("core", "BlockPosition").getConstructor(double.class, double.class, double.class);
+				blockPositionConstructor =
+						getNMSClass("core", "BlockPosition").getConstructor(int.class, int.class, int.class);
 
 				nmsWorld = Class.forName(cpack + "CraftWorld").getDeclaredMethod("getHandle").invoke(Bukkit.getWorlds().get(0));
 
@@ -911,7 +909,8 @@ public abstract class Laser {
 		}
 
 		public static void setCrystalWatcher(Object watcher, Location target) throws ReflectiveOperationException {
-			Object blockPosition = blockPositionConstructor.newInstance(target.getX(), target.getY(), target.getZ());
+			Object blockPosition =
+					blockPositionConstructor.newInstance(target.getBlockX(), target.getBlockY(), target.getBlockZ());
 			tryWatcherSet(watcher, watcherObject4, version < 13 ? com.google.common.base.Optional.of(blockPosition) : Optional.of(blockPosition));
 			tryWatcherSet(watcher, watcherObject5, Boolean.FALSE);
 		}
@@ -1040,7 +1039,12 @@ public abstract class Laser {
 					return Packets.versionMinor < 2 ? "aa" : "Z";
 				}
 			},
-			V1_19(19, "Z", "b", "e", "c", "d", 89, 38, null, null, "w", "a", "g") {
+			V1_19(19, null, "b", "e", "c", "d", 89, 38, null, null, "w", "a", "g") {
+				@Override
+				public String getWatcherFlags() {
+					return versionMinor < 4 ? "Z" : "an";
+				}
+
 				@Override
 				public int getGuardianID() {
 					return versionMinor < 3 ? 38 : 39;
@@ -1048,12 +1052,22 @@ public abstract class Laser {
 
 				@Override
 				public String getSquidTypeName() {
-					return versionMinor < 3 ? "aM" : "aN";
+					if (versionMinor < 3)
+						return "aM";
+					else if (versionMinor == 3)
+						return "aN";
+					else
+						return "aT";
 				}
 
 				@Override
 				public String getGuardianTypeName() {
-					return versionMinor < 3 ? "N" : "O";
+					if (versionMinor < 3)
+						return "N";
+					else if (versionMinor == 3)
+						return "O";
+					else
+						return "V";
 				}
 			},
 			;
