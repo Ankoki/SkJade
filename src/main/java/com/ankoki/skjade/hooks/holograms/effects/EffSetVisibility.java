@@ -24,32 +24,34 @@ public class EffSetVisibility extends Effect {
                 "(1¦show|2¦hide) %holograms% (to|from) %players%");
     }
 
-    private Expression<Hologram> holo;
-    private Expression<Player> player;
+    private Expression<Hologram> holoExpr;
+    private Expression<Player> playerExpr;
     private boolean show;
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        holo = (Expression<Hologram>) exprs[0];
-        player = (Expression<Player>) exprs[1];
+        holoExpr = (Expression<Hologram>) exprs[0];
+        playerExpr = (Expression<Player>) exprs[1];
         show = parseResult.mark == 1;
         return true;
     }
 
     @Override
     protected void execute(Event event) {
-        Hologram hologram = holo.getSingle(event);
-        Player p = player.getSingle(event);
-        if (hologram == null || p == null) return;
-        if (show) {
-            hologram.getVisibilityManager().showTo(p);
-        } else {
-            hologram.getVisibilityManager().hideTo(p);
+        Hologram[] holograms = holoExpr.getArray(event);
+        Player[] players = playerExpr.getArray(event);
+        for (Hologram hologram : holograms) {
+            for (Player player : players) {
+                if (show)
+                    hologram.getVisibilityManager().showTo(player);
+                else
+                    hologram.getVisibilityManager().hideTo(player);
+            }
         }
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return (show ? "show " : "hide ") + holo.toString(event, b) + (show ? " to " : " from ") + player.toString(event, b);
+        return (show ? "show " : "hide ") + holoExpr.toString(event, b) + (show ? " to " : " from ") + playerExpr.toString(event, b);
     }
 }
