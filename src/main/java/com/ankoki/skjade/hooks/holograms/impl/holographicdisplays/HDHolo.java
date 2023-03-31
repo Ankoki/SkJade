@@ -103,6 +103,11 @@ public class HDHolo implements SKJHolo {
 	}
 
 	@Override
+	public boolean isDeleted() {
+		return this.current.isDeleted();
+	}
+
+	@Override
 	public boolean isPersistent() {
 		return false;
 	}

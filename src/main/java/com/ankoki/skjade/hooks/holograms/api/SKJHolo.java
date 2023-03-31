@@ -82,6 +82,12 @@ public interface SKJHolo {
     void delete();
 
     /**
+     * Checks if this hologram has been deleted.
+     * @return true if it has been deleted;
+     */
+    boolean isDeleted();
+
+    /**
      * Returns whether to save this hologram over restart.
      * Please note not all providers support this.
      * @return whether the hologram should be saved over restart.

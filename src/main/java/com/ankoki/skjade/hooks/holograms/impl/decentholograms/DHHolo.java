@@ -109,6 +109,12 @@ public class DHHolo implements SKJHolo {
     }
 
     @Override
+    public boolean isDeleted() {
+        // TODO determine how DecentHolograms detect if it has been deleted/destroyed.
+        return false;
+    }
+
+    @Override
     public boolean isPersistent() {
         return current.isSaveToFile();
     }

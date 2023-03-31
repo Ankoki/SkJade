@@ -1,9 +1,7 @@
 package com.ankoki.skjade.hooks.holograms.elements.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -18,6 +16,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Hologram Page")
 @Description("Gets the page of a hologram a player is viewing. Only some hologram plugins support this.")
 @Examples("set {_page} to page viewed of {_holo} by player")
+@Since("2.0")
+@RequiredPlugins("DecentHolograms")
 public class ExprHoloPage extends SimpleExpression<Number> {
 
 	static {
