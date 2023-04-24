@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprWorldBorderSize extends SimpleExpression<Number> {
 
     static {
-        Skript.registerExpression(ExprWorldBorderSize.class, Number.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprWorldBorderSize.class, Number.class, ExpressionType.PROPERTY,
                 "[skjade] [world[ ]]border size of %world%",
                 "[skjade] %world%'s [world[ ]]border size",
                 "[skjade] [the] size of %world%'s [world[ ]]border");

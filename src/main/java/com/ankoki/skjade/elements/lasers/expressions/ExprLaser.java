@@ -23,7 +23,7 @@ public class ExprLaser extends SimpleExpression<Laser> {
 
     static {
         if (Laser.isEnabled())
-            Skript.registerExpression(ExprLaser.class, Laser.class, ExpressionType.SIMPLE,
+            Skript.registerExpression(ExprLaser.class, Laser.class, ExpressionType.COMBINED,
                 "[the] (la(s|z)er [beam]|guardian beam) with [the] id %string%");
     }
 

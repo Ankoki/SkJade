@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprWorldBorderWarningTime extends SimpleExpression<Timespan> {
 
     static {
-        Skript.registerExpression(ExprWorldBorderWarningTime.class, Timespan.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprWorldBorderWarningTime.class, Timespan.class, ExpressionType.PROPERTY,
                 "[skjade] [world[ ]]border warning time of %world%",
                 "[skjade] %world%'s [world[ ]]border warning time",
                 "[skjade] [the] warning time of %world%'s [world[ ]]border");

@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprPlayerSpawn extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprPlayerSpawn.class, Location.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprPlayerSpawn.class, Location.class, ExpressionType.PROPERTY,
                 "[the] %player%[']s spawn[ point]",
                 "[the] spawn [point] of %player%");
     }

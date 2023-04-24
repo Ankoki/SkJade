@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprUnary extends SimpleExpression<Number> {
 
     static {
-        Skript.registerExpression(ExprUnary.class, Number.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprUnary.class, Number.class, ExpressionType.COMBINED,
                 "(-|unary [value of ])%~number%");
     }
 

@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprHologram extends SimpleExpression<SKJHolo> {
 
     static {
-        Skript.registerExpression(ExprHologram.class, SKJHolo.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprHologram.class, SKJHolo.class, ExpressionType.COMBINED,
                 "[the] [skjade] holo[gram] [(key|nam)ed [as]] %string%");
     }
 

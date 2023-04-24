@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprChunkAt extends SimpleExpression<Chunk> {
 
     static {
-        Skript.registerExpression(ExprChunkAt.class, Chunk.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprChunkAt.class, Chunk.class, ExpressionType.COMBINED,
                 "chunk %number%(, | and) %number% of %world%");
     }
 

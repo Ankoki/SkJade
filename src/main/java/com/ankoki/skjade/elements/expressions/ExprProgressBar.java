@@ -19,7 +19,7 @@ public class ExprProgressBar extends SimpleExpression<String> {
     private static final Color[] defaultColours = new Color[]{Color.GREEN, Color.GRAY};
 
     /*static {
-        Skript.registerExpression(ExprProgressBar.class, String.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprProgressBar.class, String.class, ExpressionType.COMBINED,
                 "[a] [new] progress[ ]bar [(string|text|txt)] with [([the]|(current|filled))] value %number% [out] of [[a] total [value] [of]] %number% [(using|with) [the] [bar] char[acter] %-string%] [([and] (using|with) [the]|and) colo[u]rs %-colors%] [(1¦with %-number% bar char[acter]s)]");
     }*/
 

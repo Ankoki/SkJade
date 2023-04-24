@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprVisibility extends SimpleExpression<Boolean> {
 
 	static {
-		Skript.registerExpression(ExprVisibility.class, Boolean.class, ExpressionType.SIMPLE,
+		Skript.registerExpression(ExprVisibility.class, Boolean.class, ExpressionType.COMBINED,
 				"%skjholo%'s visibility for %player%",
 				"visibility of %skjholo% for %player%");
 	}

@@ -28,7 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprExactTargetBlock extends SimpleExpression<Block> {
 
     static {
-        Skript.registerExpression(ExprExactTargetBlock.class, Block.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprExactTargetBlock.class, Block.class, ExpressionType.PROPERTY,
                 "%entity%'s exact target[ed] block",
                 "%entity%'s exact target[ed] block including (1¦[only ]source|[any] [type of]) fluid[s]");
     }

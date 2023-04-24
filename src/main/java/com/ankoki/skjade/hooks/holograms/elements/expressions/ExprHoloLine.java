@@ -38,7 +38,7 @@ public class ExprHoloLine extends SimpleExpression<SKJHoloLine> {
 			patterns[2] = "[all lines of ]page %number% (in|for|of) %skjholo%";
 			patterns[3] = "line %number% of page %number% (in|for|of) %skjholo%";
 		}
-		Skript.registerExpression(ExprHoloLine.class, SKJHoloLine.class, ExpressionType.SIMPLE, patterns);
+		Skript.registerExpression(ExprHoloLine.class, SKJHoloLine.class, ExpressionType.COMBINED, patterns);
 	}
 
 	private Expression<Number> lineExpr, pageExpr;

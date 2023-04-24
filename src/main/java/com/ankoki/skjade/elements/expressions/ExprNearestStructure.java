@@ -31,7 +31,7 @@ public class ExprNearestStructure extends SimpleExpression<Location> {
 
     static {
         if (Utils.getMinecraftMinor() > 12) {
-            Skript.registerExpression(ExprNearestStructure.class, Location.class, ExpressionType.SIMPLE,
+            Skript.registerExpression(ExprNearestStructure.class, Location.class, ExpressionType.COMBINED,
                     "[the] (nearest|closest) (1¦(not |un)(explored|discovered)|) [structure [of]] %skjstructuretype% (in|within) [a] radius [of] %number% (around|at|from|of) %location%");
         }
     }

@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprStar extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprStar.class, Location.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprStar.class, Location.class, ExpressionType.COMBINED,
                 "[(all [[of] the]|the)] [(loc[ation]s|points) of] [a] star (at|from) %location% with %number% points(,| and) [with] [a] radius [of] %number%(,| and) [a] density [of] %number%");
     }
 

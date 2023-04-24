@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprCircle extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.COMBINED,
                 "[a[n]] (1¦upright|) circle (at|from) %location% with [a] radius [of] %number% [and %-number% total (points|blocks|locations)]");
     }
 

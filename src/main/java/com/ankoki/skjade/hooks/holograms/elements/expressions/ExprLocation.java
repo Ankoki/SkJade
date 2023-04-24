@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprLocation extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprLocation.class, Location.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprLocation.class, Location.class, ExpressionType.COMBINED,
                 "[the] loc[ation] of %skjholo%",
                 "%skjholo%'s loc[ation]");
     }

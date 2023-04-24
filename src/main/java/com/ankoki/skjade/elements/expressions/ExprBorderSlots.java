@@ -29,7 +29,7 @@ import java.util.List;
 public class ExprBorderSlots extends SimpleExpression<Integer> {
 
     static {
-        Skript.registerExpression(ExprBorderSlots.class, Integer.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprBorderSlots.class, Integer.class, ExpressionType.COMBINED,
                 "border slots of [the] [inventory] %inventory%");
     }
 

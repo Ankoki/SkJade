@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprWorldBorderWarningDistance extends SimpleExpression<Number> {
 
     static {
-        Skript.registerExpression(ExprWorldBorderWarningDistance.class, Number.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprWorldBorderWarningDistance.class, Number.class, ExpressionType.PROPERTY,
                 "[skjade] [world[ ]]border warning distance of %world%",
                 "[skjade] %world%'s [world[ ]]border warning distance",
                 "[skjade] [the] warning distance of %world%'s [world[ ]]border");

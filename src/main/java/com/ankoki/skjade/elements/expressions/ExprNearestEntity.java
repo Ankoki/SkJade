@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprNearestEntity extends SimpleExpression<Entity> {
 
     static {
-        Skript.registerExpression(ExprNearestEntity.class, Entity.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprNearestEntity.class, Entity.class, ExpressionType.COMBINED,
                 "[the] (nearest|closest) (1¦[entity of type] %-entitytype%|entity) to %entity%",
                 "[the] (nearest|closest) entity (1¦[entity of type] %-entitytype%|entity) to %location%");
     }

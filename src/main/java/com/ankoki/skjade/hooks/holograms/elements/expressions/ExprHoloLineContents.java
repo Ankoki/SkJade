@@ -26,7 +26,7 @@ public class ExprHoloLineContents extends SimpleExpression<Object> {
 	private static final Class<?>[] CLASS_TYPES = new Class<?>[]{String.class, String.class, Material.class, ItemStack.class, EntityType.class};
 
 	static {
-		Skript.registerExpression(ExprHoloLineContents.class, Object.class, ExpressionType.SIMPLE,
+		Skript.registerExpression(ExprHoloLineContents.class, Object.class, ExpressionType.COMBINED,
 				"[the] (:content|:text|:material|:item|:entity) of %skjhololine%",
 				"%skjhololine%'s (:content|:text|:material|:item|:entity)");
 	}

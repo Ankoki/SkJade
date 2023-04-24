@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprCone extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprCone.class, Location.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprCone.class, Location.class, ExpressionType.COMBINED,
                 "[a] cone (with [a] cent(re|er) [of]|around) %location%(,| and) [a] radius [of] %number%[(,| and)] [a] height [of] %number%[(,| and)] [a] density [of] %number%");
     }
 

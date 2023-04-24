@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ExprGlowing extends SimplePropertyExpression<ItemStack, ItemStack> {
 
     static {
-        Skript.registerExpression(ExprGlowing.class, ItemStack.class, ExpressionType.PROPERTY,
+        Skript.registerExpression(ExprGlowing.class, ItemStack.class, ExpressionType.COMBINED,
                 "(shiny|glowing|glinting|glistening) %itemstack%");
     }
 

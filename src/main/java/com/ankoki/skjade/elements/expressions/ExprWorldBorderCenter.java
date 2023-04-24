@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprWorldBorderCenter extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprWorldBorderCenter.class, Location.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprWorldBorderCenter.class, Location.class, ExpressionType.PROPERTY,
                 "[skjade] [world[ ]]border cent(re|er) of %world%",
                 "[skjade] [the] %world%'s [world[ ]]border cent(re|er)",
                 "[skjade] [the] cent(re|er) of %world%'s [world[ ]]border");

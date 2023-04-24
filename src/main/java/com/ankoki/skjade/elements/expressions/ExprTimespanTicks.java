@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprTimespanTicks extends SimpleExpression<Number> {
 
     static {
-        Skript.registerExpression(ExprTimespanTicks.class, Number.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprTimespanTicks.class, Number.class, ExpressionType.PROPERTY,
                 "%timespan% in ticks",
                 "ticks of %timespan%",
                 "[the] amount of ticks in %timespan%");

@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprWorldBorderDamageAmount extends SimpleExpression<Number> {
 
     static {
-        Skript.registerExpression(ExprWorldBorderDamageAmount.class, Number.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprWorldBorderDamageAmount.class, Number.class, ExpressionType.PROPERTY,
                 "[skjade] [world[ ]]border damage amount of %world%",
                 "[skjade] %world%'s [world[ ]]border damage amount",
                 "[skjade] [the] damage amount of %world%'s [world[ ]]border");

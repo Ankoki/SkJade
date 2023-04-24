@@ -22,7 +22,7 @@ import java.text.NumberFormat;
 public class ExprFormatNumber extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprFormatNumber.class, String.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprFormatNumber.class, String.class, ExpressionType.COMBINED,
                 "[the] formatted number %number%");
     }
 

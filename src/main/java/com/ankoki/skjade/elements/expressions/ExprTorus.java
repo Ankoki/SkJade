@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprTorus extends SimpleExpression<Location> {
 
     static {
-        Skript.registerExpression(ExprTorus.class, Location.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprTorus.class, Location.class, ExpressionType.COMBINED,
                 "[a] (torus|[giant ]donut) (at|around) %location% with [a] major radius [of] %number% and [a] minor radius [of] %number% [with [a] density [of] %-number%]");
     }
 

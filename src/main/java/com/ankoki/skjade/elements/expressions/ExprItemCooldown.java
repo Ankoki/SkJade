@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprItemCooldown extends SimpleExpression<Timespan> {
 
     static {
-        Skript.registerExpression(ExprItemCooldown.class, Timespan.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprItemCooldown.class, Timespan.class, ExpressionType.COMBINED,
                 "[the] cooldown of %itemtypes% for %player%");
     }
 

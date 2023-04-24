@@ -22,7 +22,7 @@ public class ExprHoloPage extends SimpleExpression<Number> {
 
 	static {
 		if (HoloHandler.get().getCurrentProvider().supportsPages())
-			Skript.registerExpression(ExprHoloPage.class, Number.class, ExpressionType.SIMPLE,
+			Skript.registerExpression(ExprHoloPage.class, Number.class, ExpressionType.COMBINED,
 					"[the] [viewed] page (index|number) of %skjholo% for %player%");
 	}
 

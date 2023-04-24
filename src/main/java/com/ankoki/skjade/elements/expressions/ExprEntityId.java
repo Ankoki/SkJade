@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprEntityId extends SimpleExpression<Number> {
 
     static {
-        Skript.registerExpression(ExprEntityId.class, Number.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprEntityId.class, Number.class, ExpressionType.PROPERTY,
                 "%entity%'s id",
                 "the id of %entity%");
     }

@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprWorldHardcore extends SimpleExpression<Boolean> {
 
     static {
-        Skript.registerExpression(ExprWorldHardcore.class, Boolean.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprWorldHardcore.class, Boolean.class, ExpressionType.PROPERTY,
                         "[the] hardcore (value|mode|state) of %world%",
                         "[the] %world%'s hardcore (value|mode|state)");
     }

@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class ExprTextBetween extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprTextBetween.class, String.class, ExpressionType.SIMPLE,
+        Skript.registerExpression(ExprTextBetween.class, String.class, ExpressionType.COMBINED,
                 "[the] text between %string% and %string% (from|in) %string%");
     }
 

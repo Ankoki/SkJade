@@ -21,7 +21,7 @@ public class ExprRainbow extends SimpleExpression<String> {
 
     static {
         if (Utils.getMinecraftMinor() >= 16) {
-            Skript.registerExpression(ExprRainbow.class, String.class, ExpressionType.SIMPLE,
+            Skript.registerExpression(ExprRainbow.class, String.class, ExpressionType.COMBINED,
                     "(1¦pastel rainbow|2¦monochrome |[normal ]rainbow ) %string%");
         }
     }
