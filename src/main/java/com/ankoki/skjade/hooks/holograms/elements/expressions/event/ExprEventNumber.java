@@ -28,7 +28,7 @@ public class ExprEventNumber extends SimpleExpression<Number> {
 			List<String> patterns = new ArrayList<>();
 			if (SUPPORTS_LINE_CLICK)
 				patterns.add("[event(-| )]line[(-| )index]");
-			else if (SUPPORTS_PAGES)
+			if (SUPPORTS_PAGES)
 				patterns.add("[event(-| )]page[(-| )index]");
 			Skript.registerExpression(ExprEventNumber.class, Number.class, ExpressionType.SIMPLE, patterns.toArray(new String[0]));
 		}

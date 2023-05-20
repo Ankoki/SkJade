@@ -22,8 +22,9 @@ command /skjade-test <text> [<text>]:
 		else if arg-1 = "hologram":
 			create new holo keyed as (arg-2 ? "SKJADE-TEST") at player's location:
 				default lines: "§aHello there!", "", "§7[§cCLICK ME§7]", "" and "§eThis hologram does stuff!"
-				page 1: "Hey! This is the second page", a zombie, player's head
+				page 1: "Hey! This is the second page", a zombie, and player's head
 				static: true # As of the current DecentHolograms version, this is not supported and is useless.
+				persistent: false # This will allow the hologram to be saved with the ID given. There will be errors if this hologram has the same ID as a saved one.
 				on left click of page 1:
 					send "§ePage One §7| §fYou have clicked on page 1 of %event-hologram's id%"
 				on left click of page 0:
@@ -33,7 +34,7 @@ command /skjade-test <text> [<text>]:
 				on shift left click of page 0:
 					send "§eShift Left Click §7| §fYou have shift left clicked %event-hologram's id%."
 				on shift right click:
-					set {_i} to 1 if event-index = 0
+					set {_i} to 1 if event-page-index = 0
 					show page {_i} ? 0 of event-hologram to player
 					send "§eShift Right Click §7| §fYou are now viewing the alternate page."
 				on any left click:
@@ -48,7 +49,7 @@ command /skjade-test <text> [<text>]:
 
 		# RAINBOW - The text modification elements of SkJade. Also acts as a test for the server minor expression.
 		else if arg-1 = "rainbow":
-			if server version >= 16:
+			if (current server minor version) >= 16:
 				send rainbow "RAINBOW | This text is a regular rainbow."
 				send pastel rainbow "PASTEL RAINBOW | This text is a pastel rainbow."
 				send monochrome "MONOCHROME | This text is monochrome."

@@ -2,10 +2,7 @@ package com.ankoki.skjade.hooks.holograms.elements.effects.sub;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
-import ch.njol.skript.lang.Effect;
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.SectionSkriptEvent;
-import ch.njol.skript.lang.SkriptEvent;
+import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
@@ -15,6 +12,8 @@ import com.ankoki.skjade.hooks.holograms.api.SKJHoloBuilder;
 import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
+
+import java.util.List;
 
 @Name("Hologram Page")
 @Description("Adds a new page (or default page) to the current hologram." +
@@ -66,6 +65,11 @@ public class EffHoloPage extends Effect {
         SKJHoloBuilder builder = section.getCurrentBuilder();
         builder.addPage(page, lines);
         section.setCurrentBuilder(builder);
+    }
+
+    @Override
+    public List<Class<? extends Section>> getUsableSections() {
+        return List.of(SecKeyedHologram.class);
     }
 
     @Override

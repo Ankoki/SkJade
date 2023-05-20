@@ -22,20 +22,20 @@ public class ExprServerVersion extends SimpleExpression<Number> {
 
 	static {
 		Skript.registerExpression(ExprServerVersion.class, Number.class, ExpressionType.SIMPLE,
-				"[the] [current] server :[minor|patch] version");
+				"[the] [current] server:[ minor| patch] version");
 	}
 
-	private boolean minor;
+	private boolean patch;
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-		minor = parseResult.hasTag("minor");
+		patch = parseResult.hasTag(" patch");
 		return true;
 	}
 
 	@Override
 	protected Number[] get(Event event) {
-		return new Number[]{minor ? Utils.getMinecraftMinor() : Utils.getMinecraftPatch()};
+		return new Number[]{patch ? Utils.getMinecraftPatch() : Utils.getMinecraftMinor()};
 	}
 
 	@Override
