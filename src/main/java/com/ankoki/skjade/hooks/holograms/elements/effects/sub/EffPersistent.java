@@ -53,10 +53,10 @@ public class EffPersistent extends Effect {
 		section.setCurrentBuilder(builder);
 	}
 
-	@Override
+	/*@Override
 	public List<Class<? extends Section>> getUsableSections() {
 		return List.of(SecKeyedHologram.class);
-	}
+	}*/
 
 	@Override
 	public String toString(@Nullable Event event, boolean debug) {

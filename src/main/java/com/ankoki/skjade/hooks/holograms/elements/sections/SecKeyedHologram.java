@@ -45,8 +45,8 @@ public class SecKeyedHologram extends Section {
         }
         keyExpr = (Expression<String>) exprs[0];
         locationExpr = (Expression<Location>) exprs[1];
-        // trigger = loadCode(sectionNode, "hologram creation", getParser().getCurrentEvents());
-        loadCode(sectionNode);
+        trigger = loadCode(sectionNode, "hologram creation", getParser().getCurrentEvents());
+        //loadCode(sectionNode);
         return true;
     }
 
@@ -57,12 +57,13 @@ public class SecKeyedHologram extends Section {
         TriggerItem item = null;
         if (key != null && location != null) {
             this.currentBuilder = new SKJHoloBuilder(key, location);
-            // trigger.execute(event);
-            item = this.walk(event, true);
+            trigger.execute(event);
+            // item = this.walk(event, true);
             this.currentBuilder.build();
             this.currentBuilder = null;
         }
-        return item == null ? this.getNext() : item;
+        // return item == null ? this.getNext() : item;
+        return this.getNext();
     }
 
     @Override
