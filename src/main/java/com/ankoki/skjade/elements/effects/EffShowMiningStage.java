@@ -11,6 +11,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.SkJade;
 import com.ankoki.skjade.utils.ReflectionUtils;
+import com.ankoki.skjade.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -91,13 +92,17 @@ public class EffShowMiningStage extends Effect {
         if (remove) stage = 100;
         for (Location location : locs) {
             try {
-                Object position = blockPosition.getConstructor(double.class, double.class, double.class)
+                Object position;
+                if (Utils.getServerMajorVersion() >= 19)
+                    position = blockPosition.getConstructor(int.class, int.class, int.class)
+                            .newInstance(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+                else
+                    position = blockPosition.getConstructor(double.class, double.class, double.class)
                         .newInstance(location.getX(), location.getY(), location.getZ());
                 Object instance = packet.getConstructor(int.class, blockPosition, int.class)
                         .newInstance(ent, position, stage);
-                for (Player p : players) {
+                for (Player p : players)
                     ReflectionUtils.sendPacket(p, instance);
-                }
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
             }
