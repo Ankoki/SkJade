@@ -54,15 +54,12 @@ public class SecKeyedHologram extends Section {
     protected @Nullable TriggerItem walk(Event event) {
         String key = keyExpr.getSingle(event);
         Location location = locationExpr.getSingle(event);
-        TriggerItem item = null;
         if (key != null && location != null) {
             this.currentBuilder = new SKJHoloBuilder(key, location);
             trigger.execute(event);
-            // item = this.walk(event, true);
             this.currentBuilder.build();
             this.currentBuilder = null;
         }
-        // return item == null ? this.getNext() : item;
         return this.getNext();
     }
 
