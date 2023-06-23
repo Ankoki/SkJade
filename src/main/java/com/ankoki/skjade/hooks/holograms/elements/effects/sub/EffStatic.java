@@ -38,6 +38,11 @@ public class EffStatic extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+        SkriptEvent event = this.getParser().getCurrentSkriptEvent();
+        if (!(event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecKeyedHologram.class))) {
+            Skript.error("You cannot set the static state outside of hologram creation using this effect.");
+            return false;
+        }
         section = this.getParser().getCurrentSection(SecKeyedHologram.class);
         staticExpr = (Expression<Boolean>) exprs[0];
         return true;

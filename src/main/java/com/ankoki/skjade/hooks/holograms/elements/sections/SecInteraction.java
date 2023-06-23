@@ -54,6 +54,11 @@ public class SecInteraction extends Section {
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult, SectionNode sectionNode, List<TriggerItem> list) {
+		SkriptEvent event = this.getParser().getCurrentSkriptEvent();
+		if (!(event instanceof SectionSkriptEvent skriptEvent && skriptEvent.isSection(SecKeyedHologram.class))) {
+			Skript.error("You cannot use an interaction section outside of the creation of a hologram.");
+			return false;
+		}
 		section = this.getParser().getCurrentSection(SecKeyedHologram.class);
 		final boolean left = parseResult.hasTag("left");
 		final boolean right = parseResult.hasTag("right");
@@ -108,10 +113,10 @@ public class SecInteraction extends Section {
 		return this.getNext();
 	}
 
-	@Override
+	/*@Override
 	public List<Class<? extends Section>> getUsableSections() {
 		return List.of(SecKeyedHologram.class);
-	}
+	}*/
 
 	@Override
 	public String toString(@Nullable Event event, boolean debug) {

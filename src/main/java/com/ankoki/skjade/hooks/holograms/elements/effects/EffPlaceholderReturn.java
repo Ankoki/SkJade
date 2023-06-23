@@ -6,6 +6,7 @@ import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import com.ankoki.skjade.hooks.holograms.api.HoloHandler;
+import com.ankoki.skjade.hooks.holograms.elements.sections.SecKeyedHologram;
 import com.ankoki.skjade.hooks.holograms.elements.structures.StructPlaceholder;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -48,6 +49,10 @@ public class EffPlaceholderReturn extends Effect {
 
 	@Override
 	public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
+		if (this.getParser().isCurrentStructure(StructPlaceholder.class)) {
+			Skript.error("You cannot return a placeholder outside of a placeholder structure.");
+			return false;
+		}
 		returnExpr = (Expression<String>) exprs[0];
 		structure = this.getParser().getCurrentStructure();
 		return true;
@@ -60,10 +65,10 @@ public class EffPlaceholderReturn extends Effect {
 			VALUES.put(structure, rtrn);
 	}
 
-	@Override
+	/*@Override
 	public List<Class<? extends Structure>> getUsableStructures() {
 		return List.of(StructPlaceholder.class);
-	}
+	}*/
 
 	@Override
 	public String toString(@Nullable Event event, boolean debug) {
