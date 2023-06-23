@@ -23,14 +23,12 @@ public class SkJadeCmd implements CommandExecutor {
 						"behavior. Please switch to a stable version if possible!");
 		} else {
 			switch (args[0].toUpperCase()) {
-				case "HELP" -> {
-					sender.sendMessage(PREFIX + "§7§oThere are a few commands you can use, and are listed as followed.\n" +
-							" §7- §a/skjade §7~ §f§oThis shows the current version and warnings if they are needed.\n" +
-							" §7- §a/skjade reload §7~ §f§oThis reloads the config.yml in the 'plugins/SkJade' folder.\n" +
-							" §7- §a/skjade contact §7~ §f§oThis shows all the applicable ways to contact the developer (me:D).\n" +
-							" §7- §a/skjade help §7~ §f§oYou are here! This shows the command help list.\n" +
-							PREFIX + "§7§oBut this is a skript addon, what more do you need:)");
-				}
+				case "HELP" -> sender.sendMessage(PREFIX + "§7§oThere are a few commands you can use, and are listed as followed.\n" +
+						" §7- §a/skjade §7~ §f§oThis shows the current version and warnings if they are needed.\n" +
+						" §7- §a/skjade reload §7~ §f§oThis reloads the config.yml in the 'plugins/SkJade' folder.\n" +
+						" §7- §a/skjade contact §7~ §f§oThis shows all the applicable ways to contact the developer (me:D).\n" +
+						" §7- §a/skjade help §7~ §f§oYou are here! This shows the command help list.\n" +
+						PREFIX + "§7§oBut this is a skript addon, what more do you need:)");
 				case "RELOAD" -> {
 					SkJade.getInstance().getOwnConfig().reloadConfig();
 					sender.sendMessage(PREFIX + "§7§oYou have successfully reloaded the config!");
