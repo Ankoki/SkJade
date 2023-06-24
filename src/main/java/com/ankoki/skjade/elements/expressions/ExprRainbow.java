@@ -42,7 +42,7 @@ public class ExprRainbow extends SimpleExpression<String> {
     protected String[] get(Event event) {
         String string = stringExpr.getSingle(event);
         if (string == null) return new String[0];
-        return new String[]{monochrome ? Utils.monochrome(string) : Utils.simpleRainbow(string, pastel)};
+        return new String[]{monochrome ? Utils.monochrome(string) : Utils.rainbow(string, pastel)};
     }
 
     @Override

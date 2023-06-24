@@ -96,7 +96,8 @@ public class EffShowMiningStage extends Effect {
                             .newInstance(location.getX(), location.getY(), location.getZ());
                 Object instance = packet.getConstructor(int.class, blockPosition, int.class)
                         .newInstance(ent, position, stage);
-                for (Player p : players) ReflectionUtils.sendPacket(p, instance);
+                for (Player p : players)
+                    ReflectionUtils.sendPacket(p, instance);
             } catch (ReflectiveOperationException ex) {
                 ex.printStackTrace();
             }

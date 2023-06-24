@@ -28,18 +28,42 @@ public final class Utils {
         ROMAN_NUMERALS.put(1, "I");
     }
 
-    public static String coloured(String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
+    /**
+     * Colours a given text using the default minecraft codes.
+     *
+     * @param string the string to colour.
+     * @return the coloured string.
+     */
+    public static String coloured(String string) {
+        return ChatColor.translateAlternateColorCodes('&', string);
     }
 
+    /**
+     * Changes a number to the roman numeral equivalent.
+     *
+     * @param number the number to change.
+     * @return the roman numeral.
+     */
     public static String toRoman(int number) {
         int floor = ROMAN_NUMERALS.floorKey(number);
         if (number == floor) return ROMAN_NUMERALS.get(number);
         return ROMAN_NUMERALS.get(floor) + toRoman(number - floor);
     }
 
-    public static String rainbow(String message, double freq1, double freq2, double freq3,
-                                 double amp1, double amp2, double amp3, boolean pastel) {
+    /**
+     * Changes a string to be coloured as a rainbow.
+     *
+     * @param message the message to colour.
+     * @param pastel true if the rainbow should be pastel.
+     * @return the coloured string.
+     */
+    public static String rainbow(String message, boolean pastel) {
+        double freq1 = 0.3;
+        double freq2 = 0.3;
+        double freq3 = 0.3;
+        double amp1 = 0;
+        double amp2 = 2;
+        double amp3 = 4;
         int center = pastel ? 200 : 128;
         int width = pastel ? 55 : 127;
         StringBuilder builder = new StringBuilder();
@@ -78,10 +102,12 @@ public final class Utils {
         return builder.toString();
     }
 
-    public static String simpleRainbow(String message, boolean pastel) {
-        return rainbow(message, 0.3, 0.3, 0.3, 0, 2, 4, pastel);
-    }
-
+    /**
+     * Makes the given text monochrome.
+     *
+     * @param string the string to uncolour.
+     * @return the uncoloured string.
+     */
     public static String monochrome(String string) {
         double frequency = 0.3;
         int amplitude = 127;
@@ -111,6 +137,11 @@ public final class Utils {
         return builder.toString();
     }
 
+    /**
+     * Gets the minor version of the current server version.
+     *
+     * @return the minor version.
+     */
     public static int getMinecraftMinor() {
         try {
             String packageName = SkJade.getInstance().getServer().getClass().getPackage().getName();
@@ -122,6 +153,11 @@ public final class Utils {
         return -1;
     }
 
+    /**
+     * Gets the patch version of the current server version.
+     *
+     * @return the patch version.
+     */
     public static int getMinecraftPatch() {
         try {
             String version = Bukkit.getMinecraftVersion().split("-R")[0];
@@ -132,9 +168,14 @@ public final class Utils {
         return -1;
     }
 
+    /**
+     * Returns true if a plugin under the given name exists.
+     *
+     * @param name the name of the plugin.
+     * @return true if enabled.
+     */
     public static boolean isPluginEnabled(String name) {
-        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin(name);
-        return plugin != null && plugin.isEnabled();
+        return Bukkit.getServer().getPluginManager().isPluginEnabled(name);
     }
 
 }

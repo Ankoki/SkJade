@@ -9,6 +9,9 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class NonLegacyClassInfo {
 
+    /**
+     * Registers any non legacy class info.
+     */
     public static void register() {
         //StructureType ClassInfo
         Classes.registerClass(new ClassInfo<>(StructureType.class, "skjstructuretype")

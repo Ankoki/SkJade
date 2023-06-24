@@ -155,6 +155,9 @@ public class SkJade extends JavaPlugin implements Listener {
                 fin + "ms)");
     }
 
+    /**
+     * Loads NMS for the current server version.
+     */
     private void loadNMS() {
         if (MinecraftVersion.CURRENT_VERSION == MinecraftVersion.UNKNOWN || MinecraftVersion.currentIsLegacy()) {
             this.getLogger().warning("Could not find any NMS support for " + version + "! Please note SkJade only supports " +
@@ -165,6 +168,9 @@ public class SkJade extends JavaPlugin implements Listener {
             nmsEnabled = true;
     }
 
+    /**
+     * Loads the miscellaneous elements of SkJade.
+     */
     private void loadMiscElements() {
         if (Utils.getMinecraftMinor() > 12)
             NonLegacyClassInfo.register();
@@ -181,6 +187,9 @@ public class SkJade extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * Loads the binflop elements of SkJade.
+     */
     private void loadBinflopElements() {
         try {
             addon.loadClasses("com.ankoki.skjade.elements", "binflop");
@@ -190,6 +199,9 @@ public class SkJade extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * Loads the laser elements of SkJade.
+     */
     private void loadLaserElements() {
         Classes.registerClass(new ClassInfo<>(Laser.class, "laser")
                 .user("laser?s?")
@@ -204,6 +216,9 @@ public class SkJade extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * Loads the hologram elements of SkJade.
+     */
     private void loadHologramElements() {
         Classes.registerClass(new ClassInfo<>(SKJHolo.class, "skjholo")
                 .user("skjholos%")
@@ -253,31 +268,66 @@ public class SkJade extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * Registers the listeners.
+     *
+     * @param listeners the listeners to register.
+     */
     private void registerListeners(Listener... listeners) {
         for (Listener listener : listeners)
             this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
+    /**
+     * Whether the current SkJade version is a beta version.
+     *
+     * @return true if beta.
+     */
     public boolean isBeta() {
         return version.hasSuffix() && version.getSuffix().equalsIgnoreCase("beta");
     }
 
+    /**
+     * Gets the current SkJade version object.
+     *
+     * @return the version.
+     */
     public Version getVersion() {
         return version;
     }
 
+    /**
+     * Gets the current SkJade instance.
+     *
+     * @return the instance.
+     */
     public static SkJade getInstance() {
         return instance;
     }
 
+    /**
+     * Whether the NMS elements are enabled.
+     *
+     * @return true if NMS is enabled.
+     */
     public boolean isNmsEnabled() {
         return nmsEnabled;
     }
 
+    /**
+     * Whether SkJade is the latest version or not.
+     *
+     * @return true if latest.
+     */
     public boolean isLatest() {
         return latest;
     }
 
+    /**
+     * Copies SkJade's test script into the current server.
+     *
+     * @return true if succeeded.
+     */
     public boolean copyTests() {
         File file = new File(Skript.getInstance().getDataFolder() + File.separator + "scripts", "skjade-tests.sk");
         if (!file.exists()) {
@@ -297,6 +347,11 @@ public class SkJade extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * Gets SkJade's configuration.
+     *
+     * @return the config.
+     */
     public Config getOwnConfig() {
         return config;
     }

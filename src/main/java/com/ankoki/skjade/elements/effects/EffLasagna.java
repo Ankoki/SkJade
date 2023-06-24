@@ -31,7 +31,7 @@ public class EffLasagna extends Effect {
     
     @Override
     protected void execute(Event event) {
-        Bukkit.broadcastMessage(Utils.getMinecraftMinor() >= 16 ? Utils.simpleRainbow("&l&o&nlasagna", true) : "lasagna");
+        Bukkit.broadcastMessage(Utils.getMinecraftMinor() >= 16 ? Utils.rainbow("&l&o&nlasagna", true) : "lasagna");
     }
 
     @Override

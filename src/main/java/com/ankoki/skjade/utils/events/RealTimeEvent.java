@@ -10,6 +10,9 @@ import java.util.Date;
 
 public class RealTimeEvent extends Event {
 
+    /**
+     * Registers a repeating task to call this event every minute.
+     */
     public static void register() {
         Bukkit.getScheduler()
                 .scheduleSyncRepeatingTask(SkJade.getInstance(), () -> Bukkit.getPluginManager().callEvent(new RealTimeEvent(new Date())), 0L, 20 * 60L);
@@ -18,6 +21,11 @@ public class RealTimeEvent extends Event {
     private static final HandlerList handlerList = new HandlerList();
     private final Date date;
 
+    /**
+     * Creates a new real time event with the given date.
+     *
+     * @param date the date.
+     */
     public RealTimeEvent(Date date) {
         this.date = date;
     }
@@ -28,11 +36,22 @@ public class RealTimeEvent extends Event {
         return handlerList;
     }
 
+    /**
+     * Gets the date of the event.
+     *
+     * @return the date.
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     * Required by bukkit.
+     *
+     * @return an empty handler list.
+     */
     public static HandlerList getHandlerList() {
         return handlerList;
     }
+
 }

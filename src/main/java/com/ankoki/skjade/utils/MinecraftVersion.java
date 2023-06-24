@@ -46,26 +46,42 @@ public enum MinecraftVersion {
         }
     }
 
+    /**
+     * Checks if the current version is a legacy version.
+     *
+     * @return true if legacy.
+     */
     public static boolean currentIsLegacy() {
-        return CURRENT_VERSION.legacy;
+        return CURRENT_VERSION.isLegacy();
     }
 
     private final boolean legacy = this.ordinal() < 10;
 
+    /**
+     * Checks if the version is legacy.
+     *
+     * @return true if legacy.
+     */
     public boolean isLegacy() {
         return legacy;
     }
 
+    /**
+     * Checks if the version is newer than the current.
+     *
+     * @return true if newer.
+     */
     public boolean isNewer() {
         return this.ordinal() > CURRENT_VERSION.ordinal();
     }
 
+    /**
+     * Checks if the version is older than the current.
+     *
+     * @return true if older.
+     */
     public boolean isOlder() {
         return this.ordinal() < CURRENT_VERSION.ordinal();
-    }
-
-    public boolean equals(MinecraftVersion version) {
-        return this.ordinal() == version.ordinal();
     }
 
 }

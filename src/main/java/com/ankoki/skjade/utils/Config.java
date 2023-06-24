@@ -16,21 +16,31 @@ public class Config {
     private FileConfiguration config;
     private File file;
 
+    /**
+     * Creates a new configuration file.
+     *
+     * @param plugin the plugin which owns it.
+     */
     public Config(SkJade plugin) {
         this.plugin = plugin;
         reloadConfig();
     }
 
+    /**
+     * Reloads the configuration file.
+     */
     public void reloadConfig() {
         if (file == null) file = new File(plugin.getDataFolder(), "config.yml");
         if (!file.exists()) plugin.saveResource("config.yml", false);
         config = YamlConfiguration.loadConfiguration(file);
         if (this.checkLegacyConfig())
             SkJade.getInstance().getLogger().info("We have found a legacy configuration file! It has been updated. Make sure to check the values are to your liking.");
-
-        loadFile();
+        this.loadFile();
     }
 
+    /**
+     * Loads the file.
+     */
     private void loadFile() {
         if (config.contains("hologram-plugin")) HOLOGRAM_PLUGIN = config.getString("hologram-plugin");
         else SkJade.getInstance().getLogger().severe("Required key 'hologram-plugin' was not found.");
@@ -46,19 +56,23 @@ public class Config {
         else SkJade.getInstance().getLogger().severe("Required key 'misc-elements-enabled' was not found.");
     }
 
+    /**
+     * Checks if the current configuration is pre 2.0.
+     *
+     * @return true if changed.
+     */
     private boolean checkLegacyConfig() {
-        if (config.contains("config-version")) return false;
-        else {
-            boolean hologram = true, newVersion = true;
-            if (config.contains("holographic-displays-enabled"))
-                hologram = config.getBoolean("holographic-displays-enabled");
-            else if (config.contains("new-version-alerts"))
-                newVersion = config.getBoolean("new-version-alerts");
-            plugin.saveResource("config.yml", true);
-            config.set("holographic-elements-enabled", hologram);
-            config.set("new-version-alerts", newVersion);
-            return true;
-        }
+        if (config.contains("config-version"))
+            return false;
+        boolean hologram = true, newVersion = true;
+        if (config.contains("holographic-displays-enabled"))
+            hologram = config.getBoolean("holographic-displays-enabled");
+        if (config.contains("new-version-alerts"))
+            newVersion = config.getBoolean("new-version-alerts");
+        plugin.saveResource("config.yml", true);
+        config.set("holographic-elements-enabled", hologram);
+        config.set("new-version-alerts", newVersion);
+        return true;
     }
 
 }

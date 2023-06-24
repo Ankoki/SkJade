@@ -19,6 +19,7 @@ public class SKJHoloBuilder {
 
     /**
      * Creates a new builder with the core values.
+     *
      * @param key the key.
      * @param location the location.
      */
@@ -29,6 +30,7 @@ public class SKJHoloBuilder {
 
     /**
      * Adds a page to the current builder.
+     *
      * @param page the page to set. If the provider doesn't support pages, use page 0.
      * @param lines the lines to add.
      * @return the current builder for chaining.
@@ -42,6 +44,7 @@ public class SKJHoloBuilder {
 
     /**
      * Sets whether the hologram should be static if the provider supports it.
+     *
      * @param still true if it should be static.
      * @return the current builder for chaining.
      */
@@ -52,6 +55,7 @@ public class SKJHoloBuilder {
 
     /**
      * Sets whether the hologram should be saved over restart if the provider supports it.
+     *
      * @param persistent true if it should be persistent.
      * @return the current builder for chaining.
      */
@@ -62,6 +66,7 @@ public class SKJHoloBuilder {
 
     /**
      * Adds players to show the hologram to if the provider supports it.
+     *
      * @param players the players to show the hologram to.
      * @return the current builder for chaining.
      */
@@ -72,6 +77,7 @@ public class SKJHoloBuilder {
 
     /**
      * Adds players to hide the hologram from if the provider supports it.
+     *
      * @param players the players to hide the hologram from.
      * @return the current builder for chaining.
      */
@@ -82,6 +88,7 @@ public class SKJHoloBuilder {
 
     /**
      * Adds an interaction for the hologram.
+     *
      * @param trigger the trigger to execute.
      * @return the current builder for chaining.
      */
@@ -92,6 +99,7 @@ public class SKJHoloBuilder {
 
     /**
      * Builds the current builder into an SKJHolo object.
+     *
      * @return the built hologram.
      */
     public SKJHolo build() {

@@ -30,6 +30,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Gets a hologram by key.
+     *
      * @param key the key.
      * @return the hologram under the given key, null if not found.
      */
@@ -39,6 +40,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Registers a hologram under a given key.
+     *
      * @param key the key to register under. Must not already be registered.
      * @param holo the hologram to register.
      * @return if registering was successful.
@@ -52,6 +54,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Returns whether a key is already in use.
+     *
      * @param key the key to check.
      * @return true if it is in use, else false.
      */
@@ -61,6 +64,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Removes a hologram from the temporary cache.
+     *
      * @param key the key to delete.
      */
     public void deleteHolo(String key) {
@@ -69,6 +73,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Adds an interaction to the given SKJHolo.
+     *
      * @param holo the hologram to register an interaction for.
      * @param trigger the trigger to execute.
      */
@@ -80,6 +85,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Attempts to execute an interaction for a hologram with certain criteria.
+     *
      * @param holo the hologram that has been clicked.
      * @param page the page that has been clicked.
      * @param line the line that has been clicked.
@@ -94,6 +100,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Check if a hologram has any interactions linked.
+     *
      * @param holo the hologram to check.
      * @return true if the hologram has interactions to run.
      */
@@ -104,6 +111,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Returns all holograms in the cache.
+     *
      * @return the registered holograms.
      */
     public Collection<SKJHolo> getHolograms() {
@@ -113,6 +121,7 @@ public class HoloHandler implements Listener {
     //<editor-fold desc="Providers" defaultstate="collapsed">
     /**
      * Checks if SkJade has a hologram provider registered under the given id.
+     *
      * @param id the id.
      * @return if a provider is registered.
      */
@@ -124,6 +133,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Adds a new hologram provider. Must have a unique id.
+     *
      * @param provider the new provider.
      */
     public void addProvider(HoloProvider provider) {
@@ -135,6 +145,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Gets a provider by id.
+     *
      * @param id the id of the wanted provider.
      */
     public HoloProvider getProvider(String id) {
@@ -145,6 +156,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Sets the provider SkJade should use.
+     *
      * @param provider the provider to use.
      */
     public void setCurrentProvider(HoloProvider provider) {
@@ -153,6 +165,7 @@ public class HoloHandler implements Listener {
 
     /**
      * Gets the current hologram provider.
+     *
      * @return the current provider.
      */
     public HoloProvider getCurrentProvider() {
