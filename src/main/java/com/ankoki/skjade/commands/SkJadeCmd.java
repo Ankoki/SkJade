@@ -44,7 +44,7 @@ public class SkJadeCmd implements CommandExecutor {
 				case "CONTACT" -> sender.sendMessage(PREFIX + "§7§oIf you ever need to contact me in regards to SkJade or any other reason, you can reach out through the following methods:\n" +
 						" §7- §aBYEOL DEV §7~ §fThis is my development discord, and you can join it through this link: discord.gg/3RWFg2xDBF\n" +
 						" §7- §aSkUnity §7~ §fThis is the official Skript discord, you can join it at discord.gg/skript\n" +
-						" §7- §aDiscord DMs §7~ §fMy discord tag is Ankoki#0001 if you ever need support.\n" +
+						" §7- §aDiscord DMs §7~ §fMy discord tag is Ankoki#0001, or Ankokii, if you ever need support.\n" +
 						" §7- §aGitHub §7~ §fIf there is an issue or suggestion, you should report it at the GitHub error tracker, at www.github.com/Ankoki/SkJade/issues");
 				default -> sender.sendMessage(PREFIX + "§c§oThere is no command that matches the argument '" + args[0] + "'");
 			}

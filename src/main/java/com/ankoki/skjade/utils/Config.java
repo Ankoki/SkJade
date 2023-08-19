@@ -35,7 +35,8 @@ public class Config {
         config = YamlConfiguration.loadConfiguration(file);
         if (this.checkLegacyConfig())
             SkJade.getInstance().getLogger().info("We have found a legacy configuration file! It has been updated. Make sure to check the values are to your liking.");
-        this.loadFile();
+        else
+            this.loadFile();
     }
 
     /**
