@@ -45,6 +45,8 @@ public final class Utils {
      * @return the roman numeral.
      */
     public static String toRoman(int number) {
+        if (number == 0)
+            return "0";
         int floor = ROMAN_NUMERALS.floorKey(number);
         if (number == floor) return ROMAN_NUMERALS.get(number);
         return ROMAN_NUMERALS.get(floor) + toRoman(number - floor);
