@@ -38,7 +38,9 @@ public class ReflectionUtils {
 
     public static void sendPacket(Player player, Object... packets) {
         try {
-            Object connection = playerConnection.get(getHandle.invoke(player));
+            Object handle = getHandle(player);
+            playerConnection.setAccessible(true);
+            Object connection = playerConnection.get(handle);
             for (Object packet : packets) {
                 sendPacket.invoke(connection, packet);
             }
