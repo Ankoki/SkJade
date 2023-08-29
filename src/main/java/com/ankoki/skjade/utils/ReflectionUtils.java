@@ -52,10 +52,11 @@ public class ReflectionUtils {
      */
     public static void sendPacket(Player player, Object... packets) {
         try {
-            Object connection = playerConnection.get(getHandle.invoke(player));
-            for (Object packet : packets) {
+            Object handle = getHandle(player);
+            playerConnection.setAccessible(true);
+            Object connection = playerConnection.get(handle);
+            for (Object packet : packets)
                 sendPacket.invoke(connection, packet);
-            }
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();
         }
@@ -71,7 +72,8 @@ public class ReflectionUtils {
     @Nullable
     public static Method getMethod(Class<?> clazz, String name) {
         for (Method m : clazz.getDeclaredMethods()) {
-            if (m.getName().equals(name)) return m;
+            if (m.getName().equals(name))
+                return m;
         }
         return null;
     }
