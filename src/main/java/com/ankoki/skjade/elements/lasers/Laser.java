@@ -18,6 +18,8 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+
+import com.ankoki.skjade.SkJade;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -831,7 +833,7 @@ public abstract class Laser {
 				e.printStackTrace();
 				String errorMsg = "Laser Beam reflection failed to initialize. The util is disabled. Please ensure your version (" + Bukkit.getServer().getClass().getPackage().getName() + ") is supported.";
 				if (logger == null)
-					System.err.println(errorMsg);
+					SkJade.getInstance().getLogger().severe(errorMsg);
 				else
 					logger.severe(errorMsg);
 			}

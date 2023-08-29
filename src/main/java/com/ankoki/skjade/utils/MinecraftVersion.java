@@ -42,7 +42,7 @@ public enum MinecraftVersion {
             CURRENT_VERSION = MinecraftVersion.valueOf(version);
         } catch (IllegalArgumentException ex) {
             CURRENT_VERSION = UNKNOWN;
-            System.err.println("You are using an unknown version (" + version + "). You could be using a version before 1.7, or a newer version I haven't supported.");
+            SkJade.getInstance().getLogger().severe("You are using an unknown version (" + version + "). You could be using a version before 1.7, or a newer version I haven't supported.");
         }
     }
 
