@@ -22,7 +22,7 @@ public class EffRemoveLine extends Effect {
     static {
         Skript.registerEffect(EffRemoveLine.class,
                 "remove %hologramlines%",
-                "remove [the] (%number%(st|nd|rd|th) line|line %number%) from %hologram%");
+                "remove [the] line %number% from %hologram%");
     }
 
     private Expression<Number> number;
