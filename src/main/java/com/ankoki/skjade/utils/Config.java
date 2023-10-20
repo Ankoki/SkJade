@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 public class Config {
 
-    public static boolean PROTOCOL_LIB_ENABLED, HOLOGRAPHIC_DISPLAYS_ENABLED, ELEMENTALS_ENABLED, VERSION_ALERTS;
+    public static boolean PROTOCOL_LIB_ENABLED, HOLOGRAPHIC_DISPLAYS_ENABLED, ELEMENTALS_ENABLED, VERSION_ALERTS, DISABLE_UPDATE_CHECKER;
 
     private final SkJade plugin;
 
@@ -66,5 +66,6 @@ public class Config {
         HOLOGRAPHIC_DISPLAYS_ENABLED = config.getBoolean("holographic-displays-enabled");
         ELEMENTALS_ENABLED = config.getBoolean("elementals-enabled");
         VERSION_ALERTS = config.getBoolean("new-version-alerts");
+        DISABLE_UPDATE_CHECKER = config.getBoolean("disable-update-checker");
     }
 }
