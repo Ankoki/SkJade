@@ -32,7 +32,7 @@ public class EffRemoveLine extends Effect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int i, Kleenean kleenean, ParseResult parseResult) {
-        if (parseResult.mark == 1) {
+        if (i == 1) {
             isNumber = true;
             number = (Expression<Number>) exprs[0];
             hologram = (Expression<Hologram>) exprs[1];

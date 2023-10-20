@@ -43,7 +43,7 @@ public class EffRegisterPlaceholder extends Effect {
         timespanExpr = i == 1 ?(Expression<Timespan>) exprs[1] : null;
         String unparsed = parseResult.regexes.get(0).group(0) + "(" + (parseResult.regexes.size() > 1 ? parseResult.regexes.get(1).group(0) : "") + ")";
         FunctionReference<?> function = new SkriptParser(unparsed, SkriptParser.ALL_FLAGS, ParseContext.DEFAULT)
-                .parseFunction((Class<?>[]) null);
+                .parseFunction(String.class);
         if (function == null) {
             Skript.error("This isn't a valid function! Your function needs to return a value!");
             return false;
