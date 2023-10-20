@@ -100,7 +100,7 @@ public class SkJade extends JavaPlugin {
         Console.info("SkJade v" + version + " has been successfully enabled in " + df.format(fin / 1000.0) + " seconds (" +
                 fin + "ms)");
 
-        if (!isBeta()) {
+        if (!isBeta() && !Config.DISABLE_UPDATE_CHECKER) {
             new Thread(() -> {
                 UpdateChecker checker = new UpdateChecker("Ankoki-Dev", "SkJade");
                 if (!checker.isLatest()) {
