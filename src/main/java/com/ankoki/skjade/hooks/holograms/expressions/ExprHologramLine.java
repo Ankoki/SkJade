@@ -73,9 +73,13 @@ public class ExprHologramLine extends SimpleExpression<HologramLine> {
             int i = number.intValue();
             i--;
             if (i < 0) i = 0;
-            HologramLine line = holo.getLine(i);
-            return line == null ? new HologramLine[0] :
-                    new HologramLine[]{line};
+            try {
+                HologramLine line = holo.getLine(i);
+                return line == null ? new HologramLine[0] :
+                        new HologramLine[]{line};
+            } catch (IndexOutOfBoundsException ex) {
+                return new HologramLine[0];
+            }
         }
         return HologramManager.getLines(holo);
     }
